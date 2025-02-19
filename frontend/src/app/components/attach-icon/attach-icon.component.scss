@@ -1,0 +1,27 @@
+.attach-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mat-small-icon {
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+  
+  .download-text {
+    margin-top: 5px;
+    cursor: pointer;
+    color: navy;
+    background: none;
+    border: none;
+  }
+  
+  .clear-button {
+    margin-top: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ff0000; /* Color rojo para el botón de limpiar */
+  }

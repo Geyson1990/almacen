@@ -1,0 +1,606 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container mt-2 mb-3">
+        <form [formGroup]="formularioFG">
+            <div class="center">
+                <h6>{{txtTitulo}}</h6>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2, seccion-3, seccion-5, seccion-7">
+                <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>I.
+                                PROCEDIMENTO A SOLICITAR</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" formGroupName="f_Seccion1FG">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="inpEspecificacion">
+                                        Especifique <span class="text-danger">(*)</span>
+                                    </label>
+                                    <textarea class="form-control" id="inpEspecificacion" rows="2"
+                                        formControlName="f_s1_EspecificacionFC"
+                                        (input)="onInputEvent($event, f_s1_EspecificacionFC)"
+                                        maxlength="200"></textarea>
+                                    <div *ngIf="f_s1_EspecificacionFC.invalid && (f_s1_EspecificacionFC.dirty || f_s1_EspecificacionFC.touched)"
+                                        class="text-danger">
+                                        <div *ngIf="f_s1_EspecificacionFC.errors?.required">
+                                            El campo es obligatorio
+                                        </div>
+                                        <div *ngIf="f_s1_EspecificacionFC.errors?.maxlength">
+                                            El tamaño máximo permitido es {{
+                                            f_s1_EspecificacionFC.errors.maxlength.requiredLength }} caracteres
+                                        </div>
+                                        <div *ngIf="f_s1_EspecificacionFC.errors?.whitespace">
+                                            El campo no debe contener espacios en blanco al inicio ni al final
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="f_s1_AeronaveFA.enabled">
+                                    <hr>
+                                    <div formArrayName="f_s1_AeronaveFA">
+                                        <div class="mt-4"><strong>1.2 DATOS DE LA(S) AERONAVE(S)</strong></div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="row gx-2" [formGroup]="aeronaveFG">
+                                                    <div class="col-lg-6 col-xl mb-3">
+                                                        <app-basic-input [parentForm]="aeronaveFG"
+                                                            inputFormControlName="a_MatriculaFC" label="Matrícula"
+                                                            maxLength="30" placeHolder="Ingrese la matrícula"
+                                                             [btnAppend]="true" iconBtnAppend="fa-search"
+                                                            [disabledAppend]="!a_MatriculaFC.value?.trim()"
+                                                            (clickAppend)="buscarMatricula($event)" [horizontal]="true">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-6 col-xl mb-3">
+                                                        <app-basic-input [parentForm]="aeronaveFG"
+                                                            inputFormControlName="a_ModeloFC" label="Modelo"
+                                                            placeHolder="Ingrese el modelo" maxLength="30"
+                                                            [horizontal]="true">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg col-xl mb-3">
+                                                        <app-basic-input [parentForm]="aeronaveFG"
+                                                            inputFormControlName="a_NroSerieFC" label="N° de Serie"
+                                                            placeHolder="Ingrese el número de serie" maxLength="30"
+                                                            [horizontal]="true">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-auto col-xl-auto mb-3"
+                                                        style="text-align: center;">
+                                                        <button class="btn btn-danger" [disabled]="aeronaveFG.invalid"
+                                                            (click)="saveAeronave()">
+                                                            <div *ngIf="indexEditAeronave === -1; else elseBlock">
+                                                                <i class="fas fa-plus-circle"></i>
+                                                                Agregar
+                                                            </div>
+                                                            <ng-template #elseBlock>
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                                Modificar
+                                                            </ng-template>
+
+                                                        </button>
+
+                                                        <button *ngIf="indexEditAeronave !== -1"
+                                                            class="btn btn-warning ms-2" (click)="nosaveAeronave()">
+                                                            <i class="fas fa-ban"></i>
+                                                            Cancelar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table
+                                                        class="table table-sm table-bordered table-hover table-striped">
+                                                        <thead class="tabla-header-mtc">
+                                                            <tr class="table-light">
+                                                                <th>N°</th>
+                                                                <th class="text-center">Matrícula</th>
+                                                                <th class="text-center">Modelo</th>
+                                                                <th class="text-center">N° de Serie</th>
+                                                                <th class="text-center">Acciones</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="text-center"
+                                                                *ngFor="let _ of f_s1_AeronaveFA.controls; let i=index"
+                                                                [formGroupName]="i">
+                                                                <td>{{ i + 1}}</td>
+                                                                <td>{{ f_s1_an_MatriculaFC(i).value }}</td>
+                                                                <td class="text-start">{{
+                                                                    f_s1_an_ModeloFC(i).value }}</td>
+                                                                <td>{{ f_s1_an_NroSerieFC(i).value }}</td>
+                                                                <td>
+                                                                    <i class="far fa-edit pe-2 text-primary cursor-pointer"
+                                                                        title="Editar" (click)="editAeronave(i)"></i>
+                                                                    <i class="far fa-trash-alt ps-2 text-danger cursor-pointer"
+                                                                        title="Eliminar"
+                                                                        (click)="removeAeronave(i)"></i>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="f_s1_DatosOmaFG.enabled">
+                                    <hr>
+                                    <div formGroupName="f_s1_DatosOmaFG">
+                                        <div class="mt-4"><strong>1.3 DATOS DE LA OMA / OMAE</strong></div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="row gx-2">
+                                                    <div class="mb-3 col-lg-12">
+                                                        <app-basic-input [parentForm]="f_s1_DatosOmaFG"
+                                                            inputFormControlName="f_s1_do_DomicilioFC"
+                                                            label="Domicilio Legal"
+                                                            placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                                <app-ubigeo #ubigeoCmpDatOma [parentForm]="f_s1_DatosOmaFG"
+                                                    depaFormControlName="f_s1_do_DepartamentoFC"
+                                                    provFormControlName="f_s1_do_ProvinciaFC"
+                                                    distFormControlName="f_s1_do_DistritoFC"
+                                                    depaFormLabel="Departamento" provFormLabel="Provincia"
+                                                    distFormLabel="Distrito" [horizontal]="true">
+                                                </app-ubigeo>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+                </div>
+
+                <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>II.
+                                NOTIFICACIÓN</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <!-- <div class="row gx-2">
+                            <div>La notificación del presente procedimiento, se realiza a través del Sistema de Casillas
+                                Electrónicas del Ministerio de Transportes y Comunicaciones. </div>
+                            <br>
+                            <div>En virtud a ello, para la tramitación del presente procedimiento administrativo, usted
+                                debe contar con una casilla electrónica. Si aún no se ha afiliado, deberá hacerlo,
+                                ingresando al siguiente enlace:</div>
+                            <a text-align="center" href="http://casilla.mtc.gob.pe/"
+                                target="_blank">http://casilla.mtc.gob.pe/</a>
+                        </div> -->
+                        <div class="col-lg-12 mt-4 d-flex justify-content-center">
+                            <div class="alert alert-custom" role="alert">
+                                <div class="row" formGroupName="f_Seccion2FG">
+                                    <div class="col">
+                                        <p>Solicito que todo acto administrativo derivado del presente procedimiento, se
+                                            me notifique en el correo electrónico (e-mail) consignado en el presente
+                                            formulario. (Articulo 20° numeral 20.4 del Texto Único Ordenadode
+                                            la Ley N° 27444 - Ley del Procedimiento Administrativo General, aprobado por
+                                            Decreto Supremo N° 004-2019-JUS)</p>
+                                    </div>
+                                    <div class="col-auto" style="align-self: center; text-align: center;">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                                                formControlName="f_s2_notificaCorreoFC">
+                                            <label class="custom-control-label" for="customSwitch1">NO / SI</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-3" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>III. DATOS
+                                SOLICITANTE</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" formGroupName="f_Seccion3FG">
+                            <div class="col-lg-12" *ngIf="f_s3_PerNatFG.enabled" formGroupName="f_s3_PerNatFG">
+                                <div class="mt-4"><strong>PERSONA NATURAL</strong></div>
+                                <br>
+                                <div class="row gx-2">
+                                    <div class="col-lg-12">
+                                        <app-basic-input [parentForm]="f_s3_PerNatFG"
+                                            inputFormControlName="f_s3_pn_NombresFC" label="Apellidos y Nombres"
+                                            placeHolder="Ingrese los apellidos y nombres" [maxLength]="50"
+                                            [readonly]="true">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div class="row gx-2">
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerNatFG"
+                                            inputFormControlName="f_s3_pn_TipoDocSolicitanteFC" label="Tipo Doc."
+                                            placeHolder="Ingrese el tipo de documento" [readonly]="true"
+                                            [maxLength]="20">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="mb-3 col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerNatFG"
+                                            inputFormControlName="f_s3_pn_NroDocSolicitanteFC" label="Nro. Documento"
+                                            placeHolder="Ingrese el número de documento" [readonly]="true"
+                                            [maxLength]="9">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="mb-3 col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerNatFG"
+                                            inputFormControlName="f_s3_pn_RucFC" label="N° de RUC"
+                                            placeHolder="Ingrese el número de RUC" [onlyNumbers]="true"
+                                            [maxLength]="11">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div class="row gx-2">
+                                    <div class="mb-3 col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerNatFG"
+                                            inputFormControlName="f_s3_pn_TelefonoFC" label="Teléfono Fijo"
+                                            placeHolder="Ingrese el número de teléfono" [onlyNumbers]="true"
+                                            [maxLength]="11">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="mb-3 col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerNatFG"
+                                            inputFormControlName="f_s3_pn_CelularFC" label="Celular"
+                                            placeHolder="Ingrese el número de celular" [onlyNumbers]="true"
+                                            [maxLength]="9">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="mb-3 col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerNatFG"
+                                            inputFormControlName="f_s3_pn_CorreoFC" label="Correo Electrónico (E-mail)"
+                                            placeHolder="Ingrese el correo electrónico" [maxLength]="50">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div class="row gx-2">
+                                    <div class="mb-3 col-lg-12">
+                                        <app-basic-input [parentForm]="f_s3_PerNatFG"
+                                            inputFormControlName="f_s3_pn_DomicilioFC" label="Domicilio Legal"
+                                            placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <app-ubigeo #ubigeoCmpPerNat [parentForm]="f_s3_PerNatFG"
+                                    depaFormControlName="f_s3_pn_DepartamentoFC"
+                                    provFormControlName="f_s3_pn_ProvinciaFC" distFormControlName="f_s3_pn_DistritoFC"
+                                    depaFormLabel="Departamento" provFormLabel="Provincia" distFormLabel="Distrito"
+                                    [horizontal]="true"></app-ubigeo>
+                                <hr>
+                            </div>
+                            <div class="col-lg-12" *ngIf="f_s3_PerJurFG.enabled" formGroupName="f_s3_PerJurFG">
+                                <div class="mt-4"><strong>PERSONA JURÍDICA</strong></div>
+                                <br>
+                                <div class="row gx-2">
+                                    <div
+                                        [ngClass]="{'col-lg-8': tipoSolicitante !== 'PNR', 'col-lg-12': tipoSolicitante === 'PNR'}">
+                                        <app-basic-input [parentForm]="f_s3_PerJurFG"
+                                            inputFormControlName="f_s3_pj_RazonSocialFC" label="Razón Social"
+                                            placeHolder="Ingrese la razón social" [maxLength]="100">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4" *ngIf="tipoSolicitante !== 'PNR'">
+                                        <app-basic-input [parentForm]="f_s3_PerJurFG"
+                                            inputFormControlName="f_s3_pj_RucFC" label="N° de Ruc"
+                                            placeHolder="Ingrese el número de RUC" [onlyNumbers]="true"
+                                            [maxLength]="11">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div class="row gx-2">
+                                    <div class="col-lg-12">
+                                        <app-basic-input [parentForm]="f_s3_PerJurFG"
+                                            inputFormControlName="f_s3_pj_DomicilioFC" label="Domicilio Legal"
+                                            placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div *ngIf="tipoSolicitante !== 'PNR'" class="row gx-2">
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerJurFG"
+                                            inputFormControlName="f_s3_pj_DepartamentoFC" label="Departamento">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerJurFG"
+                                            inputFormControlName="f_s3_pj_ProvinciaFC" label="Provincia">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PerJurFG"
+                                            inputFormControlName="f_s3_pj_DistritoFC" label="Distrito">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div formGroupName="f_s3_pj_RepLegalFG">
+                                    <div class="mt-4"><strong>REPRESENTANTE LEGAL</strong></div>
+                                    <br>
+                                    <div class="row gx-2">
+                                        <div class="mb-3 col-lg-4">
+                                            <label class="control-label campo-obligatorio">Tipo Documento</label>
+                                            <select class="form-select" formControlName="f_s3_pj_rl_TipoDocumentoFC"
+                                                [class.control-invalid]="formInvalid(f_s3_pj_rl_TipoDocumentoFC)">
+                                                <option value=''>Seleccione</option>
+                                                <option *ngFor="let item of listaTiposDocumentos | slice:0:3"
+                                                    [value]="item.id">{{
+                                                    item.documento }}</option>
+                                            </select>
+                                            <div *ngIf="f_s3_pj_rl_TipoDocumentoFC.invalid && (f_s3_pj_rl_TipoDocumentoFC.dirty || f_s3_pj_rl_TipoDocumentoFC.touched)"
+                                                class="text-danger">
+                                                <div *ngIf="f_s3_pj_rl_TipoDocumentoFC.errors?.required">
+                                                    El campo es obligatorio
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_NumeroDocumentoFC" label="N° Documento"
+                                                [maxLength]="maxLengthNumeroDocumentoRepLeg"
+                                                placeHolder="Ingrese el número de documento" [onlyNumbers]="true"
+                                                 [btnAppend]="true" iconBtnAppend="fa-search"
+                                                [disabledAppend]="!f_s3_pj_rl_TipoDocumentoFC.value?.trim() || disableBtnBuscarRepLegal"
+                                                (clickAppend)="buscarNumeroDocumentoRepLeg($event)">
+                                            </app-basic-input>
+                                        </div>
+                                    </div>
+                                    <div class="row gx-2">
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_NombreFC" label="Nombres"
+                                                placeHolder="Ingrese el nombre" [maxLength]="50">
+                                            </app-basic-input>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_ApePaternoFC" label="Apellido Paterno"
+                                                placeHolder="Ingrese el apellido paterno" [maxLength]="50">
+                                            </app-basic-input>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_ApeMaternoFC" label="Apellido Materno"
+                                                placeHolder="Ingrese el apellido materno" [maxLength]="50">
+                                            </app-basic-input>
+                                        </div>
+                                    </div>
+                                    <div class="row gx-2">
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_TelefonoFC" label="Teléfono Fijo"
+                                                placeHolder="Ingrese el teléfono fijo" [onlyNumbers]="true"
+                                                [maxLength]="11">
+                                            </app-basic-input>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_CelularFC" label="Celular"
+                                                placeHolder="Ingrese el número de celular" [onlyNumbers]="true"
+                                                [maxLength]="9">
+                                            </app-basic-input>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_CorreoFC"
+                                                label="Correo Electrónico (E-mail)"
+                                                placeHolder="Ingrese el correo electrónico" [maxLength]="50">
+                                            </app-basic-input>
+                                        </div>
+                                    </div>
+
+                                    <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                        inputFormControlName="f_s3_pj_rl_DomicilioFC" label="Domicilio Legal"
+                                        placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                                    </app-basic-input>
+
+                                    <app-ubigeo #ubigeoCmpRepLeg [parentForm]="f_s3_pj_RepLegalFG"
+                                        depaFormControlName="f_s3_pj_rl_DepartamentoFC"
+                                        provFormControlName="f_s3_pj_rl_ProvinciaFC"
+                                        distFormControlName="f_s3_pj_rl_DistritoFC" depaFormLabel="Departamento"
+                                        provFormLabel="Provincia" distFormLabel="Distrito" [horizontal]="true">
+                                    </app-ubigeo>
+
+                                    <div class="row gx-2">
+                                        <div class="mb-3 col-lg-4">
+                                            <label class="control-label">Oficina registral <span
+                                                    class="text-danger">(*)</span></label>
+                                            <select class="form-select" formControlName="f_s3_pj_rl_OficinaFC"
+                                                [class.control-invalid]="formInvalid(f_s3_pj_rl_OficinaFC)">
+                                                <option value="">Seleccione</option>
+                                                <option *ngFor="let oficina of oficinasRegistral;"
+                                                    [value]="oficina.value">{{
+                                                    oficina.text }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_PartidaFC"
+                                                label="Poder registrado en la partida N°"
+                                                placeHolder="Ingrese el número de partida" [onlyNumbers]="true"
+                                                [maxLength]="15">
+                                            </app-basic-input>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="f_s3_pj_RepLegalFG"
+                                                inputFormControlName="f_s3_pj_rl_AsientoFC" label="Asiento N°"
+                                                placeHolder="Ingrese el número de asiento" [onlyNumbers]="true"
+                                                [maxLength]="15">
+                                            </app-basic-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-5" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>IV. DECLARACIONES
+                                JURADAS</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div formGroupName="f_Seccion5FG">
+                            <div class="mt-2 mb-4 ng-star-inserted" *ngIf="f_s5_declaracion1FC.enabled">
+                                <div class="alert alert-custom">
+                                    <div _ngcontent-ehx-c118="" class="row gx-2" style="align-items: center;">
+                                        <div _ngcontent-ehx-c118="" class="col" >
+                                            <div _ngcontent-ehx-c118=""> 5.1 Toda la información proporcionada es veraz,
+                                                así como los documentos presentados son auténticos, en caso contrario,
+                                                me someto al procedimiento y a las sanciones previstas en la Ley N°
+                                                27444, Ley del Procedimiento Administrativo General y/o normas
+                                                complementarias.
+                                            </div>
+                                        </div>
+                                        <div _ngcontent-ehx-c118="" class="col-auto">
+                                            <div _ngcontent-ehx-c118="" class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="f_s5_declaracion1FC"
+                                                    class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2 mb-4 ng-star-inserted" *ngIf="f_s5_declaracion2FC.enabled">
+                                <div class="alert alert-custom">
+                                    <div _ngcontent-ehx-c118="" class="row gx-2" style="align-items: center;">
+                                        <div _ngcontent-ehx-c118="" class="col">
+                                            <div _ngcontent-ehx-c118=""> 5.2 Adjunto todos los requisitos señalados en
+                                                el TUPA vigente del MTC.</div>
+                                        </div>
+                                        <div _ngcontent-ehx-c118="" class="col-auto">
+                                            <div _ngcontent-ehx-c118="" class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="f_s5_declaracion2FC"
+                                                    class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-active">
+                                <span style="text-align: justify; display: block;">
+                                    NOTA: En el presente documento electrónico se ha vinculado e identificado al
+                                    firmante,
+                                    así como se ha garantizado la autenticación e integridad del mismo a través de la
+                                    firma
+                                    electrónica utilizada atraves del usuario y clave de ingreso al Sistema Tupa Digital
+                                    del
+                                    Ministerio de Transportes y Comunicaciones , la cual tiene la misma validez y
+                                    eficacia
+                                    jurídica que la firma manuscrita, de conformidad con el artículo primero y segundo
+                                    de la
+                                    Ley N° 27269 - Ley de Firmas y Certificados Digitales y lo establecido en el inciso
+                                    c)
+                                    del numeral 47.1 del Art 47 del Reglamento de la Ley de Gobierno Digital, aprobado
+                                    mediante Decreto Supremo 029-2021-PCM.
+                                </span>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-7" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>VII. DATOS PARA
+                                LA INSPECCIÓN (Información llenada por el inspector de la DGAC)</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" formGroupName="f_Seccion7FG">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="inpItinerario">
+                                        A. ITINERARIO DE VUELO <span class="text-danger">(*)</span>
+                                    </label>
+                                    <textarea class="form-control" id="inpItinerario" rows="3"
+                                        formControlName="f_s7_ItinerarioFC"
+                                        (input)="onInputEvent($event, f_s7_ItinerarioFC)" maxlength="2000"></textarea>
+                                    <div *ngIf="f_s7_ItinerarioFC.invalid && (f_s7_ItinerarioFC.dirty || f_s7_ItinerarioFC.touched)"
+                                        class="text-danger">
+                                        <div *ngIf="f_s7_ItinerarioFC.errors?.required">
+                                            El campo es obligatorio
+                                        </div>
+                                        <div *ngIf="f_s7_ItinerarioFC.errors?.maxlength">
+                                            El tamaño máximo permitido es {{
+                                            f_s7_ItinerarioFC.errors.maxlength.requiredLength }} caracteres
+                                        </div>
+                                        <div *ngIf="f_s7_ItinerarioFC.errors?.whitespace">
+                                            El campo no debe contener espacios en blanco al inicio ni al final
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-lg-12 d-flex">
+
+            <div class="flex-1">
+
+                <button type="button" class="btn btn-secondary" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success w-50" (click)="guardarFormulario()" [disabled]="formularioFG.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                    (id === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

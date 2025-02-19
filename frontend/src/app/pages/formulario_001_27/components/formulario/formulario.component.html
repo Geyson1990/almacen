@@ -1,0 +1,692 @@
+<div class="modal-header anexo bg-danger text-white">
+
+
+    <h4 class="modal-title">FORMULARIO 001-27</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+</button>
+</div>
+
+<div class="modal-body anexo">
+
+    <form novalidate [formGroup]="formulario">
+        <div ngbAccordion #acc="ngbAccordion">
+            <div ngbAccordionItem="ngb-formulario001-17" [collapsed]="false">
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton>I. DATOS DEL SOLICITANTE</button>
+                    </h2>
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row gx-2">
+                        <div class="col-md-4 mb-2">
+                            <label for="inputRuc" class="col-form-label">Tipo de Persona</label>
+                            <div class="input-group input-group-sm">
+                                <input disabled formControlName="tipoPersonaForm" type="text" class="form-control text-uppercase" />
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4 mb-2">
+                            <label>Tipo Documento <span class="text-danger">(*)</span></label>
+                            <select disabled class="form-select form-select-sm" formControlName="tipoDocumentoForm">
+                                      <option value=''>Seleccione</option>
+                                      <option  *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                                  </select>
+
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label for="numerodocumento" class="col-form-label">Numero de Documento  </label>
+                            <input disabled formControlName="numeroDocumentoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                    <div class="row gx-2">
+
+                        <div class="col-md-12 mb-2">
+                            <label for="apellidosNombresRazonSocial" class="col-form-label">Nombres y apellidos o Razon Social </label>
+                            <input disabled formControlName="nombresApellidosRazonSocialForm" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="row gx-2">
+                        <div class="col-md-4 mb-2">
+                            <label for="inputRuc" class="col-form-label">Telefono</label>
+                            <div class="input-group input-group-sm">
+                                <input formControlName="telefonoForm" type="text" class="form-control text-uppercase" [class.control-invalid]="formInvalid('rucForm')" />
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="razonSocial" class="col-form-label">Celular  </label>
+                            <input formControlName="celularForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="razonSocial" class="col-form-label">Correo Electronico (email) </label>
+                            <input formControlName="correoElectronicoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                    <div class="row gx-2">
+
+                        <div class="col-md-12 mb-2">
+                            <label for="domicilioLegal" class="col-form-label">DOMICILIO LEGAL (AVENIDA / CALLE / JIRÓN / PASAJE / N° / DEPARTAMENTO / MANZANA / LOTE / URBANIZACIÓN)</label>
+                            <input formControlName="domicilioLegalForm" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <!-- <div class=" col">
+                    <div class="mb-3 row">
+                        <div class="col">
+                            <label for="inputPassword" class="col-form-label">Distrito <span
+                                class="text-danger">(*)</span></label>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="" formControlName="distritoForm" [class.is-invalid]="distritoNoValido">
+                            <small *ngIf="distritoNoValido" class="text-danger">Campo requerido</small>
+                        </div>
+                        <div class="col">
+                            <label for="inputPassword" class=" col-form-label">Provincia <span
+                                class="text-danger">(*)</span></label>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="" formControlName="provinciaForm" [class.is-invalid]="provinciaNoValido">
+                            <small *ngIf="provinciaNoValido" class="text-danger">Campo requerido</small>
+                        </div>
+                        <div class="col">
+                            <label for="inputPassword" class=" col-form-label">Departamento <span
+                                class="text-danger">(*)</span></label>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="" formControlName="departamentoForm" [class.is-invalid]="departamentoNoValido">
+                            <small *ngIf="departamentoNoValido" class="text-danger">Campo requerido</small>
+                        </div>
+                    </div>
+                </div> -->
+                    <div class="row gx-2 mb-2">
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Departamento <span class="text-danger">(*)</span></label>
+                            <input formControlName="departamentoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Provincia </label>
+                            <input formControlName="provinciaForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Distrito </label>
+                            <input formControlName="distritoForm" type="text" class="form-control form-control-sm">
+                        </div>
+
+
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <p style="font-size:10px;">Solicito que todo acto administrativo derivado del presente procedimiento, se me notifique en el correo electrónico (e-mail) consignado en el presente formulario. (Articulo 20° numeral 20.4 del Texto Único Ordenadode la
+                                    Ley N° 27444 – Ley del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS)</p>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="custom-control custom-switch">
+                                    <input formControlName="autorizacionForm" type="checkbox" class="custom-control-input" id="customSwitch1" (change)="onChangeMarcado($event)">
+                                    <label class="custom-control-label" for="customSwitch1">NO/SI</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Poder registrado, Oficina registral -->
+
+                    <div class="row gx-2">
+                        <div class="col-md-4 mb-2">
+                            <label>Tipo Documento <span class="text-danger">(*)</span></label>
+                            <select class="form-select form-select-sm" formControlName="tipoDocumentoRepresentanteForm" [class.control-invalid]="formInvalid('tipoDocumentoRepresentanteForm')">
+                            <option value=''>Seleccione</option>
+                            <option *ngFor="let item of listaTiposDocumentos | slice:0:3" [value]="item.id">{{ item.documento }}</option>
+                        </select>
+
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label for="numero" class="">N° Documento<span class="text-danger">(*)</span></label>
+
+                            <div class="input-group">
+
+                                <input type="text" class="form-control text-uppercase" (input)="inputNumeroDocumento($event)" [maxlength]="getMaxLengthNumeroDocumentoRepresentanteForm()" formControlName="numeroDocumentoRepresentanteForm" [class.control-invalid]="formInvalid('numeroDocumentoRepresentanteForm')"
+                                />
+
+
+                                    <!-- <button class="btn btn-outline-secondary" [disabled]="this.formulario.controls['numeroDocumentoRepresentanteForm'].value.trim().length !== 8" type="button" (click)="buscarNumeroDocumento()"> -->
+                                    <button class="btn btn-outline-secondary" type="button" (click)="buscarNumeroDocumento()">
+                                        <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="">Representante Legal (Apellidos y Nombres)<span class="text-danger">(*)</span></label>
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control text-uppercase" formControlName="apellidosyNombresRepresentanteForm" />
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+
+
+                    <!-- Razón Social / Operador, Representante Legal -->
+
+                    <div class="row gx-2 mb-2">
+                        <div class="col-md-8 mb-2">
+                            <label class="mb-0">DOMICILIO LEGAL (AVENIDA / CALLE / JIRÓN / PASAJE / N° / DEPARTAMENTO / MANZANA / LOTE / URBANIZACIÓN) <small class="text-muted"></small></label>
+                            <input type="text" class="form-control form-control-sm" formControlName="direccionRepresentanteForm">
+                        </div>
+                        <div class="col-md-4 mb-2">
+
+                        </div>
+                    </div>
+
+                    <div class="row gx-2 mb-2">
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="mb-3 ps-1">
+                                <label> Poder registrado en la ficha / partida N°</label>
+                                <input type="text" class="form-control ms-2 me-2 form-control-sm" formControlName="poderRegistradoForm" [class.control-invalid]="formInvalid('poderRegistradoForm')">
+                            </div>
+                            <div class="mb-3 ps-1">
+                                <label> Asiento N°</label>
+                                <input type="text" class="form-control ms-2 me-2 form-control-sm" formControlName="asientoForm" [class.control-invalid]="formInvalid('poderRegistradoForm')">
+                            </div>
+
+
+                            <!-- <div class="mb-3">
+                                <label> de la oficina Registral de </label>
+                               
+                                <div class="col-md-2">
+                                    <select class="form-select" formControlName="oficinaRegistralForm">
+                                    <option value="">Seleccione</option>
+                                    <option *ngFor="let oficina of listaOficinaRegistral;" [value]="oficina.id">{{ oficina.descripcion }}</option>
+                                </select>
+                                </div>
+                            </div> -->
+                            <div class="mb-3">
+                                <label class="col-form-label">Oficina registral:</label>
+                                <select class="form-select" formControlName="oficinaRegistralForm" [class.control-invalid]="formInvalid('oficinaRegistralForm')">
+                                    <option value="">Seleccione</option>
+                                    <option *ngFor="let oficina of oficinasRegistral;" [value]="oficina.value">{{ oficina.text }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+</div>
+</div>
+            </div>
+            <!-- II. SERVICIO SOLICITADO (Marcar con un aspa “X”) -->
+            <div  ngbAccordionItem>
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>II. HABILITACIÓN PROFESIONAL DE INGENIERO ELECTRÓNICO, TELECOMUNICACIONES Y AFINES</button>
+                    </h2>
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-2">
+
+
+
+                            <label> Número de Colegiatura.</label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="text" class="float-end m-2" formControlName="numeroColegiaturaForm" /> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-2">
+                            <label>Colegio Profesional.</label>
+
+
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="text" class="float-end m-2" formControlName="colegioProfesionalForm" /> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+            </div>
+            <!-- III. SERVICIO SOLICITADO (Marcar con un aspa “X”) -->
+            <div  ngbAccordionItem>
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>III. SERVICIO SOLICITADO</button>
+                    </h2>
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-001:</span> Concesión Única para la prestación de servicios públicos de telecomunicaciones sin asignación de espectro radioeléctrico.
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <p> <input type="checkbox" class="float-end m-2" formControlName="otorgamiento" /> </p> -->
+                                    <p> <input type="radio" value="DGPPC-001" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-011:</span> Asignación Temporal de Espectro Radioeléctrico para la prestación de servicios públicos de telecomunicaciones.
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="DGPPC-011" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-002:</span> Concesión Única para la prestación de servicios públicos de telecomunicaciones en caso requiera asignación de espectro
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="DGPPC-002" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-012:</span> Imposición de Servidumbre Forzosa para la prestación de servicios portadores o teleservicios públicos
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <p> <input type="radio" value="DGPPC-012" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-003:</span> Transferencia de Concesión para la prestación de servicios públicos de telecomunicaciones.
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <p> <input type="radio" value="DGPPC-003" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGC-003:</span> Permiso de Instalación y Operación de Estaciones Radioeléctricas para servicios públicos de telecomunicaciones.
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <p> <input type="radio" value="DGC-003" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-004:</span> Renovación de la Concesión para la prestación de servicios públicos de telecomunicaciones.
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <p> <input type="radio" value="DGPPC-004" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGC-004:</span> Modificación del Plan Mínimo de Expansión o Plan de Cobertura
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="DGC-004" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-005:</span>Modificación de la Concesión para la prestación de servicios públicos de telecomunicaciones en caso no se requiera asignación de espectro radioeléctrico
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <p> <input type="radio" value="DGPPC-005" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGC-005::</span> Modificación de Características Técnicas de Operación de servicios públicos de telecomunicaciones en caso no implique la asignación de espectro radioeléctrico.
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <p> <input type="radio" value="DGC-005" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-006:</span> : Modificación de la Concesión para la prestación de servicios públicos de telecomunicaciones en caso requiera asignación de espectro radioeléctrico
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="DGPPC-006" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGC-006:</span>Modificación de Características Técnicas de Operación de servicios públicos de telecomunicaciones en caso implique la asignación de espectro radioeléctrico.
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="DGC-006" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-007:</span> Asignación Adicional de Espectro Radioeléctrico para la prestación de servicios públicos de telecomunicaciones.
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="DGPPC-007" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGC-010:</span> Asignación del Recurso Numérico
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <p> <input type="radio" value="DGC-010" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGPPC-008:</span> Concesión de operador independiente en caso no utilice espectro radioeléctrico.
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="DGPPC-008" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-justify small">
+                                <span class="fw-bold">DGC-011:</span> Transferencia de Recurso Numérico
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="DGC-011" class="ms-3" formControlName="s3_servicioCodigo" disabled/></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col-sm-12 mt-3">
+                            <span class="campo-resolucion-jurada">{{ this.codigoProcedimientoTupa }}</span> <span class="campo-resolucion-jurada">{{ this.descProcedimientoTupa }}</span>
+                        </div>
+                    </div> -->
+                </ng-template>
+</div>
+</div>
+            </div>
+            <!-- DECLARACION JURADA -->
+            <div  ngbAccordionItem>
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>IV. DECLARACIÓN
+                        JURADA</button>
+                    </h2>
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                    <!--  Declaracion SI NO -->
+                    <div class="row gx-2 mb-2">
+                        <div class="col-md-10 mb-2">
+                            <label class="mb-0">MARQUE CON UN ASPA “X”, SI AUTORIZA O NO A OTRA PERSONA PARA LA PRESENTACIÓN
+                            DE ESTA DECLARACIÓN</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class=" form-check custom-control-inline">
+                                <input type="radio" id="customRadioInline1" class="form-check-input" value="1" name="s4_autorizacionDeclaracionForm" formControlName="s4_autorizacionDeclaracionForm">
+                                <label class="form-check-label" for="customRadioInline1">Sí</label>
+                            </div>
+                            <div class=" form-check custom-control-inline">
+                                <input type="radio" id="customRadioInline2" class="form-check-input" value="0" name="s4_autorizacionDeclaracionForm" formControlName="s4_autorizacionDeclaracionForm">
+                                <label class="form-check-label" for="customRadioInline2">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gx-2 mb-2">
+                        <div class="col-md-4 mb-2">
+                            <label>Tipo Documento <span class="text-danger">(*)</span></label>
+                            <select class="form-select form-select-sm" formControlName="s4_tipoDocumentoDeclaracionForm" [class.control-invalid]="formInvalid('tipoDocumentoDeclaracionForm')">
+                        <option value=''>Seleccione</option>
+                        <option *ngFor="let item of listaTiposDocumentos | slice:0:3" [value]="item.id">{{ item.documento }}</option>
+                    </select>
+
+                        </div>
+
+
+
+                        <div class="col-md-3 mb-2">
+                            <label for="numero" class="">N° Documento<span class="text-danger">(*)</span></label>
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control text-uppercase" (input)="inputNumeroDocumento($event)" [maxlength]="getMaxLengthNumeroDocumentoDeclaracion()" formControlName="s4_numeroDocumentodeclaracionForm" [class.control-invalid]="formInvalid('s4_numeroDocumentodeclaracionForm')"
+                                />
+                                    <!-- <button class="btn btn-outline-secondary" [disabled]="this.formulario.controls[ 's4_numeroDocumentodeclaracionForm'].value.trim().length===0" type="button" (click)="buscarNumeroDocumentoDeclaracion()"> -->
+                                    <button class="btn btn-outline-secondary" type="button" (click)="buscarNumeroDocumentoDeclaracion()">
+                                        <i class="fas fa-search"></i>
+                        </button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-2">
+                            <label for="Apellidos" class="">Apellidos y Nombres<span class="text-danger">(*)</span></label>
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control text-uppercase" formControlName="s4_apellidosNombresDeclaracionForm" [class.control-invalid]="formInvalid('s4_apellidosNombresDeclaracionForm')" />
+
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+</div>
+</div>
+
+            </div>
+        </div>
+        <!-- <div class="mb-3 row pt-4">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-secondary btn-block" *ngIf="idForm!==0"><i class="fas fa-cloud-download-alt"></i> Descargar PDF</button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-danger btn-block"><i class="fas fa-arrow-left"></i> Regresar</button>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success btn-block" (click)="guardarFormulario0117()" [disabled]="this.formulario.invalid"><i class="fas fa-save"></i>{{
+                (idForm === 0 ? 'Guardar' : 'Modificar')
+            }}</button>
+            </div>
+        </div> -->
+    </form>
+
+</div>
+
+<!-- <div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idForm===0" (click)="descargarPdf()">
+                        <i class="far fa-eye"></i>
+                        Visualizar
+                    </button>
+                </div>
+                <div class="flex-1 text-end">
+                    <button class="btn btn-success" (click)="guardarFormulario0117()" [disabled]="this.formulario.invalid">
+                <i class="far fa-save"></i>
+                {{
+                  (idForm === 0 ? 'Guardar' : 'Modificar')
+              }}
+            </button>
+                </div>
+            </div>
+        </div>
+
+    </div> -->
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" *ngIf="idForm!==0" (click)="descargarPdf()">
+                      <i class="far fa-eye"></i>
+                      Visualizar
+                  </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+
+                <!-- " -->
+                <button class="btn btn-success" (click)="guardarFormulario0127()">
+                  <i class="far fa-save"></i>
+                  {{
+                      (idForm === 0 ? 'Grabar' : 'Modificar')
+                  }}
+              </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,327 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+    <div class="modal-body">
+      <div class="container mt-2 mb-3">
+        <form novalidate [formGroup]="formulario">
+            <div class="center">
+                <h6>{{titulo}}</h6>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion">
+
+                <div ngbAccordionItem="seccion-1" [disabled]="!habilitarSeccion1" [collapsed]="!habilitarSeccion1">
+
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton>I. PROCEDIMIENTO A SOLICITAR</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                        <div class="row mt-3">
+                          <div class="col-sm-6 d-flex flex-column justify-content-between ">
+                            <div class="d-flex" *ngIf="formulario.get('procedimiento').value == 'DSA-001'">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <b>DSA-001</b>&nbsp; - Otorgamiento de licencia aeronáutica o de habilitación aeronáutica. <br>
+                                </div>
+                                <div class="col-md-12 ms-2" *ngIf="this.codigoTipoSolicitudTupa =='1'">
+                                    <span>- Otorgamiento de licencia aeronáutica.</span>
+                                </div>
+                                <div class="col-md-12 ms-2" *ngIf="this.codigoTipoSolicitudTupa =='2'">
+                                    <span>- Otorgamiento de habilitación aeronáutica</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="d-flex" *ngIf="formulario.get('procedimiento').value == 'DSA-003'">
+                                <b>DSA-003</b>&nbsp; - Convalidación de licencia aeronáutica extranjera.
+                            </div>
+                            <div class="d-flex" *ngIf="formulario.get('procedimiento').value == 'DSA-005'">
+                                <b>DSA-005</b>&nbsp; - Revalidación de competencias del personal aeronáutico.
+                            </div>
+                            <div class="d-flex" *ngIf="formulario.get('procedimiento').value == 'S-DGAC-001'">
+                                <b>S-DGAC-001</b>&nbsp; - Duplicado de licencia aeronáutica.
+                            </div>
+                            <div class="d-flex" *ngIf="formulario.get('procedimiento').value == 'S-DSA-001'">
+                                <b>S-DSA-001</b>&nbsp; - Certificado de calificaciones de personal aeronáutico.
+                            </div>
+                          </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mt-3">
+                          <div class="col-sm-12 d-flex flex-column">
+                              <div class="d-flex ">
+                                  <div class="flex-4 ">
+                                      <b>Especificar el tipo de licencia de habilitación requerida, según el servicio marcado:</b>
+                                  </div>
+                              </div>
+                              <div class="d-flex">
+                                  <textarea class="form-control" formControlName="tipoLicencia" [class.control-invalid]="formInvalid('tipoLicencia')" rows="6"></textarea>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="row mt-3" *ngIf="habilitarSeccion11" [disabled]="!habilitarSeccion11">
+                            <div class="col-sm-12 text-start text-secondary p-2 bg-light">
+                                <b>1.1. DATOS DE LA SOLICITUD (Solo para el procedimiento DSA-001, DSA-003 y DSA-005)</b>
+                            </div>
+                            <div class="col-sm-12 text-start text-secondary p-2 bg-light">
+                                <b>OFICIO DE LA DGAC EN EL QUE CONSTE EL RESULTADO FAVORABLE DE LA INSPECCIÓN TÉCNICA DE LA AERONAVE (De acuerdo a la RAP 21) </b>
+                            </div>
+                        </div>
+                        <div class="row gx-2" *ngIf="habilitarSeccion11">
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label"> N° DE OFICIO EVALUACIÓN TEÓRICA <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="numeroEvalTeorica" [class.control-invalid]="formInvalid('numeroEvalTeorica')">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label"> N° DE OFICIO EVALUACIÓN PRÁCTICA <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="numeroEvalPractica" [class.control-invalid]="formInvalid('numeroEvalPractica')">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label"> N° DE OFICIO EVALUACIÓN COMPETENCIA LINGÜÍSTICA <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="numeroEvalCompetencia" [class.control-invalid]="formInvalid('numeroEvalCompetencia')">
+                            </div>
+                        </div>
+
+                        <!--<div class="row mt-3 " *ngIf="habilitarSeccion11">
+                            <div class="mb-3 col-md-12">
+                                <label class="col-form-label">N° DE OFICIO DE LA DGAC:</label>
+                                <input type="text" class="form-control"  maxlength="100" formControlName="oficio_dgac" [class.control-invalid]="formInvalid('oficio_dgac')">
+                            </div>
+                        </div>-->
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-2" [disabled]="!habilitarSeccion2" [collapsed]="!habilitarSeccion2">
+                    <h2 ngbAccordionHeader class="card-header aaa" >
+                        
+                            <button ngbAccordionButton>II. NOTIFICACIÓN</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                      <div class="px-2 py-3">
+                        <p class="fw-bold">
+                            Solicito que todo acto administrativo derivado del presente procedimiento, se me notifique bajo la siguiente modalidad:
+                        </p>
+                        <div class="row">
+                            <div class="mb-3 col-md-12">
+                                <div class=" form-check ms-3">
+                                    <input type="radio" id="rb1" class="form-check-input" name="modalidadNotificacion" value="1" formControlName="modalidadNotificacion">
+                                    <label class="form-check-label" for="rb1">
+                                        De manera personal en el domicilio de la persona jurídica o natural consignada en el presente formulario.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-12">
+                                <div class=" form-check ms-3">
+                                    <input type="radio" id="rb2" class="form-check-input" name="modalidadNotificacion" value="2" formControlName="modalidadNotificacion">
+                                    <label class="form-check-label" for="rb2">
+                                        Al correo electrónico de la persona jurídica o natural consignada en el presente formulario
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-3" [disabled]="!habilitarSeccion3" [collapsed]="!habilitarSeccion3">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>III. DATOS SOLICITANTE</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="mt-4" *ngIf="this.activarPN"><strong>PERSONA NATURAL</strong></div>
+                        <br *ngIf="this.activarPN">
+                        <div class="row gx-2" *ngIf="this.activarPN">
+                            <div class="mb-3 col-md-12">
+                                <label class="col-form-label">Apellidos y Nombres</label>
+                                <input type="text" class="form-control" formControlName="nombresPersona" [class.control-invalid]="formInvalid('nombresPersona')">
+                            </div>
+
+                        </div>
+                        <div class="row gx-2" *ngIf="this.activarPN">
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label"> Tipo Doc. <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="tipoDocumentoSolicitante" [class.control-invalid]="formInvalid('tipoDocumentoSolicitante')">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label"> Nro Documento <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="nroDocumentoSolicitante" [class.control-invalid]="formInvalid('nroDocumentoSolicitante')">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label">N° de Ruc <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="rucPersona" [class.control-invalid]="formInvalid('rucPersona')">
+                            </div>
+                        </div>
+                        <div class="row gx-2" *ngIf="this.activarPN">
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label">Teléfono Fijo</label>
+                                <input type="text" class="form-control" (input)="soloNumeros($event)" formControlName="telefonoPersona"
+                                [class.control-invalid]="formInvalid('telefonoPersona')">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label"> Celular <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" (input)="soloNumeros($event)" formControlName="celularPersona"
+                                [class.control-invalid]="formInvalid('celularPersona')">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label">Correo Electrónico (E-mail) <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="correoPersona"
+                                [class.control-invalid]="formInvalid('correoPersona')">
+                            </div>
+                        </div>
+                        <div class="row gx-2" *ngIf="this.activarPN">
+                            <div class="mb-3 col-md-12">
+                                <label class="col-form-label">Domicilio Legal</label>
+                                <input type="text" class="form-control" formControlName="domicilioPersona"
+                                [class.control-invalid]="formInvalid('domicilioPersona')">
+                            </div>
+                        </div>
+                        <div class="row gx-2" *ngIf="this.activarPN">
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label">Distrito <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="distritoPersona" [class.control-invalid]="formInvalid('distritoPersona')">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label">Provincia <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="provinciaPersona" [class.control-invalid]="formInvalid('provinciaPersona')">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="col-form-label">Departamento <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="departamentoPersona" [class.control-invalid]="formInvalid('departamentoPersona')">
+                            </div>
+                        </div>
+                        <div class="row gx-2" *ngIf="this.activarPN">
+                            <div class="mb-3 col-md-3">
+                                <label class="col-form-label">Peso (kg) <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="peso" (input)="soloNumerosDecimal($event)" [class.control-invalid]="formInvalid('peso')">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label class="col-form-label">Estatura (m) <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="estatura" (input)="soloNumerosDecimal($event)" [class.control-invalid]="formInvalid('estatura')">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label class="col-form-label">Color de ojos <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="colorOjos" (input)="soloTexto($event)" [class.control-invalid]="formInvalid('colorOjos')">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label class="col-form-label">Color cabellos <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="colorCabello" (input)="soloTexto($event)" [class.control-invalid]="formInvalid('colorCabello')">
+                            </div>
+                        </div>
+                        <div class="row gx-2" *ngIf="this.activarPN">
+                            <div class="mb-3 col-md-3">
+                                <label class="col-form-label">Nacionalidad <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="nacionalidad" (input)="soloTexto($event)" [class.control-invalid]="formInvalid('nacionalidad')">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label class="col-form-label">Fecha de Nacimiento <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="fechaNacimiento" [class.control-invalid]="formInvalid('fechaNacimiento')">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label class="col-form-label">Registro de Licencia DGAC <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="licencia" [class.control-invalid]="formInvalid('licencia')">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label class="col-form-label">Nro <span class="text-danger">(*)</span></label>
+                                <input type="text" class="form-control" formControlName="numeroLicencia" [class.control-invalid]="formInvalid('numeroLicencia')">
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-4" [disabled]="!habilitarSeccion4" [collapsed]="!habilitarSeccion4">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>IV. DECLARACION JURADA</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="mt-2 mb-4 ng-star-inserted">
+                            <div class="alert alert-custom">
+                                <div class="row gx-2">
+                                    <div class="col-md-10">
+                                        <div> Toda la información proporcionada es veraz, así como los documentos presentados son auténticos, en caso contrario, me someto al procedimiento y a las sanciones previstas en
+                                            la Ley N° 27444, Ley del Procedimiento Administrativo General y/o normas complementarias</div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex flex-row p-2 ms-4">
+                                            <ui-switch formControlName="declaracion_1"  class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 mb-4 ng-star-inserted">
+                            <div class="alert alert-custom">
+                                <div class="row gx-2">
+                                    <div class="col-md-10">
+                                        <div> Adjunto todos los requisitos señalados en el TUPA vigente del Minem.</div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex flex-row p-2 ms-4">
+                                            <ui-switch formControlName="declaracion_2" class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-active">
+                            <span style="text-align: justify; display: block;">
+                                NOTA: En el presente documento electrónico se ha vinculado e identificado al firmante, así como se ha garantizado la autenticación e integridad del mismo a través de la firma electrónica utilizada atraves del usuario y clave de ingreso al Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones , la cual tiene la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales y lo establecido en el inciso c) del numeral 47.1 del Art 47 del Reglamento de la Ley de Gobierno Digital, aprobado mediante Decreto Supremo 029-2021-PCM.
+                            </span>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+
+                    <button type="button" class="btn btn-secondary" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success w-50" (click)="guardarFormulario()" [disabled]="this.formulario.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                        (id === 0 ? 'Grabar' : 'Modificar')
+                    }}
+              </button>
+            </div>
+        </div>
+    </div>
+</div>

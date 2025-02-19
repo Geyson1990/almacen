@@ -1,0 +1,32 @@
+<div [formGroup]="parentForm">
+    <div class=" form-check">
+
+        <ng-container *ngIf="readOnly || checkboxFormControl.disabled; else elseTemplate">
+            <input type="checkbox" class="form-check-input" [id]="'inputControl-' + inputUUID"
+                [readonly]="readOnly" [disabled]="checkboxFormControl.disabled" [value]="inputFormControl.value">
+        </ng-container>
+        <ng-template #elseTemplate>
+            <input type="checkbox" class="custom-control-input" [id]="'inputControl-' + inputUUID"
+                [formControlName]="checkboxFormControlName" [readonly]="readOnly"
+                (change)="onChangeCheckbox($event)">
+        </ng-template>
+
+        <!-- <input type="checkbox" class="custom-control-input" [id]="'inputControl-' + inputUUID"
+            formControlName="{{ checkboxFormControlName }}" [readonly]="readOnly" (change)="onChangeCheckbox($event)"> -->
+        <label class="form-check-label" [for]="'inputControl-' + inputUUID">
+            {{ label }}
+            <span class="text-danger" *ngIf="isRequired()">(*)</span>
+        </label>
+    </div>
+    <div *ngIf="checkboxFormControl.invalid && (checkboxFormControl.dirty || checkboxFormControl.touched)"
+        class="text-danger">
+        <div *ngIf="checkboxFormControl.errors?.required">
+            El campo es obligatorio
+        </div>
+        <ng-content select="[slot=customValidators]"></ng-content>
+        <!-- Para usar los validadores personalizados llamarlo de esta forma: -->
+        <!-- <div slot="customValidators">Aqui colocamos los validadores personalizados</div> -->
+        <!-- o -->
+        <!-- <ng-container slot="customValidators">Aqui colocamos los validadores personalizados</ng-container> -->
+    </div>
+</div>

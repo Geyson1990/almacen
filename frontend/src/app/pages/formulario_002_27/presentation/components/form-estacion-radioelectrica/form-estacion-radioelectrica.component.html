@@ -1,0 +1,565 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close()">
+        
+    </button>
+</div>
+<div class="modal-body anexo">
+    <div class="container-fluid">
+        <form novalidate [formGroup]="formulario">
+            <div class="mt-1 mb-3">
+                <h6 class="mb-0">{{txtTitulo}}</h6>
+                <h6 class="text-muted">{{txtTituloHelp}}</h6>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2, seccion-3, seccion-4, seccion-5">
+
+                <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>I. DESCRIPCIÓN</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                        <ng-container formGroupName="seccion1">
+                          <div class="row">
+                              <div class="col-12">
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Empresa <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" formControlName="empresa" readonly
+                                      [class.control-invalid]="formInvalid(empresa)">
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Servicio <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" formControlName="servicio" [class.control-invalid]="formInvalid(servicio)">
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Nombre de la estación <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" formControlName="nombreEstacion" [class.control-invalid]="formInvalid(nombreEstacion)">
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Ubicación <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" formControlName="ubicacionEstacion" [class.control-invalid]="formInvalid(ubicacionEstacion)">
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Dpto / Prov / Dist <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <div class="row gx-2">
+                                        <div class="col-sm-4">
+                                          <select class="form-select" formControlName="departamento" #dep
+                                            (change)="onChangeDepartamento(dep.value)"
+                                            [class.control-invalid]="formInvalid(departamento)">
+                                            <option value="">- Seleccionar -</option>
+                                            <option *ngFor="let item of listaDepartamentos;" [value]="item.value">{{ item.text }}</option>
+                                          </select>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                          <select class="form-select" formControlName="provincia" #prov
+                                            (change)="onChangeProvincia(dep.value, prov.value)"
+                                            [class.control-invalid]="formInvalid(provincia)">
+                                            <option value=""> Seleccionar -</option>
+                                            <option *ngFor="let item of listaProvincias;" [value]="item.value">{{ item.text }}</option>
+                                          </select>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                          <select class="form-select" formControlName="distrito"
+                                            [class.control-invalid]="formInvalid(distrito)">
+                                            <option value="">- Seleccionar -</option>
+                                            <option *ngFor="let item of listaDistritos;" [value]="item.value">{{ item.text }}</option>
+                                          </select>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Localidad <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" formControlName="localidad" [class.control-invalid]="formInvalid(localidad)">
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Coord. geográficas (WGS-84) <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <div class="row gx-2">
+                                          <div class="col-sm-4">
+                                            <div class="input-group">
+
+                                              <input type="number" class="form-control" formControlName="coordenadaGeograficaGradosLO" [class.control-invalid]="formInvalid(coordenadaGeograficaGradosLO)">
+
+                                                <span class="input-group-text fw-bold bg-light">°</span>
+
+                                              <input type="number" class="form-control" formControlName="coordenadaGeograficaMinutosLO" [class.control-invalid]="formInvalid(coordenadaGeograficaMinutosLO)">
+
+                                                <span class="input-group-text fw-bold bg-light">′</span>
+
+                                              <input type="number" class="form-control" formControlName="coordenadaGeograficaSegundosLO" [class.control-invalid]="formInvalid(coordenadaGeograficaSegundosLO)">
+
+                                                <span class="input-group-text fw-bold bg-light">″</span>
+
+                                                <label class="input-group-text text-bold bg-light">L.O.</label>
+
+                                            </div>
+                                          </div>
+
+                                          <div class="col-sm-4">
+                                            <div class="input-group">
+
+                                              <input type="number" class="form-control" formControlName="coordenadaGeograficaGradosLS" [class.control-invalid]="formInvalid(coordenadaGeograficaGradosLS)">
+
+                                                <span class="input-group-text fw-bold bg-light">°</span>
+
+                                              <input type="number" class="form-control" formControlName="coordenadaGeograficaMinutosLS" [class.control-invalid]="formInvalid(coordenadaGeograficaMinutosLS)">
+
+                                                <span class="input-group-text fw-bold bg-light">′</span>
+
+                                              <input type="number" class="form-control" formControlName="coordenadaGeograficaSegundosLS" [class.control-invalid]="formInvalid(coordenadaGeograficaSegundosLS)">
+
+                                                <span class="input-group-text fw-bold bg-light">″</span>
+
+                                                <label class="input-group-text text-bold bg-light">L.S.</label>
+
+                                            </div>
+                                          </div>
+
+                                          <div class="col-sm-4">
+                                            <div class="input-group">
+
+                                              <input type="number" class="form-control" formControlName="coordenadaGeograficaAltitud" [class.control-invalid]="formInvalid(coordenadaGeograficaAltitud)">
+
+                                                <label class="input-group-text text-bold bg-light">Altitud (m.s.n.m.)
+                                                  <span class="text-info" triggers="mouseenter:mouseleave" popoverTitle="Información" placement="left"
+                                                    ngbPopover="DEBERÁ SER MEDIDO CON UN ALTÍMETRO.">
+                                                    <i class="fas fa-info-circle"></i>
+                                                  </span>
+                                                </label>
+
+                                            </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Indicativo</label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" formControlName="indicativo" [class.control-invalid]="formInvalid(indicativo)">
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Frecuencia (MHz) / Polarización <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <div class="row gx-2">
+                                        <div class="col-sm-6">
+                                          <div class="input-group">
+
+                                              <span class="input-group-text text-bold bg-light">Tx:</span>
+
+                                            <input type="number" class="form-control" formControlName="frecuenciaTx" [class.control-invalid]="formInvalid(frecuenciaTx)">
+
+                                              <span class="input-group-text text-bold bg-white">Polarización:</span>
+                                              <!-- <span class="input-group-text text-bold bg-light">(V)</span> -->
+
+                                            <input type="text" class="form-control text-uppercase" formControlName="polarizacionTx" maxlength="1"
+                                            [class.control-invalid]="formInvalid(polarizacionTx)">
+
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                          <div class="input-group">
+
+                                              <span class="input-group-text text-bold bg-light">Rx:</span>
+
+                                            <input type="number" class="form-control" formControlName="frecuenciaRx" [class.control-invalid]="formInvalid(frecuenciaRx)">
+
+                                              <span class="input-group-text text-bold bg-light">Polarización:</span>
+                                              <!-- <span class="input-group-text text-bold bg-light">(V)</span> -->
+
+                                            <input type="text" class="form-control text-uppercase" formControlName="polarizacionRx" maxlength="1"
+                                            [class.control-invalid]="formInvalid(polarizacionRx)">
+
+                                          </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Bloque Horario <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" formControlName="bloqueHorario" [class.control-invalid]="formInvalid(bloqueHorario)">
+                                    </div>
+                                  </div>
+
+                                  <div class="mb-3 row mb-2">
+                                    <label class="col-sm-2 col-form-label text-bold">Configuración <span class="text-danger">(*)</span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" formControlName="configuracion" [class.control-invalid]="formInvalid(configuracion)">
+                                    </div>
+                                  </div>
+
+                              </div>
+                          </div>
+                        </ng-container>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>II. EQUIPAMIENTO</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                      <ng-container formGroupName="seccion2">
+                        <div class="row">
+                          <div class="col-12">
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Marca <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="marca" [class.control-invalid]="formInvalid(marca)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Modelo <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="modelo" [class.control-invalid]="formInvalid(modelo)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Rango de Frecuencias (MHz) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="rangoFrecuencia" [class.control-invalid]="formInvalid(rangoFrecuencia)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Potencia (dBm/W) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <div class="row gx-2">
+                                    <div class="col-sm-6">
+                                      <div class="input-group">
+
+                                        <input type="number" class="form-control" formControlName="potenciadBm" [class.control-invalid]="formInvalid(potenciadBm)">
+
+                                          <span class="input-group-text text-bold bg-white">(dBm)</span>
+
+                                      </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                      <div class="input-group">
+
+                                        <input type="number" class="form-control" formControlName="potenciaW" [class.control-invalid]="formInvalid(potenciaW)">
+
+                                          <span class="input-group-text text-bold bg-white">(W)</span>
+
+                                      </div>
+                                    </div>
+                                </div>
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Tipo de Emisión <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="tipoEmision" [class.control-invalid]="formInvalid(tipoEmision)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Capacidad (Mbps) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="number" class="form-control" formControlName="capacidad" [class.control-invalid]="formInvalid(capacidad)">
+                                </div>
+                              </div>
+
+                          </div>
+                        </div>
+                      </ng-container>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-3" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>III. SISTEMA RADIANTE</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                      <ng-container formGroupName="seccion3">
+                        <div class="row">
+                          <div class="col-12">
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Tipo de Antena <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="tipoAntena" [class.control-invalid]="formInvalid(tipoAntena)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Marca <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="marcaSistemaRadiante" [class.control-invalid]="formInvalid(marcaSistemaRadiante)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Modelo <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="modeloSistemaRadiante" [class.control-invalid]="formInvalid(modeloSistemaRadiante)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Ganancia (dBi) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="number" class="form-control" formControlName="ganancia" [class.control-invalid]="formInvalid(ganancia)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Pire (dBm/W) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <div class="row gx-2">
+                                    <div class="col-sm-6">
+                                      <div class="input-group">
+
+                                        <input type="number" class="form-control" formControlName="piredBm" [class.control-invalid]="formInvalid(piredBm)">
+
+                                          <span class="input-group-text text-bold bg-white">(dBm):</span>
+
+                                      </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                      <div class="input-group">
+
+                                        <input type="number" class="form-control" formControlName="pireW" [class.control-invalid]="formInvalid(pireW)">
+
+                                          <span class="input-group-text text-bold bg-white">(W):</span>
+
+                                      </div>
+                                    </div>
+                                </div>
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Altura de Torre (m) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="number" class="form-control" formControlName="alturaTorre" [class.control-invalid]="formInvalid(alturaTorre)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Altura de Edificio (m) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="number" class="form-control" formControlName="alturaEdificio" [class.control-invalid]="formInvalid(alturaEdificio)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Altura Instalada (m) <span class="text-danger">(*)</span>
+                                  <span class="text-info" triggers="mouseenter:mouseleave" popoverTitle="Información" placement="right"
+                                    ngbPopover="ALTURA SOBRE EL SUELO A LA QUE HA SIDO INSTALADA LA ANTENA">
+                                    <i class="fas fa-info-circle"></i>
+                                  </span>
+                                </label>
+                                <div class="col-sm-10">
+                                  <input type="number" class="form-control" formControlName="alturaInstalada" [class.control-invalid]="formInvalid(alturaInstalada)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Distancia de la antena a todo punto accesible por las personas (m) <span class="text-danger">(*)</span>
+                                  <span class="text-info" triggers="mouseenter:mouseleave" popoverTitle="Información" placement="right"
+                                    ngbPopover="DIFERENCIA ENTRE LA ALTURA INSTALADA Y LA ALTURA DEL EDIFICIO">
+                                    <i class="fas fa-info-circle"></i>
+                                  </span>
+                                </label>
+                                <div class="col-sm-10">
+                                  <input type="number" class="form-control" formControlName="distanciaAntena" [class.control-invalid]="formInvalid(distanciaAntena)">
+                                </div>
+                              </div>
+
+                          </div>
+                        </div>
+                      </ng-container>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-4" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>IV. ENLACE</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                      <ng-container formGroupName="seccion4">
+                        <div class="row">
+                          <div class="col-12">
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Estación <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="estacion" [class.control-invalid]="formInvalid(estacion)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Azimut (°) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="number" class="form-control" formControlName="azimut" [class.control-invalid]="formInvalid(azimut)">
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Distancia (Km) <span class="text-danger">(*)</span></label>
+                                <div class="col-sm-10">
+                                  <input type="number" class="form-control" formControlName="distancia" [class.control-invalid]="formInvalid(distancia)">
+                                </div>
+                              </div>
+
+                          </div>
+                        </div>
+                      </ng-container>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-5" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>V. DATOS DE INGENIERO</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                      <ng-container formGroupName="seccion5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-2">
+
+                                  <label class="text-bold mb-1">D.N.I. <span class="text-danger">(*)</span></label>
+                                  <div class="input-group input-group-sm">
+                                      <input #nroDoc type="text" class="form-control" maxlength="8"
+                                          (keypress)="soloNumeros($event); onPressEnterNroDoc($event, nroDoc.value)"
+                                          (input)="onInputNroDoc()"
+                                          formControlName="dni" [class.control-invalid]="formInvalid(dni)">
+                                          <button class="btn btn-outline-secondary" type="button"
+                                              [disabled]="this.dni.invalid || !habilitarBusquedaIngeniero"
+                                              (click)="buscarIngeniero(nroDoc.value)">
+                                              <i class="fas fa-search"></i>
+                                          </button>
+                                  </div>
+
+                                    <!-- <input type="text" class="form-control text-uppercase" formControlName="dni" [class.control-invalid]="formInvalid(dni)"> -->
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="mb-2">
+                                    <label class="text-bold mb-1">Apellidos y nombres <span class="text-danger">(*)</span></label>
+                                    <input type="text" class="form-control text-uppercase" formControlName="nombresApellidos" readonly
+                                    [class.control-invalid]="formInvalid(nombresApellidos)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-2">
+                                    <label class="text-bold mb-1">C.I.P.  N° <span class="text-danger">(*)</span></label>
+                                    <input type="text" class="form-control text-uppercase" formControlName="cip" maxlength="10"
+                                    (keypress)="soloNumeros($event);"
+                                    [class.control-invalid]="formInvalid(cip)">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-2">
+                                    <label class="text-bold mb-1">Teléfono fijo</label>
+                                    <input type="text" class="form-control text-uppercase" formControlName="telefono" maxlength="9"
+                                    (keypress)="soloNumeros($event);"
+                                    [class.control-invalid]="formInvalid(telefono)">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-2">
+                                    <label class="text-bold mb-1">Celular <span class="text-danger">(*)</span></label>
+                                    <input type="text" class="form-control text-uppercase" formControlName="celular" maxlength="9"
+                                    (keypress)="soloNumeros($event);"
+                                    [class.control-invalid]="formInvalid(celular)">
+                                </div>
+                            </div>
+                        </div>
+                      </ng-container>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+            <div class="flex-1 text-end">
+
+              <button *ngIf="dataIdx !== null; else btn_agregar" class="btn btn-success boton-guardar" (click)="agregarAnexo()">
+                <i class="fas fa-pencil-alt"></i> Modificar
+              </button>
+
+              <ng-template #btn_agregar>
+                <button class="btn btn-success boton-guardar" (click)="agregarAnexo()">
+                  <i class="fas fa-plus"></i> Agregar
+                </button>
+              </ng-template>
+
+              <button type="button" class="btn btn-light ms-2" (click)="activeModal.close()">
+                Cancelar
+              </button>
+            </div>
+        </div>
+    </div>
+</div>

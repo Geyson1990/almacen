@@ -1,0 +1,10 @@
+<div class="attach-icon">
+  <button *ngIf="!viewOnly" (click)="fileInput.click()" class="mat-small-icon" type="button">
+    <i class="material-icons">file_present</i>
+  </button>
+  <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
+  <div *ngIf="nombreArchivo">
+    <i class="material-icons download-text" type="button" (click)="download()">download</i>
+    <i *ngIf="!viewOnly" class="material-icons clear-button" type="button" (click)="limpiarArchivo()">clear</i>
+  </div>
+</div>

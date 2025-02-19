@@ -1,0 +1,67 @@
+.lots-coordinates-table{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5REM;
+
+    h4{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--primary-color);
+        color: var(--white-color);
+    }
+
+    .table{
+        overflow-y: auto;
+       
+        max-height: 252px;
+
+        thead{
+            position: sticky;
+            top: 0;
+            height: 40px;
+  
+      
+            text-align: center;
+            z-index: 1; 
+        }
+
+
+   
+        td{
+     
+            height: 25px;
+            text-align: center;
+            border-top: 1px solid #ff6c3e;
+            border-bottom: 1px solid #ff6c3e;
+            padding: 0.75rem 0rem ;
+
+        }
+
+        table{
+            border-collapse: collapse;
+        }
+
+        thead{
+            border-top: 2px solid #ff6c3e;
+            background-color: #f2f2f2;
+        }
+
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+    }
+
+
+    input[type="text"]{
+        width: 90%;
+    }
+ 
+}
+

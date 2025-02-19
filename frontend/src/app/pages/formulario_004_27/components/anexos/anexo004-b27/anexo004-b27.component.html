@@ -1,0 +1,514 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close"
+        (click)="activeModal.close(graboUsuario)">
+
+    </button>
+</div>
+<div class="modal-body anexo">
+    <div class="container-fluid">
+        <form novalidate [formGroup]="formulario">
+            <div class="mt-1 mb-3">
+                <h6 class="mb-0">{{txtTitulo}}</h6>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2, seccion-3, seccion-4, seccion-5">
+
+                <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+
+                        <button ngbAccordionButton>I.
+                            ÁREA DE COBERTURA DEL (DE LOS) SERVICIO(S)</button>
+                    </h2>
+                    <div ngbAccordionCollapse>
+                        <div ngbAccordionBody>
+                            <ng-template>
+
+                                <ng-container [formGroup]="formularioAgregarArea">
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-2">
+                                                <label class="text-bold mb-1">Departamento <span *ngIf=""
+                                                        class="text-danger">(*)</span></label>
+                                                <select class="form-select" formControlName="departamento" #dep
+                                                    (change)="onChangeDepartamento(dep.value)"
+                                                    [class.control-invalid]="formInvalid(Departamento)">
+                                                    <option value="">- Seleccionar -</option>
+                                                    <option *ngFor="let item of listaDepartamentos;"
+                                                        [value]="item.value">{{
+                                                        item.text }}</option>
+                                                </select>
+                                                <!-- <div *ngIf="formulario.get('departamento').hasError('required')"
+                                            class="invalid-feedback">
+                                            Este campo es obligatorio
+                                        </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-2">
+                                                <label class="text-bold mb-1">Provincia <span *ngIf=""
+                                                        class="text-danger">(*)</span></label>
+                                                <select class="form-select" formControlName="provincia" #prov
+                                                    (change)="onChangeProvincia(dep.value, prov.value)"
+                                                    [class.control-invalid]="formInvalid(Provincia)">
+                                                    <option value=""> Seleccionar -</option>
+                                                    <option *ngFor="let item of listaProvincias;" [value]="item.value">
+                                                        {{
+                                                        item.text }}</option>
+                                                </select>
+                                                <!-- <div *ngIf="formulario.get('provincia').hasError('required')"
+                                            class="invalid-feedback">
+                                            Este campo es obligatorio
+                                        </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-2">
+                                                <label class="text-bold mb-1">Distrito <span *ngIf=""
+                                                        class="text-danger">(*)</span></label>
+                                                <select class="form-select" formControlName="distrito" #dist
+                                                    [class.control-invalid]="formInvalid(Distrito)">
+                                                    <option value="">- Seleccionar -</option>
+                                                    <option *ngFor="let item of listaDistritos;" [value]="item.value">{{
+                                                        item.text }}</option>
+                                                </select>
+                                                <!-- <div *ngIf="formulario.get('distrito').hasError('required')"
+                                            class="invalid-feedback">
+                                            Este campo es obligatorio
+                                        </div> -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-auto">
+                                            <div class="mb-3 mb-2 mt-2">
+                                                <label class="text-bold mb-1">&nbsp;&nbsp;</label>
+                                                <button type="button" class="btn btn-primary form-control"
+                                                    (click)="agregarArea()">
+                                                    <i class="fas fa-plus"></i> Agregar
+                                                </button>
+                                                <!-- [disabled]="this.formularioAgregarArea.invalid" -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <div class="card-body table-responsive p-0"
+                                    [class.control-invalid]="formInvalid(ListaAreas)">
+                                    <table class="table text-dark table-bordered m-0" formArrayName="listaAreas">
+                                        <!-- <thead class="text-white" style="background-color: steelblue;"> -->
+                                        <thead class="text-white bg-secondary">
+                                            <tr>
+                                                <th scope="col" class="text-center" style="width: 40px;">N°</th>
+                                                <th scope="col" class="text-center text-nowrap">Departamento</th>
+                                                <th scope="col" class="text-center text-nowrap">Provincia</th>
+                                                <th scope="col" class="text-center text-nowrap">Distrito</th>
+                                                <th scope="col" class="text-center" style="width: 50px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-small">
+                                            <tr *ngFor="let item of ListaAreas.controls; let i = index"
+                                                [formGroupName]="i" class="text-small">
+                                                <td class="text-center py-1 fw-bold">{{ i+1 }}</td>
+                                                <td class="text-center py-1">{{ item.get('departamento').value }}</td>
+                                                <td class="text-center py-1">{{ item.get('provincia').value }}</td>
+                                                <td class="text-center py-1">{{ item.get('distrito').value }}</td>
+                                                <td class="text-center py-1">
+                                                    <button class="btn btn-outline-danger btn-sm"
+                                                        (click)="eliminarArea(i)"><i class="fas fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-auto">
+                                        <label class="check-modalidad my-2">
+                                            <input type="checkbox" class="me-2" formControlName="flagANivelNacional"
+                                                (change)="onChangeFlagANivelNacional()" /> A NIVEL
+                                            NACIONAL
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+                <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+
+                        <button ngbAccordionButton>II. SERVICIO(S)
+                            REQUERIDO(S): (Marcar con una "X")</button>
+                    </h2>
+                    <div ngbAccordionCollapse>
+                        <div ngbAccordionBody>
+                            <ng-template>
+
+                                <div formGroupName="serviciosRequeridos">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2"
+                                                    formControlName="almacenamientoRetransmision" /> Almacenamiento y
+                                                Retransmisión de datos
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2"
+                                                    formControlName="conmutacionDatos" />
+                                                Servicio de Comnmutación de Datos por paquetes (internet)
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="teletexto" />
+                                                Teletexto
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="facsimil" />
+                                                Facsímil
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="teleproceso" />
+                                                Teleproceso
+                                                y Procesamiento de Datos
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="teletex" /> Teletex
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2"
+                                                    formControlName="mensajeriaInterpersonal" />
+                                                Mensajería Interpersonal (Correo Electrónico, EDI, etc.)
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="telealarma" />
+                                                Telealarma
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="videotex" />
+                                                Videotex
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="mensajeriaVoz" />
+                                                Mensajería de Voz
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="telemando" />
+                                                Telemando
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2"
+                                                    formControlName="suministroInformacion" />
+                                                Suministro de Información
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2"
+                                                    formControlName="servicioConsulta" />
+                                                Servicio de Consulta (Serie 0-808)
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="check-modalidad mb-2"
+                                                [class.control-invalid]="formInvalid(formulario.get('serviciosRequeridos'))">
+                                                <input type="checkbox" class="me-2" formControlName="teleaccion" />
+                                                Teleacción
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span *ngIf="formInvalid(ServiciosRequeridos)" class="text-danger text-bold"><i
+                                        class="fas fa-exclamation-circle"></i> Seleccione al menos un servicio</span>
+
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-2 mt-2">
+                                            <label class="text-bold mb-1">BUSCAR CONCESIONARIO<span
+                                                    class="text-danger">(*)</span></label>
+                                            <div class="input-group">
+                                                <input #ruc type="text" class="form-control" maxlength="11"
+                                                    #rucConcesionario placeholder="INGRESE EL R.U.C."
+                                                    (keypress)="soloNumeros($event); onPressEnterRucConcesionario($event, ruc.value)"
+                                                    (input)="onInputRucConcesionario()">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    [disabled]="!habilitarBusquedaConcesionario"
+                                                    (click)="buscarConcesionario(ruc.value)">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-2 mt-2">
+                                            <label class="text-bold mb-1">
+                                                NOMBRE O RAZÓN SOCIAL DEL CONCESIONARIO (En el que se soportará su(s)
+                                                servicios(s) requeridos(s)):
+                                            </label>
+                                            <input *ngIf="listaConcesionarios.length===0; else concesionarios"
+                                                type="text" class="form-control text-uppercase"
+                                                (click)="onClickConcesionario()"
+                                                [class.control-invalid]="listaConcesionarios.length===0 && concesionarioToched"
+                                                readonly>
+                                            <div class="invalid-feedback"> Ingrese al menos un concesionario</div>
+
+                                            <ng-template #concesionarios>
+                                                <div *ngFor="let item of listaConcesionarios; let i = index"
+                                                    class="input-group">
+                                                    <input type="text" class="form-control text-uppercase"
+                                                        [value]="item.ruc +' - '+ item.nombre" disabled>
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        (click)="eliminarConcesionario(i)"><i class="fa"></i></button>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+                <div ngbAccordionItem="seccion-3" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+
+                        <button ngbAccordionButton>III. EQUIPOS A
+                            SER UTILIZADOS</button>
+                    </h2>
+                    <div ngbAccordionCollapse>
+                        <div ngbAccordionBody>
+                            <ng-template>
+
+                                <ng-container [formGroup]="formularioAgregarEquipo">
+                                    <div class="row gx-2">
+                                        <div class="col-md-3">
+                                            <div class="mb-2 mt-2">
+                                                <label class="text-bold mb-1">Nombre del equipo</label>
+                                                <input type="text" class="form-control" formControlName="nombre"
+                                                    maxlength="50" [class.control-invalid]="formInvalid(NombreEquipo)">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-2 mt-2">
+                                                <label class="text-bold mb-1">Marca</label>
+                                                <input type="text" class="form-control" formControlName="marca"
+                                                    maxlength="25" [class.control-invalid]="formInvalid(MarcaEquipo)">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-2 mt-2">
+                                                <label class="text-bold mb-1">Modelo</label>
+                                                <input type="text" class="form-control" formControlName="modelo"
+                                                    maxlength="25" [class.control-invalid]="formInvalid(ModeloEquipo)">
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="mb-2 mt-2">
+                                                <label class="text-bold mb-1">Cantidad</label>
+                                                <input type="number" class="form-control" formControlName="cantidad"
+                                                    [class.control-invalid]="formInvalid(CantidadEquipo)">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-auto">
+                                            <div class="mb-3 mb-2 mt-2">
+                                                <label class="text-bold mb-1">&nbsp;&nbsp;</label>
+                                                <button type="button" class="btn btn-primary form-control"
+                                                    (click)="agregarEquipo()"
+                                                    [disabled]="this.formularioAgregarEquipo.invalid">
+                                                    <i class="fas fa-plus"></i> Agregar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <div class="card-body table-responsive p-0"
+                                    [class.control-invalid]="formInvalid(ListaEquipos)">
+                                    <table class="table text-dark table-bordered m-0" formArrayName="listaEquipos">
+                                        <!-- <thead class="text-white" style="background-color: steelblue;"> -->
+                                        <thead class="text-white bg-secondary">
+                                            <tr>
+                                                <th scope="col" class="text-center" style="width: 40px;">N°</th>
+                                                <th scope="col" class="text-center text-nowrap">Nombre del equipo</th>
+                                                <th scope="col" class="text-center text-nowrap">Marca</th>
+                                                <th scope="col" class="text-center text-nowrap">Modelo</th>
+                                                <th scope="col" class="text-center" style="width: 100px;">Cantidad</th>
+                                                <th scope="col" class="text-center" style="width: 50px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-small">
+                                            <tr *ngFor="let item of ListaEquipos.controls; let i = index"
+                                                [formGroupName]="i" class="text-small">
+                                                <td class="text-center py-1 fw-bold">{{ i+1 }}</td>
+                                                <td class="text-center py-1">{{ item.get('nombre').value }}</td>
+                                                <td class="text-center py-1">{{ item.get('marca').value }}</td>
+                                                <td class="text-center py-1">{{ item.get('modelo').value }}</td>
+                                                <td class="text-center py-1">{{ item.get('cantidad').value }}</td>
+                                                <td class="text-center py-1">
+                                                    <button class="btn btn-outline-danger btn-sm"
+                                                        (click)="eliminarEquipo(i)"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <span *ngIf="formInvalid(ListaEquipos)" class="text-danger text-bold"><i
+                                        class="fas fa-exclamation-circle"></i> Ingrese al menos un equipo</span>
+
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+                <div ngbAccordionItem="seccion-4" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+
+                        <button ngbAccordionButton>IV. DESCRIPCIÓN
+                            DETALLADA DEL (DE LOS) SERVICIO(S): (Se podrá adicionar una hoja, de contar con más
+                            descripción)
+                        </button>
+                    </h2>
+                    <div ngbAccordionCollapse>
+                        <div ngbAccordionBody>
+                            <ng-template>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-2">
+                                            <label class="text-bold mb-1">Descripción</label>
+                                            <textarea type="text" class="form-control text-uppercase"
+                                                formControlName="descripcionServicio" rows="10" maxlength="500"
+                                                [class.control-invalid]="formInvalid(DescripcionServicio)"></textarea>
+                                            <div *ngIf="formulario.get('descripcionServicio').hasError('required')"
+                                                class="invalid-feedback">
+                                                Este campo es obligatorio
+                                            </div>
+                                            <small class="d-block text-end">{{ this.CountCaracteresDescripcionServicio
+                                                }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+                <div ngbAccordionItem="seccion-5" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+
+                        <button ngbAccordionButton>V. DIAGRAMA DE
+                            CONEXIÓN DE RED</button>
+                    </h2>
+                    <div ngbAccordionCollapse>
+                        <div ngbAccordionBody>
+                            <ng-template>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary mb-2"
+                                            (click)="inputFilePdf.click()" [disabled]="diagramaConexionRed">
+                                            Adjuntar PDF
+                                        </button>
+                                        <input type="file" class="d-none" #inputFilePdf accept="application/pdf"
+                                            (change)="onChangeInputPdf($event)">
+
+                                        <div class="mb-2" *ngIf="diagramaConexionRed">
+                                            <div class="input-group mb-0">
+                                                <input type="text" readonly class="form-control"
+                                                    aria-label="Archivo PDF" [value]="diagramaConexionRed.nombre">
+                                                <span class="input-group-text">{{
+                                                    formatBytes(diagramaConexionRed.tamanio)
+                                                    }}</span>
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    style="color: gray;" (click)="verDocumento(diagramaConexionRed)"><i
+                                                        class="fa fa-file-pdf"></i>
+                                                </button>
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    (click)="eliminarPdf(diagramaConexionRed)"><i
+                                                        class="fa"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+            <div class="flex-1">
+                <button type="button" class="btn btn-secondary" [disabled]="id === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i> Visualizar
+                </button>
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success boton-guardar" (click)="guardarAnexo()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="activeModal.close(graboUsuario)">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+[
+    {
+      "codigo": 6055,
+      "tupaId": 0,
+      "codigoTupa": 0,
+      "descripcion": "SOLICITUD SEGÚN FORMULARIO, INDICANDO BAJO DECLARACIÓN JURADA:\r\nA) CONTAR CON CERTIFICADO DE SALUD PARA LICENCIAS DE CONDUCIR, APROBADO Y REGISTRADO EN EL SISTEMA NACIONAL DE CONDUCTORES.\r\nB) CONTAR CON EXAMEN DE CONOCIMIENTOS APROBADO REGISTRADO EN EL SISTEMA NACIONAL DE CONDUCTORES, NO SIENDO EXIGIBLE \r\n PARA LOS CIUDADANOS DE PAÍSES QUE HAYAN CELEBRADO CON EL PERÚ ACUERDOS INTERNACIONALES SOBRE RECONOCIMIENTO RECÍPROCO \r\n Y CANJE DE LICENCIAS DE CONDUCIR.\r\nC) DÍA DE PAGO Y NÚMERO DE CONSTANCIA DE PAGO.\r\n",
+      "estado": null,
+      "tieneAdjunto": false,
+      "tieneFormAnexo": false,
+      "tieneCosto": false,
+      "codigoFormAnexo": " ",
+      "tipoPermiso": " ",
+      "porcentajeUIT": 0
+    },
+    {
+      "codigo": 6056,
+      "tupaId": 0,
+      "codigoTupa": 0,
+      "descripcion": "CERTIFICADO EMITIDO POR LA AUTORIDAD COMPETENTE QUE EXPIDIÓ LA LICENCIA MATERIA DE CANJE O LA OFICINA CONSULAR O EMBAJADA DE\r\nDICHO PAÍS EN EL PERÚ, ACREDITANDO SU AUTENTICIDAD CON LA INDICACIÓN DE LA CLASE DE VEHÍCULOS QUE AUTORIZA A CONDUCIR.\r\n",
+      "estado": null,
+      "tieneAdjunto": false,
+      "tieneFormAnexo": false,
+      "tieneCosto": false,
+      "codigoFormAnexo": " ",
+      "tipoPermiso": " ",
+      "porcentajeUIT": 0
+    }
+  ]

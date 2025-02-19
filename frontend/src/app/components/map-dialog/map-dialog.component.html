@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <h2>{{ title }}</h2>
+  </div>
+  <div class="modal-body mat-typography" style="height: 100vh;">
+    <div *ngIf="isLoading" class="loading-overlay">
+        <div class="loader"></div>
+    </div>
+    <div class="drawer-left" [@slideOutAnimation]="drawerState">
+        <div class="map-dialog-content">
+            <div class="map-options">
+                <lots-map-options />
+            </div>
+            <div class="file-selector">
+                <lots-file-selector [actividad]="vIdTipoActividad" />
+            </div>
+            <div class="coordinates-table">
+                <lots-coordinates-table [coordenadas]="vCoordenadas" [esEdicion]="vEsEdicion"/>
+            </div>
+            <div class="nearby-town">
+                <div class="titles">
+                    <h4> 
+                        <span> Departamento </span>
+                        <span> Provincia </span>
+                        <span> Distrito </span>
+                    </h4>
+                </div>
+                <div class="data">
+                    <span> {{ nearby.departamento }} </span>
+                    <span> {{ nearby.provincia }} </span>
+                    <span> {{ nearby.distrito }} </span>
+                </div>
+            </div>
+  
+            <div class="register">
+                <h4> Registro </h4>
+                <div style="width: 100%;">
+                    <input style="width: 80%;" type="text" placeholder="Descripción" (blur)="capturarValor($event)" [value]="vDescripcionArea" />
+                    <!--  <button> Registrar  </button> -->
+                </div>
+            </div> 
+  
+        </div>  
+    </div>
+    <div class="toogle" [@slideOutAnimation]="toogleState" (click)="toggleDrawer()">
+        <span class="material-symbols-outlined">
+            arrow_left
+        </span>
+    </div>
+    <div class="legend">
+        <lots-legend />
+    </div>
+    <div  class="map" >
+        <lots-map />
+    </div>
+    
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+      Cancel</button>
+    <button type="button" class="mat-small" (click)="save()" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+  </div>
+
+
+<!-- <div class="lots-register-page">
+  
+</div> -->

@@ -1,0 +1,668 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{codigoTupa}}  {{descripcionTupa}}&nbsp;&nbsp;[{{tipoPersonaLogin}}] </h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+    <div class="modal-body">
+            <form [formGroup]='formulario' >
+            <div class="center">
+                <h5>FORMULARIO 003-17&nbsp;&nbsp; {{tituloFormulario}}</h5>
+            </div>
+        
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1" data-toggle="collapse" >
+                <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>I. DATOS SOLICITANTE</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="mb-3 row">
+                            <label for="nombres" class="col-sm-2 col-form-label" *ngIf="datos.tipo_solicitante === 'PN'">Nombres y Apellidos</label>
+                            <label for="nombres" class="col-sm-2 col-form-label" *ngIf="datos.tipo_solicitante === 'PJ'">Razón Social</label>
+                            <div class="col-sm-10"  >
+                                <input type="hidden" class="form-control" formControlName="tipo_solicitante" > 
+                                <input type="text" class="form-control" formControlName="nombres"  [ngClass]="{'is-invalid': form.nombres.errors}" disabled> 
+                                <div class="invalid-feedback" *ngIf="formInvalid('nombres')" >
+                                    <span *ngIf="formulario.get('nombres').hasError('required')">El campo Nombre es requerido</span>
+                                    <span *ngIf="formulario.get('nombres').hasError('minlength')">Nombres: Min {{ formulario.get("nombres").errors?.minlength?.requiredLength}} Caracteres </span>
+                                    <span *ngIf="formulario.get('nombres').hasError('maxlength')">Nombres: Max {{ formulario.get("nombres").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="mb-3 row ">
+                            <label for="direccion" class="col-sm-2 col-form-label">Domicilio Legal</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" formControlName="domicilio"  [ngClass]="{'is-invalid': form.domicilio.errors}" disabled> 
+                                <div class="invalid-feedback" *ngIf="formulario.get('domicilio').errors && formulario.get('domicilio').dirty">
+                                    <span *ngIf="formulario.get('domicilio').hasError('required')">El campo Domicilio es requerido</span>
+                                    <span *ngIf="formulario.get('domicilio').hasError('minlength')">Domicilio: Min {{ formulario.get("domicilio").errors?.minlength?.requiredLength}}  Caracteres </span>
+                                    <span *ngIf="formulario.get('domicilio').hasError('maxlength')">Domicilio: Max {{ formulario.get("domicilio").errors?.maxlength?.requiredLength}}  Caracteres </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Distrito</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" formControlName="distrito" [ngClass]="{'is-invalid': form.distrito.errors}" disabled> 
+                                        <div class="invalid-feedback" *ngIf="formulario.get('distrito').errors && formulario.get('distrito').dirty">
+                                            <span *ngIf="formulario.get('distrito').hasError('required')">El campo distrito es requerido</span>
+                                            <span *ngIf="formulario.get('distrito').hasError('minlength')">distrito: Min {{ formulario.get("distrito").errors?.minlength?.requiredLength}} Caracteres </span>
+                                            <span *ngIf="formulario.get('distrito').hasError('maxlength')">distrito: Max {{ formulario.get("distrito").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-3 row">
+                                    <label class="col-sm-4 col-form-label">Provincia</label>
+                                    <div class="col-sm-8">  
+                                        <input type="text" class="form-control"  formControlName="provincia"   [ngClass]="{'is-invalid': form.provincia.errors}" disabled> 
+                                        <div class="invalid-feedback" *ngIf="formulario.get('provincia').errors && formulario.get('provincia').dirty">
+                                            <span *ngIf="formulario.get('provincia').hasError('required')">El campo provincia es requerido</span>
+                                            <span *ngIf="formulario.get('provincia').hasError('minlength')">provincia: Min {{ formulario.get("provincia").errors?.minlength?.requiredLength}} Caracteres </span>
+                                            <span *ngIf="formulario.get('provincia').hasError('maxlength')">provincia: Max {{ formulario.get("provincia").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-3 row">
+                                    <label for="departamento" class="col-sm-5 col-form-label">Departamento</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control"  formControlName="departamento"  [ngClass]="{'is-invalid': form.departamento.errors}" disabled> 
+                                        <div class="invalid-feedback" *ngIf="formulario.get('departamento').errors && formulario.get('departamento').dirty">
+                                            <span *ngIf="formulario.get('departamento').hasError('required')">El campo departamento es requerido</span>
+                                            <span *ngIf="formulario.get('departamento').hasError('minlength')">departamento: Min {{ formulario.get("departamento").errors?.minlength?.requiredLength}} Caracteres </span>
+                                            <span *ngIf="formulario.get('departamento').hasError('maxlength')">departamento: Max {{ formulario.get("departamento").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <div class="col-sm-5">
+                                <div class="mb-3 row">
+                                    <label for="docIdentidad" class="col-sm-4 col-form-label">Doc Identidad</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-select" formControlName="doc_identidad" disabled>
+                                            
+                                            <option *ngFor="let tipodocumento of tiposDocIdentidad" [value]="tipodocumento.value">{{tipodocumento.text}}</option>
+                                        </select>
+                                    </div>            
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="nro_documento" formControlName="nro_documento"   [ngClass]="{'is-invalid': form.nro_documento.errors}" disabled> 
+                                        <div class="invalid-feedback" *ngIf="formulario.get('nro_documento').errors && formulario.get('nro_documento').dirty">
+                                            <span *ngIf="formulario.get('nro_documento').hasError('required')">El campo Nro Documento es requerido</span>
+                                            <span *ngIf="formulario.get('nro_documento').hasError('minlength')">Nro Documento: Min {{ formulario.get("nro_documento").errors?.minlength?.requiredLength}} Caracteres </span>
+                                            <span *ngIf="formulario.get('nro_documento').hasError('maxlength')">Nro Documento: Max {{ formulario.get("nro_documento").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="mb-3 row">
+                                    <label for="correo" class="col-sm-2 col-form-label campo-obligatorio">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="correo" formControlName="correo"  [ngClass]="{'is-invalid': form.correo.errors}"> 
+                                        <div class="invalid-feedback" *ngIf="formulario.get('correo').errors && formulario.get('correo').dirty">
+                                            <span *ngIf="formulario.get('correo').hasError('required')">El campo email es requerido</span>
+                                            <span *ngIf="formulario.get('correo').hasError('minlength')">Email: Min {{ formulario.get("correo").errors?.minlength?.requiredLength}} Caracteres </span>
+                                            <span *ngIf="formulario.get('correo').hasError('maxlength')">Email: Max {{ formulario.get("correo").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="mb-3 row">
+                                <label class="col-sm-5 col-form-label">Teléfono</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" formControlName="telefono" maxlength="15" [ngClass]="{'is-invalid': form.telefono.errors}"> 
+                                    <div class="invalid-feedback" *ngIf="formulario.get('telefono').errors && formulario.get('telefono').dirty">
+                                        <span *ngIf="formulario.get('telefono').hasError('required')">El campo Teléfono es requerido</span>
+                                        <span *ngIf="formulario.get('telefono').hasError('minlength')">Teléfono: Min {{ formulario.get("telefono").errors?.minlength?.requiredLength}} Caracteres </span>
+                                        <span *ngIf="formulario.get('telefono').hasError('maxlength')">Teléfono: Max {{ formulario.get("telefono").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="mb-3 row">
+                                    <label class="col-sm-5 col-form-label campo-obligatorio">Celular</label>
+                                    <div class="col-sm-7">  
+                                        <input type="text" class="form-control"  formControlName="celular" maxlength="9" [ngClass]="{'is-invalid': form.celular.errors}" > 
+                                        <div class="invalid-feedback" *ngIf="formulario.get('celular').errors && formulario.get('celular').dirty">
+                                            <span *ngIf="formulario.get('celular').hasError('required')">El campo Celular es requerido</span>
+                                            <span *ngIf="formulario.get('celular').hasError('minlength')">Celular: Min {{ formulario.get("celular").errors?.minlength?.requiredLength}} Caracteres </span>
+                                            <span *ngIf="formulario.get('celular').hasError('maxlength')">Celular: Max {{ formulario.get("celular").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <hr>
+                        <div class="mb-3 row">
+                            <div  class="col-sm-10 ">
+                                Solicito que todo acto administrativo derivado del presente procedimiento, se me notifique en el correo electrónico (e-mail) consignado en el presente formulario. (Articulo 20° numeral 20.4 del Texto Único Ordenado de la Ley N° 27444 – Ley del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS)
+                            </div>            
+                            <div class="col-sm-2">
+                                <div class="mb-3 row">
+                                    <ui-switch formControlName="procedimiento_notificacion" disabled></ui-switch>                                    
+                                    <label class="col-form-label">NO/SI</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div *ngIf=" datos.tipo_solicitante === 'PJ'">
+                            <fieldset class="fieldset">
+                                <legend class="legend">Representante</legend> 
+                                
+                                <div class="mb-3 row">
+                                    <div class="col-sm-5">
+                                        <div class="mb-3 row">
+                                            <label for="docIdentidad" class="col-sm-4 col-form-label">Doc Identidad</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-select" (change)="changeTipoDocumento()" formControlName="cod_identidad_representante">
+                                                    <option value=''>Seleccione</option>
+                                                    <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                                                </select>
+
+                                                <!-- <select class="form-select" formControlName="cod_identidad_representante" disabled>
+                                                    <option *ngFor="let tipodocumento of tiposDocIdentidad" [value]="tipodocumento.value">{{tipodocumento.text}}</option>
+                                                </select> -->
+                                            </div>            
+                                            <div class="col-sm-5">
+                                                <div class="input-group">                                                    
+                                                    <!-- <input type="text" class="form-control" (input)="soloNumeros($event)" [maxlength]="8" [readonly]="this.formulario.controls['nro_identidad_representante'].value === ''" formControlName="nro_identidad_representante" [class.control-invalid]="formInvalid('nro_identidad_representante')" disabled/> -->
+                                                    <input type="text" class="form-control text-uppercase" (input)="inputNumeroDocumento($event)" [maxlength]="getMaxLengthNumeroDocumento()" formControlName="nro_identidad_representante">
+                                                        <button class="btn btn-outline-secondary" [disabled]="this.formulario.controls['nro_identidad_representante'].value.trim().length < 8" type="button" (click)="buscarNumeroDocumento()">
+                                                        <i class="fas fa-search"></i>
+                                                        </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="mb-3 row">
+                                            <!-- <label class="col-sm-2 col-form-label">Nombres</label> -->
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control text-uppercase" id="nombre_representante" formControlName="nombre_representante" disabled>                                                 
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control text-uppercase" id="paterno_representante" formControlName="paterno_representante" disabled>                                                 
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control text-uppercase" id="materno_representante" formControlName="materno_representante" disabled>                                                 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <div class="col-sm-3">
+                                        <label for="">Cargo</label>
+                                        <input type="text" class="form-control text-uppercase" formControlName="cargo_representante" disabled >
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <label  class="">Domicilio Representante</label>
+                                        <input type="text" class="form-control text-uppercase" formControlName="domicilio_representante" disabled> 
+                                        <!-- <div class="invalid-feedback" *ngIf="formInvalid('nombres')">
+                                            <span *ngIf="myformulario003.get('nombres').hasError('required')">El campo Nombre es requerido</span>
+                                            <span *ngIf="myformulario003.get('nombres').hasError('minlength')">Nombres: Min {{ myformulario003.get("nombres").errors?.minlength?.requiredLength}} Caracteres </span>
+                                            <span *ngIf="myformulario003.get('nombres').hasError('maxlength')">Nombres: Max {{ myformulario003.get("nombres").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                        </div> -->
+        
+                                    </div>
+                                </div>
+                             </fieldset>
+                             <br>
+                             <hr>
+                             <div class="mb-3 row">
+                                <label  class="col-sm-4 col-form-label">Poder registrado en la ficha/partida</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" formControlName="nro_partida" >                                   
+                                </div>
+                                <label  class="col-sm-2 col-form-label">de la oficina registral </label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control text-uppercase" formControlName="oficina_registral" >                                   
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-2" [disabled]="disabledAcordion" [collapsed]="disabledAcordion">
+            
+                    <h2 ngbAccordionHeader  >
+                        
+                            <button ngbAccordionButton>II. SERVICIO SOLICITADO (Automático)</button>
+                        </h2>
+            
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+            
+                        <div class="mb-3 row">
+                            <label  class="col-sm-10 col-form-label">
+                                DSTT-033 Otorgamiento del certificado de habilitación técnica de terminales terrestres, estaciones de ruta o taller de mantenimiento
+                            </label>            
+                            <div class="col-sm-2">
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" formControlName="check_dstt033" >
+                                    <label class="form-check-label"></label>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label  class="col-sm-10 col-form-label">
+                                DSTT-037 Otorgamiento de autorización para prestar servicio especial de transporte turístico
+                            </label>            
+                            <div class="col-sm-2">
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" formControlName="check_dstt037" >
+                                    <label class="form-check-label"></label>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label  class="col-sm-10 col-form-label">
+                                DSTT-038 Otorgamiento de autorización para prestar servicio especial de transporte de trabajadores
+                            </label>            
+                            <div class="col-sm-2">
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" formControlName="check_dstt038" >
+                                    <label class="form-check-label"></label>
+                                  </div>
+                            </div>
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+            
+                
+
+                <div ngbAccordionItem="seccion-4" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>III. DECLARACIÓN JURADA</button>
+                        </h2>
+            
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="container">
+                            <div class="mt-2 mb-4" *ngIf="activarDeclaracionJurada">
+                                <div class="alert alert-custom">
+                                    <div class="row gx-2">
+                                        <div class="col-md-10">
+                                            <div>
+                                                Declaro bajo juramento que los socios, accionistas o asociados, miembros del directorio o consejo directivo, gerentes, apoderados o representantes legales de la misma, no están incursos en alguno de los impedimentos e incompatibilidades previstos en el
+                                                artículo 4-A de la Ley Nº 27181 – Ley General de Transporte y Tránsito Terrestre incorporado mediante Decreto de Urgencia Nº 019-2020.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <!-- <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="marcadoObligatorio">
+                                                <label class="custom-control-label" for="customSwitch1">NO / SI</label>
+                                            </div> -->
+                                            <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch (change)="onChangeDeclaracionJurada($event)" formControlName="declaracionJurada">
+                                                    
+                                                </ui-switch>
+                                                <label class="col-form-label"> NO/SI </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                Al acceder al sistema TUPA Digital MTC y registrarme como usuario: (i) reconozco que entiendo y acepto los términos
+    y condiciones de éste, (ii) acepto como auténtico y válido cualquier medio de prueba o proceso tecnológico que utilice
+    el MTC para comprobar mi acceso y salida del sistema; y, (iii) me hago responsable por los efectos legales en la
+    gestión del procedimiento administrativo o servicio exclusivo.
+                            </div>
+                            <div class="invisible" class="mb-3 row" *ngIf="datos.autorizada === 'T'">
+                                <div for="autoriza" class="col-sm-10 col-form-label">
+                                    Marque la casilla, si autoriza  o no a otra persona para la presentación  de esta declaración
+                                </div>            
+                                <div class="col-sm-2">
+                                    <div class="d-flex flex-row p-2 flex-row-reverse">
+                                        <div class="custom-control custom-switch flex-1">
+                                            <input type="checkbox" class="custom-control-input" id="autorizada" formControlName="autorizada"  (click)="cambio()">
+                                            <label class="custom-control-label" for="autorizada">NO/SI</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invisible" *ngIf="datos.autorizada === 'T'">
+                                <strong >Persona Presenta declaración</strong>                        
+                                <div class="mb-3 row">
+                                    <div class="col-sm-4">
+                                        <div class="mb-3 row">
+                                            <label for="docIdentidad" class="col-sm-4 col-form-label">DNI</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="dni_autorizada" formControlName="dni_autorizada"   > 
+                                                <!-- <div class="invalid-feedback" *ngIf="myformulario003.get('nro_documento').errors && myformulario003.get('nro_documento').dirty">
+                                                    <span *ngIf="myformulario003.get('nro_documento').hasError('required')">El campo Nro Documento es requerido</span>
+                                                    <span *ngIf="myformulario003.get('nro_documento').hasError('minlength')">Nro Documento: Min {{ myformulario003.get("nro_codumento").errors?.minlength?.requiredLength}} Caracteres </span>
+                                                    <span *ngIf="myformulario003.get('nro_documento').hasError('maxlength')">Nro Documento: Max {{ myformulario003.get("nro_documento").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="mb-3 row">
+                                            <label for="correo" class="col-sm-2 col-form-label">Nombres</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="nombres_autorizada" formControlName="nombres_autorizada"  > 
+                                                <!-- <div class="invalid-feedback" *ngIf="myformulario003.get('nombres_autorizada').errors && myformulario003.get('nombres_autorizada').dirty">
+                                                    <span *ngIf="myformulario003.get('nombres_autorizada').hasError('required')">El campo email es requerido</span>
+                                                    <span *ngIf="myformulario003.get('nombres_autorizada').hasError('minlength')">Email: Min {{ myformulario003.get("correo").errors?.minlength?.requiredLength}} Caracteres </span>
+                                                    <span *ngIf="myformulario003.get('nombres_autorizada').hasError('maxlength')">Email: Max {{ myformulario003.get("correo").errors?.maxlength?.requiredLength}} Caracteres </span>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        
+                            <hr>
+
+                            <div class="text-center texto-bajo-juramento" > DECLARO BAJO JURAMENTO QUE LOS DATOS EXPRESAN LA VERDAD</div>
+                            <div class="col-sm-12 mt-5 d-flex justify-content-center">
+                                <div class="alert alert-custom" role="alert">
+                                        NOTA: En el presente documento electrónico se ha vinculado e identificado al firmante, así como se ha garantizado la autenticación e integridad del mismo a través de la firma electrónica utilizada a través del usuario y clave de ingreso al Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones, la cual tiene la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+         
+            </div>
+        </form>
+    </div>
+ <!--        
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" [destroyOnHide]="false">
+        <li [ngbNavItem]="1">
+        <a ngbNavLink>Formulario 003 - 17</a>
+        <ng-template ngbNavContent>
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+        <a ngbNavLink>Anexo 003-A-17</a>
+        <ng-template ngbNavContent>
+            <app-anexo003-a17></app-anexo003-a17> 
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+        <a ngbNavLink>Anexo 003-C-17</a>
+        <ng-template ngbNavContent>
+            <app-anexo003-c17></app-anexo003-c17>
+        </ng-template>
+    </li>
+
+     <li [ngbNavItem]="4">
+        <a ngbNavLink>Anexo 003-D-17</a>
+        <ng-template ngbNavContent>
+            <app-anexo003-d17></app-anexo003-d17>
+        </ng-template>
+    </li> 
+
+    <li [ngbNavItem]="5">
+        <a ngbNavLink>Anexo 003-F-17</a>
+        <ng-template ngbNavContent>
+            <app-anexo003-f17></app-anexo003-f17>
+        </ng-template>
+    </li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+ -->
+
+<!-- 
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="modal.close('Click para cerrar')">Cerrar</button>
+</div>
+</ng-template>
+
+<ng-template #anexo003a17 let-modal>
+    <div class="modal-header" style="background-color: var(--color-mtc); height: 50px; color: white;">
+      <h5 class="modal-title">Anexo 003 - A17</h5>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        
+      </button>
+    </div>
+    <div class="modal-body">
+        <app-anexo003-a17></app-anexo003-a17>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Click para cerrar')">Cerrar</button>
+    </div>
+</ng-template>
+
+<ng-template #anexo003b17 let-modal>
+    <div class="modal-header" style="background-color: var(--color-mtc); height: 50px; color: white;">
+      <h5 class="modal-title">Anexo 003 - B17</h5>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        
+      </button>
+    </div>
+    <div class="modal-body">
+        <app-anexo003-a17></app-anexo003-a17>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Click para cerrar')">Cerrar</button>
+    </div>
+</ng-template>
+
+<ng-template #anexo003c17 let-modal>
+    <div class="modal-header" style="background-color: var(--color-mtc); height: 50px; color: white;">
+      <h5 class="modal-title">Anexo 003 - C17</h5>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        
+      </button>
+    </div>
+    <div class="modal-body">
+        <app-anexo003-c17></app-anexo003-c17>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Click para cerrar')">Cerrar</button>
+    </div>
+</ng-template>
+
+<ng-template #anexo003d17 let-modal>
+    <div class="modal-header" style="background-color: var(--color-mtc); height: 50px; color: white;">
+      <h5 class="modal-title">Anexo 003 - D17</h5>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        
+      </button>
+    </div>
+    <div class="modal-body">
+        <app-anexo003-d17></app-anexo003-d17>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Click para cerrar')">Cerrar</button>
+    </div>
+</ng-template>
+
+<ng-template #anexo003f17 let-modal>
+    <div class="modal-header" style="background-color: var(--color-mtc); height: 50px; color: white;">
+      <h5 class="modal-title">Anexo 003 - F17</h5>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        
+      </button>
+    </div>
+    <div class="modal-body">
+        <app-anexo003-f17></app-anexo003-f17>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Click para cerrar')">Cerrar</button>
+    </div>
+</ng-template>
+ -->
+
+<!-- 
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h3 >TUPA DSTT {{codigoTupa}}</h3>
+        <p class="lead">
+            <span *ngIf=" codigoTupa === 33">Otorgamiento del certificado de habilitación técnica de terminales terrestres, estaciones de ruta o taller de mantenimiento</span>
+            <span *ngIf=" codigoTupa === 37">Otorgamiento de autorización para prestar servicio especial de transporte turístico</span>
+            <span *ngIf=" codigoTupa === 38">Otorgamiento de autorización para prestar servicio especial de transporte de trabajadores</span>
+        </p>
+
+    </div>
+  </div>
+<br>
+
+<table class="table">
+    <thead class="table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Formulario</th>
+        <th scope="col">Link</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Formulario 003-17</td>
+        <td><button class="btn btn-primary btn-sm" (click)="openXl(content)">Formulario</button></td>
+        <td><span class="badge text-bg-success">Listo</span></td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Anexo 1: 003-A17</td>
+        <td><button class="btn btn-primary btn-sm" (click)="openXl(anexo003a17)">Mostrar</button></td>
+        <td><span class="badge text-bg-warning">Pendiente</span></td>
+      </tr> 
+      <tr>
+        <th scope="row">2</th>
+        <td>Anexo 1: 003-B17</td>
+        <td><button class="btn btn-primary btn-sm" (click)="openXl(anexo003b17)">Mostrar</button></td>
+        <td><span class="badge text-bg-warning">Pendiente</span></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Anexo 2: 003-C17</td>
+        <td><button class="btn btn-primary btn-sm" (click)="openXl(anexo003c17)">Mostrar</button></td>
+        <td><span class="badge text-bg-warning">Pendiente</span></td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td>Anexo 3: 003-D17</td>
+        <td><button class="btn btn-primary btn-sm" (click)="openXl(anexo003d17)">Mostrar</button></td>
+        <td><span class="badge text-bg-warning">Pendiente</span></td>
+      </tr>
+      <tr>
+        <th scope="row">5</th>
+        <td>Anexo 4: 003-F17</td>
+        <td><button class="btn btn-primary btn-sm" (click)="openXl(anexo003f17)">Mostrar</button></td>
+        <td><span class="badge text-bg-warning">Pendiente</span></td>
+      </tr>
+    </tbody>
+  </table>
+<br> 
+
+<div class="progress">
+    <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<br>
+<button type="button" class="btn btn-secondary btn-lg btn-block" disabled>Iniciar Trámite</button>
+
+-->
+
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idFormularioMovimiento === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+                </div>
+            </div>
+
+           <!--  <div class="flex-1">
+                <div class="btn-group" role="group" >
+                    <button type="button" class="btn btn-secondary" [disabled]="idFormularioMovimiento === 0" (click)="descargarPdf2()">
+                    <i class="far fa-eye"></i>
+                    Descargar
+                </button>
+                </div>
+            </div> -->
+
+            <div class="flex-1 text-end">
+
+                <button class="btn btn-success" (click)="guardarFormulario()" [disabled]="this.formulario.invalid ">
+                <i class="far fa-save"></i>
+                {{
+                    (idFormularioMovimiento === 0 ? 'Grabar' : 'Modificar')
+                }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 
+<div class="row mt-3">
+    <div class="col-sm-12  d-flex">
+        <div class="flex-1">
+            <button class="btn btn-secondary" [disabled]="idFormularioMovimiento === 0" (click)="descargarPdf()">
+                <i class="fas fa-cloud-download-alt"></i>
+                Descargar XPDF
+            </button>
+        </div>
+
+        <div class="flex-1 text-end">
+            <button class="btn btn-primary ms-2">
+                <i class="fas fa-signature"></i>
+                Firma Digital
+            </button>
+           
+            
+            <button type="submit" class="btn btn-success ms-2"  (click)="guardarFormulario()">
+                <i class="far fa-save"></i>
+                {{
+                    (idFormularioMovimiento === 0 ? 'Grabar' : 'Modificar')
+                }}
+            </button>
+
+            <button class="btn btn-info ms-2">
+                <i class="fas fa-arrow-right"></i>
+                Siguiente
+            </button>
+        </div>
+    </div>
+</div>
+ -->

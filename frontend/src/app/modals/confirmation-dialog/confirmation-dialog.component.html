@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h2>Confirmación</h2>
+</div>
+<div class="modal-body mat-typography">
+    <div class="mensaje-dialog d-flex flex-row m-0">
+        <div class="col-sm-1 col-md-1 w-5 d-flex justify-content-center align-items-center p-0">
+            <i class="material-icons icon-rojo"> info </i>
+        </div>
+        <div class="col-sm-11 col-md-11 ml-3">
+            <p class="m-0"> {{description}}</p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="mat-small" (click)="closeDialog()"><i class="material-icons">check</i> Ok</button>
+</div>

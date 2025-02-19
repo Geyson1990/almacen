@@ -1,0 +1,462 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{codigoTupa}}  {{descripcionTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+<div class="modal-body anexo">
+
+
+    <form [formGroup]='anexo'>
+        <div class="center">
+            <h5>ANEXO 003-A/17&nbsp;&nbsp;  {{tituloAnexo}}</h5>
+        </div>
+
+
+        <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1" data-toggle="collapse">
+            <div ngbAccordionItem="seccion-1">
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton>I. ÁMBITO
+                            (Otorgamiento)</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="mb-3 row">
+                        <label for="ambitoOperacion" class="col-sm-2 col-form-label">Ámbito de Operación</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="3" formControlName="ambitoOperacion"
+                                [ngClass]="{'is-invalid': form.ambitoOperacion.errors}"></textarea>
+                            <input type="hidden" class="form-control" formControlName="dia" />
+                            <input type="hidden" class="form-control" formControlName="mes" />
+                            <input type="hidden" class="form-control" formControlName="anio" />
+                        </div>
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+            </div>
+            <div ngbAccordionItem="seccion-2">
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>II. VEHÍCULOS
+                            OFERTADOS</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            Relación de vehículos ofertados, marcar con un aspa (X) los que corresponden a Contrato de
+                            Arrendamiento Financiero (C.A.F.) y/o Contrato de Arrendamiento Operativo (C.A.O.):
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-3">
+
+                        <div class="col-sm-5 flex-2 d-flex flex-column">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 campo-obligatorio">Placa de rodaje:</div>
+                                <div class="flex-1">                                    
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-uppercase"
+                                            (input)="changePlacaRodaje()" maxlength="6" formControlName="placaRodaje" 
+                                            [class.control-invalid]="this.anexo.controls['placaRodaje'].value.trim().length > 0 &&  this.anexo.controls['placaRodaje'].value.trim().length != 6 "/>
+                                            <button class="btn btn-outline-secondary"
+                                                type="button" (click)="buscarPlacaRodaje()">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                    </div>
+                                    <div class="invalid-texto-aux" *ngIf="this.anexo.controls['placaRodaje'].value.trim().length > 0 &&  this.anexo.controls['placaRodaje'].value.trim().length != 6 ">
+                                        <span >Ingrese 6 dígitos. Ejemplo: ZM1234</span>
+                                    </div> 
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-3 align-items-center">
+                                <div class="flex-1 ">SOAT:</div>
+                                <div class="flex-2">
+                                    <input type="text" class="form-control" formControlName="soat"  />
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3 align-items-center ">
+                                <div class="flex-1 ">CITV:</div>
+                                <div class="flex-2">
+                                    <input type="text" class="form-control" formControlName="citv"  />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-5  flex-2 d-flex flex-column">                           
+
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1">C.A.F</div>
+                                <div class="d-flex flex-2">
+                                    <ui-switch (change)="onChangeCaf($event)" formControlName="caf"></ui-switch>
+                                    <button class="btn btn-danger btn-sm ms-3 align-self-center"
+                                        *ngIf="visibleButtonCaf" (click)="inputFileCaf.click($event)">
+                                        <i class="fas fa-upload"></i>
+                                        Adjuntar C.A.F.
+                                    </button>
+                                    <input type="file" class="d-none" #inputFileCaf accept="application/pdf"
+                                        (change)="onChangeInputCaf($event)" />
+                                    <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa"
+                                        *ngIf="filePdfCafSeleccionado || filePdfCafPathName"
+                                        (click)="vistaPreviaCaf()"></i>
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3 align-items-center">
+                                <div class="flex-1 ">C.A.O</div>
+                                <div class="d-flex flex-2">
+                                    <ui-switch (change)="onChangeCao($event)" formControlName="cao"></ui-switch>
+                                    <button class="btn btn-danger btn-sm ms-3 align-self-center" 
+                                        *ngIf="visibleButtonCao" (click)="inputFileCao.click($event)">
+                                        <i class="fas fa-upload"></i>
+                                        Adjuntar C.A.O.
+                                    </button>
+                                    <input type="file" class="d-none" #inputFileCao accept="application/pdf" (change)="onChangeInputCao($event)" />
+                                    <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa" 
+                                        *ngIf="filePdfCaoSeleccionado !== null" 
+                                        (click)="vistaPreviaCao()"></i>
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3 align-items-center">
+                                <div class="alert alert-primary" role="alert">
+                                 En caso de <b>Vehículo Propio</b> no es necesario adjuntar contratos C.A.F. y C.A.O.
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2  flex-1">
+                            <button class="btn btn-danger btn-sm flex-1" (click)="agregarFlotaVehicular()">
+                                <div *ngIf="indexEditTabla === -1; else elseBlock">
+                                    <i class="fas fa-plus"></i>
+                                    Agregar
+                                </div>
+                                <ng-template #elseBlock>
+                                    <i class="fas fa-pencil-alt"></i>
+                                    Modificar
+                                </ng-template>
+                            </button>
+
+                            <button *ngIf="indexEditTabla !== -1" class="btn btn-warning btn-sm flex-1 "
+                                (click)="cancelarFlotaVehicular()">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-sm">
+                                <thead class="bg-secondary text-white text-center">
+                                    <th>N°</th>
+                                    <th>Placa de rodaje</th>
+                                    <th>SOAT</th>
+                                    <th>CITV</th>
+                                    <th>C.A.F.</th>
+                                    <th>C.A.O.</th>
+                                    <th>Acciones</th>
+                                </thead>
+                                <tbody *ngIf="listaFlotaVehicular.length > 0; else sinRegistros">
+                                    <tr *ngFor="let item of listaFlotaVehicular; let i = index">
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td class="text-center">{{ item.placaRodaje }}</td>
+                                        <td class="text-center">{{ item.soat }}</td>
+                                        <td class="text-center">{{ item.citv }}</td>
+                                        <td *ngIf="item.fileCaf === null && item.pathNameCaf === null; else pdfcaf">
+                                        </td>
+                                        <ng-template #pdfcaf>
+                                            <td class="text-center">
+                                                <i class="far fa-file-pdf text-danger fa-2x" (click)="verPdfCafGrilla(item)"></i>
+                                            </td>
+                                        </ng-template>
+                                        <td *ngIf="item.fileCao === null && item.pathNameCao === null; else pdfcao">
+                                        </td>
+                                        <ng-template #pdfcao>
+                                            <td class="text-center">
+                                                <i class="far fa-file-pdf text-danger fa-2x" (click)="verPdfCaoGrilla(item)"></i>
+                                            </td>
+                                        </ng-template>
+                                        <td class="text-center">
+                                            <i class="far fa-edit pe-2 text-primary cursor-pointer"
+                                                [class.opacity-icon]="indexEditTabla !== -1" title="Editar"
+                                                (click)="modificarFlotaVehicular(item, i)"></i>
+                                            <i class="far fa-trash-alt ps-2 text-danger cursor-pointer"
+                                                [class.opacity-icon]="indexEditTabla !== -1" title="Eliminar"
+                                                (click)="eliminarFlotaVehicular(item, i)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <ng-template #sinRegistros>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="7" class="text-center text-danger">  No se encontraron registros</td>
+                                        </tr>
+                                    </tbody>
+                                </ng-template>
+
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mt-3">
+                        <div class="col-sm-10">
+                            <span>
+                                <strong>    Croquis de Ruta por usar (Solo servicio comunal de transporte de pasajeros por
+                                carretera) Presentar en hoja anexa.
+                                </strong>
+                            </span>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="file" class="d-none" #inputFileCroquis accept="application/pdf"
+                                (change)="onChangeInputCroquis($event)" />
+                            <button class="btn btn-danger btn-sm" type="button" (click)="inputFileCroquis.click()">
+                                <i class="fas fa-upload"></i>
+                                Adjuntar Croquis
+                            </button>
+
+                            <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa"
+                                *ngIf="filePdfCroquisSeleccionado !== null || filePdfCroquisPathName !== null"
+                                (click)="vistaPreviaPdfCroquis()"></i>
+                        </div>
+                    </div>
+
+
+                </ng-template>
+            </div>
+        </div>
+            </div>
+
+            <div ngbAccordionItem="seccion-3">
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>III. RELACIÓN DE CONDUCTORES {{txt_opcional}}</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            Especificar según los encabezados la relación de conductores (de corresponder de acuerdo al procedimiento)
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+
+                        <div class="col-sm-5 flex-2 d-flex flex-column">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 campo-obligatorio">Número de DNI:</div>
+                                <div class="flex-1">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" (input)="soloNumeros($event)"
+                                            [maxlength]="8" 
+                                            formControlName="nroDni" [class.control-invalid]="this.anexo.controls['nroDni'].value.trim().length > 0 &&  this.anexo.controls['nroDni'].value.trim().length != 8 "/>
+                                            <button class="btn btn-outline-secondary"
+                                                [disabled]="this.anexo.controls['nroDni'].value.trim().length !== 8"
+                                                type="button" (click)="buscarDNI()">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-3 align-items-center">
+                                <div class="flex-1">Nombres:</div>
+                                <div class="flex-2">
+                                    <input type="hidden" class="form-control" formControlName="nombres">
+                                    <input type="hidden" class="form-control" formControlName="apellidoPaterno">
+                                    <input type="hidden" class="form-control" formControlName="apellidoMaterno">
+                                    <input type="text" class="form-control text-uppercase"
+                                        formControlName="nombresApellidos"  />
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3 align-items-center">
+                                <div class="flex-1">Licencia:</div>
+                                <div class="flex-2">
+                                    <input type="text" class="form-control text-uppercase" [maxlength]="25"
+                                        formControlName="nroLicencia" />
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3 align-items-center ">
+                                <div class="flex-1 campo-obligatorio">Edad:</div>
+                                <div class="flex-2">
+                                    <input type="text" class="form-control" (input)="soloNumeros_edad($event)"
+                                        [maxlength]="3" formControlName="edad" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-5  flex-2 d-flex flex-column">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 campo-obligatorio">Categoría Vehícular:</div>
+                                <div class="flex-2">
+                                    <select class="form-select" formControlName="categoria" >
+                                       
+                                            
+                                            <option value="">Seleccione</option>
+                                            <option value="M1" *ngIf="mostrarCategoriaM1">M1</option>
+                                            <option value="M2">M2</option>
+                                            <option value="M3">M3</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3 align-items-center">
+                                <div class="alert alert-primary" role="alert">
+                                 <b>M1:</b>Vehículos de ocho asientos o menos, sin contar el asiento del conductor <br>
+                                 <b>M2:</b>Vehículos de más de ocho asientos, sin contar el asiento del conductor y peso bruto vehicular de 5 toneladas o menos<br >
+                                 <b>M3:</b>Vehículos de más de ocho asientos, sin contar el asiento del conductor y peso bruto vehicular de más de 5 toneladas
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2  flex-1">
+                            <button type="button" class="btn btn-danger col-sm-12" (click)="addConductores();">
+                                <i class="fas fa-plus"></i>
+                                Agregar
+                            </button>
+                        </div>
+                        
+                    </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-sm table-hover">
+                                <thead class="bg-secondary text-white text-center">
+                                    <th>N°</th>
+                                    <th>Nombres y Apellidos</th>
+                                    <th>Número de DNI</th>
+                                    <th>Edad</th>
+                                    <th>Número de Licencia</th>
+                                    <th>Categoría</th>
+                                    <th>Acciones</th>
+                                </thead>
+                                <tbody  *ngIf="listaConductores.length > 0; else sinRegistros1">
+                                    <tr *ngFor="let item of listaConductores; let i = index">
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td>{{ item.nombresApellidos }}</td>
+                                        <td class="text-center">{{ item.nroDni }}</td>
+                                        <td class="text-center">{{ item.edad }}</td>
+                                        <td class="text-center">{{ item.nroLicencia }}</td>
+                                        <td class="text-center">{{item.categoria }}</td>
+                                        <td class="text-center">
+                                            <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" title="Eliminar"
+                                                (click)="eliminarConductor(i)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <ng-template #sinRegistros1>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="7" class="text-center text-danger">  No se encontraron registros</td>
+                                        </tr>
+                                    </tbody>
+                                </ng-template>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-5 d-flex justify-content-center">
+                        <div class="alert alert-custom" role="alert">
+                            <strong>
+                                En el presente documento electrónico se ha vinculado e identificado al firmante, así
+                                como se ha garantizado la autenticación e integridad del mismo a través de la firma
+                                electrónica utilizada a través del usuario y clave de ingreso al Sistema Tupa Digital
+                                del Ministerio de Transportes y Comunicaciones, la cual tiene la misma validez y
+                                eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y
+                                segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </ng-template>
+            </div>
+        </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <!-- <div class="row mt-3">
+    <div class="col-sm-12  d-flex">
+        <div class="flex-1">
+            <button class="btn btn-secondary"  [disabled]="idAnexoMovimiento === 0" (click)="descargarPdf()">
+                <i class="fas fa-cloud-download-alt"></i>
+                Descargar PDF
+            </button>
+        </div>
+
+        <div class="flex-1 text-end">
+            <button class="btn btn-primary">
+            <i class="fas fa-signature"></i>
+            Firma Digital
+        </button>
+        
+        <button type="submit" class="btn btn-success ms-2"  (click)="guardarAnexo()" [disabled]="this.anexo.invalid  || listaFlotaVehicular.length === 0">
+            <i class="far fa-save"></i>
+            {{
+                (idAnexoMovimiento === 0 ? 'Grabar' : 'Modificar')
+            }}
+        </button>
+        <button class="btn btn-primary ms-2">
+            <i class="fas fa-arrow-right"></i>
+            Siguiente
+        </button>
+        </div>
+    </div>
+</div> -->
+
+    </form>
+
+</div>
+
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexoMovimiento === 0"
+                        (click)="descargarPdf()">
+                        <i class="far fa-eye"></i>
+                        Visualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success w-50" (click)="guardarAnexo()" [disabled]="this.anexo.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                    (idAnexoMovimiento === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+
+
+        </div>
+    </div>
+</div>

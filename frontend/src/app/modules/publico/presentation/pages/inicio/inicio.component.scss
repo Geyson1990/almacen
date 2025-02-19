@@ -1,0 +1,250 @@
+/* BUSCADOR */
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: lightgray;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: lightgraygray;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: lightgray;
+}
+.inner-addon {
+  display: flex;
+  position: relative;
+  height: 48px;
+  width: 100%;
+}
+.inner-addon .icon {
+  position: absolute;
+  height: 100%;
+}
+
+.inner-addon .icon i {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 18px;
+  color: #808080;
+}
+
+.left-addon .icon i {
+  left: 5px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.left-addon input {
+  padding-left: 40px;
+  border: 2px solid #666;
+  border-radius: 0.15rem;
+  height: 100%;
+  font-size: 1rem;
+}
+.left-addon input:focus {
+  border-color: #666;
+  box-shadow: 0 0 0 0.05rem #666;
+}
+
+.pad-right-addon {
+  padding-right: 40px;
+}
+
+.icon-right {
+  right: 0px;
+}
+
+.icon-right i {
+  left: 0px !important;
+  top: 0% !important;
+  transform: translateY(0%) !important;
+}
+
+.btn-limpiar {
+  position: relative;
+  padding: 0;
+  margin: 4px;
+}
+
+.list-group-item:hover {
+  background-color: #dae0e5 !important;
+  color: black;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.custom-card > .card-header {
+  padding: 0;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  // background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.accordion:hover {
+  background-color: #ccc;
+}
+.active,
+.active.accordion:hover {
+  background-color: #fff;
+  pointer-events: none;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+.titulo {
+  color: #555555;
+  font-weight: 600;
+}
+
+.header {
+  box-shadow: 0 1px 11px 1px rgb(190 199 211 / 25%);
+  position: sticky;
+  z-index: 40;
+  top: 68px;
+  background-color: #f6f9fc;
+}
+
+.ayuda {
+  position: absolute;
+  visibility: hidden;
+  top: 50px;
+  right: 539px;
+  z-index: 999;
+}
+
+.icon-ayuda {
+  width: auto;
+  height: auto;
+  font-size: 3em;
+  color: #bf0909;
+}
+
+.main-container {
+  // position: absolute;
+  // width: 100%;
+  min-height: 100vh;
+  background: url("/assets/img/inicio/backgroundPortal.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  .body-container {
+    background-color: white;
+    border-bottom-right-radius: 0.25em;
+    border-bottom-left-radius: 0.25em;
+
+    .contenedor-principal {
+      padding-top: 2em;
+      padding-bottom: 5em;
+    }
+  }
+}
+
+.subtitle {
+  color: #bf0909;
+  margin-top: 1.25em;
+  font-weight: 600;
+  font-size: 23px;
+}
+
+.subtitle-underline {
+  border-bottom: 5px solid #bf0909;
+  margin-top: 0.25em;
+  margin-bottom: 1.25em;
+  width: 20px;
+}
+
+.popover-body-ayuda {
+  background: #bf0909;
+  width: 300px;
+  max-width: none;
+}
+
+.popover-body-ayuda .popover-arrow::after {
+  border-bottom-color: #bf0909;
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+  .popover-body-ayuda {
+    width: 200px;
+    left: -80px !important;
+
+    .popover-arrow {
+      left: 90% !important;
+    }
+  }
+}
+
+.btn-login {
+  border: 1px solid #d7d7d7;
+  padding: 0;
+
+  .icon-container {
+    background-color: #fff;
+    height: 60px;
+    width: 50px;
+  }
+
+  .icon {
+    color: #dc3545;
+    height: auto;
+    width: auto;
+    font-size: 25px;
+  }
+
+  .text-container {
+    background-color: #dc3545;
+    color: #fff;
+    font-weight: 600;
+    height: 60px;
+    width: 150px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .btn-login {
+    border: 0;
+    border-radius: 6em;
+
+    .icon-container {
+      background-color: #dc3545;
+      border-radius: 6em;
+      height: 60px;
+      width: 60px;
+    }
+
+    .icon {
+      color: #fff;
+    }
+
+    .text-container {
+      display: none !important;
+    }
+  }
+}

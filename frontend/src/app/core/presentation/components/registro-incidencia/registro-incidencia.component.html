@@ -1,0 +1,127 @@
+<ng-template #modalIncidencia let-modal>
+  <div class="modal-header bg-danger text-white">
+      <h4 class="modal-title" id="modal-basic-title">Registrar incidencia</h4>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      </button>
+  </div>
+  <div class="modal-body">
+      <form [formGroup]="registroIncidenciaFG" (ngSubmit)="submitIncidencia(btnSubmitRegistro)">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label class="control-label">Nombres y Apellidos</label>
+                              <input type="text" formControlName="rinNombresFC" maxlength="240" class="form-control">
+                              <div *ngIf="rinNombresFC.invalid && (rinNombresFC.dirty || rinNombresFC.touched)"
+                                  class="text-danger">
+                                  <div *ngIf="rinNombresFC.errors?.required">
+                                      El campo es obligatorio
+                                  </div>
+                                  <div *ngIf="rinNombresFC.errors?.pattern">
+                                      El campo solo permite caracteres alfabéticos
+                                  </div>
+                                  <div *ngIf="rinNombresFC.errors?.whitespace">
+                                      El campo no debe contener espacios en blanco al inicio ni al final
+                                  </div>
+                                  <div *ngIf="rinNombresFC.errors?.maxlength">
+                                      El campo excede el tamaño permitido
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label class="control-label">Documento (DNI o RUC)</label>
+                              <input formControlName="rinDocIdentidadFC" minlength="8" maxlength="11" appDigitOnly
+                                  class="form-control">
+                              <div *ngIf="rinDocIdentidadFC.invalid && (rinDocIdentidadFC.dirty || rinDocIdentidadFC.touched)"
+                                  class="text-danger">
+                                  <div *ngIf="rinDocIdentidadFC.errors?.required">
+                                      El campo es obligatorio
+                                  </div>
+                                  <div *ngIf="rinDocIdentidadFC.errors?.exactlength">
+                                      El campo debe contener 8 u 11 dígitos
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label class="control-label">Número de celular</label>
+                              <input formControlName="rinCelularFC" maxlength="9" appDigitOnly class="form-control">
+                              <div *ngIf="rinCelularFC.invalid && (rinCelularFC.dirty || rinCelularFC.touched)"
+                                  class="text-danger">
+                                  <div *ngIf="rinCelularFC.errors?.required">
+                                      El campo es obligatorio
+                                  </div>
+                                  <div *ngIf="rinCelularFC.errors?.exactlength">
+                                      El campo debe contener 9 dígitos
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="mb-3">
+                              <label class="control-label">Correo electrónico</label>
+                              <input formControlName="rinEmailFC" maxlength="240" type="email" class="form-control">
+                              <div *ngIf="rinEmailFC.invalid && (rinEmailFC.dirty || rinEmailFC.touched)"
+                                  class="text-danger">
+                                  <div *ngIf="rinEmailFC.errors?.required">
+                                      El campo es obligatorio
+                                  </div>
+                                  <div *ngIf="rinEmailFC.errors?.maxlength">
+                                      El campo excede el tamaño permitido
+                                  </div>
+                                  <div *ngIf="rinEmailFC.errors?.email">
+                                      El correo electrónico no es válido
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="mb-3">
+                      <label class="control-label">Descripción</label>
+                      <textarea formControlName="rinDescripcionFC" rows="3" maxlength="240"
+                          class="form-control"></textarea>
+                      <div *ngIf="rinDescripcionFC.invalid && (rinDescripcionFC.dirty || rinDescripcionFC.touched)"
+                          class="text-danger">
+                          <div *ngIf="rinDescripcionFC.errors?.required">
+                              El campo es obligatorio
+                          </div>
+                          <div *ngIf="rinDescripcionFC.errors?.maxlength">
+                              El campo excede el tamaño permitido
+                          </div>
+                          <div *ngIf="rinDescripcionFC.errors?.whitespace">
+                              El campo no debe contener espacios en blanco al inicio ni al final
+                          </div>
+                      </div>
+                  </div>
+
+                  <app-file-upload [parentForm]="registroIncidenciaFG" formControlName="rinFileAdjuntoFC">
+                      <div *ngIf="rinFileAdjuntoFC.invalid && (rinFileAdjuntoFC.dirty || rinFileAdjuntoFC.touched)"
+                          class="text-danger">
+                          <div *ngIf="rinFileAdjuntoFC.errors?.filesize">
+                              El tamaño del archivo excede el permitido
+                          </div>
+                          <div *ngIf="rinFileAdjuntoFC.errors?.requiredFileType">
+                              El tipo de archivo no es válido
+                          </div>
+                      </div>
+                  </app-file-upload>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button #btnSubmitRegistro [disabled]="registroIncidenciaFG.invalid" type="submit"
+                  class="btn btn-success">
+                  <i class="far fa-send"></i>
+                  Enviar incidencia
+              </button>
+          </div>
+      </form>
+  </div>
+</ng-template>

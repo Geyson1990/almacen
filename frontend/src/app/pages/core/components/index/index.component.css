@@ -1,0 +1,57 @@
+.formatoPrincipal {
+  font-family: "Quattrocento Sans", sans-serif;
+  font-size: 14px;
+  position: relative;
+  clear: both;
+  zoom: 1;
+}
+
+.dataTables_filter {
+  display: none;
+}
+
+.thumbnail:hover {
+  background-color: #bebebe;
+  /*border:3px solid  #e2001a !important;*/
+}
+
+.thumbnail {
+  display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 11px;
+  overflow: hidden;
+  -webkit-transition: border 0.2s ease-in-out;
+  -o-transition: border 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out;
+}
+
+.hsmall {
+  font-weight: 400;
+  line-height: 1;
+  color: #777;
+  font-size: 65%;
+}
+
+.labelclass {
+  font-weight: 700;
+  color: #a94442;
+  font-size: 14px;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.requisito-desc ::ng-deep .ql-editor {
+  padding: 0px;
+  font-size: 13px;
+}
+
+.btn-text {
+  color: inherit; /* Usa el color de texto heredado */
+  text-decoration: none; /* Quita la subrayado */
+}

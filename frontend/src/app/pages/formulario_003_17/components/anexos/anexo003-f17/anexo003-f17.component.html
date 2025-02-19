@@ -1,0 +1,312 @@
+
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{codigoTupa}}  {{descripcionTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+<div class="modal-body anexo">
+
+
+<form [formGroup]='anexo' >
+    <div class="center">
+        <h5>ANEXO 003-F/17&nbsp;&nbsp;  {{tituloAnexo}}</h5>
+    </div>
+
+<div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1">
+    <div ngbAccordionItem="seccion-1" [collapsed]="false">
+        <h2 ngbAccordionHeader >
+            
+                <button ngbAccordionButton>I. DECLARACIÓN JURADA</button>
+            </h2>
+
+        <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+            <div class="mb-3 row">
+                <div class="col-sm-12">
+                    Los suscritos declaramos bajo juramento, cumplir con los requisitos establecidos en los numerales 37.4, 37.5 y 37.7 establecidos en el D.S. 017-2009-MTC.
+                </div>
+            </div>
+
+    
+            <div class="mb-3 row">
+                <div class="col-sm-2">
+                    <select class="form-select" (change)="changeTipoDocumento()" formControlName="tipoDocumento">
+                        <option value=''>Seleccione</option>
+                        <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                    </select>
+                </div>
+                <!-- <label for="dni" class="col-sm-1 col-form-label">DNI</label> -->
+                <div class="col-sm-2">
+                    <div class="input-group">                                                    
+                        <input type="text" class="form-control" (input)="soloNumeros($event)" [maxlength]="getMaxLengthNumeroDocumento()"  formControlName="nroDni" [class.control-invalid]="this.anexo.controls['nroDni'].value.trim().length > 0 &&  this.anexo.controls['nroDni'].value.trim().length <8 " />
+                            <button class="btn btn-outline-secondary" [disabled]="this.anexo.controls['nroDni'].value.trim().length < 8" type="button" (click)="buscarNumeroDocumento()">
+                            <i class="fas fa-search"></i>
+                            </button>
+                        
+                    </div>
+                </div>            
+                <div class="col-sm-4">
+                    <input type="hidden" class="form-control text-uppercase" formControlName="nombres"> 
+                    <input type="hidden" class="form-control text-uppercase" formControlName="apellidoPaterno"> 
+                    <input type="hidden" class="form-control text-uppercase" formControlName="apellidoMaterno"> 
+                    <input type="text" class="form-control text-uppercase" id="nombres" formControlName="nombresApellidos" disabled> 
+                </div>
+
+                <label for="cargo" class="col-sm-1 col-form-label">Cargo</label>
+                <div class="col-sm-2">
+                    <select class="form-select" formControlName="cargo">
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let item of listaCargos" [value]="item.value">{{ item.text }}</option>
+                    </select>
+
+                    <input type="hidden" class="form-control" id="firma" formControlName="firma"> 
+                </div> 
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-danger btn-sm btn-block "  (click)="addSuscritos();" >
+                        <div *ngIf="indexEditTabla === -1; else elseBlock">
+                            <i class="fas fa-plus-circle"></i>
+                            Agregar
+                        </div>
+                        <ng-template #elseBlock>
+                            <i class="fas fa-pencil-alt"></i>
+                            Modificar
+                        </ng-template>
+                    </button>
+                </div> 
+            </div>
+    
+            <div class="mb-3 row">            
+    
+                <div class="col-sm-12">                
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-hover table-sm">
+                                <thead class="bg-secondary text-white text-center">
+                                    <th>N°</th>
+                                    <th>Nombres y Apellidos</th> 
+                                    <th>Cargo</th> 
+                                    <th>Número de DNI</th> 
+                                    <th>Acciones</th> 
+                                </thead>
+                                <tbody  *ngIf="listaSuscritos.length > 0; else sinRegistros">
+                                    <tr *ngFor="let item of listaSuscritos; let i = index">
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td>{{ item.nombresApellidos }}</td>
+                                        <td>{{ item.cargo.descripcion }}</td>                                        
+                                        <td>{{ item.numeroDocumento }}</td>                                        
+                                        <td class="text-center">
+                                            <div *ngIf="validarRegistroDeFormulario(i, item)">
+                                                <i class="far fa-edit pe-2 text-primary cursor-pointer" [class.opacity-icon]="indexEditTabla !== -1" title="Editar" (click)="modificarSuscrito(item, i)"></i>
+                                                <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" [class.opacity-icon]="indexEditTabla !== -1" title="Eliminar" (click)="eliminarSuscrito(item, i)"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <ng-template #sinRegistros>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="5" class="text-center text-danger">  No se encontraron registros</td>
+                                        </tr>
+                                    </tbody>
+                                </ng-template>
+                            </table>
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="col-sm-12">                 
+                    Lo declarado se sujeta a lo señalado en el artículo 34 del Texto Único Ordenado de la Ley Nº 27444, Ley del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS y demás normas pertinentes.
+                </div>
+            </div>
+    
+
+            <div class="col-sm-12 mt-5 d-flex justify-content-center">
+                <div class="alert alert-custom" role="alert">
+                    <strong>
+                        En el presente documento electrónico se ha vinculado e identificado al firmante, así como se ha garantizado la autenticación e integridad del mismo a través de la firma electrónica utilizada a través del usuario y clave de ingreso al Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones, la cual tiene la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales
+                        </strong>
+                  </div>
+                  
+            </div>
+
+
+
+        </ng-template>
+    </div>
+    </div>
+    </div>
+    <div ngbAccordionItem="seccion-2" [collapsed]="false">
+
+        <h2 ngbAccordionHeader>
+            
+                <button ngbAccordionButton>II. DOCUMENTACIÓN QUE SE DEBE ADJUNTAR (Conforme al D.S. Nº 017-2009-MTC (22.04.09))</button>
+            </h2>
+
+        <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+
+            <div class="col-sm-12">
+                
+                <div class="col-sm-12">
+                        <div class="row justify-content-end" *ngIf="visibleButtonDoc">
+                                <div class="col-sm-3 text-end">
+                                    <button class="btn btn-secondary btn-sm align-self-center"
+                                        (click)="inputFileDoc.click($event)">
+                                        <i class="fas fa-upload"></i>
+                                        Adjuntar Documento.
+                                    </button>
+                                    <input type="file" class="d-none" #inputFileDoc accept="application/pdf"
+                                        (change)="onChangeInputDoc($event)" />
+                                    <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa"
+                                        *ngIf="filePdfDocSeleccionado || filePdfDocPathName"
+                                        (click)="vistaPreviaDoc()"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger btn-sm " (click)="agregarDocumento()">
+                                        <i class="fas fa-save"></i>
+                                        Guardar
+                                    </button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button *ngIf="indexEditTabla !== -1" class="btn btn-warning btn-sm "
+                                        (click)="cancelarDocumento()">
+                                        Cancelar
+                                    </button>
+                                </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-sm">
+                                    <thead class="bg-secondary text-white text-center">
+                                        <tr>
+                                            <th >N°</th>
+                                            <th >Documento</th>
+                                            <th class="columna-custom">Archivo PDF</th>
+                                            <th class="columna-custom">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr [class.registro-edit]="indexEditTabla === i"
+                                            *ngFor="let item of listaDocumentos; let i = index">
+                                            <td class="text-center">{{ item.nroOrden}}</td>
+                                            <td>{{ item.descripcion }}</td>
+                                            <td *ngIf="item.file === null && item.pathName === null; else pdfdoc"></td>
+                                            <ng-template #pdfdoc>
+                                                <td class="text-center">
+                                                    <i class="far fa-file-pdf text-danger fa-2x ms-3" (click)="verPdfDocGrilla(item)"></i>
+                                                </td>
+                                            </ng-template>
+                                            <td class="text-center">
+                                                <button type="button" *ngIf="item.file === null && item.pathName === null" class="btn btn-danger btn-sm align-self-center" [class.opacity-icon]="indexEditTabla !== -1"  (click)="modificarDocumento(item, i)"> 
+                                                    <i class="fas fa-upload"></i>
+                                                    Adjuntar
+                                                </button>
+                                                <button type="button" *ngIf="item.file !== null || item.pathName !== null" class="btn btn-secondary btn-sm align-self-center" [class.opacity-icon]="indexEditTabla !== -1" (click)="modificarDocumento(item, i)">
+                                                    <i  class="far fa-edit"></i>                                                    
+                                                </button>
+                                                &nbsp;&nbsp;
+                                                <button type="button" *ngIf="item.file !== null || item.pathName !== null" class="btn btn-danger btn-sm align-self-center" [class.opacity-icon]="indexEditTabla !== -1" (click)="eliminarDocumento(item, i)">
+                                                    <i  class="far fa-trash-alt"></i>                                                    
+                                                </button>
+                                                &nbsp;
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+            </div>
+
+
+
+            <div class="col-sm-12 mt-3">
+                Lima, <span class="campo-resolucion-jurada">{{ this.anexo.controls['dia'].value }}</span> de <span class="campo-resolucion-jurada">{{ this.anexo.controls['mes'].value }}</span> de 20<span class="campo-resolucion-jurada">{{ this.anexo.controls['anio'].value }}</span>
+            </div>
+      
+        </ng-template>
+    </div>
+    </div>
+    </div>
+
+
+
+</div>
+
+
+
+<!-- 
+<div class="row mt-3">
+    <div class="col-sm-12  d-flex">
+        <div class="flex-1">
+            <button class="btn btn-secondary"  [disabled]="idAnexoMovimiento === 0" (click)="descargarPdf()">
+                <i class="fas fa-cloud-download-alt"></i>
+                Descargar PDF
+            </button>
+        </div>
+
+        <div class="flex-1 text-end">
+            <button class="btn btn-primary">
+            <i class="fas fa-signature"></i>
+            Firma Digital
+        </button>
+        <button type="submit" class="btn btn-success ms-2"  (click)="guardarAnexo()" [disabled]="this.anexo.invalid  || listaSuscritos.length === 0">
+            <i class="far fa-save"></i>
+            {{
+                (idAnexoMovimiento === 0 ? 'Grabar' : 'Modificar')
+            }}
+        </button>
+
+            <button class="btn btn-primary ms-2">
+            <i class="fas fa-arrow-right"></i>
+            Siguiente
+        </button>
+        </div>
+    </div>
+</div>
+</form>
+ -->
+
+</form>
+
+</div>
+
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexoMovimiento === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="this.anexo.invalid || listaSuscritos.length === 0">
+                <i class="far fa-save"></i>
+                {{
+                    (idAnexoMovimiento === 0 ? 'Grabar' : 'Modificar')
+                }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>
+

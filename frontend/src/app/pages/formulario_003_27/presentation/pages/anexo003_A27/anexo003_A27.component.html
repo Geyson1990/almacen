@@ -1,0 +1,288 @@
+<div class="modal-header anexo bg-danger text-white">
+  <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+
+  </button>
+</div>
+<div class="modal-body anexo">
+  <div class="container mt-2 mb-3">
+    <form [formGroup]='anexoFG'>
+      <div class="center">
+        <h6>{{txtTitulo}}</h6>
+      </div>
+      <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1,seccion-2,seccion-3,seccion-4,seccion-5">
+
+
+        <div ngbAccordionItem="seccion-1" *ngIf="habilitarSeccion1" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>I. DATOS DE LA OFICINA PRINCIPAL </button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+
+                <div class="row" formGroupName="d_Seccion1">
+
+                  <div class="col-md-12">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">RAZÓN SOCIAL</label>
+                      <input type="text" formControlName="d_s1_razon_social" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">DOMICILIO EN DONDE SE OPERARÀ EL SERVICIO POSTAL (AVENIDA / CALLE /
+                        JIRON / PASAJE / N° / DEPARTAMENTO / MANZANA / LOTE / URBANIZACIÓN)
+                      </label>
+                      <input type="text" formControlName="d_s1_direccion" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div ngbAccordionItem="seccion-2" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>II. DATOS DE LA CONCESIÒN Y/O MODIFICACIÓN</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+
+                <div class="row" formGroupName="d_Seccion2">
+
+                  <div class="col-md-12">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">DESCRIPCIÓN DEL ÁMBITO GEOGRÁFICO (UBICACIÓN DE PUNTOS DE ATENCIÓN U
+                        OFICINAS)</label>
+                      <textarea class="form-control" formControlName="d_s2_desc_ambito_geo"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">TIPO DE SERVICIO A PRESTAR Y BREVE DESCRIPCIÒN DE LOS MISMOS</label>
+                      <textarea class="form-control" formControlName="d_s2_desc_tipo_servicio_prestar"></textarea>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">DESCRIPCIÓN DE LA INFRAESTRUCTURA Y EQUIPO CON QUE CUENTA</label>
+                      <textarea class="form-control" formControlName="d_s2_desc_infraesctructura"></textarea>
+                    </div>
+                  </div>
+                  <div class="row col-md-12">
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">VIENE PRESTANDO EL SERVICIO POSTAL</label>
+                        <select class="form-select" formControlName="d_s2_servicio_postal"
+                          (change)="onChangeServicioPostal()">
+                          <option value=''>Seleccione</option>
+                          <option *ngFor="let item of listaEsBienPrestadoPostal" [value]="item.id">{{ item.nombre }}
+                          </option>
+                        </select>
+                        <div
+                          *ngIf="d_s2_servicio_postal.invalid && (d_s2_servicio_postal.dirty || d_s2_servicio_postal.touched)"
+                          class="text-danger">
+                          <div *ngIf="d_s2_servicio_postal.errors?.required">
+                            El campo es obligatorio
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">FECHA INICIO </label>
+                        <input type="date" formControlName="d_s2_fecha_inicio" class="form-control text-uppercase">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">ULTIMA AUTORIZACIÓN - Nro (RD) </label>
+                        <input type="text" formControlName="d_s2_nro_rd" class="form-control text-uppercase">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">ULTIMA AUTORIZACIÓN - Fecha </label>
+                        <input type="date" formControlName="d_s2_fecha_ultima_autoriza"
+                          class="form-control text-uppercase">
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row col-md-12">
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">VIENE PRESTANDO EL SERVICIO DE TRANSPORTE DE PERSONAS Y
+                          MERCANCIAS</label>
+
+                        <select class="form-select" formControlName="d_s2_prestado_servicio_transporte"
+                          (change)="onChangeServicioTransporte()">
+                          <option value=''>Seleccione</option>
+                          <option *ngFor="let item of listaEsBienPrestadoTransporte" [value]="item.id">{{ item.nombre }}
+                          </option>
+                        </select>
+                        <div
+                          *ngIf="d_s2_prestado_servicio_transporte.invalid && (d_s2_prestado_servicio_transporte.dirty || d_s2_prestado_servicio_transporte.touched)"
+                          class="text-danger">
+                          <div *ngIf="d_s2_prestado_servicio_transporte.errors?.required">
+                            El campo es obligatorio
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">INDICAR NÙMERO DE LA RESOLUCIÒN DE AUTORIZACIÒN</label>
+                        <input type="text" formControlName="d_s2_nro_reso_autoriza" class="form-control text-uppercase">
+
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1 mt-3">FECHA DE LA RESOLUCIÓN DE AUTORIZACIÓN</label>
+                        <input type="date" formControlName="d_s2_fecha_resolucion_ultima_autoriza"
+                          class="form-control text-uppercase">
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row col-md-12">
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">CARTA FIANZA EMITIDA POR: </label>
+                        <input type="text" formControlName="d_s2_entidad_emite_carta_fianza"
+                          class="form-control text-uppercase">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">MONTO CARTA FIANZA </label>
+                        <input type="number" formControlName="d_s2_monto_carta_fianza"
+                          class="form-control text-uppercase">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="mb-2">
+                        <label class="text-bold mb-1">FECHA VENCIMIENTO DE CARTA FIANZA </label>
+                        <input type="date" formControlName="d_s2_fecha_vence_carta_fianza"
+                          class="form-control text-uppercase">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <div ngbAccordionItem="seccion-5" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>III. DECLARACION
+              JURADA</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div formGroupName="a_Seccion5FG">
+                  <div class="mt-2 mb-4 ng-star-inserted" *ngIf="a_s5_declaracion1FC.enabled">
+                    <div class="alert alert-custom">
+                      <div _ngcontent-ehx-c118="" class="row gx-2" style="align-items: center;">
+                        <div _ngcontent-ehx-c118="" class="col">
+                          <div _ngcontent-ehx-c118=""> 1 Toda la información proporcionada es veraz,
+                            así como los documentos presentados son auténticos, en caso contrario,
+                            me someto al procedimiento y a las sanciones previstas en la Ley N°
+                            27444, Ley del Procedimiento Administrativo General y/o normas
+                            complementarias.
+                          </div>
+                        </div>
+                        <div _ngcontent-ehx-c118="" class="col-auto">
+                          <div _ngcontent-ehx-c118="" class="d-flex flex-row p-2 ms-4">
+                            <ui-switch formControlName="a_s5_declaracion1FC" (change)="cambio()"
+                              class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="alert alert-active">
+                    <span style="text-align: justify; display: block;">
+                      NOTA: En el presente documento electrónico se ha vinculado e identificado al
+                      firmante, así como se ha garantizado la autenticación e integridad del mismo a
+                      través de la firma electrónica utilizada atraves del usuario y clave de ingreso al
+                      Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones , la cual tiene
+                      la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el
+                      artículo primero y segundo de la Ley N° 27269 - Ley de Firmas y Certificados
+                      Digitales y lo establecido en el inciso c) del numeral 47.1 del Art 47 del
+                      Reglamento de la Ley de Gobierno Digital, aprobado mediante Decreto Supremo
+                      029-2021-PCM.
+                    </span>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer anexo">
+  <div class="row">
+    <div class="col-lg-12 d-flex">
+      <div class="flex-1">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+            <i class="far fa-eye"></i>
+            Visualizar
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 text-end">
+        <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="anexoFG.invalid">
+          <i class="far fa-save"></i>
+          {{
+          (idAnexo === 0 ? 'Grabar' : 'Modificar')
+          }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

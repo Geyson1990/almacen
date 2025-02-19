@@ -1,0 +1,18 @@
+.check-modalidad {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.check-modalidad > input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+  margin-right: 0.2rem;
+}
+
+.opcion-encuesta{
+    display: inline-flex;
+    margin: 0 auto;
+    margin-left: 0.6rem;
+}

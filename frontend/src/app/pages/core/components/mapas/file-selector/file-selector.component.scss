@@ -1,0 +1,28 @@
+.lots-file-selector{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    h4{
+        background-color: var(--primary-color);
+        color: var(--white-color);
+    }
+    
+
+    .activity{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+
+    }
+
+    .file{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}

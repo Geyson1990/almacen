@@ -1,0 +1,36 @@
+
+<div class="lots-coordinates-table">
+
+    <h4> COORDENADAS 
+        <span class="material-symbols-outlined"
+            (click) = "addInputs()"
+        >
+            add
+        </span>
+        <span class="material-symbols-outlined"
+            (click) = "removeInputs()"
+        >
+            remove
+        </span>
+    </h4>
+    <div class="table">
+        <table>
+            <thead>
+                <tr> 
+                    <th> Nro </th>
+                    <th> Latitud  </th>
+                    <th> Longitud </th>
+                </tr> 
+            </thead>
+            <tbody>
+                <tr *ngFor="let coordenada of countArrayInputs; let i = index">
+                    <td> {{i + 1}} </td>
+                    <td> <input type="text" [id]="'input' + (2 * i + 1)" #input /> </td>
+                    <!-- <td> <input type="text" [id]="'input' + (2 * i + 2)"  (keyup.enter)="setCoordinate('input' + (2 * i + 1), 'input' + (2 * i + 2))" #input  /> </td> -->
+                    <td> <input type="text" [id]="'input' + (2 * i + 2)"  (blur)="setCoordinate('input' + (2 * i + 1), 'input' + (2 * i + 2))" #input  /> </td>
+                    <td (click)="deleteRow(i)" *ngIf="i > 2"> <span class="material-symbols-outlined"> delete </span> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

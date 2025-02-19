@@ -1,0 +1,257 @@
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
+import { NgbAccordionDirective , NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  ProcedimientoModel,
+  TupaNota,
+} from 'src/app/core/models/Tramite/ProcedimientoModel';
+import { RequisitoModel } from 'src/app/core/models/Tramite/RequisitoModel';
+import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
+import { TramiteService } from 'src/app/core/services/tramite/tramite.service';
+import { RelacionTupasService } from 'src/app/core/services/servicios/relacion-tupas.service';
+import { TipoSolicitudModel } from 'src/app/core/models/TipoSolicitudModel';
+import * as _ from 'lodash';
+import { Materia } from '../../../domain';
+import { MateriaUseCase } from '../../../application/usecases';
+import { VisorPdfArchivosService } from 'src/app/core/services/tramite/visor-pdf-archivos.service';
+import { VistaPdfComponent } from 'src/app/shared/components/vista-pdf/vista-pdf.component';
+
+@Component({
+  selector: 'app-inicio',
+  templateUrl: './inicio.component.html',
+  styleUrls: ['./inicio.component.scss'],
+})
+export class InicioComponent implements OnInit {
+  public isCollapsed = true;
+  public navbarCollapsed = false;
+  Object = Object;
+  listaMaterias: Array<Materia>;
+  listaTupas: ProcedimientoModel[] = [];
+  // listaTupasAgrupado: {[index:string]: ProcedimientoModel[]} = null;
+  listaTupasAgrupado: Array<{ materia: string; lista: ProcedimientoModel[] }> =
+    [];
+  listaSize = 1;
+  page = 1;
+  pageSize = 10;
+
+  filtrarTexto: string = '';
+  idMateria: number;
+
+  detalle_tupa_temp: Array<{
+    idTupa: number;
+    requisitos: RequisitoModel[];
+    tipoSolicitud: TipoSolicitudModel[];
+    tipoSolicitudSelected: TipoSolicitudModel | null;
+    tupaNotas: TupaNota[];
+  }> = [];
+
+  codTipoSolicitud: number;
+  requisitosTemp: RequisitoModel[];
+  plazoAtencionTemp: number;
+  tipoEvaluacionTemp: string;
+
+  @ViewChildren('el', { read: ElementRef }) el: QueryList<ElementRef>;
+
+  constructor(
+    private readonly funcionesMtcService: FuncionesMtcService,
+    private readonly relacionTupasService: RelacionTupasService,
+    private readonly materiaUseCase: MateriaUseCase,
+    private readonly visorPdfArchivosService: VisorPdfArchivosService,
+    private modalService: NgbModal
+  ) {
+    this.materiaUseCase.listar().subscribe((data) => {
+      this.listaMaterias = data;
+    });
+  }
+
+  ngOnInit() {
+    this.cargarLista();
+  }
+
+  toggleHelper(i: number) {
+    this.el.toArray()[i].nativeElement.classList.toggle('active');
+    const panel = this.el.toArray()[i].nativeElement.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+  }
+
+  mostrarDetalle(idxGroup: number, idx: number, idTupa: number) {
+    const listaRequisitos = this.detalle_tupa_temp.find(
+      (x) => x.idTupa == idTupa
+    );
+    console.log('listaRequisotis', listaRequisitos);
+    if (listaRequisitos) {
+      // this.listaTupasAgrupado[idxGroup].lista[idx].requisitos = listaRequisitos
+    } else {
+      this.relacionTupasService.obtenerDatosTupa(idTupa).subscribe(
+        (response: ProcedimientoModel) => {
+          this.listaTupasAgrupado[idxGroup].lista[idx].requisitos =
+            response.requisitos as RequisitoModel[];
+          this.listaTupasAgrupado[idxGroup].lista[idx].tupaNotas =
+            response.tupaNotas;
+          this.listaTupasAgrupado[idxGroup].lista[idx].tipoSolicitud =
+            response.tipoSolicitud as TipoSolicitudModel[];
+
+          this.detalle_tupa_temp.push({
+            idTupa: idTupa,
+            requisitos: response.requisitos,
+            tipoSolicitud: response.tipoSolicitud as TipoSolicitudModel[],
+            tupaNotas: response.tupaNotas,
+            tipoSolicitudSelected:
+              response.tipoSolicitud?.length > 0
+                ? (response.tipoSolicitud as TipoSolicitudModel[])[0]
+                : null,
+          });
+        },
+        (error) => {
+          this.funcionesMtcService.mensajeError(
+            'No se pudo cargar los procedimientos'
+          );
+        }
+      );
+    }
+    const indexButton = this.listaTupas.findIndex((x) => x.id == idTupa);
+    console.log('indexButton', indexButton);
+    this.el.toArray()[indexButton].nativeElement.classList.toggle('active');
+    const panel = this.el.toArray()[idx].nativeElement.nextElementSibling;
+    panel.style.maxHeight = '100%';
+  }
+
+  ocultarDetalle(idTupa: number) {
+    console.log('idTupa', idTupa);
+    const indexButton = this.listaTupas.findIndex((x) => x.id == idTupa);
+    console.log('indexButton', indexButton);
+    this.el.toArray()[indexButton].nativeElement.classList.toggle('active');
+    const panel =
+      this.el.toArray()[indexButton].nativeElement.nextElementSibling;
+    panel.style.maxHeight = null;
+  }
+
+  cargarLista() {
+    const buscar = this.filtrarTexto;
+    const idMateria = this.idMateria;
+
+    this.relacionTupasService
+      .buscarTupasPorFiltros(idMateria, '', null, null, buscar)
+      .subscribe(
+        (resp: ProcedimientoModel[]) => {
+          this.listaTupas = resp;
+          this.listaSize = resp.length;
+
+          // this.listaTupasAgrupado = _.groupBy(resp, proc => proc.materia);
+          this.listaTupasAgrupado = _.chain(resp)
+            .groupBy('materia')
+            .map((value, key) => ({ materia: key, lista: value }))
+            .value();
+          this.detalle_tupa_temp = [];
+          // console.log("this.listaTupasAgrupado )> ",  this.listaTupasAgrupado)
+          console.log('this.listaTupasAgrupado )> ', this.listaTupasAgrupado);
+        },
+        (error) => {
+          this.funcionesMtcService.mensajeError(
+            'No se pudo cargar los procedimientos'
+          );
+        }
+      );
+  }
+
+  onKeyPress(event: any) {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode === 13) this.cargarLista();
+  }
+
+  onChangeTipoSolicitud(
+    idProc: number,
+    codigoSeleccionado: number,
+    tiposSolicitud: TipoSolicitudModel[]
+  ) {
+    console.log('onChangeTipoSolicitud', idProc);
+    console.log('onChangeTipoSolicitud', codigoSeleccionado);
+    console.log('onChangeTipoSolicitud', tiposSolicitud);
+    this.detalle_tupa_temp.find(
+      (x) => x.idTupa == idProc
+    ).tipoSolicitudSelected = tiposSolicitud.find(
+      (x) => x.codigo == codigoSeleccionado
+    );
+    console.log(
+      'selected ====',
+      this.detalle_tupa_temp.find((x) => x.idTupa == idProc)
+        .tipoSolicitudSelected
+    );
+  }
+  // DETALLE
+  // ===============================================================================================
+
+  getRequisitos(idProc: number): any {
+    // console.log(tiposSolicitud)
+    // if(tipoSolicitudSeleccionado){
+    //   if(tiposSolicitud && tiposSolicitud.length > 0){
+    //     return tiposSolicitud.find(x => x.codigo == tipoSolicitudSeleccionado).requisitos
+    //   } else{
+    //     return this.listaTupas.find(x => x.id == idProc).requisitos
+    //   }
+    // }else{
+    //   return this.listaTupas.find(x => x.id == idProc).requisitos
+    // }
+    const proced = this.detalle_tupa_temp.find((x) => x.idTupa == idProc);
+
+    if (proced && proced?.tipoSolicitudSelected !== null) {
+      return proced?.tipoSolicitudSelected.requisitos;
+    } else {
+      return proced?.requisitos;
+    }
+  }
+
+  getPersonaTexto(tiposPersona: any): string {
+    const TIPO_PERSONA = [
+      { cod: '00001', desc: 'PERSONA NATURAL' },
+      { cod: '00002', desc: 'PERSONA JURIDICA' },
+      { cod: '00003', desc: 'PERSONA NATURAL JURIDICA' },
+      { cod: '00004', desc: 'PERSONA EXTRANJERA' },
+      { cod: '00005', desc: 'PERSONA NATURAL CON RUC' },
+      { cod: '00006', desc: 'PERSONA JURIDICA O PERSONA NATURAL CON RUC' },
+    ];
+    let newArray = [];
+    const lista = tiposPersona.split(',');
+    lista.forEach((element) => {
+      newArray.push(TIPO_PERSONA.find((x) => x.cod == element)?.desc);
+    });
+
+    return newArray.join(', ');
+  }
+
+  verDocumento(uriArchivo: string, nombreArchivo: string = '') {
+    this.funcionesMtcService.mostrarCargando();
+
+    this.visorPdfArchivosService.get(uriArchivo).subscribe(
+      (file: Blob) => {
+        this.funcionesMtcService.ocultarCargando();
+
+        const modalRef = this.modalService.open(VistaPdfComponent, {
+          size: 'xl',
+          scrollable: true,
+        });
+        const urlPdf = URL.createObjectURL(file);
+        modalRef.componentInstance.pdfUrl = urlPdf;
+        modalRef.componentInstance.titleModal =
+          nombreArchivo != '' ? nombreArchivo : 'Vista Previa';
+      },
+      (error) => {
+        this.funcionesMtcService
+          .ocultarCargando()
+          .mensajeError('Problemas para descargar Pdf');
+      }
+    );
+
+    return;
+  }
+}

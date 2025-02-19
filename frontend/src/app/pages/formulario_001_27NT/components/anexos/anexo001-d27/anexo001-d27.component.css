@@ -1,0 +1,29 @@
+
+.custom-header::after {
+    content: none;
+}
+
+.lista-representantes div.card-header {
+    /* background-color: #e6e6e6; */
+    background-color: #f8f9fa;
+}
+
+.justify-content-between {
+    display: flex;
+    justify-content: space-between!important;
+    align-items: center;
+}
+
+.boton-guardar {
+    width: 115px;
+}
+
+.text-bold {
+    font-weight: 600 !important;
+}
+
+.alert-custom {
+    color: #717171;
+    background-color: #e6e6e6;
+    border-color: #9c9c9c;
+}

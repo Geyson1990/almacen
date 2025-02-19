@@ -1,0 +1,164 @@
+<div [formGroup]="parentForm">
+  <div [ngClass]="{ 'mb-3': !horizontal }">
+    <div [ngClass]="{ 'row gx-2': horizontal }">
+      <label
+        [ngClass]="{
+          'control-label': !horizontal,
+          'col-form-label': horizontal
+        }"
+        *ngIf="label"
+        [for]="'inputControl-' + inputUUID"
+        >{{ label }}{{ horizontal ? ": " : " " }}
+        <span class="text-danger" *ngIf="isRequired()">(*)</span>
+      </label>
+      <div
+        [ngClass]="{
+          col: horizontal,
+          inpGroupSize: horizontal && inputGroup,
+          inpSize: horizontal && !inputGroup
+        }"
+      >
+        <div [ngClass]="{ 'input-group': inputGroup }">
+          <ng-container *ngIf="!customPrepend; else elsePrependTemplate">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              *ngIf="btnPrepend"
+              [disabled]="disableBtnPrepend || inputFormControl.disabled"
+              (click)="onClickButtonPrepend($event)"
+            >
+              <i class="fas" [ngClass]="iconBtnPrepend"></i>{{ textBtnPrepend }}
+            </button>
+          </ng-container>
+          <ng-template #elsePrependTemplate>
+            <ng-content select="[slot=customPrepend]"></ng-content>
+          </ng-template>
+
+          <ng-container *ngIf="!textArea; else elseTextAreaTemplate">
+            <ng-container
+              *ngIf="readOnly || inputFormControl.disabled; else elseTemplate"
+            >
+              <input
+                class="form-control"
+                [id]="'inputControl-' + inputUUID"
+                [placeholder]="placeHolder"
+                [readonly]="readOnly"
+                [disabled]="inputFormControl.disabled"
+                [class.control-invalid]="
+                  inputFormControl.invalid &&
+                  (inputFormControl.dirty || inputFormControl.touched)
+                "
+                [value]="inputFormControl.value"
+                [maxlength]="maxLength"
+              />
+            </ng-container>
+            <ng-template #elseTemplate>
+              <input
+                class="form-control"
+                [id]="'inputControl-' + inputUUID"
+                [formControlName]="inputFormControlName"
+                [placeholder]="placeHolder"
+                [class.control-invalid]="
+                  inputFormControl.invalid &&
+                  (inputFormControl.dirty || inputFormControl.touched)
+                "
+                (input)="onInputEvent($event)"
+                [maxlength]="maxLength"
+              />
+            </ng-template>
+          </ng-container>
+          <ng-template #elseTextAreaTemplate>
+            <ng-container
+              *ngIf="
+                readOnly || inputFormControl.disabled;
+                else elseDisabledTextAreaTemplate
+              "
+            >
+              <textarea
+                class="form-control"
+                [id]="'inputControl-' + inputUUID"
+                [placeholder]="placeHolder"
+                [readonly]="readOnly"
+                [disabled]="inputFormControl.disabled"
+                [class.control-invalid]="
+                  inputFormControl.invalid &&
+                  (inputFormControl.dirty || inputFormControl.touched)
+                "
+                [value]="inputFormControl.value"
+                [maxlength]="maxLength"
+              ></textarea>
+            </ng-container>
+            <ng-template #elseDisabledTextAreaTemplate>
+              <textarea
+                class="form-control"
+                [id]="'inputControl-' + inputUUID"
+                [formControlName]="inputFormControlName"
+                [placeholder]="placeHolder"
+                [class.control-invalid]="
+                  inputFormControl.invalid &&
+                  (inputFormControl.dirty || inputFormControl.touched)
+                "
+                (input)="onInputEvent($event)"
+                [maxlength]="maxLength"
+              ></textarea>
+            </ng-template>
+          </ng-template>
+
+          <ng-container *ngIf="!customAppend; else elseAppendTemplate">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              *ngIf="btnAppend"
+              [disabled]="disableBtnAppend || inputFormControl.disabled"
+              (click)="onClickButtonAppend($event)"
+            >
+              <i class="fas" [ngClass]="iconBtnAppend"></i>{{ textBtnAppend }}
+            </button>
+          </ng-container>
+          <ng-template #elseAppendTemplate>
+            <ng-content select="[slot=customAppend]"></ng-content>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        inputFormControl.invalid &&
+        (inputFormControl.dirty || inputFormControl.touched)
+      "
+      class="text-danger"
+    >
+      <div *ngIf="inputFormControl.errors?.required">
+        El campo es obligatorio
+      </div>
+      <div *ngIf="inputFormControl.errors?.maxlength">
+        El tamaño máximo permitido es
+        {{ inputFormControl.errors.maxlength.requiredLength }} caracteres
+      </div>
+      <div *ngIf="inputFormControl.errors?.minlength">
+        El tamaño mínimo permitido es
+        {{ inputFormControl.errors.minlength.requiredLength }} caracteres
+      </div>
+      <div *ngIf="inputFormControl.errors?.exactlength">
+        {{ exactLengthMessage }}
+      </div>
+      <div *ngIf="inputFormControl.errors?.max">
+        El valor máximo permitido es {{ inputFormControl.errors.max.max }}
+      </div>
+      <div *ngIf="inputFormControl.errors?.min">
+        El valor mínimo permitido es {{ inputFormControl.errors.min.min }}
+      </div>
+      <div *ngIf="inputFormControl.errors?.email">
+        El correo electrónico no es válido
+      </div>
+      <div *ngIf="inputFormControl.errors?.whitespace">
+        El campo no debe contener espacios en blanco al inicio ni al final
+      </div>
+      <ng-content select="[slot=customValidators]"></ng-content>
+      <!-- Para usar los validadores personalizados llamarlo de esta forma: -->
+      <!-- <div slot="customValidators">Aqui colocamos los validadores personalizados</div> -->
+      <!-- o -->
+      <!-- <ng-container slot="customValidators">Aqui colocamos los validadores personalizados</ng-container> -->
+    </div>
+  </div>
+</div>

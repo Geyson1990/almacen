@@ -1,0 +1,362 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+<div class="modal-body anexo">
+
+    <div>
+        <h6>ANEXO 001-B/17 TRANSPORTE INTERNACIONAL TERRESTRE CONO SUR (MERCANCÍAS)</h6>
+    </div>
+
+    <div class="row" *ngIf="false">
+        <div class="col-sm-12 px-4 d-flex" id="anexo001-b17-permiso-solicitar">
+
+            <div class="fw-bold flex-1">
+                ¿Qué tipo de permiso desea solicitar?
+            </div>
+            <div class="d-flex justify-content-between flex-2">
+                <div>
+                    <label>
+                    <input type="radio" name="permiso-anexo001-b17" checked (change)="onChangePermiso('anexo001-b17-seccion-1', 'anexo001-b17-seccion-2', 2)">
+                    Permiso Originario
+                </label>
+                </div>
+                <div>
+                    <label>
+                    <input type="radio" name="permiso-anexo001-b17" (change)="onChangePermiso('anexo001-b17-seccion-2', 'anexo001-b17-seccion-1', 1)">
+                    Permiso ocasional para transporte de cargo
+                </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form novalidate [formGroup]="anexoFormulario">
+
+        <div ngbAccordion #acc="ngbAccordion" ><!--(panelChange)="toggleAccordian($event)"-->
+            <!-- activeIds="ngb-anexo001-b17"> -->
+            <div ngbAccordionItem="anexo001-b17-seccion-1" [disabled]="!habilitarSeccion1" [collapsed]="!habilitarSeccion1"><!--[disabled]="disabledAcordion == 1"-->
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton>I. PERMISO ORIGINARIO</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12 d-flex" id="anexo001-b17-paises-operar">
+
+                            <div class="campo-obligatorio d-flex align-self-center">
+                                Países con los que se pretende operar:
+                            </div>
+
+                            <div class="anexo001-b17-contenedor-check-paises justify-content-between" [class.control-invalid]="formInvalid('s1_paisesOperar')">
+                                <label formArrayName="s1_paisesOperar" class="check" *ngFor="let item of this.anexoFormulario.get('s1_paisesOperar')['controls']; let i = index">
+                                <input type="checkbox" [formControl]="item.get('checked')" /> {{ item.get('text').value }}
+                            </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+            </div>
+            <div ngbAccordionItem="anexo001-b17-seccion-2" [disabled]="!habilitarSeccion2" [collapsed]="!habilitarSeccion2"><!--[disabled]="disabledAcordion == 1"-->
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>II. PERMISO OCASIONAL PARA TRANSPORTE DE CARGA</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+
+                        <div class="col-sm-8 d-flex flex-column" id="anexo001-b17-seccion-left">
+
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 campo-obligatorio">Tipo de carga a transportar (ida):</div>
+                                <div class="flex-1">
+                                    <textarea type="text" class="form-control" formControlName="s2_tipoCargaTransportarIda" [class.control-invalid]="formInvalid('s2_tipoCargaTransportarIda')"></textarea>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="flex-1 campo-obligatorio">Origen viaje:</div>
+                                <div class="flex-1">
+                                    <span class="form-control" disabled>Perú</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="flex-1 campo-obligatorio">Tipo de carga a transportar (regreso):</div>
+                                <div class="flex-1">
+                                    <textarea type="text" class="form-control" formControlName="s2_tipoCargaTransportarRegreso" [class.control-invalid]="formInvalid('s2_tipoCargaTransportarRegreso')"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="flex-1 campo-obligatorio">Destino viaje:</div>
+                                <div class="flex-1">
+                                    <select class="form-select flex-1" formControlName="s2_destinoViaje" [class.control-invalid]="formInvalid('s2_destinoViaje')" (change)="changeDestinoViaje($event.target.value)">
+                                    <option value=''>Seleccione</option>
+                                    <option *ngFor="let item of listaPaises" [value]="item.value">{{ item.text }}</option>
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="flex-1 campo-obligatorio">Perí­odo de viaje(s) ocasional(es):</div>
+                                <div class="flex-1">
+                                    <textarea type="text" class="form-control" formControlName="s2_periodoViajeOsacional" [class.control-invalid]="formInvalid('s2_periodoViajeOsacional')"></textarea>
+                                    El periodo de viaje es de 6 meses como máximo para todos los destinos, a excepción de Chile que es de 3 meses
+                                </div>
+                                
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-4" id="anexo001-b17-seccion-right">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="campo-obligatorio">
+                                        Pasos de frontera a utilizar (ida):
+                                    </div>
+                                    <select class="form-select mt-1" formControlName="s2_pasoFronteraIda" [class.control-invalid]="formInvalid('s2_pasoFronteraIda')">
+                                    <option value="">Seleccione</option>
+                                    <option *ngFor="let item of listaPasoFrontera" [value]="item.value">{{item.text}}</option>
+                                </select>
+                                </div>
+                            </div>
+
+
+                            <div class="row mt-3">
+                                <div class="col-sm-12">
+
+                                    <div class="campo-obligatorio">
+                                        Pasos de frontera a utilizar (regreso):
+                                    </div>
+                                    <select class="form-select mt-1" formControlName="s2_pasoFronteraRegreso" [class.control-invalid]="formInvalid('s2_pasoFronteraRegreso')">
+                                    <option value="">Seleccione</option>
+                                    <option *ngFor="let item of listaPasoFrontera" [value]="item.value">{{item.text}}</option>
+                                </select>
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="flex-1 campo-obligatorio">Cantidad de viajes:</div>
+                                <div class="flex-1">
+                                    <input type="text" class="form-control text-center" maxlength="2" (input)="soloNumeros($event)" formControlName="s2_cantidadViajes" [class.control-invalid]="formInvalid('s2_cantidadViajes')" />
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="flex-1 campo-obligatorio">Vehí­culos ofertados:</div>
+                                <div class="flex-1">
+                                    <input type="text" class="form-control" formControlName="s2_vehiculosOfertados" [class.control-invalid]="formInvalid('s2_vehiculosOfertados')" />
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mt-3" *ngIf="anexoFormulario.get('s2_destinoViaje').value === '29'">
+                                <div class="flex-1 campo-obligatorio">Póliza de Seguro:</div>
+                                <div class="flex-1 d-flex">
+
+                                    <input type="file" class="d-none" #inputFilePoliza accept="application/pdf" (change)="onChangeInputPoliza($event)" />
+                                    <button class="btn btn-danger btn-sm" type="button" (click)="inputFilePoliza.click()">
+                                        <i class="fas fa-upload"></i>
+                                        Adjuntar
+                                    </button>
+
+                                    <i class="far fa-file-pdf text-danger fa-2x ms-3 align-self-center" title="Vista previa" *ngIf="filePdfPolizaSeleccionado !== null || filePdfPolizaPathName !== null" (click)="vistaPreviaPdfPoliza()"></i>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+            </div>
+            <div ngbAccordionItem="anexo001-b17-seccion-3" [disabled]="!habilitarSeccion3" [collapsed]="!habilitarSeccion3">
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>III. FLOTA VEHICULAR</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            Relación de vehículos ofertados, marcar con un aspa (X) los que corresponden a Leasing:
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+
+                        <div class="col-sm-5 flex-2 d-flex flex-column" id="anexo001-b17-placarodaje-soat">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 campo-obligatorio">Placa de rodaje:</div>
+                                <div class="flex-1">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control text-uppercase" (input)="changePlacaRodaje()" maxlength="6" formControlName="placaRodajeForm" />
+                                            <button class="btn btn-outline-secondary" [disabled]="this.anexoFormulario.controls['placaRodajeForm'].value.trim().length !== 6" type="button" (click)="buscarPlacaRodaje()">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-3 align-items-center">
+                                <div class="flex-1 campo-obligatorio">SOAT:</div>
+                                <div class="flex-2">
+                                    <input type="text" class="form-control text-uppercase" disabled formControlName="soatForm" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5  flex-2 d-flex flex-column" id="anexo001-b17-citv-caf">
+                            <div class="d-flex align-items-center ">
+                                <div class="flex-1 campo-obligatorio">CITV:</div>
+                                <div class="flex-2">
+                                    <input type="text" class="form-control text-uppercase" disabled formControlName="citvForm" />
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-3 align-items-center flex-1">
+                                <div class="flex-1 campo-obligatorio">C.A.F</div>
+                                <div class="d-flex flex-2">
+                                    <ui-switch (change)="onChangeCaf($event)" formControlName="cafForm"></ui-switch>
+                                    <button class="btn btn-danger btn-sm ms-3 align-self-center" *ngIf="visibleButtonCarf" (click)="inputFileCaf.click($event)">
+                                        <i class="fas fa-upload"></i>
+                                        Adjuntar C.A.F.
+                                    </button>
+                                    <input type="file" class="d-none" #inputFileCaf accept="application/pdf" (change)="onChangeInputCaf($event)" />
+                                    <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa" *ngIf="filePdfCafSeleccionado || filePdfCafPathName" (click)="vistaPreviaCaf()"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 flex-1 d-flex flex-column justify-content-between" id="anexo001-b17-radio-y-button">
+                            <div id="anexo001-b17-tipo-modificacion" class="mb-3" *ngIf="this.dataInput.tipoSolicitud.codigo === 4 && this.dataInput.tupaId === 878">
+                                <div class="campo-obligatorio">TIP. MODIF.</div>
+                                <div>
+                                    <label class="w-100 mb-0">
+                                        <input type="radio" value="ALTA" formControlName="tipoModificacion" /> ALTA
+                                    </label>
+                                    <label class="w-100 mb-0">
+                                        <input type="radio" value="BAJA" formControlName="tipoModificacion" /> BAJA
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column" id="anexo001-b17-boton-agregar-modificar">
+                                <button class="btn btn-danger btn-sm flex-1" (click)="agregarFlotaVehicular()">
+                                    <div *ngIf="indexEditTabla === -1; else elseBlock">
+                                        <i class="fas fa-plus"></i>
+                                        Agregar
+                                    </div>
+                                    <ng-template #elseBlock>
+                                        <i class="fas fa-pencil-alt"></i>
+                                        Modificar
+                                    </ng-template>
+                                </button>
+
+                                <button *ngIf="indexEditTabla !== -1" class="btn btn-warning btn-sm mt-2 flex-1 anexo001-b17-btn-cancelar" (click)="cancelarFlotaVehicular()">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered table-sm">
+                                    <thead class="tabla-header-mtc">
+                                        <tr>
+                                            <th>N°</th>
+                                            <th>Placa de rodaje</th>
+                                            <th>SOAT</th>
+                                            <th>CITV</th>
+                                            <th>C.A.F.</th>
+                                            <th *ngIf="this.dataInput.tipoSolicitud.codigo === 4 && this.dataInput.tupaId === 878">Tip. Modif.</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="listaFlotaVehicular.length > 0; else sinRegistros">
+                                        <tr class="text-uppercase" [class.registro-edit]="indexEditTabla === i" *ngFor="let item of listaFlotaVehicular; let i = index">
+                                            <td class="text-center">{{ i + 1 }}</td>
+                                            <td>{{ item.placaRodaje }}</td>
+                                            <td>{{ item.soat }}</td>
+                                            <td>{{ item.citv }}</td>
+                                            <td *ngIf="item.caf === false; else pdfcaf"></td>
+                                            <ng-template #pdfcaf>
+                                                <td class="text-center">
+                                                    <i class="far fa-file-pdf" (click)="verPdfCafGrilla(item)"></i>
+                                                </td>
+                                            </ng-template>
+                                            <td *ngIf="this.dataInput.tipoSolicitud.codigo === 4 && this.dataInput.tupaId === 878">{{ item.tipoModificacion }}</td>
+                                            <td class="text-center">
+                                                <i class="far fa-edit pe-2 text-primary cursor-pointer" [class.opacity-icon]="indexEditTabla !== -1" title="Editar" (click)="modificarFlotaVehicular(item, i)"></i>
+                                                <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" [class.opacity-icon]="indexEditTabla !== -1" title="Eliminar" (click)="eliminarFlotaVehicular(item, i)"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <ng-template #sinRegistros>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="6" class="text-center">No se encontraron registros</td>
+                                            </tr>
+                                        </tbody>
+                                    </ng-template>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" *ngIf="errorAlCargarData === false || true" (click)="guardarAnexo()" [disabled]="this.anexoFormulario.invalid || listaFlotaVehicular.length === 0 || indexEditTabla !== -1">
+                <i class="far fa-save"></i>
+                {{
+                    (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

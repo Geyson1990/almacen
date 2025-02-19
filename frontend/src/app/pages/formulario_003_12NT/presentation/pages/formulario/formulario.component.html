@@ -1,0 +1,276 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+
+        <form novalidate [formGroup]="formulario">
+            <div class="center">
+                <h6>{{txtTitulo}}</h6>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2, seccion-3, seccion-4">
+
+              <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton>PROCEDIMIENTO A SOLICITAR</button>
+                    </h2>
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                    <div class="px-2">
+                        <div class="row">
+                            <div class="col-12">
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-2">
+                                          <app-basic-input [parentForm]="formulario"
+                                          inputFormControlName="Domicilio" label="Especificar para qué tipo de licencia:"
+                                          [maxLength]="150">
+                                          </app-basic-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+</div>
+</div>
+            </div>
+
+                <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>DATOS SOLICITANTE</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="px-2">
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <h5>Persona Natural</h5>
+                                    <hr class="mt-1">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <app-basic-input [parentForm]="formulario"
+                                                inputFormControlName="Nombres" label="Nombres y apellidos"
+                                                [maxLength]="50"
+                                                [readonly]="true">
+                                            </app-basic-input>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="formulario"
+                                                inputFormControlName="TipoDocSolicitante" label="Tipo Documento"
+                                                [readonly]="true"
+                                                [maxLength]="20">
+                                            </app-basic-input>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="formulario"
+                                                inputFormControlName="NroDocSolicitante" label="Nro. Documento"
+                                                [readonly]="true" input
+                                                [maxLength]="9">
+                                            </app-basic-input>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="formulario"
+                                                inputFormControlName="Ruc" label="R.U.C."
+                                                [onlyNumbers]="true"
+                                                [maxLength]="11">
+                                            </app-basic-input>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <app-basic-input [parentForm]="formulario"
+                                                inputFormControlName="Domicilio" label="Domicilio Legal"
+                                                placeHolder="Ingrese el domicilio legal" [maxLength]="150">
+                                            </app-basic-input>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="mb-2">
+                                                <label class="text-bold mb-1">Departamento <span class="text-danger">(*)</span></label>
+                                                <select class="form-select" formControlName="Departamento" #departamento
+                                                    (change)="onChangeDepartamento(departamento.value)"
+                                                    [class.control-invalid]="formInvalid(Departamento)">
+                                                    <option value="">- Seleccionar -</option>
+                                                    <option *ngFor="let item of listaDepartamentos;" [value]="item.value">{{ item.text }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="mb-2">
+                                                <label class="text-bold mb-1">Provincia <span class="text-danger">(*)</span></label>
+                                                <select class="form-select" formControlName="Provincia" #provincia
+                                                    (change)="onChangeProvincia(departamento.value, provincia.value)"
+                                                    [class.control-invalid]="formInvalid(Provincia)">
+                                                    <option value=""> Seleccionar -</option>
+                                                    <option *ngFor="let item of listaProvincias;" [value]="item.value">{{ item.text }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="mb-2">
+                                                <label class="text-bold mb-1">Distrito <span class="text-danger">(*)</span></label>
+                                                <select class="form-select" formControlName="Distrito" #distrito
+                                                    [class.control-invalid]="formInvalid(Distrito)">
+                                                    <option value="">- Seleccionar -</option>
+                                                    <option *ngFor="let item of listaDistritos;" [value]="item.value">{{ item.text }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="formulario"
+                                                inputFormControlName="Telefono" label="Teléfono Fijo"
+                                                placeHolder="Ingrese el número de teléfono" [onlyNumbers]="true"
+                                                [maxLength]="9">
+                                            </app-basic-input>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="formulario"
+                                                inputFormControlName="Celular" label="Celular"
+                                                placeHolder="Ingrese el número de celular" [onlyNumbers]="true"
+                                                [maxLength]="9">
+                                            </app-basic-input>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <app-basic-input [parentForm]="formulario"
+                                                inputFormControlName="Correo" label="Correo Electrónico"
+                                                placeHolder="Ingrese el correo electrónico" [maxLength]="50">
+                                            </app-basic-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-3" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>MODALIDAD DE NOTIFICACIÓN</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="px-2 py-3">
+                            <p class="fw-bold">
+                                Solicito que todo acto administrativo derivado del presente procedimiento, se me notifique bajo la siguiente modalidad:
+                            </p>
+                            <div class="row">
+                                <div class="mb-3 col-md-12">
+                                    <div class=" form-check ms-3">
+                                        <input type="radio" id="rb1" class="form-check-input" name="ModalidadNotificacion" value="1" formControlName="ModalidadNotificacion">
+                                        <label class="form-check-label" for="rb1">
+                                            De manera personal en el domicilio de la persona jurídica o natural consignada en el presente formulario.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <div class=" form-check ms-3">
+                                        <input type="radio" id="rb2" class="form-check-input" name="ModalidadNotificacion" value="2" formControlName="ModalidadNotificacion">
+                                        <label class="form-check-label" for="rb2">
+                                            Al correo electrónico de la persona jurídica o natural consignada en el presente formulario
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-4" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>DECLARACIÓN JURADA</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                      <div class="alert alert-custom">
+                        <div class="px-2 py-3">
+                            <p class="fw-bold">
+                                Manifiesto con carácter de Declaración Jurada que:
+                            </p>
+                            <ul>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <p>Toda la información proporcionada es veraz, así como los documentos presentados son auténticos, en caso contrario, me someto al procedimiento y a las sanciones previstas en el TUO de la Ley N° 27444, Ley del Procedimiento Administrativo General y/o normas complementarias</p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="Declaracion1" class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <p>Adjunto todos los requisitos señalados en el TUPA vigente del MTC</p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="Declaracion2" class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                      </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-lg-12 d-flex">
+            <div class="flex-1">
+                <button type="button" class="btn btn-secondary" [disabled]="id === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i> Visualizar
+                </button>
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success boton-guardar" (click)="guardarFormulario()">
+                    <i class="far fa-save"></i> Guardar
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="activeModal.close(graboUsuario)">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

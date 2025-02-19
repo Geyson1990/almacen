@@ -1,0 +1,11 @@
+.check-adjuntar {
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.campo-resolucion-jurada {
+    margin: 0 5px;
+    display: inline-block;
+    text-decoration: underline;
+    font-weight: bold;
+}

@@ -1,0 +1,315 @@
+<!-- <div class="col-sm-12 mt-3 mb-3 text-center fw-bold">
+    SERVICIOS DE TRANSPORTE DE MERCANCÍAS EN GENERAL
+ </div> -->
+
+ <div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">Anexo 002-H17  </h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body">
+    <div ngbAccordion #acc="ngbAccordion" activeIds="ngb-anexo002-h17">
+        <div ngbAccordionItem="ngb-anexo002-h17" [collapsed]="false">
+            <h2 ngbAccordionHeader >
+                
+                    <button ngbAccordionButton>I. DECLARACIÓN JURADA</button>
+                </h2>
+            <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                <div class="row">
+                    <div class="col-sm-12">
+                    Los suscritos declaramos bajo juramento, cumplir con los requisitos establecidos en los numerales 37.4, 37.5 y 37.7 de artículo 37° del D.S. 017-2009-MTC.    
+                    </div>
+                </div>
+                <div class="row mt-3">
+                   <div class="col-sm-3">
+                       <div class="d-flex flex-row p-2">
+                           <div class="d-flex flex-1 campo-obligatorio">
+                             Tipo de documento :
+                           </div>
+                       </div>
+                   </div>
+   
+                   <div class="col-sm-9">
+                       <div class="row">
+   
+                           <div class="col-sm-12">
+                               <div class="d-flex flex-row p-2 align-items-center">
+                                   <div class="d-flex flex-4">
+                                       <select class="form-select" value="0" [(ngModel)]="selectedDocumento" >
+                                           <option value="0">--Seleccione--</option>
+                                           <option value="1">D.N.I.</option>
+                                           <option value="2">C.E.</option>
+                                           <option value="3">C.I.</option>
+                                           <option value="4">Pasaporte</option>
+                                           </select>
+                                   </div>
+                                   <div class="d-flex flex-1" style="padding-left: 50px;">
+                                       <!-- <input type="text" class="form-control"[(ngModel)]="seccion12Data.numeroDni" > -->
+                                      
+                                         <input type="text" class="form-control"  [(ngModel)]="nroDNI" >
+                                           <button class="btn btn-secondary" (click) ="loadDataUser()"  >
+                                               <i class="fas fa-search "></i>                                            
+                                           </button> 
+                                   </div>
+                              
+                                   <div class="d-flex flex-1 flex-column flex-row-reverse">
+   
+                                       <div class="d-flex">
+                                           <!-- <button class="btn btn-danger" (click)="validacionAnexoH17()">
+                                               <i class="fas fa-plus "></i>
+                                               Agregar
+                                           </button>    -->
+                                       </div>
+   
+                                       
+   
+                               </div>
+                                  
+                               </div>
+                           </div>
+   
+                       </div>
+                   </div>
+   
+   
+   
+                   <div class="col-sm-3">
+                       <div class="d-flex flex-row p-2">
+                           <div class="d-flex flex-1 campo-obligatorio mt-2">
+                               Apellidos y Nombres:
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-sm-9">
+                     <div class="d-flex flex-row p-2">
+                         <div class="d-flex flex-1">
+                             <input type="text" class="form-control" [(ngModel)]="seccion12Data.apellidosNombres" disabled >
+                         </div>
+                     </div>
+                   </div>
+   
+                   <div class="col-sm-3">
+                       <div class="d-flex flex-row p-2">
+                           <div class="d-flex flex-1 campo-obligatorio">
+                             Cargo :
+                           </div>
+                       </div>
+                   </div>
+   
+                   <div class="col-sm-9">
+                       <div class="row">
+   
+                           <div class="col-sm-12">
+                               <div class="d-flex flex-row p-2 align-items-center">
+                                   <div class="d-flex flex-1">
+                                       <input type="text" class="form-control" [(ngModel)]="seccion12Data.cargo" >
+                                   </div>
+                                   <div class="d-flex flex-1  justify-content-center">
+                                       <!-- DNI : -->
+                                   </div>
+                                   <div class="d-flex flex-1">
+                                       <!-- <input type="text" class="form-control" [(ngModel)]="seccion12Data.numeroDni"> -->
+                                   </div>
+                              
+                                   <div class="d-flex flex-1 flex-column flex-row-reverse">
+   
+                                       <div class="d-flex">
+                                           <button class="btn btn-danger" (click)="validacionAnexoH17()">
+                                               <i class="fas fa-plus "></i>
+                                               Agregar
+                                           </button>   
+                                       </div>
+   
+                                       
+   
+                               </div>
+                                  
+                               </div>
+                           </div>
+   
+                       </div>
+                   </div>
+   
+   
+               
+                    <!-- <div class="col-sm-5  flex-2 d-flex flex-column">
+                    
+                        <div class="d-flex mt-3 align-items-center">
+                          
+                            <div class="d-flex flex-2">
+                              
+                                <button class="btn btn-danger btn-sm ms-3">
+                                    <i class="fas fa-upload"></i>
+                                    Adjuntar
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+                   
+                    
+                </div>
+                <div class="row mt-3">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered">
+                            <thead class="bg-secondary text-white text-center">
+                                <th>N°</th>
+                                <th>Apellidos y Nombres</th>
+                                <th>Cargo</th>
+                                <th>Número de DNI</th>
+                                <th>Acciones</th>
+                            </thead>
+                            <tbody *ngFor="let item of seccion12Datos; let i = index">
+                                <td class="text-center">{{i + 1}}</td>
+                                <td>{{item.apellidosNombres}}</td>
+                                <td>{{item.cargo}}</td>
+                                <td>{{item.numeroDni}}</td>
+                                <td class="text-center">
+                                    <!-- <i class="far fa-edit pe-2 text-primary cursor-pointer" title="Editar"></i> -->
+                                    <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" title="Eliminar" (click)="eliminarSeccion1(i)"></i>
+                                </td>
+                            </tbody>
+                        </table>
+                        <div class="col col-md-12" *ngIf="seccion12Datos.length == 0" style="text-align: center;">
+                           <span style="font-weight: bold;">No se encontraron registros.</span>
+                           <hr>
+                       </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-sm-12">
+                        Lo declarado se sujeta a lo señalado en el artículo 34 del Texto Único Ordenado de la Ley N° 27444, Ley del Procedimiento Administrativo General, aprobado por 
+                        Decreto Supremo N° 004-2019-JUS y demás normas.
+                    </div>
+                </div>
+    
+                <div class="col-sm-9 mt-3">
+                   Lima, 16 de Noviembre de 2020
+               </div> -->
+            </ng-template>
+</div>
+</div>
+        </div>
+    
+        <div  ngbAccordionItem>
+    
+            <h2 ngbAccordionHeader>
+                
+                    <button ngbAccordionButton>II. DOCUMENTACIÓN QUE SE DEBE ADJUNTAR (Conforme al D.S. N° 017-2009-MTC(22.04.09))</button>
+                </h2>
+    
+            <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                <div class="row">                       
+                    <div class="col-sm-12 d-flex">
+                        <div class="col-sm-11">
+                            1. La persona natural, o los socios, accionistas, asociados, directores, administradores o representantes legales
+                            de la persona jurídica que pretenda acceder a prestar servicio de transporte, no podrán encontrarse condenados por
+                            la comisión de los delitos de Tráfico Ilícito de Drogas, Lavado de Activos, Pérdida de Dominio, o Delito Tributario
+                            ni podrán serlo, en tanto se encuentre vigente la autorización. Dicha condena deberá constar en una sentencia consentida
+                            o ejecutoriada que no haya sido objeto de rehabilitación.
+                            <br>
+                            <br>
+                            Esta prohibición es aplicable a los accionistas, socios, directores y representantes legales de la persona jurídica que sea 
+                            accionista o socia del solicitante o transportista. (Num. 37.4)
+                            <br>
+                            <br>
+                          <br>
+                        </div>
+                        <div class="check-declaracion-jurada">
+                            <div class="check">
+                                <input type="checkbox" [(ngModel)]="seccion2Data.check1" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 d-flex">
+                        <div class="col-sm-11">
+                            2. La persona natural o los socios, accionistas, asociados, directores, administradores o representantes legales de la persona jurídica que pretenda
+                             acceder a prestar servicio de transporte no podrán haber sido declarados en quiebra, estar incursos en un proceso concursal, o estar sometido a medida judicial
+                             o administrativa que lo prive o restrinja de la administración de sus bienes, ni podrán serlo, en tanto se encuentre vigente la autorización.      
+                               <br>
+                               <br>
+                             Esta prohibición es aplicable a los accionistas, socios, directores y representantes legales de la persona jurídica que sea accionista o socia del solicitante
+                             o transportista. (Num. 37.5)
+                           <br>
+                           <br>
+                        </div>
+                        <div class="check-declaracion-jurada">
+                            <div class="check">
+                                <input type="checkbox" [(ngModel)]="seccion2Data.check2"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 d-flex">
+                        <div class="col-sm-11">
+                            3. No debe haber sufrido la cancelación de la autorización para prestar servicios de transporte o encontrarse inhabilitado en forma definitiva para ello.
+                               Lo dispuesto en el presente numeral alcanza a los socios, accionistas, asociados, directores y representantes legales del transportista que fue cancelado
+                               y/o inhabilitado. (Num. 37.7)
+                               <br>
+                               <br>
+                        </div>
+                        <div class="check-declaracion-jurada">
+                            <div class="check">
+                                <input type="checkbox" [(ngModel)]="seccion2Data.check3"/>
+                            </div>
+                        </div>
+                    </div>
+     
+                    <!-- <div class="col-sm-12 mt-5 d-flex justify-content-center">
+                        <div class="d-flex border border-dark">
+                            <div class="d-flex p-5 border-end border-dark">
+                                <i class="far fa-file-pdf fa-3x"></i>
+                            </div>
+                            <div class="d-flex p-3 flex-column justify-content-center border">
+    
+                                <div class="text-center">
+                                    Agregar PDF firmado localmente
+                                </div>
+    
+                                <button class="btn btn-primary w-100 mt-3">
+                                    Subir PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </ng-template>
+</div>
+</div>
+    
+        </div>
+    
+        
+    
+    
+    </div>
+</div>
+
+
+
+ <div class="modal-footer anexo">
+    <div class="row mt-3">
+        <div class="col-sm-12 d-flex">
+    
+            <div class="flex-1">
+              <button class="btn btn-success w-50" (click)="guardarAnexo()" >
+                  <i class="far fa-save"></i>
+                  {{
+                    (idAnexoMovimiento === 0 ? 'Grabar' : 'Modificar')
+                }}
+              </button>
+            </div>
+    
+            <div class="flex-1 ">
+                <button class="btn btn-secondary w-50" (click)="descargarPdf()"  >
+                    <i class="fas fa-file-pdf"></i>
+                   Visualizar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+ </div>

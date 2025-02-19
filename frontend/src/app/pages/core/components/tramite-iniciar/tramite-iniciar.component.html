@@ -1,0 +1,96 @@
+<div class="card mb-5 shadow">
+   <div class="card-header py-3">
+      Datos del trámite
+   </div>
+   <div class="card-body p-4 small">
+      <div class="shadow-none p-4 mb-4 bg-light rounded">
+
+         <div class="row">
+            <div class="col-md-3 fw-bold">Dirección general:</div>
+            <div class="col-md-9">{{ tupa?.dependencia || '' }}</div>
+         </div>
+         <!-- <div class="row mt-2">
+            <div class="col-md-3 fw-bold">Dependencia a quien se dirige:</div>
+            <div class="col-md-9">{{ TupaOrganizacion}}</div>
+         </div> -->
+         <div class="row mt-2">
+            <div class="col-md-3 fw-bold">TUPA:</div>
+            <div class="col-md-9">{{ TupaCodigo }} - {{ TupaNombre }}</div>
+         </div>
+         <div class="row mt-2">
+            <div class="col-md-3 fw-bold">Tipo evaluación:</div>
+            <div class="col-md-9">{{ TupaTipoEvaluacion }}</div>
+         </div>
+         <div class="row mt-2">
+            <div class="col-md-3 fw-bold">Plazo de atención:</div>
+            <div class="col-md-9">{{ TupaPlazo }}</div>
+         </div>
+      </div>
+
+
+      <div class="shadow-none p-4 mb-4 bg-light rounded">
+         <h6 class="card-title">Datos de Solicitud</h6>
+         <hr>
+
+         <div class="row">
+            <div class="col-md-3 fw-bold">Tipo de Persona:</div>
+            <div class="col-md-3">{{ nombreTipoPersona }}</div>
+            <div class="col-md-3 fw-bold">Tipo Documento:</div>
+            <div class="col-md-3">{{ nombreTipoDocumento }}</div>
+         </div>
+         <div class="row">
+            <div class="col-md-3 fw-bold">{{ tipoNombres }}:</div>
+            <div class="col-md-3">{{ Nombres }}</div>
+            <div class="col-md-3 fw-bold">N° Documento:</div>
+            <div class="col-md-3">{{ NDocumento }}</div>
+         </div>
+      </div>
+
+      <br>
+
+      <div *ngIf="listadoTipoSolicitud != null" class="row">
+         <label class="col-md-12">SELECCIONE EL TIPO DE SOLICITUD</label>
+         <div *ngFor="let tipoSolicitud of listadoTipoSolicitud; let i = index" class="col-md-12 mt-2">
+            <label for="tipoSolicitud_{{tipoSolicitud.codigo}}">
+               <input id="tipoSolicitud_{{tipoSolicitud.codigo}}" [value]='tipoSolicitud.codigo' type="radio" 
+                  name="tipoSolicitud" [(ngModel)]="tipoSolicitudSeleccionado"
+                  (ngModelChange)="onSelectTipoSolicitud($event)">
+               {{ tipoSolicitud.descripcion }}
+            </label>
+
+            <!--<div *ngIf="tipoSolicitud.detalle != null && tipoSolicitud.detalle != ''" class="p-1" ><p style="padding-left: 12px;"> {{ tipoSolicitud.detalle }}</p></div>-->
+         </div>
+      </div>
+
+      <div>
+         <div class="col-md-12 alert alert-info" role="alert">
+           <h5 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Base legal</h5>
+           <ul class="mb-0" style="padding-inline-start: 22px;">
+               <li>Ley N° 28611 (Art. 17) (15-10-2005)
+               <li>Ley N° 27446 (Art. 3, 6, 7, 11 y 18) (23-04-2001)
+               <li>D.S. N° 019-2009-MINAM (Art. 8, 33 y 51) (25-09-2009)
+               <li>D.S. N° 042-2017-EM (Art. 45 al 49) (22-12-2017)
+               <li>D.S. N° 028-2008-EM (Art. 2 y 13) (27-05-2008)
+               <li>TUO de la Ley N° 27444, D.S. N° 004-2019-JUS (Art. 38, 39, 124 y 153) (25-01-2019)
+           </ul>
+         </div>
+       </div>
+
+      <div class="row ">
+         <div class="col-md-12 text-end">
+            <div class="input-group-sm" style="display: flex; justify-content: flex-end; gap: 10px;">
+              <!-- Botón Regresar -->
+              <button type="button" class="btn btn-info ms-2 btn-regresar" (click)="close()">
+                <i class="material-icons">reply</i> Regresar
+              </button>
+              
+              <!-- Botón Iniciar Procedimiento -->
+              <button type="button" class="btn btn-success save register" (click)="confirmarCrearSolicitud();">
+                <i class="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;Iniciar Procedimiento
+              </button>
+            </div>
+      </div>
+   </div>
+</div>
+ <br>
+

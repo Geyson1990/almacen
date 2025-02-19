@@ -1,0 +1,164 @@
+.cabecera {
+  color: #26292e;
+  background-color: #edf0f4;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  scroll-margin: 200px;
+
+  .titulo {
+    font-weight: 600;
+  }
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+  .cabecera {
+    scroll-margin: 255px;
+  }
+}
+
+.cabecera:hover {
+  background-color: #dee3ea;
+}
+
+.card-detalle {
+  border: 0px;
+  background-color: #f6f9fc;
+  color: #26292e;
+}
+
+.text-emphasys-1 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.text-1 {
+  font-size: 14px;
+}
+
+.text-emphasys-2 {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.text-2 {
+  font-size: 13px;
+}
+
+.subtitulo {
+  margin-top: 0.75em;
+  margin-bottom: 1em;
+  .text {
+    font-weight: 600;
+    color: #bf0909;
+  }
+  .underline {
+    margin-top: 0.25em;
+    color: #bf0909;
+  }
+}
+
+button,
+a {
+  font-weight: 600;
+  border-radius: 0.25rem;
+  > i {
+    font-size: 0.9em;
+    vertical-align: middle;
+    padding-bottom: 0.25em;
+    padding-left: 0.25em;
+  }
+}
+
+a {
+  color: #0056ac;
+}
+
+button:focus {
+  border: 1px solid black;
+  outline: 3px solid #ffd147;
+  outline-offset: 0;
+  color: #333;
+  box-shadow: 0 0 0;
+}
+
+a:focus {
+  border: 1px solid black;
+  outline: 3px solid #ffd147;
+  outline-offset: 0;
+  color: #333;
+  box-shadow: 0 0 0;
+}
+
+.btn-secundario {
+  border-color: #0056ac;
+  background-color: #fff;
+  color: #0056ac;
+}
+
+.btn-secundario:hover {
+  background-color: #e6f2f8;
+}
+
+.row-canal-atencion {
+  margin-bottom: -1em;
+}
+
+.formulario-adjunto {
+  margin-top: 0.5em;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.tabla-requisito {
+  border: 1px solid #dee3ea;
+  font-size: 13px;
+
+  thead td,
+  thead th {
+    border-bottom-width: 2px;
+  }
+  td,
+  th {
+    border: 1px solid #dee3ea;
+  }
+}
+
+.monto-pago {
+  margin-top: 0.5em;
+  font-weight: 600;
+  font-size: 12px;
+  color: #555869;
+}
+
+.codigo-pago {
+  font-weight: 600;
+  font-size: 10px;
+  color: #555869;
+  margin-top: -0.25em;
+}
+
+.btn-cerrar {
+  color: #26292e;
+  background-color: #edf0f4;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  padding: 0.5em;
+}
+
+.btn-cerrar:hover {
+  background-color: #dee3ea;
+}
+
+.requisito-desc ::ng-deep .ql-editor {
+  padding: 0px;
+  font-size: 13px;
+}

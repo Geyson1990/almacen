@@ -1,0 +1,108 @@
+<div class="modal-header">
+  <h2>{{ title }}</h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body mat-typography">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="content-contorno">
+        <h3>3.1.1. METEREOLOGIA, CLIMA Y ZONAS DE VIDA</h3>
+        <div class="form-group mt-2 mb-4">
+          <textarea class="form-control" placeholder="" rows="3" formControlName="Metereologia" maxlength="3500"></textarea>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3>3.1.2. CALIDAD DEL AIRE</h3>
+        <div class="form-group mt-2 mb-4">
+          <textarea class="form-control" placeholder="" rows="3" formControlName="CalidadAire" maxlength="3500"></textarea>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>3.1.3. CALIDAD DE RUIDO AMBIENTAL</h3>
+        <div class="form-group mt-2 mb-4">
+          <textarea class="form-control" placeholder="" rows="3" formControlName="CalidadRuidoAmbiental" maxlength="3500"></textarea>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3>3.1.4. TOPOGRAFIA, GEOLOGIA Y GEOMORFOLOGIA</h3>
+        <div class="sub-grupo">
+          <h3>3.1.4.1. TOPOGRAFIA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="Topografia" maxlength="3500"></textarea>
+          </div>
+    
+          <h3>3.1.4.2. GEOLOGIA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="Geologia" maxlength="3500"></textarea>
+          </div>
+    
+          <h3>3.1.4.3. GEOMORFOLOGIA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="Geomorfologia" maxlength="3500"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>3.1.5. HIDROGRAFIA, HIDROLOGIA E HIDROGEOLOGIA</h3>
+        <div class="sub-grupo">
+          <h3>3.1.5.1. CUENCAS</h3>
+          <div>SIN INFORMACION DE CUENCAS</div>        
+          <h3>3.1.5.2. HIDROLOGÍA E HIDROGRAFÍA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="Hidrologia" maxlength="3500"></textarea>
+          </div>
+    
+          <h3>3.1.5.3. HIDROGEOLOGÍA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="Hidrogeologia" maxlength="3500"></textarea>
+          </div>
+    
+          <h3>3.1.5.4. CALIDAD DEL AGUA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="CalidadAgua" maxlength="3500"></textarea>
+          </div>
+        </div>
+      </div>
+  
+      <div class="content-contorno">
+        <h3>3.1.6. SUELOS, C.U.M, USO ACTUAL Y CALIDAD DE SUELO</h3>
+        <div class="sub-grupo">
+          <h3>3.1.6.1. ESTUDIO DE SUELOS Y TIERRA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="EstudioSuelo" maxlength="3500"></textarea>
+          </div>
+    
+          <h3>3.1.6.2. CLASIFICACION DE LAS TIERRAS POR CAPACIDAD DE USO MAYOR</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="ClasificacionTierras" maxlength="3500"></textarea>
+          </div>
+    
+          <h3>3.1.6.3. USO ACTUAL DE LA TIERRA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="UsoActualTierra" maxlength="3500"></textarea>
+          </div>
+    
+          <h3>3.1.6.4. CALIDAD DE LOS SUELOS</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="CalidadSuelos" maxlength="3500"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+        Cancel</button>
+      <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i>
+        Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>
+</form>

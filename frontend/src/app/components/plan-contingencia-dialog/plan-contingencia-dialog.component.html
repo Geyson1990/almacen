@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h2>{{ title }}</h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div  class="modal-body mat-typography">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="form-group mt-2 mb-4">
+        <textarea class="form-control text-uppercase" rows="3" formControlName="Descripcion" maxlength="500"
+          placeholder="Ingresar el plan de contingencia considerando las medidas a partir de la identificación de riesgos, indicando los procedimientos, acciones y funciones requeridas durante y después de eventos no deseados que afecten el proyecto.  El plan deberá  considerar  como  mínimo lo siguiente:  a) organización para  dar respuesta a la emergencia  b) sistema  de comunicaciones, recursos humanos  c) capacitaciones, simulacros,  equipos y herramientas para dar respuesta  a las emergencias."></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+      Cancel</button>
+      <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>
+</form>

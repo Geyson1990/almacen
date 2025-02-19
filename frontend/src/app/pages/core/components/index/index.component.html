@@ -1,0 +1,385 @@
+<div>
+  <h1 style="text-align: center">
+    <small class="hsmall">¿Qué trámite desea realizar?</small>
+  </h1>
+  <br />
+
+  <div class="d-flex flex-row align-items-center pb-4">
+    <!-- <input
+      type="text"
+      class="form-control inline"
+      [ngModel]="txtBuscarTupa"
+      (ngModelChange)="onChangeBuscarTupa($event)"
+      placeholder="Buscar por trámite"
+      style="width: 100%; text-transform: uppercase"
+    /> -->
+    <br>
+    <hr />
+  </div>
+
+  <div class="dropdown-divider"></div>
+
+  <!-- <div class="row pb-4">
+        <div class="col-md-12 alert alert-danger text-center" role="alert">
+            <label class="labelclass text-center">*** Solo se muestran los Procedimientos Administrativos
+                correspondientes a su tipo
+                de usuario ***</label>
+        </div>
+    </div> -->
+
+  <div class="row justify-content-center">
+    <div *ngIf="mostrarUO" class="row" style="max-width: 900px">
+      <div
+        class="col-md-6 col-lg-4"
+        *ngFor="let item of listadoSectores"
+      >
+        <button
+          type="button"
+          class="btn thumbnail"
+          (click)="redirecToTupas(item)"
+          style="margin: auto; margin-bottom: 0.5rem; border:0px;"
+        >
+          <img [src]="item.urlImagen" [alt]="item.nombre" />
+          <b>{{item.nombre}}</b>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="py-2">
+    <div class="col-md-12 alert alert-info small" role="alert">
+      <h5 class="alert-heading">
+        <i class="fas fa-exclamation-circle"></i> Recuerde
+      </h5>
+      <ul class="mb-0" style="padding-inline-start: 5px; list-style-type: none">
+        <li>
+          Solo se muestran los Procedimientos Administrativos correspondientes a
+          su tipo de usuario.
+        </li>
+        <li>
+          Para el trámite en el TUPA Digital, el pago en el Banco de la Nación
+          debe realizarse con el documento del administrado:
+          <ul>
+            <li>Persona Jurídica con RUC de la empresa</li>
+            <li>Persona Natural con DNI</li>
+            <li>Persona Natural con el número de RUC</li>
+            <li>Persona Extranjera con el Nro de Carnet de Extranjería</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div> -->
+
+  <div *ngIf="!mostrarUO">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table table-hover table-striped small">
+              <thead class="bg-secondary text-white text-center">
+                <tr class="align-self-center">
+                  <th class="align-middle">Código TUPA</th>
+                  <th class="align-middle">Grupo</th>
+                  <th class="align-middle">Denominación</th>
+                  <th class="align-middle">Clasificación</th>
+                  <th class="align-middle">Plazo de atención</th>
+                  <th class="align-middle">Requisitos</th>
+                  <th class="align-middle">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let item of listadoProcedimientosFilter
+                      | slice
+                        : (page - 1) * pageSize
+                        : (page - 1) * pageSize + pageSize
+                  "
+                >
+                  <td class="align-middle text-nowrap">{{ item.codigo }}</td>
+                  <td class="align-middle text-nowrap">{{ item.acronimo }}</td>
+                  <td class="align-middle" [innerHTML]="item.nombre"></td>
+                  <td class="align-middle">{{ item.tipoEvaluacion }}</td>
+                  <td class="align-middle text-center">
+                    {{ item.plazoDias }} DÍAS HÁBILES
+                  </td>
+                  <td class="text-center align-middle">
+                    <!-- <img (click)="openModal(requisitos,item)" height="20%" style="height: 25px;" src="/assets/icon/list.svg"> -->
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-light"
+                      (click)="openModal(requisitos, item)"
+                    >
+                      <i class="fas fa-list"></i>
+                    </button>
+                  </td>
+                  <td class="align-middle text-center py-0">
+                    <!-- <a class="btn btn-link" (click)="iniciarTramite(item)">Iniciar Trámite</a> -->
+                    <a
+                      class="btn btn-sm btn-link text-bold"
+                      (click)="iniciarTramite(item)"
+                      >Iniciar Trámite</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table
+              datatable=""
+              dt-options="dtOptions"
+              dt-columns="dtColumns"
+              dt-column-defs="dtColumnDefs"
+              class="table table-striped table-condensed table-hover"
+            ></table>
+          </div>
+        </div>
+      </div>
+
+      <app-pagination-table
+        [page]="page"
+        [pageSize]="pageSize"
+        [totalRegistros]="listSize"
+        (changePagination)="refreshPagination($event)"
+      ></app-pagination-table>
+    </div>
+  </div>
+
+  <!-- <div class="dropdown-divider"></div>
+
+  <div class="row" align="center">
+    <hr />
+    <div class="col-md-12 pb-4">
+      <h1><small class="hsmall">Servicios en línea</small></h1>
+    </div>
+    <br />
+    <div class="col-sm-6 col-md-4">
+      <button
+        type="button"
+        class="btn btn-link thumbnail"
+        (click)="redirecToServices(3)"
+      >
+        <img src="/assets/img/index/boton_licencia.png" alt="imagen" />
+      </button>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <button
+        type="button"
+        class="btn btn-link thumbnail"
+        (click)="redirecToServices(4)"
+      >
+        <img
+          src="/assets/img/index/obtener_licencia_tripulante.png"
+          alt="imagen"
+        />
+      </button>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <button
+        type="button"
+        class="btn btn-link thumbnail"
+        (click)="redirecToServices(5)"
+      >
+        <img src="/assets/img/index/vuce.png" alt="imagen" />
+      </button>
+    </div>
+  </div>
+</div> -->
+
+<!-- <ng-template #requisitos let-modal>
+        <div class="modal-header bg-danger text-white">
+            <h4 class="modal-title" id="modal-basic-title">LISTADO DE REQUISITOS</h4>
+            <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="card">
+                <div class="card-body small">
+                    <h5 class="card-title">DATOS DEL PROCEDIMIENTO</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-2 fw-bold">Código TUPA:</div>
+                        <div class="col-md-10">{{ procedimientoSeleccionado?.codigo || 'INDETERMINADO' }}</div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-2 fw-bold">Descripción:</div>
+                        <div class="col-md-10">{{ procedimientoSeleccionado?.nombre || 'INDETERMINADO' }}</div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-2 fw-bold">Tipo Evaluación:</div>
+                        <div class="col-md-10">{{ tipoSolicitudSeleccionado?.tipoEvaluacion || 'INDETERMINADO' }}</div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-2 fw-bold">Plazo Atención:</div>
+                        <div class="col-md-10">{{ tipoSolicitudSeleccionado?.plazoAtencion > 0 ?
+                            tipoSolicitudSeleccionado.plazoAtencion + ' DÍAS HÁBILES' : 'INDETERMINADO' }}
+                        </div>
+                    </div>
+
+                    <br>
+                    <h5 class="card-title">Requisitos</h5>
+                    <hr>
+                    <div class="row mt-3">
+                        <div class="col-md-2 col-form-label fw-bold">Tipo de Solicitud:</div>
+                        <div class="col-md-10">
+                            <select class="form-select" [(ngModel)]="tipoSolicitudModel"
+                                (ngModelChange)="onTipoSolicitudChange($event)">
+                                <option *ngFor="let item of listadoTipoSolicitud" [value]="item.codigostr">{{
+                                    item.descripcion }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr class="align-self-center">
+                                        <th>Nro</th>
+                                        <th>Denominación del requisito</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of listadoDetalleTupaFilter">
+                                        <td class="align-middle">{{ item.ordenTxt }}</td>
+                                        <ng-container *ngIf="item.tieneCosto; else elseTemplate">
+                                            <td class="align-middle">{{ item.descripcion }} <br>
+                                              <strong>Monto a Pagar: S/ {{ item.costoFormatted }}</strong>
+                                            </td>
+                                        </ng-container>
+                                        <ng-template #elseTemplate>
+                                            <td class="align-middle">{{ item.descripcion }}</td>
+                                        </ng-template>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template> -->
+<ng-template #requisitos let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h5 class="modal-title" id="modal-basic-title">
+      <i class="fas fa-list"></i> Listado de requisitos
+    </h5>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body card bg-light p-4">
+    <!-- <div class="card bg-light"> -->
+    <div class="card-body py-2 small">
+      <h6 class="card-title text-danger">Datos del procedimiento</h6>
+      <hr class="border-danger opacity-75" />
+      <div class="row mb-2">
+        <div class="col-md-2 text-bold">Código TUPA:</div>
+        <div class="col-md-10">
+          {{ procedimientoSeleccionado?.codigo || "DETERMINADO" }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-2 text-bold">Descripción:</div>
+        <div class="col-md-10">
+          {{ procedimientoSeleccionado?.nombre || "DETERMINADO" }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-2 text-bold">Tipo Evaluación:</div>
+        <div class="col-md-10">
+          {{ tipoSolicitudSeleccionado?.tipoEvaluacion || "DETERMINADO" }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-2 text-bold">Plazo Atención:</div>
+        <div class="col-md-10">
+          {{
+            tipoSolicitudSeleccionado?.plazoAtencion > 0
+              ? tipoSolicitudSeleccionado.plazoAtencion + " DÍAS HÁBILES"
+              : "DETERMINADO"
+          }}
+        </div>
+      </div>
+
+      <br />
+
+      <h6 class="card-title text-danger">Requisitos</h6>
+      <hr class="border-danger opacity-75" />
+      <div class="row mt-3 align-items-center">
+        <div class="col-md-auto col-form-label text-bold">Tipo de Solicitud:</div>
+        <div class="col-md">
+          <select
+            class="form-select form-select-sm"
+            [(ngModel)]="tipoSolicitudModel"
+            data-container="body"
+            (ngModelChange)="onTipoSolicitudChange($event)"
+          >
+            <option
+              *ngFor="let item of listadoTipoSolicitud"
+              [value]="item.codigostr"
+            >
+              {{ item.descripcion }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr class="align-self-center">
+                <th>Nro</th>
+                <th>Denominación del requisito</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let item of listadoDetalleTupaFilter; index as indice"
+              >
+                <td class="align-middle text-center text-bold">
+                  {{ indice + 1 }}
+                </td>
+                <ng-container *ngIf="item.tieneCosto; else elseTemplate">
+                  <td class="align-middle requisito-desc">
+                    <quill-view
+                      [content]="item.descripcion"
+                      theme="snow"
+                      [sanitize]="true"
+                    ></quill-view>
+                    <div>
+                      <strong class="text-muted">
+                        Monto a Pagar: S/ {{ item.costoFormatted }}
+                      </strong>
+                    </div>
+                    <div class="badge text-bg-info" *ngIf="!!item.obligatorio">
+                      Requisito obligatorio
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  <td class="align-middle requisito-desc">
+                    <quill-view
+                      [content]="item.descripcion"
+                      theme="snow"
+                      [sanitize]="true"
+                    ></quill-view>
+                    <div class="badge text-bg-info" *ngIf="!!item.obligatorio">
+                      Requisito obligatorio
+                    </div>
+                  </td>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+</ng-template>

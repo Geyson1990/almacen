@@ -1,0 +1,30 @@
+.flex-4 {
+    flex: 4;
+}
+  
+.flex-5 {
+    flex: 5;
+}
+
+.seccion-header{
+    height: 18px;
+    margin: 0px;
+    padding: 2px;
+  }
+
+.campo-resolucion-jurada {
+    margin: 0 5px;
+    display: inline-block;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.txtCoordenada{
+    font-weight: bold;
+    font-size: 16px;
+    padding-left: 5px;
+}
+.text-blue{
+    padding: 0px 10px;
+    color: #2980B9;
+}

@@ -1,0 +1,861 @@
+<section>
+  <div class="body-home">
+    <div
+      class="cols-12"
+      style="
+        height: 60px;
+        background-color: #ffffff;
+        border-bottom: 2px solid #ff0c0c;
+      "
+    >
+      <img
+        src="/assets/img/inicio/mtcLogotipo.png"
+        width="200px"
+        style="float: left; padding-top: 10px; padding-left: 10px"
+      />
+      <div style="float: right">
+        <table border="0">
+          <tr>
+            <td>
+              <img
+                src="/assets/img/inicio/TUPADIGITAL0.png"
+                width="200px"
+                style="padding-top: 3px; padding-right: 10px"
+              />
+            </td>
+            <td>
+              <a
+                [routerLink]="[]"
+                (click)="
+                  divAyuda === 'hidden'
+                    ? (divAyuda = 'visible')
+                    : (divAyuda = 'hidden')
+                "
+                style="padding-top: 3px; padding-right: 10px"
+              >
+                <img
+                  src="/assets/img/inicio/icon_help48_red.png"
+                  width="48px"
+                />
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="linear-space"></div>
+    <div class="access-option">
+      <div id="Item1" class="item-option-one">
+        <div class="span-header">
+          <img src="/assets/img/inicio/iconuser_pp.png" width="20px" /> Personal
+          MTC
+        </div>
+        <div class="span-concep">
+          <a routerLink="" style="color: black">
+            Seleccione esta opción si usted es un servidor público del
+            Ministerio de Transportes y Comunicaciones o de alguno de sus
+            Anexos.</a
+          >
+        </div>
+      </div>
+      <div id="Item2" class="item-option-two">
+        <div class="span-header">
+          <img src="/assets/img/inicio/iconciudadano_pp.png" width="25px" />
+          Ciudadano y Empresa
+        </div>
+        <div class="span-concep">
+          <a routerLink="/autenticacion/iniciar-sesion" style="color: black">
+            Seleccione esta opción si usted es un ciudadano o empresa que
+            utiliza los servicios del Ministerio de Transportes y
+            Comunicaciones.</a
+          >
+        </div>
+      </div>
+    </div>
+    <!-- <div class="button-image">
+            <a href="datos_table/procedimiento.html">
+                <input type="image" id="myimage" src="/assets/img/inicio/botonProcedimientos.png" width="240px"
+                    height="47px" />
+            </a>
+        </div> -->
+  </div>
+</section>
+
+<div
+  [ngStyle]="{ visibility: divAyuda }"
+  style="position: absolute; top: 60px; right: 0px; z-index: 999"
+>
+  <div class="ayuda-content">
+    <table style="border: 0px; width: 100%" cellpadding="2" cellspacing="0">
+      <tr>
+        <th colspan="2" style="font-size: large; text-align: center">
+          ¿Necesitas ayuda?
+        </th>
+      </tr>
+      <!-- <tr>
+                <th colspan="2" style="font-size: medium;text-align: center;">Contáctenos en:</th>
+            </tr>
+            <tr>
+                <td><img src="assets/img/icon_whatsapp.png" style="width: 24px;" /></td>
+                <td><a href="https://wa.me/51995117099" target="_blank" style="color: #ffffff;"
+                        title="Déjanos tu mensaje y te responderemos en breve"><b>995 117 099</b></a>
+                </td>
+            </tr> -->
+      <!--tr>
+                <td><img src="assets/img/icon_email.png" style="width: 24px;" /></td>
+                <td><a href="mailto:tupadigital@mtc.gob.pe" style="color: #ffffff;" title="Envíanos un correo con tu consulta con el mayor detalle posible"><b>tupadigital@mtc.gob.pe</b></a>
+                </td>
+            </tr-->
+      <tr>
+        <td><img src="assets/img/icon_book.png" style="width: 24px" /></td>
+        <td>
+          <button
+            (click)="openModal(modalManuales)"
+            type="button"
+            class="btn btn-link"
+            style="color: #ffffff; padding: 0px !important"
+            title="Revisa los manuales disponibles del sistema"
+          >
+            <b>Manuales</b>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td><img src="assets/img/icon_cash.png" style="width: 24px" /></td>
+        <td>
+          <button
+            (click)="openModalValVoucher(modalValidadorVoucher)"
+            type="button"
+            class="btn btn-link"
+            style="color: #ffffff; padding: 0px !important"
+            title="Valida tu voucher pagado en el Banco de la Nación"
+          >
+            <b>Validador de voucher</b>
+          </button>
+        </td>
+      </tr>
+      <!-- <tr>
+                <td><img src="assets/img/icon_form.png" style="width: 24px;" /></td>
+                <td>
+                    <button (click)="openModalIncidencia(modalIncidencia)" type="button" class="btn btn-link"
+                        style="color: #ffffff;padding: 0px !important;"
+                        title="Si tienes problemas con el funcionamiento del sistema haz clic aquí"><b>Registrar
+                            incidencia</b></button>
+                </td>
+            </tr> -->
+      <tr>
+        <td><img src="assets/img/icon_list.png" style="width: 24px" /></td>
+        <td>
+          <button
+            (click)="openModalLista(modalListaTupas)"
+            type="button"
+            class="btn btn-link"
+            style="color: #ffffff; padding: 0px !important"
+            title="Revisa la lista de procedimientos TUPA"
+          >
+            <b>Resumen de TUPAs</b>
+          </button>
+        </td>
+      </tr>
+      <!--<tr>
+                <td colspan="2">
+                    <div style="font-size: smaller;"><b>Horario:</b> Lunes a viernes de 9:00am a 7:00pm, Sábados 9:00am
+                        a 1:00pm</div>
+                </td>
+            </tr>-->
+    </table>
+  </div>
+</div>
+
+<ng-template #modalIncidencia let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">Registrar incidencia</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body">
+    <form
+      [formGroup]="registroIncidenciaFG"
+      (ngSubmit)="submitIncidencia(btnSubmitRegistro)"
+    >
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="control-label">Nombres y Apellidos</label>
+                <input
+                  type="text"
+                  formControlName="rinNombresFC"
+                  maxlength="240"
+                  class="form-control"
+                />
+                <div
+                  *ngIf="
+                    rinNombresFC.invalid &&
+                    (rinNombresFC.dirty || rinNombresFC.touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="rinNombresFC.errors?.required">
+                    El campo es obligatorio
+                  </div>
+                  <div *ngIf="rinNombresFC.errors?.pattern">
+                    El campo solo permite caracteres alfabéticos
+                  </div>
+                  <div *ngIf="rinNombresFC.errors?.whitespace">
+                    El campo no debe contener espacios en blanco al inicio ni al
+                    final
+                  </div>
+                  <div *ngIf="rinNombresFC.errors?.maxlength">
+                    El campo excede el tamaño permitido
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="control-label">Documento (DNI o RUC)</label>
+                <input
+                  formControlName="rinDocIdentidadFC"
+                  minlength="8"
+                  maxlength="11"
+                  appDigitOnly
+                  class="form-control"
+                />
+                <div
+                  *ngIf="
+                    rinDocIdentidadFC.invalid &&
+                    (rinDocIdentidadFC.dirty || rinDocIdentidadFC.touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="rinDocIdentidadFC.errors?.required">
+                    El campo es obligatorio
+                  </div>
+                  <div *ngIf="rinDocIdentidadFC.errors?.exactlength">
+                    El campo debe contener 8 u 11 dígitos
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="control-label">Número de celular</label>
+                <input
+                  formControlName="rinCelularFC"
+                  maxlength="9"
+                  appDigitOnly
+                  class="form-control"
+                />
+                <div
+                  *ngIf="
+                    rinCelularFC.invalid &&
+                    (rinCelularFC.dirty || rinCelularFC.touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="rinCelularFC.errors?.required">
+                    El campo es obligatorio
+                  </div>
+                  <div *ngIf="rinCelularFC.errors?.exactlength">
+                    El campo debe contener 9 dígitos
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="control-label">Correo electrónico</label>
+                <input
+                  formControlName="rinEmailFC"
+                  maxlength="240"
+                  type="email"
+                  class="form-control"
+                />
+                <div
+                  *ngIf="
+                    rinEmailFC.invalid &&
+                    (rinEmailFC.dirty || rinEmailFC.touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="rinEmailFC.errors?.required">
+                    El campo es obligatorio
+                  </div>
+                  <div *ngIf="rinEmailFC.errors?.maxlength">
+                    El campo excede el tamaño permitido
+                  </div>
+                  <div *ngIf="rinEmailFC.errors?.email">
+                    El correo electrónico no es válido
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">Descripción</label>
+            <textarea
+              formControlName="rinDescripcionFC"
+              rows="3"
+              maxlength="240"
+              class="form-control"
+            ></textarea>
+            <div
+              *ngIf="
+                rinDescripcionFC.invalid &&
+                (rinDescripcionFC.dirty || rinDescripcionFC.touched)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="rinDescripcionFC.errors?.required">
+                El campo es obligatorio
+              </div>
+              <div *ngIf="rinDescripcionFC.errors?.maxlength">
+                El campo excede el tamaño permitido
+              </div>
+              <div *ngIf="rinDescripcionFC.errors?.whitespace">
+                El campo no debe contener espacios en blanco al inicio ni al
+                final
+              </div>
+            </div>
+          </div>
+
+          <app-file-upload
+            [parentForm]="registroIncidenciaFG"
+            formControlName="rinFileAdjuntoFC"
+          >
+            <div
+              *ngIf="
+                rinFileAdjuntoFC.invalid &&
+                (rinFileAdjuntoFC.dirty || rinFileAdjuntoFC.touched)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="rinFileAdjuntoFC.errors?.filesize">
+                El tamaño del archivo excede el permitido
+              </div>
+              <div *ngIf="rinFileAdjuntoFC.errors?.requiredFileType">
+                El tipo de archivo no es válido
+              </div>
+            </div>
+          </app-file-upload>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          #btnSubmitRegistro
+          [disabled]="registroIncidenciaFG.invalid"
+          type="submit"
+          class="btn btn-success"
+        >
+          <i class="far fa-send"></i>
+          Enviar incidencia
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #modalValidadorVoucher let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">Validador de voucher</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row pb-4">
+      <div class="offset-md-2 col-md-6">
+        <div class="validadorVoucher" style="width: 320px; height: 175px">
+          <table align="center">
+            <tbody>
+              <tr>
+                <td style="height: 110px" colspan="7"></td>
+              </tr>
+              <tr>
+                <td style="width: 5px; height: 41px" align="left"></td>
+                <td
+                  style="width: 140px; height: 41px"
+                  valign="bottom"
+                  align="left"
+                >
+                  <input
+                    [(ngModel)]="inpVPCodigoA"
+                    style="
+                      padding: 2px 5px !important;
+                      background-color: #e0effd;
+                    "
+                    type="text"
+                    maxlength="15"
+                    class="form-control"
+                    appDigitOnly
+                  />
+                </td>
+                <td
+                  style="width: 35px; height: 41px"
+                  valign="bottom"
+                  align="left"
+                >
+                  <input
+                    style="
+                      width: 35px;
+                      padding: 2px 5px !important;
+                      background-color: #e0effd;
+                    "
+                    [(ngModel)]="inpVPCodigoDia"
+                    type="text"
+                    maxlength="2"
+                    class="form-control"
+                    appDigitOnly
+                  />
+                </td>
+                <td
+                  style="width: 70px; height: 41px"
+                  valign="bottom"
+                  align="left"
+                >
+                  <select
+                    style="
+                      width: 70px;
+                      padding: 2px 5px !important;
+                      background-color: #e0effd;
+                    "
+                    class="form-select"
+                    [(ngModel)]="inpVPCodigoMes"
+                  >
+                    <option value="01">ENE</option>
+                    <option value="02">FEB</option>
+                    <option value="03">MAR</option>
+                    <option value="04">ABR</option>
+                    <option value="05">MAY</option>
+                    <option value="06">JUN</option>
+                    <option value="07">JUL</option>
+                    <option value="08">AGO</option>
+                    <option value="09">SET</option>
+                    <option value="10">OCT</option>
+                    <option value="11">NOV</option>
+                    <option value="12">DIC</option>
+                  </select>
+                </td>
+                <td style="width: 55px; height: 41px" valign="bottom">
+                  <input
+                    [(ngModel)]="inpVPCodigoAnio"
+                    type="text"
+                    maxlength="4"
+                    class="form-control"
+                    style="
+                      width: 55px;
+                      padding: 2px 5px !important;
+                      background-color: #e0effd;
+                    "
+                    appDigitOnly
+                  />
+                </td>
+                <td
+                  style="width: 55px; height: 41px"
+                  valign="bottom"
+                  align="left"
+                >
+                  <input
+                    [(ngModel)]="inpVPCodigoB"
+                    type="text"
+                    maxlength="10"
+                    class="form-control"
+                    style="
+                      width: 55px;
+                      padding: 2px 5px !important;
+                      background-color: #e0effd;
+                    "
+                    appDigitOnly
+                  />
+                </td>
+                <td style="height: 41px" valign="bottom" align="left"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-2" style="margin-top: auto; margin-bottom: auto">
+        <button type="button" class="btn btn-danger" (click)="validarVoucher()">
+          Validar Voucher
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalManuales let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">Manuales del Sistema</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row pb-4">
+      <div class="col-md-10">
+        <div>
+          <h3>Manual general</h3>
+        </div>
+        <ul>
+          <li>
+            <a
+              href="assets/docs/MTC_TUPA_DIGITAL-MANUAL_USUARIO_WEB_v.1.5.pdf"
+              target="_blank"
+              >Manual de usuario ADMINISTRADO</a
+            >
+          </li>
+        </ul>
+        <div>
+          <h3>Manuales espec&iacute;ficos</h3>
+        </div>
+        <ul>
+          <li><b>Direcci&oacute;n General de Aeron&aacute;utica Civil</b></li>
+          <ul>
+            <li>
+              <a href="assets/docs/MTC_DGAC-002.pdf" target="_blank"
+                >DGAC-002: AUTORIZACIÓN DE FUNCIONAMIENTO PARA ESCUELAS Y
+                CENTROS DE INSTRUCCIÓN</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-003.pdf" target="_blank"
+                >DGAC-003: INSCRIPCIÓN DE AEROCLUBES</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-004.pdf" target="_blank"
+                >DGAC-004: APROBACIÓN DE MEMORIA TÉCNICA DE REPARACIONES O
+                ALTERACIONES MAYORES</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-005.pdf" target="_blank"
+                >DGAC-005: AUTORIZACIÓN PARA TALLERES DE MANTENIMIENTO
+                AERONÁUTICO (TMA)</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-011.pdf" target="_blank"
+                >DGAC-011: PERMISO DE OPERACIÓN-SERVICIO DE TRANSPORTE AÉREO NO
+                REGULAR NACIONAL</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-023.pdf" target="_blank"
+                >DGAC-023: APROBACIÓN DE ACUERDOS DE COOPERACIÓN COMERCIAL Y DE
+                CÓDIGO COMPARTIDO</a
+              >
+            </li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalListaTupas let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">
+      Lista de Procedimientos TUPA
+    </h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body small">
+        <div class="row mb-3 align-items-center">
+          <div class="col-sm-auto">
+              <b>BUSCAR: </b>
+            </div>
+            <div class="input-group input-group-sm col-sm">
+              <input
+                class="form-control"
+                type="text"
+                name="searchTerm"
+                [(ngModel)]="txtBuscarTupa"
+                (input)="onChangeBuscarTupa()"
+                style="text-transform: uppercase"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                (click)="onChangeFilter()"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-hover table-striped">
+                <thead class="bg-secondary text-white text-center">
+                  <tr class="align-self-center">
+                    <th>Código TUPA</th>
+                    <th>Grupo</th>
+                    <th>Denominación</th>
+                    <th>Clasificación</th>
+                    <th>Plazo de atención</th>
+                    <th>Requisitos</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let item of listadoProcedimientosFilter
+                        | slice
+                          : (page - 1) * pageSize
+                          : (page - 1) * pageSize + pageSize
+                    "
+                  >
+                    <td class="align-middle">{{ item.codigo }}</td>
+                    <td class="align-middle">{{ item.acronimo }}</td>
+                    <td class="align-middle">{{ item.nombre }}</td>
+                    <td class="align-middle">{{ item.tipoEvaluacion }}</td>
+                    <td class="align-middle">
+                      {{ item.plazoDias }} DÍAS HÁBILES
+                    </td>
+                    <td class="text-center align-middle">
+                      <img
+                        (click)="openModalRequisitos(requisitos, item)"
+                        height="20%"
+                        style="height: 25px"
+                        src="/assets/icon/list.svg"
+                      />
+                    </td>
+                    <td class="align-middle">
+                      <a class="btn btn-link" (click)="iniciarTramite()"
+                        >Iniciar Trámite</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- <table class="table table-hover table-striped">
+                        <thead class="bg-secondary text-white text-center">
+                            <tr class="align-self-center">
+                                <th>#</th>
+                                <th>C&oacute;digo</th>
+                                <th>Denominaci&oacute;n</th>
+                                <th>Tipo de persona</th>
+                                <th>Acceso</th>
+                                <th>Plazo</th>
+                                <th>Ficha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of listadoFiltro  | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+                                <td>{{ item.rowId }}</td>
+                                <td>{{ item.codTupa }}</td>
+                                <td>{{ item.denominacion }}</td>
+                                <td>{{ item.tipoPersona }}</td>
+                                <td>
+                                    <div *ngIf="item.origen === 'MP'">Mesa de Partes Virtual</div>
+                                    <div *ngIf="item.origen === 'TD'">TUPA Digital</div>
+                                    <div *ngIf="item.origen === 'V'">VUCE</div>
+                                </td>
+                                <td>
+                                    <div *ngIf="item.plazo === '0'">INMEDIATO</div>
+                                    <div *ngIf="item.plazo !== '0' && item.plazo !== ''">{{ item.plazo }}
+                                        DÍAS</div>
+                                </td>
+                                <td><a href="{{ item.urlDocumento }}" target="_blank" title="Ver ficha">
+                                        <img src="assets/img/icon_pdf.png" border="0" /></a>
+                                </td>
+                        </tbody>
+                    </table> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- <app-pagination-table [page]="page" [pageSize]="pageSize" [totalRegistros]="listSize"
+            (changePagination)="refreshPagination($event)"></app-pagination-table> -->
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="listSize"
+            [maxSize]="5"
+            [rotate]="true"
+            [boundaryLinks]="true"
+          >
+            <ng-template ngbPaginationFirst>Inicio</ng-template>
+            <ng-template ngbPaginationLast>Final</ng-template>
+            <ng-template ngbPaginationPrevious>Anterior</ng-template>
+            <ng-template ngbPaginationNext>Siguiente</ng-template>
+            <ng-template ngbPaginationEllipsis>...</ng-template>
+            <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+          </ngb-pagination>
+
+          <select
+            class="form-select"
+            style="width: auto"
+            [(ngModel)]="pageSize"
+          >
+            <option [ngValue]="10">10 registros</option>
+            <option [ngValue]="25">25 registros</option>
+            <option [ngValue]="50">50 registros</option>
+            <option [ngValue]="100">100 registros</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #requisitos let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">LISTADO DE REQUISITOS</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body small">
+        <h5 class="card-title">DATOS DEL PROCEDIMIENTO</h5>
+        <hr />
+        <div class="row">
+          <div class="col-md-2 fw-bold">Código TUPA:</div>
+          <div class="col-md-10">
+            {{ procedimientoSeleccionado?.codigo || "DETERMINADO" }}
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-2 fw-bold">Descripción:</div>
+          <div class="col-md-10">
+            {{ procedimientoSeleccionado?.nombre || "DETERMINADO" }}
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-2 fw-bold">Tipo Evaluación:</div>
+          <div class="col-md-10">
+            {{ tipoSolicitudSeleccionado?.tipoEvaluacion || "DETERMINADO" }}
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-2 fw-bold">Plazo Atención:</div>
+          <div class="col-md-10">
+            {{
+              tipoSolicitudSeleccionado?.plazoAtencion > 0
+                ? tipoSolicitudSeleccionado.plazoAtencion + " DÍAS HÁBILES"
+                : "DETERMINADO"
+            }}
+          </div>
+        </div>
+
+        <br />
+        <h5 class="card-title">REQUISITOS</h5>
+        <hr />
+        <div class="row mt-3 align-items-center">
+          <div class="col-md-auto col-form-label fw-bold">
+            Tipo de Solicitud:
+          </div>
+          <div class="col-md">
+            <select
+              class="form-select"
+              [(ngModel)]="tipoSolicitudModel"
+              (ngModelChange)="onTipoSolicitudChange($event)"
+            >
+              <option
+                *ngFor="let item of listadoTipoSolicitud"
+                [value]="item.codigostr"
+              >
+                {{ item.descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr class="align-self-center">
+                  <th>Nro</th>
+                  <th>Denominación del requisito</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listadoDetalleTupaFilter">
+                  <td class="align-middle">{{ item.ordenTxt }}</td>
+                  <ng-container *ngIf="item.tieneCosto; else elseTemplate">
+                    <td class="align-middle requisito-desc">
+                      <quill-view
+                        [content]="item.descripcion"
+                        theme="snow"
+                        [sanitize]="true"
+                      ></quill-view>
+                      <div>
+                        <strong class="text-muted">
+                          Monto a Pagar: S/ {{ item.costoFormatted }}
+                        </strong>
+                      </div>
+                      <div
+                        class="badge text-bg-info"
+                        *ngIf="!!item.obligatorio"
+                      >
+                        Requisito obligatorio
+                      </div>
+                    </td>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <td class="align-middle requisito-desc">
+                      <quill-view
+                        [content]="item.descripcion"
+                        theme="snow"
+                        [sanitize]="true"
+                      ></quill-view>
+                      <div
+                        class="badge text-bg-info"
+                        *ngIf="!!item.obligatorio"
+                      >
+                        Requisito obligatorio
+                      </div>
+                    </td>
+                  </ng-template>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

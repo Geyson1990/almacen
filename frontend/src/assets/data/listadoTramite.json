@@ -1,0 +1,30 @@
+{
+    "id": 26,
+    "tupaId": 1029,
+    "tupaCodigo": "DCV-008",
+    "tupaNombre": "CANJE DE LICENCIA DE CONDUCIR MILITAR O POLICIAL",
+    "tupaOrganizacion": "DIRECCION DE CIRCULACION VIAL-(NUEVO-ROF)",
+    "tupaAcronimo": "DCV",
+    "tupaTipoEvaluacion": "EVALUACION AUTOMATICA",
+    "tupaPlazoDias": 0,
+    "requisitos": [
+      {
+        "tramiteId": 26,
+        "tramiteReqId": 30,
+        "tupaId": 1029,
+        "tupaReqId": 6054,
+        "descripcion": "SOLICITUD SEGÚN FORMULARIO, INDICANDO BAJO DECLARACIÓN JURADA EL DÍA DE PAGO Y NÚMERO DE CONSTANCIA DE PAGO.\r\n",
+        "tieneAdjunto": false,
+        "tieneFormAnexo": false,
+        "tieneCosto": false,
+        "completo": false,
+        "codigoFormAnexo": "",
+        "rutaDocumento": "",
+        "costo": 0,
+        "tipoPermiso": {
+          "codigo": 0,
+          "descripcion": " "
+        }
+      }
+    ]
+  }

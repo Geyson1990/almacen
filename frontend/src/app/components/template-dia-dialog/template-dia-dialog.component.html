@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h2>{{ title }}</h2>
+</div>
+<div class="modal-body">
+  <div class="pdf-container">
+    <pdf-viewer
+      *ngIf="pdfSrc"
+      [src]="pdfSrc"
+      [render-text]="true"
+      style="display: block;"
+      [show-all]="true"
+      [original-size]="true"
+    >
+    </pdf-viewer>
+    <button (click)="descargarPDF()">Descargar PDF</button>
+  </div>
+</div>

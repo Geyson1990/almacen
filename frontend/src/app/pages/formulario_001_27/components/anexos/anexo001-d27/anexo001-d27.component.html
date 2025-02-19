@@ -1,0 +1,205 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">ANEXO 001-D/27</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+<div class="modal-body anexo">
+
+    <form novalidate [formGroup]="anexoFormulario">
+
+        <div ngbAccordion #acc="ngbAccordion" activeIds="ngb-anexo001-d17">
+            <div ngbAccordionItem="ngb-anexo001-A27">
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton> DATOS PERSONALES
+                  </button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row gx-2">
+                        <div class="col-md-2 mb-2">
+                            <label>Tipo Documento <span class="text-danger">(*)</span></label>
+                            <select disabled class="form-select form-select-sm" formControlName="tipoDocumentoForm">
+                            <option value=''>Seleccione</option>
+                            <option *ngFor="let item of listaTiposDocumentos | slice:0:4" [value]="item.id">{{ item.documento }}</option>
+                        </select>
+
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label for="razonSocial" class="col-form-label">Número de Documento <span
+                        class="text-danger">(*)</span></label>
+                            <input disabled formControlName="numeroDocumentoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-7 mb-2">
+                            <label for="razonSocial" class="col-form-label">Nombres y  Apellidos  <span
+                        class="text-danger">(*)</span></label>
+                            <input disabled formControlName="nombresApellidosRazonSocialForm" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+
+
+                    <!-- Telefono, Celular, Correo -->
+                    <div class="row gx-2 mb-2">
+                        <div class="col-md-2 mb-1">
+                            <label class="mb-0">RUC <span class="text-danger"></span></label>
+                            <input disabled formControlName="rucForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-2 mb-1">
+                            <label class="mb-0">Teléfono <span class="text-danger"></span></label>
+                            <input disabled formControlName="telefonoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Celular <span class="text-danger">(*)</span></label>
+                            <input disabled formControlName="celularForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Correo Electrónico ( E-mail ) <span class="text-danger">(*)</span></label>
+                            <input disabled formControlName="correoElectronicoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+
+            </div>
+            <div ngbAccordionItem="ngb-anexo001S2-B27">
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>II. DIRECCIÓN ACTUAL</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12 mb-3 text-justify">
+                            DOMICILIO LEGAL (AVENIDA / CALLE / JIRÓN / PASAJE / N° / DEPARTAMENTO / MANZANA / LOTE / URBANIZACIÓN
+                        </div>
+                        <div class="col-md-12">
+                            <input formControlName="domicilioLegalForm" type="text" class="form-control flex-3 text-uppercase" />
+
+                        </div>
+
+                    </div>
+
+                    <div class="row gx-2 mb-2">
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Departamento <span class="text-danger">(*)</span></label>
+                            <input formControlName="departamentoForm" type="text" class="form-control form-control-sm" formControlName="departamentoForm">
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Provincia <span class="text-danger">(*)</span></label>
+                            <input formControlName="provinciaForm" type="text" class="form-control form-control-sm" formControlName="provinciaForm">
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Distrito <span class="text-danger">(*)</span></label>
+                            <input formControlName="distritoForm" type="text" class="form-control form-control-sm" formControlName="distritoForm">
+                        </div>
+
+
+                    </div>
+
+
+                </ng-template>
+</div>
+</div>
+
+            </div>
+
+
+            <div  ngbAccordionItem>
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>III. DECLARACIÓN JURADA</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                    DECLARO:
+
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="declaracionPrimeroForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-10">
+                            <p class="text-justify small">
+                                No estar impedido de contratar con el Estado, en razón de lo dispuesto en los artículos 1366º y 1367º del Código Civil, la Ley General del Sistema Concursal, por resolución judicial o del Tribunal de Contrataciones y Adquisiciones del Estado, u otros,
+                                ni incurso en las limitaciones establecidas en el Texto Único Ordenado de la Ley de Telecomunicaciones ni en los artículos 113º, 125º y otros que correspondan del Texto Único Ordenado del Reglamento General de la Ley de
+                                Telecomunicaciones aprobado con Decreto Supremo Nº 020-2007-MTC.
+
+                            </p>
+                        </div>
+
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+
+                        <div class="col-md-2">
+                            Lugar y Fecha
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control flex-3 text-uppercase" formControlName="declaracionLugarForm" />
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="input-group">
+                                <input type="text" (dateSelect)="onDateSelectFechaDeclaracion($event)" class="form-control form-control-sm" ngbDatepicker #fechaPago="ngbDatepicker" readonly formControlName="declaracionFechaForm">
+
+                                    <button class="btn btn-outline-secondary calendar" (click)="fechaPago.toggle()" type="button">
+                                <i class="far fa-calendar-alt"></i>
+                            </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </ng-template>
+</div>
+</div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" *ngIf="errorAlCargarData === false || true" (click)="guardarAnexo()">
+                <i class="far fa-save"></i>
+                {{
+                    (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

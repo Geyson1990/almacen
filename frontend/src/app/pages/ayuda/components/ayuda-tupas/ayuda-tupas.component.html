@@ -1,0 +1,82 @@
+<div class="p-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">LISTA DE PROCEDIMIENTOS TUPA</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3 align-items-center">
+                            <div class="col-sm-auto">
+                                <b>Buscar: </b>
+                            </div>
+                            <div class="input-group input-group-sm col-sm">
+                                <input class="form-control " type="text" name="searchTerm" [(ngModel)]="filtrarTexto"
+                                    (input)="onChangeFilter()" />
+                                    <button class="btn btn-outline-secondary" (click)="onChangeFilter()">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead class="bg-secondary text-white text-center">
+                                    <tr class="align-self-center">
+                                        <th>#</th>
+                                        <th>C&oacute;digo</th>
+                                        <th>Denominaci&oacute;n</th>
+                                        <th>Tipo de persona</th>
+                                        <th>Acceso</th>
+                                        <th>Plazo</th>
+                                        <th>Ficha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of listadoFiltro  | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+                                        <td>{{ item.rowId }}</td>
+                                        <td>{{ item.codTupa }}</td>
+                                        <td>{{ item.denominacion }}</td>
+                                        <td>{{ item.tipoPersona }}</td>
+                                        <td>
+                                            <div *ngIf="item.origen === 'MP'">Mesa de Partes Virtual</div>
+                                            <div *ngIf="item.origen === 'TD'">TUPA Digital</div>
+                                            <div *ngIf="item.origen === 'V'">VUCE</div>
+                                        </td>
+                                        <td>
+                                            <div *ngIf="item.plazo === '0'">INMEDIATO</div>
+                                            <div *ngIf="item.plazo !== '0' && item.plazo !== ''">{{ item.plazo }} DÍAS
+                                            </div>
+                                        </td>
+                                        <td><a href="{{ item.urlDocumento }}" target="_blank" title="Ver ficha">
+                                                <img src="assets/img/icon_pdf.png" border="0" /></a></td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between p-2">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="listaSize" [maxSize]="5"
+                            [rotate]="true" [boundaryLinks]="true">
+                            <ng-template ngbPaginationFirst>Inicio</ng-template>
+                            <ng-template ngbPaginationLast>Final</ng-template>
+                            <ng-template ngbPaginationPrevious>Anterior</ng-template>
+                            <ng-template ngbPaginationNext>Siguiente</ng-template>
+                            <ng-template ngbPaginationEllipsis>...</ng-template>
+                            <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+                        </ngb-pagination>
+
+                        <select class="form-select" style="width: auto" [(ngModel)]="pageSize">
+                            <option [ngValue]="10">10 registros</option>
+                            <option [ngValue]="25">25 registros</option>
+                            <option [ngValue]="50">50 registros</option>
+                            <option [ngValue]="100">100 registros</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

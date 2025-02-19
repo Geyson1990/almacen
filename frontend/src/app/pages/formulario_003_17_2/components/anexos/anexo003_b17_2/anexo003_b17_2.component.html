@@ -1,0 +1,179 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+<div class="modal-body anexo">
+
+    <div>
+        <h6>ANEXO 003-B/17.2 DECLARACION JURADA PARA SERVICIOS DE TRANSPORTE TERRESTRE (Aplica para  DSTT-025, DSTT-027, DSTT-028, DSTT-029, DSTT-030, DSTT-033, DSTT-034)</h6>
+    </div>
+
+    <form novalidate [formGroup]="anexoFormulario">
+
+        <div ngbAccordion #acc="ngbAccordion" >
+            <div ngbAccordionItem="ngb-anexo003-b17-2" [collapsed]="false">
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>I. DECLARACIÓN JURADA</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12 text-justify">
+                            Los suscritos manifiestan con carácter de declaración jurada que indique que cumple con lo establecido en los numerales 37.4, 37.5 y 37.7 del artículo 37° del Reglamento Nacional de Administración de Transportes (RNAT), sujetandose a lo señalado en el artículo 34 (3) del Texto Unico Ordenado de la Ley N° 27444-Ley del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS y demás normas asociadas.
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+
+                        <div class="col-sm-5 d-flex flex-column" id="anexo003-b172-tipo-numero-documento">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 campo-obligatorio me-2">Tipo de Documento:</div>
+                                <div class="flex-1">
+                                    <select class="form-select" (change)="changeTipoDocumento()" formControlName="tipoDocumentoForm">
+                                    <option value=''>Seleccione</option>
+                                    <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="flex-1 campo-obligatorio me-2">Número de Documento:</div>
+                                <div class="flex-1">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-uppercase" (input)="inputNumeroDocumento($event)" [readonly]="this.anexoFormulario.controls['tipoDocumentoForm'].value === ''" [maxlength]="getMaxLengthNumeroDocumento()" formControlName="numeroDocumentoForm"
+                                        />
+                                            <button class="btn btn-outline-secondary" [disabled]="this.anexoFormulario.controls['numeroDocumentoForm'].value.trim().length === 0" type="button" (click)="buscarNumeroDocumento()">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 d-flex flex-column" id="anexo003-b172-apellidos-nombres">
+                            <div class="d-flex align-items-center">
+                                <div class="campo-obligatorio me-2">Apellidos:</div>
+                                <div class="flex-1">
+                                    <input type="text" class="form-control"  formControlName="apellidosForm" />
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="campo-obligatorio me-2">Nombres:</div>
+                                <div class="flex-1">
+                                    <input type="text" class="form-control" formControlName="nombresForm" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 d-flex flex-column" id="anexo003-b172-cargo-agregar">
+                            <div class="d-flex">
+                                <div class="campo-obligatorio flex-1">Cargo:</div>
+                                <div class="flex-1">
+                                    <select class="form-select" formControlName="cargoForm">
+                                    <option value="">Seleccione</option>
+                                    <option *ngFor="let item of listaCargos" [value]="item.value">{{ item.text }}</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3" id="anexo003-b172-boton-agregar-modificar">
+                                <button class="btn btn-danger btn-sm flex-1" [disabled]="formularioCompleto() === false" (click)="agregarTripulacion()">
+                                <div *ngIf="indexEditTabla === -1; else elseBlock">
+                                    <i class="fas fa-plus-circle"></i>
+                                    Agregar
+                                </div>
+                                <ng-template #elseBlock>
+                                    <i class="fas fa-pencil-alt"></i>
+                                    Modificar
+                                </ng-template>
+</div>
+</div>
+                            </button>
+
+                                <button *ngIf="indexEditTabla !== -1" class="btn btn-warning btn-sm flex-1 ms-2 anexo003-b172-btn-cancelar" (click)="cancelarModificacion()">
+                                Cancelar
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered">
+                                    <thead class="tabla-header-mtc">
+                                        <tr>
+                                            <th>N°</th>
+                                            <th>Apellidos y Nombres</th>
+                                            <th>Cargo</th>
+                                            <th>Tipo de Documento</th>
+                                            <th>Número de Documento</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="listaTripulacion.length > 0; else sinRegistros">
+                                        <tr class="text-center" [class.registro-edit]="indexEditTabla === i" *ngFor="let item of listaTripulacion, let i = index">
+                                            <td>{{ i + 1}}</td>
+                                            <td class="text-start">
+                                                {{ item.apellidos + ' ' + item.nombres }}
+                                            </td>
+                                            <td>{{ item.cargo.text }}</td>
+                                            <td>{{ item.tipoDocumento.documento }}</td>
+                                            <td>{{ item.numeroDocumento }}</td>
+                                            <td>
+                                                <div *ngIf="validarRegistroDeFormulario(i, item)">
+                                                    <i class="far fa-edit pe-2 text-primary cursor-pointer" [class.opacity-icon]="indexEditTabla !== -1" title="Editar" (click)="modificarTripulacion(item, i)"></i>
+                                                    <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" [class.opacity-icon]="indexEditTabla !== -1" title="Eliminar" (click)="eliminarTripulacion(item, i)"></i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <ng-template #sinRegistros>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="6" class="text-center">No se encontraron registros</td>
+                                            </tr>
+                                        </tbody>
+                                    </ng-template>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" *ngIf="errorAlCargarData === false" (click)="guardarAnexo()" [disabled]="this.listaTripulacion.length === 0">
+                <i class="far fa-save"></i>
+                {{
+                    (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

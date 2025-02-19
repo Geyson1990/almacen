@@ -1,0 +1,560 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+ 
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+
+<div class="modal-body anexo">
+  <form class="needs-validation"   novalidate   [formGroup]="contactForm"  (ngSubmit)="onSubmit()">
+ 
+ 
+
+    <div class="center">
+        <h6><i></i> ANEXO 006-B/17 SOLICITUD DE EXPEDICIÓN DE LICENCIA DE CONDUCIR SOLICITADO POR MIEMBROS DEL SERVICIO DIPLOMÁTICO ACREDITADO EN EL PAIS</h6>
+      
+    </div>
+   
+
+<div ngbAccordion #acc="ngbAccordion" activeIds="ngb-anexo006-b17">
+    <div ngbAccordionItem="ngb-anexo006-b17" [collapsed]="false">
+        <h2 ngbAccordionHeader >
+            
+                <button ngbAccordionButton>I. DATOS DEL BENEFICIARIO</button>
+            </h2>
+
+        <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="validationCustom01">NOMBRES Y APELLIDOS DEL BENEFICIARIO</label>
+                                     <input
+                                     type="text"
+                                     class="form-control"
+                                     id="validationCustom01"
+                                     placeholder="Nombres y Apellidos"
+                                     formControlName="Nombres_apellido"
+                                     [maxlength]="100"
+                                     [ngClass]="{
+                                         'is-invalid': isValidField('Nombres_apellido')
+                                     }" 
+                                     />      
+                                
+                                 <div class="invalid-feedback">
+                                     <span *ngIf="contactForm.get('Nombres_apellido').errors?.required">
+                                     Por favor, introduzca su Nombre y Apellidos
+                                     </span>
+                                     <span *ngIf="contactForm.get('Nombres_apellido').errors?.minlength">
+                                     El nombre y apellidos debe ser más largo que
+                                     {{
+                                         contactForm.get("Nombres_apellido").errors?.minlength?.requiredLength
+                                     }}
+                                     characters.
+                                     </span>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">      
+                            <div class="mb-3">
+                                <label for="name">CONDICIÓN</label>
+                                    <select class="form-select flex-2 me-1"  formControlName="Condicion">
+                                        <option>Seleccione</option>
+                                        <option>EMBAJADOR</option>
+                                        <option>DIPLOMÁTICO</option>
+                                        <option>ADMINISTRATIVO</option>
+                                        <option>CONYUGE</option>
+                                        <option>HIJO</option>
+                                        <option>AGREGADO MILITAR</option>    
+                                    </select>
+                            
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">      
+                            <div class="mb-3">
+                            <label for="name">DOCUMENTO DE IDENTIDAD</label>
+                            <select class="form-select flex-2 me-1" formControlName="Documento_identidad">
+                                <option>Seleccione</option>
+                                <option selected>DNI</option>
+                                <!-- <option>CARNÉ DE IDENTIDAD</option> -->
+                                <!-- <option>TARJETA DE IDENTIDAD</option>  -->
+                                <!-- <option>CÉDULA DE IDENTIDAD</option>  -->
+                            </select>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-4">      
+                            <div class="mb-3">
+                                 <label for="validationCustom04">NUMERO</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                id="validationCustom03"
+                                placeholder="numero"
+                                formControlName="numero"
+                                [maxlength]="10"
+                                [ngClass]="{
+                                'is-invalid': isValidField('numero')
+                                }"
+                               />
+                                <div class="invalid-feedback">
+                                    <span *ngIf="contactForm.get('numero').errors?.required">
+                                        Por favor, introduzca el numero de Doc. Identidad
+                                    </span>
+                                    <span *ngIf="contactForm.get('numero').errors?.minlength">                        
+                                        El numero debe ser más largo que 
+                                    {{ contactForm.get("numero").errors?.minlength?.requiredLength }}
+                                    numeros
+                                    </span>
+                                </div>
+                         </div>
+                        </div>
+    
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">      
+                            <div class="mb-3">
+                                <label for="name">FECHA DE NACIMIENTO</label>
+                                <div class="input-group">
+                                <input class="form-control" readonly ngbDatepicker #fechaEmision2="ngbDatepicker" 
+                                id="validationCustom18"
+                                placeholder="Fecha de Nacimiento"
+                                formControlName="Fecha_Nacimiento"
+                                [ngClass]="{
+                                    'is-invalid': isValidField('Fecha_Nacimiento')
+                                }"
+                                />      
+                                  
+                                    <button class="btn btn-outline-secondary calendar" (click)="fechaEmision2.toggle()" type="button">
+                                    <i class="far fa-calendar-alt"></i>
+                                    </button>
+                                <div class="invalid-feedback">
+                                    <span *ngIf="contactForm.get('Fecha_Nacimiento').errors?.required">
+                                    Por favor, introduzca su Fecha de Nacimiento
+                                    </span>
+                                    <span *ngIf="contactForm.get('Fecha_Nacimiento').errors?.minlength">
+                                    El Fecha de Nacimiento debe ser más largo que 
+                                    {{
+                                        contactForm.get("Fecha_Nacimiento").errors?.minlength?.requiredLength
+                                    }}
+                                    characters.
+                                    </span>
+                                </div>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="col-md-4">      
+                            <div class="mb-3">
+                                <label for="name">NÚMERO DE PASAPORTE VIGENTE</label>
+                            
+        
+                                <input
+                                type="text"
+                                class="form-control"
+                                id="validationCustom07"
+                                placeholder="Pasaporte"
+                                formControlName="Pasaporte"
+                                [maxlength]="12"
+                                [ngClass]="{
+                                'is-invalid': isValidField('Pasaporte')
+                                }"
+                               />
+                                <div class="invalid-feedback">
+                                    <span *ngIf="contactForm.get('Pasaporte').errors?.required">
+                                        Por favor, introduzca el numero de Pasaporte
+                                    </span>
+                                    <span *ngIf="contactForm.get('Pasaporte').errors?.minlength">                        
+                                        El Nro. de Pasaporte debe ser más largo que 
+                                    {{ contactForm.get("Pasaporte").errors?.minlength?.requiredLength }}
+                                    numeros
+                                    </span>
+                                </div>
+        
+        
+                            </div>
+                        </div>
+        
+                        <div class="col-md-4">      
+                            <div class="mb-3">
+                                <label for="name">GENERO</label>
+                                <select class="form-select flex-2 me-1" formControlName="Sexo">
+                                    <option>Seleccione</option>
+                                    <option>MASCULINO</option>
+                                    <option>FEMENINO</option>         
+                                </select>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="name">DOMICILIO (AV./ CALLE / JIRON / PSJE/ N° /DPTO / MZA /LOTE /URB / DISTRITO )</label>
+                                 <input type="text" class="form-control" formControlName="Domicilio">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">      
+                            <div class="mb-3">
+                                <label for="name">NÚMERO DE LICENCIA CONDUCIR VIGENTE EMITIDA EN EL EXTRANJERO</label>
+                                <input type="text" class="form-control" formControlName="Nro_Licencia_Extranjera" [maxlength]="10">
+                            </div>
+                        </div>
+            
+                        <div class="col-md-4">      
+                        <!--  aqui va fecha-->
+                        <div class="mb-3">
+                            <label for="name">FECHA DE CADUCIDAD DE LA LICENCIA DE CONDUCIR</label>
+                            <div class="input-group">
+                            <input class="form-control" readonly ngbDatepicker #fechaEmision3="ngbDatepicker" 
+                            id="validationCustom19"
+                            placeholder="Fecha de Caducidad"
+                            formControlName="Fecha_Caducidad"
+                            [ngClass]="{
+                                'is-invalid': isValidField('Fecha_Caducidad')
+                            }"
+                            />      
+                              
+                                <button class="btn btn-outline-secondary calendar" (click)="fechaEmision3.toggle()" type="button">
+                                <i class="far fa-calendar-alt"></i>
+                                </button>
+                            <div class="invalid-feedback">
+                                <span *ngIf="contactForm.get('Fecha_Caducidad').errors?.required">
+                                Por favor, introduzca su Fecha de Caducidad
+                                </span>
+                                <span *ngIf="contactForm.get('Fecha_Caducidad').errors?.minlength">
+                                    La Fecha de Caducidad debe ser más largo que 
+                                {{
+                                    contactForm.get("Fecha_Caducidad").errors?.minlength?.requiredLength
+                                }}
+                                characters.
+                                </span>
+                            </div>
+                            </div>
+                         </div>
+                             
+                            
+                          
+                        </div>
+            
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="name">NÚMERO DE LA LICENCIA DE CONDUCIR PERUANA</label>
+                                <input type="text" class="form-control" formControlName="Nro_Licencia_Peruana" [maxlength]="10">
+                            </div>
+            
+                        </div>
+            
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                        <div class="col-sm-11">
+                
+                            <img [src]="url" height="271" width="216" class="center">
+          
+                            <input type="file" class="d-none" #inputFileCroquis accept=".png, .jpg" (change)="onChangeInputCroquis($event)" />
+                            <button class="btn btn-danger btn-sm" type="button" (click)="inputFileCroquis.click()">
+                            <i class="fas fa-upload"></i>
+                            Seleccionar Fotografía Tamaño Pasaporte
+                            </button>
+                       
+                        </div>
+                       
+                </div>
+
+            </div>
+
+
+
+
+        
+    <div class="row">
+                <div class="col-md-6">      
+                  
+    <div class="card">
+        <h6 class="card-header">SERVICIOS (Seleccione el servicio solicitado)</h6>
+                    
+        <div class="card-body">
+            <div id="newsletter" class="row">
+                <div class="col-sm-4" *ngFor="let item of newsletterOp">
+                     <label class="radio-inline">
+                       <input type="radio" [value]="item.valor" formControlName="newsletter" /> {{ item.desc }}
+                     </label>
+                 </div>
+            </div>
+
+        </div>
+    </div>
+
+ 
+                </div>
+   
+    </div>
+  
+
+
+
+
+
+
+
+        </ng-template>
+</div>
+</div>
+    </div>
+        
+        <div  ngbAccordionItem>
+
+        <h2 ngbAccordionHeader>
+                
+                    <button ngbAccordionButton>II. RESTRICCIONES DEL CERTIFICADO DE SALUD</button>
+                </h2>
+
+            <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                <div class="row">
+                    <div class="col-md-12">  
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox"  formControlName="Vehiculo_Transmision_automatica" />
+                                <label class="form-check-label" for="Vehiculo_Transmision_automatica">Vehiculos Automotores con transmisión automática</label>
+                            </div>
+                    </div>
+                </div> 
+                
+                <div class="row">
+                    <div class="col-md-12">          
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox"  formControlName="Vehiculo_acondicionado" />
+                            <label class="form-check-label" for="Vehiculo_acondicionado">Vehiculos Automotores con especialmente acondicionados</label>
+                        </div>
+
+                    </div>
+                </div> 
+                
+                <div class="row">
+                    <div class="col-md-12">  
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox"  formControlName="Con_lentes" />
+                            <label class="form-check-label" for="Con_lentes">Con lentes correctores externo o de contacto</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">  
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox"  formControlName="Con_Audifonos" />
+                            <label class="form-check-label" for="Con_Audifonos">Con Audifonos</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">  
+                        <div class="form-check mb-3">
+                  
+                            <input class="form-check-input" type="checkbox"  formControlName="Con_espejos_laterales" />
+                            <label class="form-check-label" for="Con_espejos_laterales">Con espejos retrovisores laterales y espejo con ángulo 180º</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">  
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox"  formControlName="Sin_restricciones"  (change)="inhabilitar()"/>
+                            <label class="form-check-label" for="Sin_restricciones">Sin restricciones</label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </ng-template>
+</div>
+</div>
+        </div>
+
+        <div  ngbAccordionItem>
+
+            <h2 ngbAccordionHeader>
+                
+                    <button ngbAccordionButton>III. LICENCIA A POSTULAR</button>
+                </h2>
+
+            <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+<div class="row">
+                    
+    <div class="col-md-12">
+        <div class="card">
+                    <h6 class="card-header">Seleccione licencia a postular</h6>
+                                
+            <div class="card-body">
+                <div id="newsletter1" class="row">
+                    <div class="col-sm-2" *ngFor="let item of newsletterOp1">
+                         <label class="radio-inline">
+                           <input type="radio" [value]="item.valor" formControlName="newsletter1" /> {{ item.desc }}
+                         </label>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="row">
+                    
+    <div class="col-md-6">
+
+
+    <div class="card">
+                    <h6 class="card-header">DONACIÓN DE ÓRGANOS</h6>
+                                
+                    <div class="card-body">
+
+                <div id="newsletter2" class="row">
+                    <div class="col-sm-4" *ngFor="let item of newsletterOp2">
+                         <label class="radio-inline">
+                           <input type="radio" [value]="item.valor" formControlName="newsletter2" /> {{ item.desc }}
+                         </label>
+                     </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <h6 class="card-header">Factor y Grupo Sanguíneo</h6>        
+            <div class="card-body">
+               
+
+                <select class="form-select flex-2 me-1" formControlName="FactorSanguineo">
+                    <option [value]="item.valor" *ngFor="let item of newsletterOp3">{{ item.desc }}</option>
+                    </select>
+        
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+            </ng-template>
+</div>
+</div>
+
+        </div>
+
+        <div  ngbAccordionItem>
+
+            <h2 ngbAccordionHeader>
+                
+                    <button ngbAccordionButton>IV. FIRMA DOCUMENTO</button>
+                </h2>
+
+            <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                <P>En honor a la verdad y al amparo del principio de presunción de veracidad estipulada en el
+                    Art. IV inc. 1) numeral 1.7) del Texto Único Ordenado de la Ley Nº 27444 – Ley del
+                    Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS,
+                    declaro Bajo Responsabilidad, que los datos consignados en el presente anexo son ciertos
+                    y que conozco las sanciones a los que seré sometido (a) en caso de haber anotado /
+                    adjuntado información falsa.
+
+
+                </P>        
+                
+
+                <div class="row">
+                    <div class="col-md-12">  
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox"  formControlName="aceptacion" />
+                            <label class="form-check-label" for="aceptacion">Acepto</label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </ng-template>
+</div>
+</div>
+
+        </div>
+
+
+</div>
+
+
+<br><br>
+
+
+
+
+
+</form>
+    
+
+</div>
+
+
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+          <div class="flex-1">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" [disabled]="idAnexoMovimiento === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-1 text-end">
+            <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="this.contactForm.invalid">
+                <i class="far fa-save"></i>
+                {{
+                    (idAnexoMovimiento === 0 ? 'Grabar' : 'Modificar')
+                }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

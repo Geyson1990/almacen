@@ -1,0 +1,558 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body anexo">
+    <div class="container-fluid">
+        <form novalidate [formGroup]="formulario">
+            <div class="mt-1 mb-3">
+                <h6 class="mb-0">{{txtTitulo}}</h6>
+                <h6 class="text-muted">{{txtTituloHelp}}</h6>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2">
+
+                <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>DATOS DEL DECLARANTE</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                        <div class="lista-representantes mx-2">
+                            <div class="justify-content-between">
+                                <h5>Lista de Representantes Legales y/o socio/accionistas de la solicitante</h5>
+                                <button class="btn btn-success" (click)="abrirModalDeclarante(modalagregar)"><i class="fas fa-plus"></i> Agregar</button>
+                            </div>
+                            <hr class="mt-2">
+
+                            <div ngbAccordion #a="ngbAccordion">
+                                <div   ngbAccordionItem *ngFor="let item of listaHojaDatos; let i = index">
+                                  <h2 ngbAccordionHeader >
+                                    
+                                      <span class="text-bold m-0 me-4"><h4 class="m-0">{{ i+1 }}</h4></span>
+                                      <span class="text-bold m-0 w-100">
+                                          <span class="fw-bold">
+                                              {{item.seccion2.representante.nombres}} {{item.seccion2.representante.apellidoPaterno}} {{item.seccion2.representante.apellidoMaterno}}
+                                          </span>
+                                          <span *ngIf="item.seccion1.tipoDeclarante==1" class="badge text-bg-secondary">Rep. Legal de la solicitante</span>
+                                          <span *ngIf="item.seccion1.tipoDeclarante==2" class="badge text-bg-secondary">Rep. Legal del Socio/Accionista de la solicitante</span> <br>
+                                          <span class="small">
+                                              {{item.seccion2.empresa.ruc}} - {{item.seccion2.empresa.razonSocial}}
+                                          </span>
+                                      </span>
+                                      <div class="text-nowrap">
+                                        <button ngbAccordionButton>
+                                            <i class="fas" [ngClass]="(opened)?'fa-eye-slash':'fa-eye'"></i>
+                                        </button>
+                                        <button *ngIf="i>0" class="btn btn-sm btn-primary ms-1" (click)="abrirModalDeclarante(modalagregar,i)"><i class="fas fa-pencil-alt"></i></button>
+                                        <button *ngIf="i>0" class="btn btn-sm btn-danger ms-1" (click)="eliminarDeclarante(i)"><i class="fas fa-trash"></i></button>
+                                      </div>
+                                      </h2>
+                                  <ng-template ngbPanelContent>
+                                    <div class="mx-2">
+                                        <div class="row">
+
+                                            <div class="col-md">
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Documento de Identidad</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">{{item.seccion2.representante.tipoDocumento.documento}} - {{item.seccion2.representante.numeroDocumento}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Domicilio Legal</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">
+                                                            {{item.seccion2.representante.domicilioLegal}} - {{item.seccion2.representante.distrito}}, {{item.seccion2.representante.provincia}}, {{item.seccion2.representante.departamento}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Teléfono Fijo</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">{{item.seccion2.representante.telefono}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Celular</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">{{item.seccion2.representante.celular}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Correo electrónico</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">{{item.seccion2.representante.email}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Partida N°</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">{{item.seccion2.representante.partida}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Asiento N°</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">{{item.seccion2.representante.asiento}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Oficina Registral</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">{{item.seccion2.representante.oficinaRegistral.descripcion }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Empresa</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">{{item.seccion2.empresa.ruc}} - {{item.seccion2.empresa.razonSocial}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row my-0">
+                                                    <label class="col-md-3 text-bold py-0 my-0">Dirección empresa</label>
+                                                    <div class="col-md-9">
+                                                        <span class="border-0 py-0 my-0">
+                                                            {{item.seccion2.empresa.domicilioLegal}} - {{item.seccion2.empresa.distrito}}, {{item.seccion2.empresa.provincia}}, {{item.seccion2.empresa.departamento}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-auto" *ngIf="i>0">
+                                                <div class="mb-3 my-0">
+                                                    <div class="col-md text-bold text-md-right">Declaración Jurada 1:</div>
+                                                    <div *ngIf="item.seccion3.declaracion1" class="col-md text-bold text-end text-success"><i class="fas fa-check-square"></i> SI</div>
+                                                    <div *ngIf="!item.seccion3.declaracion1" class="col-md text-bold text-end text-danger">PENDIENTE</div>
+
+                                                    <div class="col-md text-bold text-md-right">Declaración Jurada 2:</div>
+                                                    <div *ngIf="item.seccion3.declaracion2" class="col-md text-bold text-end text-success"><i class="fas fa-check-square"></i> SI</div>
+                                                    <div *ngIf="!item.seccion3.declaracion2" class="col-md text-bold text-end text-danger">PENDIENTE</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                  </ng-template>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </ng-template>
+                </div>
+                </div>
+                </div>
+
+                <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>DECLARACIÓN JURADA</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                        <div class="px-2 py-3">
+                            <p>
+                                En mi calidad de representante legal de la solicitante y/o representante legal del socio o accionista de la solicitante del otorgamiento de concesión única para prestar el (los) Servicio (s) Público (s) de Telecomunicaciones indicado (s) en el Formulario de la solicitud, y en aplicación del principio de presunción de veracidad estipulada en el numeral 1.7 del Art. IV del Texto Único Ordenado de la Ley Nº 27444 del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019 JUS.
+                            </p>
+
+                            <p class="text-bold">
+                                DECLARO:
+                            </p>
+                            <div class="alert alert-custom">
+                                <ul>
+                                    <li>
+                                        <div class="row" [class.control-invalid]="formInvalid(Declaracion1Solicitante)">
+                                            <div class="col-md">
+                                                <p>
+                                                    <span class="text-bold">Primero.-</span> No estar impedido de contratar con el Estado, en razón de lo dispuesto en los artículos 1366º y 1367º del Código Civil, la Ley General del Sistema Concursal, por resolución judicial o del Tribunal de Contrataciones y Adquisiciones del Estado, u otros, ni incurso en las limitaciones establecidas en el Texto Único Ordenado de la Ley de Telecomunicaciones ni en los artículos 113º, 125º y otros que correspondan del Texto Único Ordenado del Reglamento General de la Ley de Telecomunicaciones aprobado con Decreto Supremo Nº 020-2007-MTC.
+                                                </p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="d-flex flex-row p-2 ms-4">
+                                                    <ui-switch formControlName="Declaracion1Solicitante" class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row" [class.control-invalid]="formInvalid(Declaracion2Solicitante)">
+                                            <div class="col-md">
+                                                <p>
+                                                    <span class="text-bold">Segundo.-</span> Que, conforme a las facultades otorgadas en el poder inscrito en el Asiento Nº <b>{{listaHojaDatos[0]?.seccion2.representante.asiento }}</b> de la Partida Nº <b>{{listaHojaDatos[0]?.seccion2.representante.partida }}</b> del Registro de Personas Jurídicas de los Registros Públicos de <b>{{listaHojaDatos[0]?.seccion2.representante.oficinaRegistral.descripcion }}</b>, estoy facultado para realizar declaraciones juradas en nombre
+                                                </p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="d-flex flex-row p-2 ms-4">
+                                                    <ui-switch formControlName="Declaracion2Solicitante" class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p>
+                                Lima, {{this.dia}} de {{this.mes}} del {{this.anio}}
+                            </p>
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+            <div class="flex-1">
+                <button type="button" class="btn btn-secondary" [disabled]="id === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i> Visualizar
+                </button>
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success boton-guardar" (click)="guardarAnexo()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="activeModal.close(graboUsuario)">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #modalagregar let-modal>
+    <div class="modal-header bg-secondary text-white">
+      <h5 class="modal-title">Agregar</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss()">
+        
+      </button>
+    </div>
+    <div class="modal-body p-4">
+        <form  [formGroup]="formularioDeclarante">
+
+            <h5>DECLARANTE <small>(Seleccione una opción)</small></h5>
+            <hr>
+
+            <div class="row">
+                <div class="mb-3 col-md-12">
+                    <div class=" form-check ms-3">
+                        <input type="radio" id="rb1" class="form-check-input" name="TipoDeclarante" value="1" formControlName="TipoDeclarante" (change)="changeDeclarante()">
+                        <label class="form-check-label" for="rb1">
+                            Representante Legal de la Solicitante
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-3 col-md-12">
+                    <div class=" form-check ms-3">
+                        <input type="radio" id="rb2" class="form-check-input" name="TipoDeclarante" value="2" formControlName="TipoDeclarante" (change)="changeDeclarante()">
+                        <label class="form-check-label" for="rb2">
+                            Representante Legal del Socio o Accionista de la Solicitante
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <span *ngIf="this.TipoDeclarante.value && this.TipoDeclarante.value" class="d-block px-3 py-2 bg-secondary text-white mb-2">Datos de la Persona Jurídica</span>
+
+            <section *ngIf="this.TipoDeclarante.value && this.TipoDeclarante.value" [formGroup]="FormEmpresa" class="d-block p-2">
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">R.U.C.</label>
+                            <div class="input-group input-group-sm">
+                                <input #ruc type="text" class="form-control form-control-sm text-uppercase" maxlength="11"
+                                    (keypress)="soloNumeros($event); onPressEnterRuc($event, ruc.value)"
+                                    (input)="onInputRuc()"
+                                    formControlName="Ruc" [class.control-invalid]="formInvalid(Emp_Ruc)">
+                                    <button *ngIf="TipoDeclarante.value=='2'" class="btn btn-outline-secondary" type="button"
+                                        [disabled]="Emp_Ruc.invalid || !habilitarBusquedaEmpresa"
+                                        (click)="buscarEmpresa(ruc.value)">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Razón Social</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="RazonSocial" [class.control-invalid]="formInvalid(Emp_RazonSocial)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Domiciilio legal</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="DomicilioLegal" [class.control-invalid]="formInvalid(Emp_DomicilioLegal)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Departamento</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="Departamento" [class.control-invalid]="formInvalid(Emp_Departamento)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Provincia</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="Provincia" [class.control-invalid]="formInvalid(Emp_Provincia)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Distrito</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="Distrito" [class.control-invalid]="formInvalid(Emp_Distrito)">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <span *ngIf="this.TipoDeclarante.value" class="d-block px-3 py-2 bg-secondary text-white mb-2">Datos del Representante Legal</span>
+
+            <section *ngIf="this.TipoDeclarante.value" [formGroup]="FormRepresentante" class="d-block p-2">
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Tipo Documento</label>
+                            <select #tipoDoc class="form-select form-select-sm" (change)="changeTipoDocumento(tipoDoc.value); resetDatosRepresentante();"
+                                formControlName="IdTipoDocumento" [class.control-invalid]="formInvalid(Rep_IdTipoDocumento)">
+                                <option value="">- Seleccionar -</option>
+                                <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Nro. Documento</label>
+                            <div class="input-group input-group-sm">
+                                <input #nroDoc type="text" class="form-control form-control-sm text-uppercase" [maxLength]="maxLengthNroDocumento"
+                                    (keypress)="soloNumeros($event); onPressEnterNroDoc($event, tipoDoc.value, nroDoc.value)"
+                                    (input)="onInputNroDoc()"
+                                    formControlName="NumeroDocumento" [class.control-invalid]="formInvalid(Rep_NumeroDocumento)">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        [disabled]="Rep_NumeroDocumento.invalid || Rep_IdTipoDocumento.invalid || !habilitarBusquedaRepresentante"
+                                        (click)="buscarRepresentanteLegal(tipoDoc.value, nroDoc.value)">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Nombres</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="Nombres" [class.control-invalid]="formInvalid(Rep_Nombres)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Apellido paterno</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="ApellidoPaterno" [class.control-invalid]="formInvalid(Rep_ApellidoPaterno)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Apellido materno</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="ApellidoMaterno" [class.control-invalid]="formInvalid(Rep_ApellidoMaterno)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Domiciilio legal</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="DomicilioLegal" [class.control-invalid]="formInvalid(Rep_DomicilioLegal)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Departamento</label>
+                            <select class="form-select form-select-sm" formControlName="Departamento" #departamentoRep
+                                (change)="onChangeDepartamento(departamentoRep.value)"
+                                [class.control-invalid]="formInvalid(Rep_Departamento)">
+                                <option value="">- Seleccionar -</option>
+                                <option *ngFor="let item of listaDepartamentos;" [value]="item.value">{{ item.text }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Provincia</label>
+                            <select class="form-select form-select-sm" formControlName="Provincia" #provinciaRep
+                                (change)="onChangeProvincia(departamentoRep.value, provinciaRep.value)"
+                                [class.control-invalid]="formInvalid(Rep_Provincia)">
+                                <option value=""> Seleccionar -</option>
+                                <option *ngFor="let item of listaProvincias;" [value]="item.value">{{ item.text }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Distrito</label>
+                            <select class="form-select form-select-sm" formControlName="Distrito" #distritoRep
+                                [class.control-invalid]="formInvalid(Rep_Distrito)">
+                                <option value="">- Seleccionar -</option>
+                                <option *ngFor="let item of listaDistritos;" [value]="item.value">{{ item.text }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Teléfono fijo</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase" maxlength="9"
+                            (keypress)="soloNumeros($event);"
+                            formControlName="Telefono" [class.control-invalid]="formInvalid(Rep_Telefono)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Celular</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase" maxlength="12"
+                            (keypress)="soloNumeros($event);"
+                            formControlName="Celular" [class.control-invalid]="formInvalid(Rep_Celular)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Correo electrónico</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="Email" [class.control-invalid]="formInvalid(Rep_Email)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Partida N°</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase" maxlength="15"
+                            (keypress)="soloNumeros($event);"
+                            formControlName="Partida" [class.control-invalid]="formInvalid(Rep_Partida)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Asiento N°</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase" maxlength="15"
+                            (keypress)="soloNumeros($event);"
+                            formControlName="Asiento" [class.control-invalid]="formInvalid(Rep_Asiento)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Oficina Registral</label>
+                            <select class="form-select form-select-sm"
+                                formControlName="IdOficinaRegistral" [class.control-invalid]="formInvalid(Rep_IdOficinaRegistral)">
+                                <option value="">- Seleccionar -</option>
+                                <option *ngFor="let item of listaOficinasRegistrales;" [value]="item.id">{{ item.descripcion }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <span class="d-block px-3 py-2 bg-secondary text-white mb-2">Declaración Jurada</span>
+
+            <section *ngIf="this.TipoDeclarante.value" class="d-block p-2 small">
+                <p>
+                    En mi calidad de representante legal de la solicitante y/o representante legal del socio o accionista de la solicitante del otorgamiento de concesión única para prestar el (los) Servicio (s) Público (s) de Telecomunicaciones indicado (s) en el Formulario de la solicitud, y en aplicación del principio de presunción de veracidad estipulada en el numeral 1.7 del Art. IV del Texto Único Ordenado de la Ley Nº 27444 del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019 JUS.
+                </p>
+
+                <p class="text-bold">DECLARO:</p>
+
+                <div class="alert alert-custom">
+                    <ul>
+                        <li>
+                            <div class="row" [class.control-invalid]="formInvalid(Declaracion1)">
+                                <div class="col-md">
+                                    <p>
+                                        <span class="text-bold">Primero.-</span> No estar impedido de contratar con el Estado, en razón de lo dispuesto en los artículos 1366º y 1367º del Código Civil, la Ley General del Sistema Concursal, por resolución judicial o del Tribunal de Contrataciones y Adquisiciones del Estado, u otros, ni incurso en las limitaciones establecidas en el Texto Único Ordenado de la Ley de Telecomunicaciones ni en los artículos 113º, 125º y otros que correspondan del Texto Único Ordenado del Reglamento General de la Ley de Telecomunicaciones aprobado con Decreto Supremo Nº 020-2007-MTC.
+                                    </p>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="Declaracion1" class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row" [class.control-invalid]="formInvalid(Declaracion2)">
+                                <div class="col-md">
+                                    <p>
+                                        <span class="text-bold">Segundo.-</span> Que, conforme a las facultades otorgadas en el poder inscrito en el Asiento Nº <b>{{ this.Rep_Asiento.value?.trim().toUpperCase() }}</b> de la Partida Nº <b>{{ this.Rep_Partida.value?.trim().toUpperCase() }}</b> del Registro de Personas Jurídicas de los Registros Públicos de <b>{{ OficinaRegistralDescripcion }}</b>, estoy facultado para realizar declaraciones juradas en nombre
+                                    </p>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="Declaracion2" class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <p>
+                    Lima, {{this.dia}} de {{this.mes}} del {{this.anio}}
+                </p>
+            </section>
+
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="guardarDeclarante()" [disabled]="this.formularioDeclarante.invalid">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-light" (click)="modal.close()">Cancelar</button>
+    </div>
+</ng-template>

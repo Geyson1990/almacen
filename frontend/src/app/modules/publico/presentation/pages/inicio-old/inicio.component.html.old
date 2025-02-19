@@ -1,0 +1,389 @@
+<app-header-main></app-header-main>
+
+<span class="d-block py-4 bg-light">
+  <div class="contenedor-principal">
+    <div class="row">
+      <div class="col-sm-4">
+        <h3 class="mt-2 mb-0">Trámites TUPA</h3>
+      </div>
+      <div class="col-sm-8">
+        <div class="d-flex">
+          <div class="inner-addon left-addon">
+            <div class="icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <input
+              type="text"
+              class="form-control form-control-lg text-sm"
+              placeholder="Buscar trámites TUPA"
+              [(ngModel)]="filtrarTexto"
+              (keypress)="onKeyPress($event)"
+            />
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-outline-secondary ms-2"
+            (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample"
+          >
+            <i class="fas fa-filter"></i>
+          </button>
+        </div>
+
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+          <div class="mt-2 p-0">
+            <h6>Filtros:</h6>
+            <div class="row gx-2">
+              <div class="col-lg-12">
+                <div class="mb-3">
+                  <select
+                    id="inputState"
+                    class="form-select"
+                    [(ngModel)]="idMateria"
+                  >
+                    <option selected value="">- Todos -</option>
+                    <option
+                      *ngFor="let item of listaMaterias"
+                      value="{{ item.idMateria }}"
+                    >
+                      {{ item.descripcion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <button class="btn btn-dark btn-sm" (click)="cargarLista()">
+                  <i class="fas fa-search"></i> Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</span>
+
+<div class="contenedor-principal mt-4 mb-5">
+  <div class="row">
+    <!--<aside class="col-md-4 search-aside overflow-y-auto">
+      <div class="card rounded-0 border-0">
+        <div class="card-body bg-light">
+          <div class="list-group list-group-flush bg-light">
+            <a href="https://casilla.mtc.gob.pe/" class="list-group-item list-group-item-action bg-light" target="_blank">Casilla electrónica</a>
+            <a href="https://sdt.mtc.gob.pe/" class="list-group-item list-group-item-action bg-light" target="_blank">Seguimiento de trámite</a>
+            <a href="https://portal.mtc.gob.pe/servicios_tramite/plataforma/locales_atencion.html" class="list-group-item list-group-item-action bg-light" target="_blank">Locales de atención</a>
+            <a href="https://portaldenuncias.mtc.gob.pe/" class="list-group-item list-group-item-action bg-light" target="_blank">Denuncias MTC</a>
+            <a href="https://reclamos.servicios.gob.pe/?institution_id=8" class="list-group-item list-group-item-action bg-light" target="_blank">Libro de reclamaciones</a>
+            <a href="https://lreclamos.mtc.gob.pe/Inicio/Sugerencias/MTC#/" class="list-group-item list-group-item-action bg-light" target="_blank">Sugerencias</a>
+            <a href="https://lreclamos.mtc.gob.pe/Inicio/Quejas/MTC#/" class="list-group-item list-group-item-action bg-light" target="_blank">Quejas</a>
+            <a href="https://portal.mtc.gob.pe/servicios_tramite/preguntas_frecuentes/preguntas_frecuentes.html" class="list-group-item list-group-item-action bg-light" target="_blank">Preguntas frecuentes</a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>-->
+    <main class="col-md-12" id="main">
+      <div>
+        <div class="flex justify-content-between">
+          <div class="flex items-center relative">
+            <h6>{{ listaSize }} Resultado(s)</h6>
+
+            <div *ngIf="listaTupasAgrupado">
+              <div
+                *ngFor="let group of listaTupasAgrupado; let idxGroup = index"
+              >
+                <h5 class="mt-3">{{ group.materia ? group.materia : "*" }}</h5>
+                <hr class="my-2" />
+
+                <!-- <div class="box mt-2" *ngFor="let item of listaTupas | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index;"> -->
+                <div
+                  class="mt-2"
+                  *ngFor="let item of group.lista; let idx = index"
+                >
+                  <app-detalle-procedimiento [procedimiento]="item"></app-detalle-procedimiento>
+
+
+
+                  
+                  <button
+                    #el
+                    class="accordion"
+                    (click)="mostrarDetalle(idxGroup, idx, item.id)"
+                  >
+                    <!-- <small>{{item.organizacion}}</small>
+                    <hr class="mt-1"> -->
+                    <span class="titulo fw-bold"
+                      >{{ item.codigo }} {{ item.nombre }}</span
+                    >
+                  </button>
+                  <div class="panel">
+                    <!-- <app-detalle-tupa *ngIf="item" [datosTupa]="item"></app-detalle-tupa> -->
+
+                    <hr class="mt-0" />
+                    <div class="card">
+                      <div class="card-body bg-light">
+                        <div class="row">
+                          <div class="col-md-auto">
+                            <button
+                              class="btn btn-danger"
+                              (click)="
+                                verDocumento(item.uriFicha, item.nombreFicha)
+                              "
+                            >
+                              Descargar ficha TUPA
+                            </button>
+                          </div>
+
+                          <div class="col-md">
+                            <div
+                              *ngIf="
+                                item.tipoSolicitud &&
+                                item.tipoSolicitud.length > 0
+                              "
+                            >
+                              <select
+                                class="form-select"
+                                (change)="
+                                  onChangeTipoSolicitud(
+                                    item.id,
+                                    $event.target.value,
+                                    item.tipoSolicitud
+                                  )
+                                "
+                              >
+                                <option
+                                  *ngFor="let item of item.tipoSolicitud"
+                                  [value]="item.codigo"
+                                >
+                                  {{ item.descripcion }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- <hr> -->
+                        <div class="mt-3">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div
+                                class="d-flex h-100 border bg-white p-2 small shadow-sm align-items-center justify-content-center"
+                              >
+                                <span
+                                  class="align-middle text-center text-uppercase"
+                                  >Atenciòn en {{ item.plazoDias }} días
+                                  hábiles</span
+                                >
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div
+                                class="d-flex h-100 border bg-white p-2 small shadow-sm align-items-center justify-content-center"
+                              >
+                                <span
+                                  class="align-middle text-center text-uppercase"
+                                  >{{ item.tipoEvaluacion }}</span
+                                >
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div
+                                class="d-flex h-100 border bg-white p-2 small shadow-sm align-items-center justify-content-center"
+                              >
+                                <span
+                                  class="align-middle text-center text-uppercase"
+                                >
+                                  Dirigido a
+                                  {{ getPersonaTexto(item.tiposPersona) }}</span
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mt-3">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="d-flex w-100">
+                                <h6>{{ item.organizacion }}</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <h5 class="texto-principal mt-3">Requisitos</h5>
+                        <table class="table table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col" class="small fw-bold">
+                                N°
+                              </th>
+                              <th scope="col" class="small fw-bold">
+                                Denominación de requisito
+                              </th>
+                              <th scope="col" class="small fw-bold">
+                                Formulario
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="
+                                let item of getRequisitos(
+                                  item.id,
+                                  item.tipoSolicitud,
+                                  tipo_solicitud
+                                );
+                                let j = index
+                              "
+                            >
+                              <ng-container *ngIf="!item.tieneCosto">
+                                <th scope="row">
+                                  <small>
+                                    <p class="mb-0" style="line-height: 1.2">
+                                      {{ j + 1 }}
+                                    </p>
+                                  </small>
+                                </th>
+                                <td>
+                                  <small>
+                                    <p class="mb-0" style="line-height: 1.2">
+                                      {{ item.descripcion }}
+                                    </p>
+                                  </small>
+                                </td>
+                                <td>
+                                  <a
+                                    type="button"
+                                    class="btn btn-link text-nowrap pt-0"
+                                    (click)="
+                                      verDocumento(
+                                        item.plantillaAdjunto,
+                                        item.codigoFormTupa
+                                      )
+                                    "
+                                  >
+                                    <small
+                                      class="pt-0"
+                                      style="line-height: 1.2"
+                                    >
+                                      {{
+                                        item.codigoFormTupa != ""
+                                          ? item.codigoFormTupa
+                                          : item.codigoFormAnexo
+                                      }}
+                                    </small>
+                                  </a>
+                                </td>
+                              </ng-container>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <h5 class="texto-principal mt-2">Derecho trámite</h5>
+                        <hr class="mt-2" />
+
+                        <div
+                          *ngFor="
+                            let item of getRequisitos(
+                              item.id,
+                              item.tipoSolicitud,
+                              tipo_solicitud
+                            )
+                          "
+                        >
+                          <ng-container *ngIf="item.tieneCosto">
+                            <div class="text-end">
+                              <span
+                                >Monto a Pagar: S/ {{ item.costoFormatted }}</span
+                              ><br />
+                              <small
+                                >(Código de pago BN:
+                                {{ item.codigoTributo }} )</small
+                              >
+                            </div>
+                          </ng-container>
+                        </div>
+
+                        <h5 class="texto-principal mt-2">Notas</h5>
+                        <hr class="mt-2" />
+
+                        <div *ngFor="let item of item.tupaNotas; let i = index">
+                          <span>
+                            <p class="mb-2" style="line-height: 1.2">
+                              <b>({{ i + 1 }}) </b> {{ item.descripcion }}
+                            </p>
+                          </span>
+                        </div>
+
+                        <h5 class="texto-principal mt-3">
+                          Canales de atención
+                        </h5>
+                        <hr class="mt-2" />
+
+                        <div class="row">
+                          <div class="col-md">
+                            <a
+                              *ngIf="item.flagDigital"
+                              class="btn btn-secondary"
+                              title="Tupa Digital"
+                              href="https://tupadigital.mtc.gob.pe/#/autenticacion/iniciar-sesion"
+                              ><i class="fas fa-angle-double-right"></i> Iniciar
+                              tràmite virtualmente</a
+                            >
+                            <a
+                              *ngIf="item.flagVuce"
+                              class="btn btn-secondary"
+                              title="VUCE"
+                              href="https://authorize.vuce.gob.pe/public/login-options/autorizacion-operadores"
+                              ><i class="fas fa-angle-double-right"></i> Iniciar
+                              tràmite virtualmente</a
+                            >
+                            <a
+                              *ngIf="!item.flagVuce && !item.flagDigital"
+                              class="btn btn-secondary"
+                              title="Mesa de Partes Virtual"
+                              href="https://mpv.mtc.gob.pe/"
+                              ><i class="fas fa-angle-double-right"></i> Iniciar
+                              tràmite virtualmente</a
+                            >
+                          </div>
+
+                          <div class="col-md">
+                            <a
+                              class="btn btn-secondary float-end"
+                              href="https://portal.mtc.gob.pe/servicios_tramite/plataforma/locales_atencion.html"
+                              target="_blank"
+                            >
+                              <i class="fas fa-angle-double-right"></i> Iniciar
+                              trámite presencialmente
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <p>{{ item.denominacion }}</p> -->
+                    <div class="d-flex justify-content-end">
+                      <button
+                        class="btn btn-dark text-bold mt-3 mb-3"
+                        (click)="ocultarDetalle(item.id)"
+                      >
+                        Cerrar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

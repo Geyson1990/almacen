@@ -1,0 +1,689 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoTupa}} {{ this.descripcionTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+      
+  </button>
+</div>
+
+<div class="modal-body anexo">
+
+    <form novalidate [formGroup]="formulario">
+
+        <div class="center">
+            <h6><i class="far fa-list-alt"></i> FORMULARIO 004-12 INFRAESTRUCTURA AEROPORTUARIA</h6>
+        </div>
+
+        <!-- <div ngbAccordion #acc=" NgbAccordionDirective  " activeIds="ngb-formulario004-17 "> -->
+        <div ngbAccordion #acc="ngbAccordion">
+            <div ngbAccordionItem="formulario004-12-seccion-1" [collapsed]="false">
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton>I. DATOS DEL SOLICITANTE</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row justify-content-center align-items-center">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" formControlName="tipoPersona" value="1" disabled>
+                            <label class="form-check-label" for="inlineRadio1">PERSONA NATURAL</label>&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" formControlName="tipoPersona" value="2" disabled>
+                            <label class="form-check-label" for="inlineRadio2">PERSONA JURIDICA</label>
+                        </div>
+                        <!-- <div class="contenedor-check text-center ">
+                            <label class="check">
+                            PERSONA NATURAL <input type="checkbox" />
+                        </label>&nbsp;&nbsp;&nbsp;
+                            <label class="check">
+                            PERSONA JURIDICA <input type="checkbox" />
+                        </label>
+                        </div> -->
+                    </div>
+                    <hr>
+                    <div class="row" *ngIf="tipoPersona==2">
+                        <div class="col-sm-12 align-items-center flex-wrap">
+                            <div class="me-2 campo-obligatorio">Razon Social:</div>
+                            <div class="flex-1 ">
+                                <input type="text" class="form-control form-control-sm" formControlName="s1_razonSocial" [class.control-invalid]="formInvalid('s1_razonSocial')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="tipoPersona==1 || tipoPersona==3">
+                        <div class="col-sm-4 align-items-center flex-wrap">
+                            <div class="me-2 campo-obligatorio">Apellido Paterno:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_apellidoPaterno" [class.control-invalid]="formInvalid('s1_apellidoPaterno')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap">
+                            <div class="me-2 campo-obligatorio">Apellido Materno:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_apellidoMaterno" [class.control-invalid]="formInvalid('s1_apellidoMaterno')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap">
+                            <div class="me-2 campo-obligatorio">Nombres:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_nombres" [class.control-invalid]="formInvalid('s1_nombres')" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-sm-12 align-items-center flex-wrap">
+                            <div class="me-2 campo-obligatorio">Domicilio Legal:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_domicilioLegal" [class.control-invalid]="formInvalid('s1_domicilioLegal')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-4 align-items-center flex-wrap ">
+                            <div class="campo-obligatorio me-2 ">Distrito:</div>
+                            <div class="flex-1">
+                                <input type="text" class="form-control form-control-sm" formControlName="s1_distrito" [class.control-invalid]="formInvalid('s1_distrito')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap">
+                            <div class="campo-obligatorio me-2 ">Provincia:</div>
+                            <div class="flex-1">
+                                <input type="text" class="form-control form-control-sm" formControlName="s1_provincia" [class.control-invalid]="formInvalid('s1_provincia')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap ">
+                            <div class="campo-obligatorio me-2 ">Departamento:</div>
+                            <div class="flex-1">
+                                <input type="text" class="form-control form-control-sm" formControlName="s1_departamento" [class.control-invalid]="formInvalid('s1_departamento')" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-sm-4 align-items-center flex-wrap " *ngIf="tipoPersona==1 || tipoPersona==3">
+                            <div class="campo-obligatorio me-2 ">D.N.I.:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_dni" [class.control-invalid]="formInvalid('s1_dni')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap " *ngIf="tipoPersona==2 || tipoPersona==3">
+                            <div class="campo-obligatorio me-2">N° de RUC:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_nroRuc" [class.control-invalid]="formInvalid('s1_nroRuc')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap ">
+                            <div class="me-2 ">C.E. / PASAPORTE:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_cePasaporte" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-sm-4 align-items-center flex-wrap ">
+                            <div class="me-2 ">Teléfono:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_telefono" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap ">
+                            <div class="me-2 campo-obligatorio">Celular:</div>
+                            <div class="flex-1 ">
+                                <input type="text" class="form-control form-control-sm" formControlName="s1_celular" [class.control-invalid]="formInvalid('s1_celular')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap">
+                            <div class="me-2 campo-obligatorio">Correo Electrónico (E-mail):</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_correo" [class.control-invalid]="formInvalid('s1_correo')" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 ">
+                        <div class="col-sm-10 text-justify d-flex" style="font-size:11px;">
+                            <div class="p-2">
+                                Solicito que todo acto administrativo derivado del presente procedimiento, se me notifique en el correoelectrónico (e-mail) consignado en el presente formulario. (Articulo 20° numeral 20.4 del Texto Único Ordenado de la Ley N° 27444 – Ley del Procedimiento
+                                Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS).
+                            </div>
+
+                        </div>
+                        <div class="contenedor-check d-flex flex-row p-2 mt-2 ">
+                            <ui-switch (change)="onChangeNotificacion($event)" formControlName="s1_notificacion">
+                                
+                            </ui-switch>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-4 d-flex">
+
+                                <div class="d-flex flex-2 flex-column justify-content-between p-2">
+
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-2 campo-obligatorio">Nro de Ruc Operador:</div>
+                                        <div class="flex-2 ms-5">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control text-uppercase" (input)="inputNumeroRuc($event)" [maxlength]="11" formControlName="s1_numeroRucOperador" [class.control-invalid]="formInvalid('s1_numeroRucOperador')"
+                                                />
+                                                    <button class="btn btn-outline-secondary" type="button" (click)="buscarNumeroRuc()">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-4 d-flex">
+
+                                <div class="d-flex flex-2 flex-column justify-content-between p-2">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-2 campo-obligatorio">Tipo de Documento:</div>
+                                        <div class="flex-2">
+                                            <select class="form-select" [attr.disabled]="this.representanteLegal.length === 0 ? '' : null" (change)="changeTipoDocumento()" formControlName="s1_tipoDocumentoRepresentante" [class.control-invalid]="formInvalid('s1_tipoDocumentoRepresentante')" >
+                                                <option value=''>Seleccione</option>
+                                                <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-4 d-flex">
+
+                                <div class="d-flex flex-2 flex-column justify-content-between p-2">
+
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-2 campo-obligatorio">Número de Documento:</div>
+                                        <div class="flex-2 ms-5">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control text-uppercase" (input)="inputNumeroDocumento($event)" [readonly]="this.formulario.controls['s1_tipoDocumentoRepresentante'].value === ''" [maxlength]="getMaxLengthNumeroDocumento()" formControlName="s1_numeroDocumentoRepresentante" [class.control-invalid]="formInvalid('s1_numeroDocumentoRepresentante')"
+                                                />
+                                                    <button class="btn btn-outline-secondary" [disabled]="this.formulario.controls['s1_numeroDocumentoRepresentante'].value.trim().length === 0" type="button" (click)="buscarNumeroDocumento()">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="w-100">
+
+                    <div class="row">
+                        <div class="col-sm-12 align-items-center flex-wrap ">
+                            <div class="me-2 campo-obligatorio">Razón Social / Operador:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_razonSocialOperador" [class.control-invalid]="formInvalid('s1_razonSocialOperador')" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4 align-items-center flex-wrap ">
+                            <div class="me-2 campo-obligatorio">Nombres Representante Legal:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_nombresRepresentante" [class.control-invalid]="formInvalid('s1_nombresRepresentante')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap ">
+                            <div class="me-2 campo-obligatorio">Apellido Paterno:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_apellidoPaternoRepresentante" [class.control-invalid]="formInvalid('s1_apellidoPaternoRepresentante')" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 align-items-center flex-wrap ">
+                            <div class="me-2 campo-obligatorio">Apellido Materno:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_apellidoMaternoRepresentante" [class.control-invalid]="formInvalid('s1_apellidoMaternoRepresentante')" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-sm-12 align-items-center flex-wrap ">
+                            <div class="me-2 campo-obligatorio">Domicilio Representante Legal:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s1_domicilioRepresentante" [class.control-invalid]="formInvalid('s1_domicilioRepresentante')" />
+                            </div>
+                        </div>
+                        <!--<div class="col-sm-4 align-items-center d-flex flex-column">
+                            <div class="d-flex mt-3">
+                                <div class="flex-1">
+                                    <select class="form-select form-select-sm" formControlName="s1_tipoDocumentoRepresentante">
+                                        <option selected value="dni">DNI</option>
+                                        <option value="ce">CE</option>
+                                    </select>
+                                </div>
+                                <div class="flex-2 ms-2">
+                                    <input type="text" class="form-control form-control-sm" formControlName="s1_nroDocumentoRepresentante" />
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label class="campo-obligatorio me-2">REGISTRADO EN LA PARTIDA N°</label>
+                                    <input type="text " class="form-control form-control-sm d-inline-block w-auto ms-1" formControlName="s1_nroPartida" [class.control-invalid]="formInvalid('s1_nroPartida')" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="ms-3 campo-obligatorio">DE LA OFICINA REGISTRAL DE:</label>
+                                    <input type="text " class="form-control form-control-sm d-inline-block w-auto ms-3" formControlName="s1_oficinaRegistral" [class.control-invalid]="formInvalid('s1_oficinaRegistral')" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+</div>
+</div>
+            </div>
+
+            <div ngbAccordionItem="formulario004-12-seccion-2" [disabled]="codigoTupa != 'DGAC-025'" [collapsed]="codigoTupa != 'DGAC-025'">
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>II. INFORMACIÓN PATRIMONIAL (Solo para procedimiento DGAC-025)</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                    <div class="row ">
+                        <div class="col-sm-12 text-center ">
+                            <label class="campo-obligatorio">BIEN REGISTRADO EN LA PARTIDA N°</label>
+                            <input type="text " class="form-control form-control-sm d-inline-block w-auto " formControlName="s2_nroPartida" [class.control-invalid]="formInvalid('s2_nroPartida')" /> <label class="campo-obligatorio">DE LA OFICINA REGISTRAL N°:</label>
+                            <input type="text " class="form-control form-control-sm d-inline-block w-auto " formControlName="s2_oficinaRegistral" [class.control-invalid]="formInvalid('s2_oficinaRegistral')" />
+                        </div>
+                    </div>
+                </ng-template>
+</div>
+</div>
+            </div>
+
+            <div ngbAccordionItem="formulario004-12-seccion-3" [collapsed]="false">
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>III. SERVICIO SOLICITADO (Marcar con un aspa "X ")</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row text-justify ">
+
+                        <div class="col-sm-6 d-flex flex-column justify-content-between ">
+                            <div class="d-flex ">
+                                <div class="flex-4 ">
+                                    <b>DGAC-025</b> Autorización para construcción o modificación de aeródromos públicos o privados.
+                                </div>
+                                <div class="flex-1 ">
+                                    <input type="radio" value="DGAC-025" class="ms-2 mt-1" formControlName="s3_servicioCodigo" disabled/>
+                                </div>
+                            </div>
+
+                            <div class="d-flex ">
+                                <div class="flex-4 ">
+                                    <b>DGAC-026</b> Otorgamiento de autorización de funcionamiento o clausura de aeródromos públicos o privados.
+                                </div>
+                                <div class="flex-1 ">
+                                    <input type="radio" value="DGAC-026" class="ms-2 mt-1" formControlName="s3_servicioCodigo" disabled/>
+                                </div>
+                            </div>
+
+                            <div class="d-flex ">
+                                <div class="flex-4 ">
+                                    <b>DGAC-027</b> Autorización para las construcciones y/o instalaciones dentro de las áreas cubiertas por las superficies limitadoras de obstáculos de los aeródromos públicos o privados.
+                                </div>
+                                <div class="flex-1 ">
+                                    <input type="radio" value="DGAC-027" class="ms-2 mt-1" formControlName="s3_servicioCodigo" disabled/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 d-flex flex-column ">
+
+                            <div class="d-flex ">
+                                <div class="flex-4 ">
+                                    <b>S-DGAC-012</b> Inspección Técnica para aeródromos públicos o privados.
+                                </div>
+                                <div class="flex-1 ">
+                                    <input type="radio" value="S-DGAC-012" class="ms-2 mt-1" formControlName="s3_servicioCodigo" disabled/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 " *ngIf="codigoTupa=='DGAC-025' || codigoTupa=='DGAC-027'">
+                        <div class="col-sm-12 text-start text-secondary p-2 bg-light">
+                            <b>A. EXPEDIENTE TÉCNICO (Solo para los procedimientos DGAC-025 y DGAC-027):</b>
+                        </div>
+                    </div>
+                    <div class="row mt-3 " *ngIf="codigoTupa=='DGAC-025' || codigoTupa=='DGAC-027'">
+                        <div class="d-flex col-md-12 text-center">
+                            <div class="flex-1">
+                                <input type="checkbox" (change)="onChangeMemoriaDescriptiva()" class="custom-control-input checkbox-xl" id="checkbox1" checked="" formControlName="s3_memoriaDescriptiva" [class.control-invalid]="formInvalid('s3_memoriaDescriptiva')" >
+                                <label class="custom-control-label" for="checkbox1">Memoria Descriptiva<span class="campo-obligatorio-check"> (*) </span></label><br/>
+                                <div class="d-flex mt-2">
+                                    <div class="flex-1 text-center">
+                                        <button class="btn btn-danger btn-sm align-self-center mb-3" *ngIf="visibleButtonMemoriaDescriptiva" (click)="inputFileMemoriaDescriptiva.click($event)">
+                                        <i class="fas fa-upload"></i>
+                                              Adjuntar
+                                        </button>
+                                        <input type="file" class="d-none" #inputFileMemoriaDescriptiva accept="application/pdf" (change)="onChangeInputMemoriaDescriptiva($event)" />
+
+                                        <i class="far fa-file-pdf text-danger fa-2x ms-2 mt-2" title="Vista previa" *ngIf="filePdfMemoriaDescriptivaSeleccionado !== null || this.pathPdfMemoriaDescriptivaSeleccionado !==null " (click)="vistaPreviaMemoriaDescriptiva()"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-1" *ngIf="codigoTupa!=='DGAC-027'">
+                                <input type="checkbox" (change)="onChangeImpactoAmbiental()" class="custom-control-input checkbox-xl" id="checkbox2" checked="" formControlName="s3_impactoAmbiental" [class.control-invalid]="formInvalid('s3_impactoAmbiental')" >
+                                <label class="custom-control-label" for="checkbox2">Estudio de Impacto Ambiental<span class="campo-obligatorio-check"> (*) </span></label><br/>
+                                <div class="d-flex mt-2">
+                                    <div class="flex-1 text-center">
+                                        <button class="btn btn-danger btn-sm align-self-center mb-3" *ngIf="visibleButtonImpactoAmbiental" (click)="inputFileImpactoAmbiental.click($event)">
+                                        <i class="fas fa-upload"></i>
+                                              Adjuntar
+                                        </button>
+                                        <input type="file" class="d-none" #inputFileImpactoAmbiental accept="application/pdf" (change)="onChangeInputImpactoAmbiental($event)" />
+
+                                        <i class="far fa-file-pdf text-danger fa-2x ms-2 mt-2" title="Vista previa" *ngIf="filePdfImpactoAmbientalSeleccionado !== null || this.pathPdfImpactoAmbientalSeleccionado !==null " (click)="vistaPreviaImpactoAmbiental()"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <input type="checkbox" (change)="onChangeHabilidadProfesional()" class="custom-control-input checkbox-xl" id="checkbox3" checked="" formControlName="s3_habilidadProfesional" [class.control-invalid]="formInvalid('s3_habilidadProfesional')" >
+                                <label class="custom-control-label" for="checkbox3">Certificado de Habilidad del Profesional<span class="campo-obligatorio-check"> (*) </span></label><br/>
+                                <div class="d-flex mt-2">
+                                    <div class="flex-1 text-center">
+                                        <button class="btn btn-danger btn-sm align-self-center mb-3" *ngIf="visibleButtonHabilidadProfesional" (click)="inputFileHabilidadProfesional.click($event)">
+                                        <i class="fas fa-upload"></i>
+                                              Adjuntar
+                                        </button>
+                                        <input type="file" class="d-none" #inputFileHabilidadProfesional accept="application/pdf" (change)="onChangeInputHabilidadProfesional($event)" />
+
+                                        <i class="far fa-file-pdf text-danger fa-2x ms-2 mt-2" title="Vista previa" *ngIf="filePdfHabilidadProfesionalSeleccionado !== null || this.pathPdfHabilidadProfesionalSeleccionado !==null " (click)="vistaPreviaHabilidadProfesional()"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3" *ngIf="codigoTupa=='DGAC-025' || codigoTupa=='DGAC-027'">
+                        <div class="card-header text-center bg-light">
+                            <span class="text-secondary text-black-90">Profesional (Habilitado)</span>
+                        </div>
+                        <div class="card-body text-center ">
+                            <div class="row">
+                                <div class="col-sm-4 align-items-center flex-wrap ">
+                                    <div class="me-2 campo-obligatorio">Nombre y Apellido:</div>
+                                    <div class="flex-1 ">
+                                        <input type="text " class="form-control form-control-sm" formControlName="s3_nombreApellido" [class.control-invalid]="formInvalid('s3_nombreApellido')" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 align-items-center flex-wrap ">
+                                    <div class="me-2 campo-obligatorio">Profesión:</div>
+                                    <div class="flex-1 ">
+                                        <input type="text " class="form-control form-control-sm" formControlName="s3_profesion" [class.control-invalid]="formInvalid('s3_profesion')" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 align-items-center flex-wrap ">
+                                    <div class="me-2 campo-obligatorio">N° de Colegiatura:</div>
+                                    <div class="flex-1 ">
+                                        <input type="text " class="form-control form-control-sm" formControlName="s3_nroColegiatura" [class.control-invalid]="formInvalid('s3_nroColegiatura')" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                </ng-template>
+</div>
+</div>
+            </div>
+
+            <!--<div ngbAccordionItem="formulario004-12-seccion-4" [collapsed]="false">
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>IV. DERECHO DE TRÁMITE</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12 text-center text-dark">
+                            ESPACIO QUE DEBE SER LLENADO POR EL SOLICITANTE ANTES DEL INGRESO DE(LOS) DOCUMENTO(S) POR MESA DE PARTES
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-12 d-flex">
+                            <div class="col-sm-3 d-flex ">
+                                <div class="d-flex flex-2 flex-column justify-content-between ">
+                                    <div class="d-flex">
+                                        <div class="flex-1 ">N° Recibo</div>
+                                        <div class="flex-1 ">
+                                            <input type="text " readonly class="form-control form-control-sm" formControlName="s4_nroRecibo" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 d-flex ">
+                                <div class="d-flex flex-2 flex-column justify-content-between ">
+                                    <div class="d-flex">
+                                        <div class="flex-1">N° Operación:</div>
+                                        <div class="flex-1">
+                                            <input type="text " readonly class="form-control form-control-sm" formControlName="s4_nroOperacion" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 d-flex ">
+                                <div class="d-flex flex-2 flex-column justify-content-between ">
+                                    <div class="d-flex">
+                                        <div class="flex-1">Fecha Pago:</div>
+                                        <div class="flex-2">
+                                            <div class="input-group ">
+                                                <input class="form-control form-control-sm" (dateSelect)="onDateSelect($event)" readonly ngbDatepicker #fechaPago="ngbDatepicker" formControlName="s4_fechaPago" >
+                                                    <button class="btn btn-outline-secondary calendar btn-sm" type="button ">
+                                                      <i class="far fa-calendar-alt "></i>
+                                                    </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 d-flex">
+                                <div class="d-flex flex-2 flex-column justify-content-between ">
+                                    <div class="d-flex">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+
+            </div>-->
+
+            <div ngbAccordionItem="formulario004-12-seccion-4" [collapsed]="false">
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>IV. DECLARACIÓN JURADA</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <!--<div class="row ">
+                        <div class="d-flex ">
+                            <div class="col-sm-12 text-start ">
+                                MARQUE CON UN ASPA “X”, SI AUTORIZA OTRA PERSONA PARA LA PRESENTACIÓN DE ESTA DECLARACIÓN
+                            </div>&nbsp;&nbsp;
+                            <div class="check-declaracion-jurada ">
+                                <div class="check ">
+                                    <input type="checkbox" formControlName="s5_autorizaPersona" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 ">
+                        <div class="col-sm-12 text-center ">
+                            <b>IDENTIFICACIÓN DE LA PERSONA AUTORIZADA</b>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-sm-6 align-items-center flex-wrap ">
+                            <div class="me-2 ">Documento de Identidad:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s5_documentoIdentidad" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 align-items-center flex-wrap ">
+                            <div class="me-2 ">Apellidos y Nombres:</div>
+                            <div class="flex-1 ">
+                                <input type="text " class="form-control form-control-sm" formControlName="s5_apellidosNombres" />
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="row mt-3 ">
+                        <div class="col-sm-12 mt-3 ">
+                            <div class="d-flex justify-content-around ">
+                                <div class="d-flex texto-bajo-juramento ">
+                                    <b>DECLARO BAJO JURAMENTO QUE LOS DATOS EXPRESAN LA VERDAD</b>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 ">
+                            <div class="col-sm-12 mt-3 text-justify p-5">
+                                En el presente documento electrónico se ha vinculado e identificado al firmante, así como se ha garantizado la autenticación e integridad del mismo a través de la firma electrónica utilizada atraves del usuario y clave de ingreso al Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones , la cual tiene la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales.
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-sm-12 mt-5 d-flex justify-content-center ">
+                            <div class="d-flex border border-dark rounded">
+                                <div class="d-flex p-5 border-end border-dark ">
+                                    <i class="far fa-file-pdf fa-3x "></i>
+                                </div>
+                                <div class="d-flex p-3 flex-column justify-content-center border ">
+                                    <div class="text-center ">
+                                        Agregar PDF firmado localmente
+                                    </div>
+                                    <button class="btn btn-outline-primary w-100 mt-3  btn-sm">
+                                    Subir PDF
+                                </button>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </ng-template>
+</div>
+</div>
+
+            </div>
+
+        </div>
+        <!-- <div class="row mt-3 ">
+            <div class="col-sm-12 d-flex ">
+                <div class="flex-1 text-end ">
+              <button class="btn btn-success ms-2 w-25 btn-sm" (click)="guardarFormulario()">
+                  <i class="far fa-save"></i>
+                  {{
+                      (idFormularioMovimiento === 0 ? 'Grabar' : 'Modificar')
+                  }}
+              </button>
+                </div>
+            </div>
+        </div> -->
+    </form>
+
+</div>
+
+<div class="modal-footer anexo">
+
+        <div class="row mt-3 ">
+            <div class="col-sm-12 d-flex ">
+                <div class="flex-1">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary" [disabled]="idFormularioMovimiento === 0" (click)="descargarPdf()">
+                        <i class="far fa-eye"></i>
+                        Visualizar
+                    </button>
+                    </div>
+                </div>
+
+                <div class="flex-1 text-end ">
+                    <!-- <button class="btn btn-primary ">
+                  <i class="fas fa-signature "></i>
+                  Firma Digital
+              </button> -->
+              <button class="btn btn-success ms-2 w-25 btn-sm" (click)="guardarFormulario()">
+                  <i class="far fa-save"></i>
+                  {{
+                      (idFormularioMovimiento === 0 ? 'Grabar' : 'Modificar')
+                  }}
+              </button>
+
+                    <!-- <button class="btn btn-primary ms-2  btn-sm">
+                  <i class="fas fa-arrow-right "></i>
+                  Siguiente
+              </button> -->
+                </div>
+            </div>
+        </div>
+
+</div>
+
+<!-- <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" [destroyOnHide]="false">
+    <li [ngbNavItem]="1">
+        <a ngbNavLink>{{cod_tupa}}</a>
+
+        <ng-template ngbNavContent>
+
+            <div class="col-sm-12 mt-3 mb-3 text-center fw-bold">
+                {{tupa}}
+            </div>
+
+
+
+
+        </ng-template>
+
+    </li>
+
+</ul>
+
+<div [ngbNavOutlet]="nav " class="mt-2 "></div> -->

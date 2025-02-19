@@ -1,0 +1,20 @@
+
+.card-header {
+  background-color: rgba(0,0,0,.03);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.btn-regresar {
+  background-color: #D6E8FF;
+  color: #11478A;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}

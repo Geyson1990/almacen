@@ -1,0 +1,168 @@
+<div class="modal-header">
+  <h2 mat-dialog-title>{{ title }}<span class="mat-tooltip-informacion" placement="bottom"
+      ngbTooltip="Se indicará el tiempo estimado de duración del proyecto, desde la construcción hasta el post cierre. Se incluirá el cronograma detallado mensualizado, indicando los periodos de cada etapa del proyecto (construcción, operación, cierre y post-cierre). Se presentará el monto de inversión estimado en cada una de las etapas del proyecto.">Contenido
+      Mínimo</span></h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body scroll">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="sub-container table-component scroll">
+        <div class="content-contorno">
+          <h3 class="sub-titulo">2.6.1. CRONOGRAMA E INVERSION</h3>
+          <table class="table-cronograma w-sm-max-content">
+            <tr class="header-table-cronograma">
+              <th class="header-th">ITEM</th>
+              <th class="header-th" axis="fecha">MES DE INICIO</th>
+              <th class="header-th" axis="fecha">MES DE FIN</th>
+              <th class="header-th" axis="total">TOTAL DE MESES</th>
+              <th class="header-th" axis="inversion">INVERSION</th>
+            </tr>
+            <tr>
+              <td class="header-table-cronograma" axis="construcion">CONSTRUCIÓN</td>
+              <td>
+                <div class="col-12 w-90">
+                  <div class="input-group ">
+                    <input class="form-control " placeholder="F.Ini" name="dp" formControlName="FechaInicioConstruccion" maxlength="10" (input)="soloFecha($event)"
+                      ngbDatepicker #iMonthConstruction="ngbDatepicker" placeholder="dd/mm/yyyy" autocomplete="off" container="body"/>
+                    <button *ngIf="viewControl" class="btn btn-outline-secondary bi bi-calendar3" (click)="iMonthConstruction.toggle()"
+                      type="button"> <i class="material-icons">calendar_month</i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="col-12 w-90">
+                  <div class="input-group">
+                    <input class="form-control " placeholder="F.Fin" name="dp" formControlName="FechaFinConstruccion" maxlength="10" (input)="soloFecha($event)"
+                      ngbDatepicker #eMonthConstruction="ngbDatepicker"  placeholder="dd/mm/yyyy" autocomplete="off" container="body"/>
+                    <button *ngIf="viewControl" class="btn btn-outline-secondary bi bi-calendar3" (click)="eMonthConstruction.toggle()"
+                      type="button"> <i class="material-icons">calendar_month</i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="col-sm-12 col-md-12 w-75">
+                  <input type="text" class="form-control " placeholder="" formControlName="TotalMesConstruccion" maxlength="4" (input)="soloNumeros($event)">
+                </div>
+              </td>
+              <td>
+                <div class="col-sm-12 col-md-12 w-75">
+                  <input type="text" class="form-control " placeholder="" formControlName="InversionConstruccion" maxlength="10" (input)="soloNumerosDecimales($event)">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header-table-cronograma" axis="exploracion">EXPLORACIÓN</td>
+              <td>
+                <div class="col-12 w-90">
+                  <div class="input-group ">
+                    <input class="form-control" placeholder="F.Ini" name="dp" formControlName="FechaInicioExploracion" maxlength="10" (input)="soloFecha($event)"
+                      ngbDatepicker #iMonthExploration="ngbDatepicker"  placeholder="dd/mm/yyyy" autocomplete="off" container="body"/>
+                    <button *ngIf="viewControl" class="btn btn-outline-secondary bi bi-calendar3" (click)="iMonthExploration.toggle()"
+                      type="button"> <i class="material-icons">calendar_month</i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="col-12 w-90">
+                  <div class="input-group ">
+                    <input class="form-control" placeholder="F.Fin" name="dp" formControlName="FechaFinExploracion" maxlength="10" (input)="soloFecha($event)"
+                      ngbDatepicker #eMonthExploration="ngbDatepicker" placeholder="dd/mm/yyyy" autocomplete="off" container="body"/>
+                    <button *ngIf="viewControl" class="btn btn-outline-secondary bi bi-calendar3" (click)="eMonthExploration.toggle()"
+                      type="button"> <i class="material-icons">calendar_month</i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="col-sm-12 col-md-12 w-75">
+                  <input type="text" class="form-control " placeholder="" formControlName="TotalMesExploracion" maxlength="4" (input)="soloNumeros($event)">
+                </div>
+              </td>
+              <td>
+                <div class="col-sm-12 col-md-12 w-75">
+                  <input type="text" class="form-control " placeholder="" formControlName="InversionExploracion" maxlength="10" (input)="soloNumerosDecimales($event)">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header-table-cronograma" axis="cierre">CIERRE</td>
+              <td>
+                <div class="col-12 w-90">
+                  <div class="input-group ">
+                    <input class="form-control" placeholder="F.Fin" name="dp" formControlName="FechaInicioCierre" ngbDatepicker maxlength="10" (input)="soloFecha($event)"
+                      #iMonthClose="ngbDatepicker" placeholder="dd/mm/yyyy" autocomplete="off" container="body"/>
+                    <button *ngIf="viewControl" class="btn btn-outline-secondary bi bi-calendar3" (click)="iMonthClose.toggle()" type="button">
+                      <i class="material-icons">calendar_month</i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="col-12 w-90">
+                  <div class="input-group ">
+                    <input class="form-control" placeholder="F.Fin" name="dp" formControlName="FechaFinCierre" ngbDatepicker maxlength="10" (input)="soloFecha($event)"
+                      #eMonthClose="ngbDatepicker" placeholder="dd/mm/yyyy" autocomplete="off" container="body"/>
+                    <button *ngIf="viewControl" class="btn btn-outline-secondary bi bi-calendar3" (click)="eMonthClose.toggle()" type="button">
+                      <i class="material-icons">calendar_month</i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="col-sm-12 col-md-12 w-75">
+                  <input type="text" class="form-control " placeholder="" formControlName="TotalMesCierre" maxlength="4" (input)="soloNumeros($event)">
+                </div>
+              </td>
+              <td>
+                <div class="col-sm-12 col-md-12 w-75">
+                  <input type="text" class="form-control " placeholder="" formControlName="InversionCierre" maxlength="10" (input)="soloNumerosDecimales($event)">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header-table-cronograma" axis="post-cierre">POST CIERRE</td>
+              <td>
+                <div class="col-12 w-90">
+                  <div class="input-group ">
+                    <input class="form-control" placeholder="F.Fin" name="dp" formControlName="FechaInicioPostCierre" ngbDatepicker maxlength="10" (input)="soloFecha($event)"
+                      #iMonthPostClose="ngbDatepicker" placeholder="dd/mm/yyyy" autocomplete="off" container="body"/>
+                    <button *ngIf="viewControl" class="btn btn-outline-secondary bi bi-calendar3" (click)="iMonthPostClose.toggle()"
+                      type="button"> <i class="material-icons">calendar_month</i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="col-12 w-90">
+                  <div class="input-group ">
+                    <input class="form-control" placeholder="F.Fin" name="dp" formControlName="FechaFinPostCierre" ngbDatepicker maxlength="10" (input)="soloFecha($event)"
+                      #eMonthPostClose="ngbDatepicker" placeholder="dd/mm/yyyy" autocomplete="off" container="body"/>
+                    <button *ngIf="viewControl" class="btn btn-outline-secondary bi bi-calendar3" (click)="eMonthPostClose.toggle()"
+                      type="button"> <i class="material-icons">calendar_month</i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="col-sm-12 col-md-12 w-75">
+                  <input type="text" class="form-control " placeholder="" formControlName="TotalMesPostCierre" maxlength="4" (input)="soloNumeros($event)">
+                </div>
+              </td>
+              <td>
+                <div class="col-sm-12 col-md-12 w-75">
+                  <input type="text" class="form-control " placeholder="" formControlName="InversionPostCierre" maxlength="10" (input)="soloNumerosDecimales($event)">
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+        Cancel</button>
+      <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>
+</form>

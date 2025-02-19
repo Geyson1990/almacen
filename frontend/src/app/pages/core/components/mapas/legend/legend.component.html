@@ -1,0 +1,22 @@
+<div class="lots-legend">
+  
+    <div class="content"> 
+      <div> Iniciales </div>
+      <div class="square"
+        [ngStyle]="{
+          'background-color': '#FAB1DD',
+          'border': 'red 1px solid'
+        }">
+      </div>
+    </div> 
+    <div class="content" *ngFor="let shape of legendGroup">
+        <div> {{ shape.capa | titlecase }} </div>
+        <div [ngClass]="getShapeClass(shape)"
+             [ngStyle]="{
+               'background-color': shape.color !== null ? shape.color : 'none',
+               'border': shape.contornoColor !== null ? shape.contornoColor : 'none'
+             }">
+        </div>
+      </div>
+
+</div>

@@ -1,0 +1,195 @@
+{
+    
+      "IdSolicitud":0,
+      "ResumenEjecutivo": {
+        "Resumen": "",
+        "NombreDocumento": ""
+      },
+      "DescripcionProyecto":{
+        "Antecedentes": {
+        "DatosGenerales": {
+          "NombreProyecto": "",
+          "InversionEstimada": "",
+          "UnidadMinera": 0,
+          "Tipo": 0
+        },
+        "DatosTitular": {
+          "NombreTitular": "",
+          "DireccionTitular": "",
+          "Region": "",
+          "Telefono": "",
+          "Fax": "",
+          "Ruc": "",
+          "Email": "",
+          "PaginaWeb": ""
+        },
+        "DatosRepresentante":{
+          "ApellidoPaterno": "",
+          "ApellidoMaterno": "",
+          "Nombres": "",
+          "Cargo": "",
+          "DocumentoIdentidad": "",
+          "EmailRepresentante": ""
+        },
+        "CorreoNotificacion":{
+          "EmailNotificacion1": "",
+          "EmailNotificacion2": ""
+        },
+        "PasivosAmbientales":[{
+         "NombreActivo":"",
+         "TipoComponente":"",
+         "SubTipoComponente":"",
+         "UbicacionEste": 0,
+         "UbicacionNorte": 0,
+         "UbicacionZona": 0,
+         "UbicacionDatum": 0,
+         "Responsable": 0
+        }],
+        "ComponentesNoCerrados":[{
+         "NombrePasivo":"",
+         "UbicacionEste": 0,
+         "UbicacionNorte": 0,
+         "UbicacionZona": 0,
+         "UbicacionDatum": 0,
+         "SituacionActual": ""
+        }],
+        "MapaComponentes":"",
+        "Estudios":[{
+          "NroExpediente":"",
+          "TipoEstudio":"",
+          "Proyecto":"",
+          "Estado":"",
+          "FechaEnvio":"",
+          "AutoridadCompetente":""
+        }],
+        "Permisos":[{
+          "TipoEstudio":"",
+          "Institucion":"",
+          "Certificacion":"",
+          "NroRD":"",
+          "Fecha":"",
+          "Plazo":0
+        }],
+        "PropiedadSuperficial":"",
+        "AreasProtegidas":[{
+          "Nombre":"",
+          "Tipo":"",
+          "Categoria":"",
+          "Clase":"",
+          "Fuente":""
+        }],
+        "Distanciamiento":[{
+          "Nro":"",
+          "AreaNatural":"",
+          "Distancia":""
+        }],
+        "MapaAreasNaturales":""
+      },
+        "Objetivo":"",
+        "LocalizacionGeografica":{
+          "Localizacion":"",
+          "UbicacionGeografica":{
+            "Region":"",
+            "Este":"",
+            "Norte":""
+          },
+          "LocalizacionSuperpuesta":"",
+          "DistanciaPobladoscercanos":{
+            "Nombre":"",
+            "Distancia":"",
+            "Vias":""
+          }
+          
+      },
+        "Delimitacion":{
+          "DelimitacionPerimetral":"",
+          "AreasActividadMinera":[{
+            "TipoActividad": 0,
+            "Coordenadas":[{
+              "Nro":1,
+              "Este":"",
+              "Norte":"",
+              "ZonaUMT":""
+            }]
+          }],
+          "AreasUsoMinero":[{
+            "TipoActividad": 0,
+            "Coordenadas":[{
+              "Nro":1,
+              "Este":"",
+              "Norte":"",
+              "ZonaUMT":""
+            }]
+          }],
+          "CoordenadaPuntoEste":"",
+          "CoordenadaPuntoNorte":"",
+          "MapaArea":""
+        },
+        "AreasInfluencia":{
+          "AreaDirectaAmbiental":[{
+            "Nro":1,
+            "Zona":"",
+            "Datum":"",
+            "Validacion":""
+          }],
+          "AreaIndirectaAmbiental":[{
+            "Nro":1,
+            "Zona":"",
+            "Datum":"",
+            "Validacion":""
+          }],
+          "AreaDirectaSocial":[{
+            "Nro":1,
+            "Zona":"",
+            "Datum":"",
+            "Validacion":""
+          }],
+          "AreaIndirectaDirectaSocial":[{
+            "Nro":1,
+            "Zona":"",
+            "Datum":"",
+            "Validacion":""
+          }],
+          "ArchivoEscaneado":""
+        },
+        "CronogramaInversion":{
+          "Construccion":{
+            "FechaInicio":"",
+            "FechaFin":"",
+            "Inversion":""
+          },
+          "Exploracion":{
+            "FechaInicio":"",
+            "FechaFin":"",
+            "Inversion":""
+          },
+          "Cierre":{
+            "FechaInicio":"",
+            "FechaFin":"",
+            "Inversion":""
+          },
+          "PostCierre":{
+            "FechaInicio":"",
+            "FechaFin":"",
+            "Inversion":""
+          }
+        },
+        "DescripcionEtapas":{
+          "Documento":"",
+          "MineralAExplotar":[{
+            "Tipo":"",
+            "Recurso":"",
+            "Porcentaje":""
+          }],
+          "ComponentesPrincipales":{
+            "NroPerforaciones":"",
+            "NroPlataformas":"",
+            "Zona":1,
+            "Datum":1
+          }
+        }
+      }
+      
+      
+    }
+  

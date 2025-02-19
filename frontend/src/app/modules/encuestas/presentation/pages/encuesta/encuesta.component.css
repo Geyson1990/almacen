@@ -1,0 +1,58 @@
+.body-encuesta {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  /* height: calc(100vh - 60px); */
+  position: absolute;
+  margin-top: 60px;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  z-index: 0;
+}
+
+::ng-deep .customModal .modal-dialog {
+  min-width: calc(100vw - 400px);
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-header {
+  /* background-color: rgba(0,0,0,.03); */
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+}
+
+.badge-multiline {
+  white-space: normal !important;
+  text-align: justify !important;
+  text-transform: uppercase !important;
+}
+
+.text-bold {
+font-weight: 600 !important;
+}
+
+.btnaccion {
+width: 110px;
+}
+
+.subtitle {
+font-weight: 700;
+font-size: 1.2em;
+color: #DD3A49;
+}
+
+.section {
+padding-top: 1em;
+padding-bottom: 1em;
+}
+
+hr.subtitle {
+background-color: #DD3A49;
+}

@@ -1,0 +1,502 @@
+<div class="modal-header anexo bg-danger text-white">
+  <h4 class="modal-title">
+    {{ this.codigoProcedimientoTupa }} {{ this.descProcedimientoTupa }}
+  </h4>
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+    
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container mt-2 mb-3">
+    <form [formGroup]="formularioFG">
+      <div class="center">
+        <h6>{{ txtTitulo }}</h6>
+      </div>
+      <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2, seccion-3, seccion-4, seccion-5, seccion-6">
+        <div ngbAccordionItem="seccion-1" [collapsed]="false">
+          <h2 ngbAccordionHeader >
+            
+              <button ngbAccordionButton>
+                ÓRGANO Y/O UNIDAD ORGÁNICA QUE POSEE LA INFORMACIÓN
+              </button>
+            </h2>
+          <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+            <div class="row" formGroupName="f_Seccion1FG">
+              <div class="col-lg-12">
+                <app-basic-input [parentForm]="f_Seccion1FG" inputFormControlName="f_s1_UnidadOrgFC" label="Descripción"
+                  [maxLength]="100" placeHolder="Ingrese el órgano y/o unidad orgánica que posee la información">
+                </app-basic-input>
+              </div>
+            </div>
+          </ng-template>
+</div>
+</div>
+        </div>
+
+        <div ngbAccordionItem="seccion-2" [collapsed]="false">
+          <h2 ngbAccordionHeader >
+            
+              <button ngbAccordionButton>
+                I. DATOS DEL SOLICITANTE
+              </button>
+            </h2>
+          <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+            <div class="row" formGroupName="f_Seccion2FG">
+              <div class="col-lg-12" *ngIf="f_s2_PerNatJurFG.enabled" formGroupName="f_s2_PerNatJurFG">
+                <div class="row gx-2" *ngIf="tipoSolicitante === 'PN' || tipoSolicitante === 'PE' || tipoSolicitante === 'PNR'">
+                  <div class="mb-3 col-lg-4">
+                    <label class="control-label campo-obligatorio">
+                      Tipo Documento
+                    </label>
+                    <select class="form-select" formControlName="f_s2_pnj_TipoDocumentoFC" [class.control-invalid]="
+                        formInvalid(f_s2_pnj_TipoDocumentoFC)
+                      ">
+                      <option value="">Seleccione</option>
+                      <option *ngFor="
+                          let item of listaTiposDocumentos | slice : 0 : 3
+                        " [value]="item.id">
+                        {{ item.documento }}
+                      </option>
+                    </select>
+                    <div *ngIf="
+                        f_s2_pnj_TipoDocumentoFC.invalid &&
+                        (f_s2_pnj_TipoDocumentoFC.dirty ||
+                          f_s2_pnj_TipoDocumentoFC.touched)
+                      " class="text-danger">
+                      <div *ngIf="f_s2_pnj_TipoDocumentoFC.errors?.required">
+                        El campo es obligatorio
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_NumeroDocumentoFC"
+                      label="N° Documento" [maxLength]="9" placeHolder="Ingrese el número de documento"
+                      [readOnly]="true">
+                    </app-basic-input>
+                  </div>
+                </div>
+                <div class="row gx-2" *ngIf="tipoSolicitante === 'PN' || tipoSolicitante === 'PE' || tipoSolicitante === 'PNR'">
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_NombresFC"
+                      label="Nombres" placeHolder="Ingrese los nombres" [maxLength]="100" [readOnly]="false">
+                    </app-basic-input>
+                  </div>
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_ApePaternoFC"
+                      label="Apellido Paterno" placeHolder="Ingrese el apellido paterno" [maxLength]="50"
+                      [readOnly]="false">
+                    </app-basic-input>
+                  </div>
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_ApeMaternoFC"
+                      label="Apellido Materno" placeHolder="Ingrese el apellido materno" [maxLength]="50"
+                      [readOnly]="false">
+                    </app-basic-input>
+                  </div>
+                </div>
+                <div class="row gx-2" *ngIf="tipoSolicitante === 'PJ'">
+                  <div class="col-lg-3">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_NumeroDocumentoFC"
+                      label="RUC" placeHolder="Ingrese el número de documento" [readOnly]="true">
+                    </app-basic-input>
+                  </div>
+                  <div class="col-lg-9">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_RazonSocialFC"
+                      label="Razón social" placeHolder="Ingrese la razón social" [maxLength]="200" [readOnly]="true">
+                    </app-basic-input>
+                  </div>
+                </div>
+                <div class="row gx-2">
+                  <div class="col-lg-12">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_DomicilioFC"
+                      label="Domicilio legal" placeHolder="Ingrese el domicilio legal" [maxLength]="200">
+                    </app-basic-input>
+                  </div>
+                </div>
+
+                <ng-container *ngIf="tipoSolicitante === 'PJ'; else elsePjUbigeoTemplate">
+                  <div class="row gx-2">
+                    <div class="col-lg-4">
+                      <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_DepartamentoFC"
+                        label="Departamento" placeHolder="Ingrese el departamento" [readOnly]="true">
+                      </app-basic-input>
+                    </div>
+                    <div class="col-lg-4">
+                      <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_ProvinciaFC"
+                        label="Provincia" placeHolder="Ingrese la provincia" [readOnly]="true">
+                      </app-basic-input>
+                    </div>
+                    <div class="col-lg-4">
+                      <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_DistritoFC"
+                        label="Distrito" placeHolder="Ingrese el distrito" [readOnly]="true">
+                      </app-basic-input>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #elsePjUbigeoTemplate>
+                  <app-ubigeo #ubigeoCmpPerNatJur [parentForm]="f_s2_PerNatJurFG"
+                    depaFormControlName="f_s2_pnj_DepartamentoFC" provFormControlName="f_s2_pnj_ProvinciaFC"
+                    distFormControlName="f_s2_pnj_DistritoFC" depaFormLabel="Departamento" provFormLabel="Provincia"
+                    distFormLabel="Distrito" [horizontal]="true">
+                  </app-ubigeo>
+                </ng-template>
+                <div class="row gx-2">
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_TelefonoFC"
+                      label="Teléfono Fijo" placeHolder="Ingrese el número de teléfono" [onlyNumbers]="true"
+                      [maxLength]="9">
+                    </app-basic-input>
+                  </div>
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_CelularFC"
+                      label="Celular" placeHolder="Ingrese el número de celular" [onlyNumbers]="true" [maxLength]="9">
+                    </app-basic-input>
+                  </div>
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_PerNatJurFG" inputFormControlName="f_s2_pnj_CorreoFC"
+                      label="Correo Electrónico (E-mail)" placeHolder="Ingrese el correo electrónico" [maxLength]="50">
+                    </app-basic-input>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12" *ngIf="f_s2_RepLegalFG.enabled" formGroupName="f_s2_RepLegalFG">
+                <div class="mt-2"><strong>REPRESENTANTE LEGAL</strong></div>
+                <br />
+                <div class="row gx-2">
+                  <div class="mb-3 col-lg-4">
+                    <label class="control-label campo-obligatorio">
+                      Tipo Documento
+                    </label>
+                    <select class="form-select" formControlName="f_s2_rl_TipoDocumentoFC" [class.control-invalid]="
+                        formInvalid(f_s2_rl_TipoDocumentoFC)
+                      ">
+                      <option value="">Seleccione</option>
+                      <option *ngFor="
+                          let item of listaTiposDocumentos | slice : 0 : 3
+                        " [value]="item.id">
+                        {{ item.documento }}
+                      </option>
+                    </select>
+                    <div *ngIf="
+                        f_s2_rl_TipoDocumentoFC.invalid &&
+                        (f_s2_rl_TipoDocumentoFC.dirty ||
+                          f_s2_rl_TipoDocumentoFC.touched)
+                      " class="text-danger">
+                      <div *ngIf="f_s2_rl_TipoDocumentoFC.errors?.required">
+                        El campo es obligatorio
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_RepLegalFG" inputFormControlName="f_s2_rl_NumeroDocumentoFC"
+                      label="N° Documento" [maxLength]="9" placeHolder="Ingrese el número de documento"
+                      [onlyNumbers]="true" [btnAppend]="true" iconBtnAppend="fa-search" [disabledAppend]="
+                        !f_s2_rl_TipoDocumentoFC.value?.trim() ||
+                        disableBtnBuscarRepLegal
+                      " (clickAppend)="buscarNumeroDocumentoRepLeg()">
+                    </app-basic-input>
+                  </div>
+                </div>
+                <div class="row gx-2">
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_RepLegalFG" inputFormControlName="f_s2_rl_NombresFC"
+                      label="Nombres" placeHolder="Ingrese los nombres" [maxLength]="100" [readOnly]="true">
+                    </app-basic-input>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_RepLegalFG" inputFormControlName="f_s2_rl_ApePaternoFC"
+                      label="Apellido Paterno" placeHolder="Ingrese el apellido paterno" [maxLength]="50"
+                      [readOnly]="true">
+                    </app-basic-input>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_RepLegalFG" inputFormControlName="f_s2_rl_ApeMaternoFC"
+                      label="Apellido Materno" placeHolder="Ingrese el apellido materno" [maxLength]="50"
+                      [readOnly]="true">
+                    </app-basic-input>
+                  </div>
+                </div>
+
+                <div>
+                  <app-basic-input [parentForm]="f_s2_RepLegalFG" inputFormControlName="f_s2_rl_DomicilioFC"
+                    label="Domicilio Legal" placeHolder="Ingrese el domicilio legal" [maxLength]="200"
+                    [readOnly]="false">
+                  </app-basic-input>
+                </div>
+
+                <div class="row gx-2">
+                  <div class="mb-3 col-lg-4">
+                    <label class="control-label campo-obligatorio">
+                      Poder registrado - Oficina
+                    </label>
+                    <select class="form-select" formControlName="f_s2_rl_OficinaFC"
+                      [class.control-invalid]="formInvalid(f_s2_rl_OficinaFC)">
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let oficina of oficinasRegistral" [value]="oficina.value">
+                        {{ oficina.text }}
+                      </option>
+                    </select>
+                    <div *ngIf="
+                        f_s2_rl_OficinaFC.invalid &&
+                        (f_s2_rl_OficinaFC.dirty || f_s2_rl_OficinaFC.touched)
+                      " class="text-danger">
+                      <div *ngIf="f_s2_rl_OficinaFC.errors?.required">
+                        El campo es obligatorio
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <app-basic-input [parentForm]="f_s2_RepLegalFG" inputFormControlName="f_s2_rl_PartidaFC"
+                      label="Poder registrado - Partida N°"
+                      placeHolder="Ingrese el número de partida del poder registrado" [onlyNumbers]="true"
+                      [maxLength]="15">
+                    </app-basic-input>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+               <p class="text-danger ps-3">(*) Datos obligatorios </p>
+            </div>
+          </ng-template>
+        </div>
+        </div>
+        </div>
+
+        <div ngbAccordionItem="seccion-3" [collapsed]="false">
+          <h2 ngbAccordionHeader >
+            
+              <button ngbAccordionButton>
+                II. MODALIDAD DE NOTIFICACIÓN (Marcar solo una modalidad)
+              </button>
+            </h2>
+          <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+            <div class="mt-2 d-flex justify-content-center" *ngIf="f_Seccion3FG.enabled">
+              <div class="alert alert-custom mb-1" role="alert">
+                <div class="row" formGroupName="f_Seccion3FG">
+                  <div class="col-lg-11">
+                    <p>
+                      Solicito que todo acto administrativo derivado del
+                      presente procedimiento, se me notifique en el correo
+                      electrónico (e-mail) consignado en el presente formulario.
+                      Numeral 20.4 del articulo 20° del Texto Único Ordenado de
+                      la Ley N° 27444 - Ley del Procedimiento Administrativo
+                      General, aprobado por Decreto Supremo N° 004-2019-JUS.
+                    </p>
+                  </div>
+                  <div class="col-auto" style="align-self: center; text-align: center">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input form-input-size" type="radio" id="inlineRadio1"
+                        formControlName="f_s3_NotificaCorreoFC" value="1" />
+                      <label class="form-check-label" for="inlineRadio1">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input form-input-size" type="radio" id="inlineRadio2"
+                        formControlName="f_s3_NotificaCorreoFC" value="0" />
+                      <label class="form-check-label" for="inlineRadio2">No</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+</div>
+</div>
+        </div>
+
+        <div ngbAccordionItem="seccion-4" [collapsed]="false">
+          <h2 ngbAccordionHeader >
+            
+              <button ngbAccordionButton>
+                III. INFORMACIÓN SOLICITADA (Expresión concreta y precisa del
+                pedido de información)
+              </button>
+            </h2>
+          <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+            <div class="row" formGroupName="f_Seccion4FG">
+              <div class="col-lg-12">
+                <app-basic-input [parentForm]="f_Seccion4FG" inputFormControlName="f_s4_InfoSolicitaFC"
+                  [textArea]="true" label="Descripción" [maxLength]="500"
+                  placeHolder="Ingrese la descripción de la información solicitada">
+                </app-basic-input>
+              </div>
+            </div>
+            
+            <br>
+            <div class="row">
+               <p class="text-danger ps-3">(*) Datos obligatorios </p>
+            </div>
+          </ng-template>
+</div>
+</div>
+        </div>
+
+        <div ngbAccordionItem="seccion-5" [collapsed]="false">
+          <h2 ngbAccordionHeader >
+            
+              <button ngbAccordionButton>
+                IV. FORMA DE ENTREGA DE LA INFORMACIÓN (Marcar con un aspa "X")
+              </button>
+            </h2>
+          <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+            <div class="row" formGroupName="f_Seccion5FG">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input form-input-size" type="radio" id="formaEntregaRb1"
+                        formControlName="f_s5_formaEntregaFC" value="1" />
+                      <label class="form-check-label" for="formaEntregaRb1">
+                        Copia Simple A4
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input form-input-size" type="radio" id="formaEntregaRb2"
+                        formControlName="f_s5_formaEntregaFC" value="2" />
+                      <label class="form-check-label" for="formaEntregaRb2">
+                        CD
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input form-input-size" type="radio" id="formaEntregaRb3"
+                        formControlName="f_s5_formaEntregaFC" value="3" />
+                      <label class="form-check-label" for="formaEntregaRb3">
+                        Correo Electrónico
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="ps-3">Al recoger deberá pagar la reproducción </p>
+               </div>
+              </div>
+              <div class="col-lg-12 subtitle-section">
+                SOLO PARA PLANOS PLOTTER (INDICAR EL FORMATO EN TIPO DE PAPEL
+                BOND):
+              </div>
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-md-4">
+                    <app-basic-checkbox [parentForm]="f_Seccion5FG" checkboxFormControlName="f_s5_FormatoA0FC"
+                      label="Formato - A0">
+                    </app-basic-checkbox>
+                  </div>
+                  <div class="col-md-4">
+                    <app-basic-checkbox [parentForm]="f_Seccion5FG" checkboxFormControlName="f_s5_FormatoA1FC"
+                      label="Formato - A1">
+                    </app-basic-checkbox>
+                  </div>
+                  <div class="col-md-4">
+                    <app-basic-checkbox [parentForm]="f_Seccion5FG" checkboxFormControlName="f_s5_FormatoA2FC"
+                      label="Formato - A2">
+                    </app-basic-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+</div>
+</div>
+        </div>
+
+        <div ngbAccordionItem="seccion-6" [collapsed]="false">
+          <h2 ngbAccordionHeader >
+            
+              <button ngbAccordionButton>
+                V. DECLARACIONES JURADAS
+              </button>
+            </h2>
+
+          <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+            <div formGroupName="f_Seccion6FG" class="mt-2 mb-4">
+              <div class="alert alert-custom">
+                <div class="row gx-2">
+                  <div class="col-md-10">
+                    <div>
+                      Toda la información proporcionada es veraz, así como los
+                      documentos presentados son auténticos, en caso contrario,
+                      me someto al procedimiento y a las sanciones previstas en
+                      la Ley N° 27444, Ley del Procedimiento Administrativo
+                      General y/o normas complementarias.
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="d-flex flex-row p-2 ms-4">
+                      <ui-switch formControlName="f_s6_declaracion1FC">
+                        
+                      </ui-switch>
+                      <label class="col-form-label"> NO / SI </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-active">
+                <span style="text-align: justify; display: block">
+                  NOTA: En el presente documento electrónico se ha vinculado e
+                  identificado al firmante, así como se ha garantizado la
+                  autenticación e integridad del mismo a través de la firma
+                  electrónica utilizada a través del usuario y clave de ingreso
+                  al Sistema Tupa Digital del Ministerio de Transportes y
+                  Comunicaciones , la cual tiene la misma validez y eficacia
+                  jurídica que la firma manuscrita, de conformidad con el
+                  artículo primero y segundo de la Ley N° 27269 - Ley de Firmas
+                  y Certificados Digitales y lo establecido en el inciso c) del
+                  numeral 47.1 del Art 47 del Reglamento de la Ley de Gobierno
+                  Digital, aprobado mediante Decreto Supremo 029-2021-PCM.
+                </span>
+              </div>
+            </div>
+          </ng-template>
+</div>
+</div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer anexo">
+  <div class="row">
+    <div class="col-lg-12 d-flex">
+      <div class="flex-1">
+        <button type="button" class="btn btn-secondary" (click)="descargarPdf()">
+          <i class="far fa-eye"></i>
+          Visualizar
+        </button>
+      </div>
+
+      <div class="flex-1 text-end">
+        <button class="btn btn-success ms-3" (click)="guardarFormulario()"
+          [disabled]="formularioFG.invalid">
+          <i class="far fa-save"></i>
+          {{ id === 0 ? "Guardar" : "Guardar" }}
+        </button>
+      </div>
+
+      <button type="button" class="btn btn-light ms-3" (click)="activeModal.close(graboUsuario)">
+         Retornar
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<div class="modal-header">
+  <h2>{{ title }}<span class="mat-tooltip-informacion" placement="bottom"
+      ngbTooltip="Info about the action Info about the action Info about the actionInfo about the actionInfo about the actionInfo about the action">Contenido
+      Mínimo</span></h2>
+    <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+    </button>
+</div>
+<form  (submit)="save(form)" [formGroup]="form">
+<div class="modal-body">
+  <div class="antecedentes-dialog" style="font-size: 12px">
+    <div class="sub-container">
+      <div class="content-contorno">
+        <h3 class="sub-titulo">2.5.1. ÁREA DIRECTA AMBIENTAL<span class="color-red">(*)</span></h3>
+        <div class="m-0-5px">
+          <button *ngIf="viewControl" type="button" (click)="openModal('ÁREA DIRECTA AMBIENTAL', null, 3, false)"
+          class="btn button-agregar  d-flex align-items-center justify-content-center p-0">
+          <i class="material-icons color-green">add</i>
+          Agregar Área Directa Ambiental
+          </button>
+          <!-- <tupa-table [columns]="tableColumns251" [data]="tableData251"></tupa-table> -->
+          <tupa-table [columns]="headerDirectaAmbiental" [data]="dataDirectaAmbiental"></tupa-table>
+          <div>
+            NO EXISTE INFORMACIÓN DEL ÁREA.
+          </div>
+        </div>
+       
+      </div>
+    </div>
+
+    <div class="sub-container">
+      <div class="content-contorno">
+        <h3 class="sub-titulo">2.5.2. ÁREA INDIRECTA AMBIENTAL<span class="color-red">(*)</span></h3>
+        <div class="m-0-5px">
+          <button *ngIf="viewControl" type="button" (click)="openModal('ÁREA INDIRECTA AMBIENTAL', null, 4, false)"
+          class="btn button-agregar  d-flex align-items-center justify-content-center p-0">
+          <i class="material-icons color-green">add</i>
+          Agregar Área Indirecta Ambiental
+          </button>
+          <tupa-table [columns]="headerIndirectaAmbiental" [data]="dataIndirectaAmbiental"></tupa-table>
+          <div>
+            Agregar Área Indirecta Ambiental
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-container">
+      <div class="content-contorno">
+        <h3 class="sub-titulo">2.5.3.ÁREA DIRECTA SOCIAL<span class="color-red">(*)</span></h3>
+        <div class="m-0-5px">
+          <button *ngIf="viewControl" type="button" (click)="openModal('ÁREA DIRECTA SOCIAL', null, 5, false)"
+            class="btn button-agregar  d-flex align-items-center justify-content-center p-0">
+            <i class="material-icons color-green">add</i>
+            Agregar Área Directa Social
+          </button>
+          <tupa-table [columns]="headerDirectaSocial" [data]="dataDirectaSocial"></tupa-table>
+          <div>
+            NO EXISTE INFORMACIÓN DEL ÁREA.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-container">
+      <div class="content-contorno">
+        <h3 class="sub-titulo">2.5.4. ÁREA INDIRECTA SOCIAL<span class="color-red">(*)</span></h3>
+        <div class="m-0-5px">
+          <button *ngIf="viewControl" type="button" (click)="openModal('ÁREA INDIRECTA SOCIAL', null, 6, false)"
+          class="btn button-agregar  d-flex align-items-center justify-content-center p-0">
+          <i class="material-icons color-green">add</i>
+          Agregar Área Indirecta Social
+          </button>
+          <tupa-table [columns]="headerIndirectaSocial" [data]="dataIndirectaSocial"></tupa-table>
+          <div>
+            NO EXISTE INFORMACIÓN DEL ÁREA.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-contorno">
+      <h3>2.5.5. ADJUNTAR ARCHIVOS ESCANEADOS</h3>
+      <div class="m-0-5px">
+        <div class="mensaje-dialog d-flex flex-row m-0">
+          <div class="col-sm-1 col-md-1 w-5 d-flex justify-content-center align-items-center p-0">
+            <i class="material-icons icon-rojo"> info </i>
+          </div>
+          <div class="col-sm-11 col-md-11 ml-3">
+            <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 20 MB.
+              SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+              CARÁCTERES
+              (OCR).</p>
+          </div>
+        </div>
+        <br>
+        <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarDocumento($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+        <br>
+        <app-document-grid [viewOnly]="viewOnly" [documentos]="documentos" [showTipoDocumento]="showTipoDocumento" (documentosActualizados)="actualizarDocumentos($event)"></app-document-grid>    
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+  <div class="btn-footer-center">
+    <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+      Cancel</button>
+    <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+  </div>
+  <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+</div>
+</form>
+    
+  

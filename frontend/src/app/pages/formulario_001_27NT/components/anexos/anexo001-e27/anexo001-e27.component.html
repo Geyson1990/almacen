@@ -1,0 +1,278 @@
+<div class="modal-header anexo bg-danger text-white">
+  <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+      
+  </button>
+</div>
+<div class="modal-body anexo">
+  <div class="container-fluid">
+      <form novalidate [formGroup]="formulario">
+          <div class="mt-1 mb-3">
+              <h6 class="mb-0">{{txtTitulo}}</h6>
+              <!-- <h6 class="text-muted">{{txtTituloHelp}}</h6> -->
+          </div>
+          <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2, seccion-3">
+
+              <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                  <h2 ngbAccordionHeader >
+                      
+                          <button ngbAccordionButton>I. DATOS</button>
+                      </h2>
+                  <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <ng-container formGroupName="seccion1">
+                      <div class="container-fluid">
+                          <div class="col-12">
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Empresa</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="empresa" readonly
+                                  [class.control-invalid]="formInvalid(empresa)">
+                                  <div *ngIf="empresa.hasError('required')" class="invalid-feedback">
+                                    Este campo es obligatorio
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Servicio</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="servicio" [class.control-invalid]="formInvalid(servicio)">
+                                  <div *ngIf="servicio.hasError('required')" class="invalid-feedback">
+                                    Este campo es obligatorio
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="mb-3 row mb-2">
+                                <label class="col-sm-2 col-form-label text-bold">Modalidad</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" formControlName="modalidad" [class.control-invalid]="formInvalid(modalidad)">
+                                  <div *ngIf="modalidad.hasError('required')" class="invalid-feedback">
+                                    Este campo es obligatorio
+                                  </div>
+                                </div>
+                              </div>
+
+                          </div>
+                      </div>
+                    </ng-container>
+
+                  </ng-template>
+</div>
+</div>
+              </div>
+
+              <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                  <h2 ngbAccordionHeader >
+                      
+                          <button ngbAccordionButton>II. PLAN DE COBERTURA APROBADO</button>
+                      </h2>
+                  <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <ng-container formGroupName="seccion2">
+                      <div class="container-fluid">
+                        <div class="col-md-12">
+
+                          <div class="table-responsive">
+                            <table class="table table-hover table-bordered table-striped">
+                                <thead class="bg-secondary text-white text-center">
+                                    <tr class="align-self-center">
+                                        <th class="align-middle" rowspan="2">PLAN DE COBERTURA</th>
+                                        <th class="align-middle" colspan="5">UNIDADES GEOGRÁFICAS</th>
+                                    </tr>
+                                    <tr class="align-self-center">
+                                        <th class="align-middle">1° AÑO</th>
+                                        <th class="align-middle">2° AÑO</th>
+                                        <th class="align-middle">3° AÑO</th>
+                                        <th class="align-middle">4° AÑO</th>
+                                        <th class="align-middle">5° AÑO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr formGroupName="planAnual">
+                                        <td class="text-center text-bold align-middle">ANUAL</td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio1"
+                                            [class.control-invalid]="formInvalid(planAprobadoAnualAnio1)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio2"
+                                            [class.control-invalid]="formInvalid(planAprobadoAnualAnio2)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio3"
+                                            [class.control-invalid]="formInvalid(planAprobadoAnualAnio3)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio4"
+                                            [class.control-invalid]="formInvalid(planAprobadoAnualAnio4)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio5"
+                                            [class.control-invalid]="formInvalid(planAprobadoAnualAnio5)"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr formGroupName="planAcumulado">
+                                        <td class="text-center text-bold align-middle">ACUMULADO</td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio1"
+                                            [class.control-invalid]="formInvalid(planAprobadoAcumuladoAnio1)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio2"
+                                            [class.control-invalid]="formInvalid(planAprobadoAcumuladoAnio2)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio3"
+                                            [class.control-invalid]="formInvalid(planAprobadoAcumuladoAnio3)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio4"
+                                            [class.control-invalid]="formInvalid(planAprobadoAcumuladoAnio4)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio5"
+                                            [class.control-invalid]="formInvalid(planAprobadoAcumuladoAnio5)"></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </div>
+
+                          <div class="alert alert-light">
+                            <i class="fas fa-info-circle"></i> Entiéndase por unidades geográficas a las circunscripciones político administrativas definidas en la Ley de Demarcación y Organización Territorial – Ley N° 27795, constituidas por departamentos, provincias y distritos
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                  </ng-template>
+</div>
+</div>
+              </div>
+
+              <div ngbAccordionItem="seccion-3" [collapsed]="false">
+                  <h2 ngbAccordionHeader >
+                      
+                          <button ngbAccordionButton>III. PLAN DE COBERTURA PROPUESTO</button>
+                      </h2>
+                  <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <ng-container formGroupName="seccion3">
+                      <div class="container-fluid">
+                        <div class="col-md-12">
+
+                          <div class="table-responsive">
+                            <table class="table table-hover table-bordered table-striped">
+                                <thead class="bg-secondary text-white text-center">
+                                    <tr class="align-self-center">
+                                        <th class="align-middle" rowspan="2">PLAN DE COBERTURA</th>
+                                        <th class="align-middle" colspan="5">UNIDADES GEOGRÁFICAS</th>
+                                    </tr>
+                                    <tr class="align-self-center">
+                                        <th class="align-middle">1° AÑO</th>
+                                        <th class="align-middle">2° AÑO</th>
+                                        <th class="align-middle">3° AÑO</th>
+                                        <th class="align-middle">4° AÑO</th>
+                                        <th class="align-middle">5° AÑO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr formGroupName="planAnual">
+                                        <td class="text-center text-bold align-middle">ANUAL</td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio1"
+                                            [class.control-invalid]="formInvalid(planPropuestoAnualAnio1)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio2"
+                                            [class.control-invalid]="formInvalid(planPropuestoAnualAnio2)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio3"
+                                            [class.control-invalid]="formInvalid(planPropuestoAnualAnio3)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio4"
+                                            [class.control-invalid]="formInvalid(planPropuestoAnualAnio4)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio5"
+                                            [class.control-invalid]="formInvalid(planPropuestoAnualAnio5)"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr formGroupName="planAcumulado">
+                                        <td class="text-center text-bold align-middle">ACUMULADO</td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio1"
+                                            [class.control-invalid]="formInvalid(planPropuestoAcumuladoAnio1)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio2"
+                                            [class.control-invalid]="formInvalid(planPropuestoAcumuladoAnio2)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio3"
+                                            [class.control-invalid]="formInvalid(planPropuestoAcumuladoAnio3)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio4"
+                                            [class.control-invalid]="formInvalid(planPropuestoAcumuladoAnio4)"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                          <textarea type="texta" class="form-control text-center" formControlName="anio5"
+                                            [class.control-invalid]="formInvalid(planPropuestoAcumuladoAnio5)"></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </div>
+
+                          <div class="alert alert-light">
+                            <i class="fas fa-info-circle"></i> Entiéndase por unidades geográficas a las circunscripciones político administrativas definidas en la Ley de Demarcación y Organización Territorial – Ley N° 27795, constituidas por departamentos, provincias y distritos.
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                  </ng-template>
+</div>
+</div>
+              </div>
+
+          </div>
+
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i><b> NOTA:</b><br>
+            <b>PARA LARGA DISTANCIA</b><br>
+            El concesionario deberá estar en capacidad de prestar el servicio concedido dentro de un plazo máximo de 24 meses computados desde la fecha de inicio de operaciones, en cinco ciudades en distintos departamentos del país y poseer al menos un centro de conmutación.
+          </div>
+      </form>
+  </div>
+</div>
+<div class="modal-footer anexo">
+  <div class="row">
+      <div class="col-sm-12 d-flex">
+          <div class="flex-1">
+              <button type="button" class="btn btn-secondary" [disabled]="id === 0" (click)="descargarPdf()">
+                  <i class="far fa-eye"></i> Visualizar
+              </button>
+          </div>
+          <div class="flex-1 text-end">
+              <button class="btn btn-success boton-guardar" (click)="guardarAnexo()">
+                  <i class="fas fa-save"></i> Guardar
+              </button>
+              <button type="button" class="btn btn-light ms-2" (click)="activeModal.close(graboUsuario)">
+                  Cancelar
+              </button>
+          </div>
+      </div>
+  </div>
+</div>

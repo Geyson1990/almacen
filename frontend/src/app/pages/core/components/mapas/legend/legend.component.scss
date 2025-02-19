@@ -1,0 +1,36 @@
+.lots-legend{
+
+    background: var(--white-color);
+    font-size: 10px;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+
+    .content{
+        display: flex;
+        flex-direction: row;
+        gap: 0.3rem;
+        align-items: center;
+    }
+      .square {
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+      }
+      
+      .point {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        display: inline-block;
+       
+      }
+      
+      .dashed-border {
+        border-style: dashed;
+     
+      }
+}

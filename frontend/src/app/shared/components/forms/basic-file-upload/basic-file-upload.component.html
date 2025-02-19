@@ -1,0 +1,37 @@
+<div [formGroup]="parentForm">
+    <div [ngClass]="{'mb-3': !horizontal}">
+        <div [ngClass]="{'row gx-2 verticalCenter': horizontal}">
+            <label [ngClass]="{'control-label': !horizontal, 'col-form-label me-2': horizontal}" *ngIf="fileFormLabel"
+                [for]="'inputControl-' + inputUUID">{{ fileFormLabel }}{{ horizontal ? ': ' : ' ' }}
+                <span class="text-danger" *ngIf="isRequired()">(*)</span>
+            </label>
+            <br *ngIf="!horizontal" />
+
+            <app-file-upload-core [parentForm]="parentForm" [formControlName]="fileFormControlName"
+                [fileButtonLabel]="fileButtonLabel" [multiple]="multiple" [emptyFileLabel]="emptyFileLabel"
+                [inputUUID]="inputUUID">
+            </app-file-upload-core>
+
+        </div>
+        <div *ngIf="fileFormControl.invalid && (fileFormControl.dirty || fileFormControl.touched)" class="text-danger">
+            <div *ngIf="fileFormControl.errors?.fileMaxSize">
+                El tamaño máximo permitido es {{ meFormatBytes(fileFormControl.errors.fileMaxSize.requiredSize) }}
+            </div>
+            <div *ngIf="fileFormControl.errors?.fileMinSize">
+                El tamaño mínimo permitido es {{ meFormatBytes(fileFormControl.errors.fileMinSize.requiredSize) }}
+            </div>
+            <div *ngIf="fileFormControl.errors?.requiredFileType">
+                {{ fileTypeValidatorMessage }}
+            </div>
+            <ng-content select="[slot=customValidators]"></ng-content>
+            <!-- Para usar los validadores personalizados llamarlo de esta forma: -->
+            <!-- <div slot="customValidators">Aqui colocamos los validadores personalizados</div> -->
+            <!-- o -->
+            <!-- <ng-container slot="customValidators">Aqui colocamos los validadores personalizados</ng-container> -->
+        </div>
+    </div>
+    <p *ngIf="progress">
+        <ngb-progressbar showValue="true" type="primary" [value]="progress" striped="true" animated="true">
+        </ngb-progressbar>
+    </p>
+</div>

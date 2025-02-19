@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <h2>{{title}}</h2>
+</div>
+<div class="modal-body">
+    <div class="mensaje-dialog d-flex flex-row m-0">
+        <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+          <i class="material-icons icon-ambar"> warning </i>
+        </div>
+        <div class="col-sm-11 col-md-11 w-90">
+          <p class="m-0">NOTA : Si quiere agregar un profesional o actualizar los datos de un profesional existente, enviar un correo a rpizarro&commat;minem.gob.pe . indicando nombre y apellidos, número y tipo de documento de identidad, formación profesional, RUC, email y de ser el caso número de colegiatura.  </p>
+        </div>
+    </div>
+    <form (submit)="save(form)" [formGroup]="form">
+        <div class="sub-grupo">
+            <div class="col-sm-12 col-md-12 mt-2">
+                <div class="row">
+                    
+                    <div class="col-sm-6 col-md-6 mt-2">
+                        <h3>TIPO DOCUMENTO DE IDENTIDAD</h3>
+                        <div class="col-sm-12 col-md-12 mt-2">
+                            <select class="form-select" formControlName="IdTipoDocumentoIdentidad">
+                                <option value="">--SELECCIONE--</option>                    
+                                <option *ngFor="let item of tipoDocumento" [value]="item.idDocumentoIdentidad">{{ item.descripcion }}
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 mt-2">
+                        <h3>NÚMERO DOCUMENTO DE IDENTIDAD</h3>
+                        <div class="col-sm-12 col-md-12 mt-2">
+                            <input type="text" class="form-control" placeholder="" formControlName="NumeroDocumento">
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    
+                    <div class="col-sm-6 col-md-6 mt-2">
+                        <h3>COLEGIATURA</h3>
+                        <input type="text" class="form-control" placeholder="" formControlName="Colegiatura">
+                    </div>
+                    <br>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 mt-2"></div>
+                    <div class="col-sm-4 col-md-4 mt-2">
+                        <button class="btn btn-outline-secondary" type="button" class="mat-small" (click)="search(form)"><i class="material-icons">search</i>
+                            Buscar</button>
+                            <br>
+                    </div>
+                    <div class="col-sm-4 col-md-4 mt-2"></div>
+                </div>
+
+                <div class="row">
+                    <div *ngIf="ApellidoPaterno!==''">
+                        <span><b>Ap. Paterno: </b></span>{{ApellidoPaterno}}
+                        <span><b>Ap. Materno: </b></span>{{ApellidoMaterno}}
+                        <span><b>Nombres: </b></span>{{Nombres}}
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <tupa-table [columns]="headersOtrosProfesionales" [data]="dataTableOtrosProfesional"></tupa-table>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+                Cancel</button>
+            <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+        </div>
+    </form>
+</div>

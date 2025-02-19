@@ -1,0 +1,51 @@
+.main {
+  margin-top: 58px;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 40px;
+  padding-left: 40px;
+  height: calc(100vh - 58px);
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.8em;
+  color: #5d5d5d;
+  padding-top: 0.25em;
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: 1.2em;
+  color: #5d5d5d;
+}
+
+.section {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+@media (min-width: 992px) {
+  .btn-input-center {
+    padding-top: 2em;
+  }
+}
+
+hr {
+  background-color: #5d5d5d;
+}
+
+hr.vertical {
+  border: 0;
+  border-start: 1px solid #5d5d5d;
+  height: 100%;
+  margin: 0;
+}
+
+ngb-alert {
+    text-align: justify;
+    font-weight: 500;
+    font-size: 0.8em;
+}

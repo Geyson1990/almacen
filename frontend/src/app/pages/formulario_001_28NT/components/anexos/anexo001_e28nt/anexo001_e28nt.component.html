@@ -1,0 +1,513 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body anexo">
+    <div class="container mt-2 mb-3">
+        <form [formGroup]='anexoFG'>
+            <div class="center">
+                <h6>{{txtTitulo}}</h6>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion"
+                activeIds="seccion-0, seccion-1, seccion-2, seccion-3, seccion-4, seccion-5, seccion-6">
+                <div  [disabled]="a_Seccion0FG.disabled" ngbAccordionItem="seccion-0">
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton>TIPO DE
+                                SERVICIO</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row text-center" *ngIf="a_Seccion0FG.enabled" formGroupName="a_Seccion0FG">
+                            <div class="col-lg-12">
+                                <div class="row gx-2 alert alert-custom"
+                                    [class.control-invalid]="a_Seccion0FG.invalid && (a_Seccion0FG.dirty || a_Seccion0FG.touched)">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg">
+                                                <app-basic-checkbox [parentForm]="a_Seccion0FG"
+                                                    checkboxFormControlName="a_s0_CambioUbicaFC"
+                                                    label="Cambio de Ubicación">
+                                                </app-basic-checkbox>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-checkbox [parentForm]="a_Seccion0FG"
+                                                    checkboxFormControlName="a_s0_AmpliaFrecFC"
+                                                    label="Ampliación de Frecuencia ">
+                                                </app-basic-checkbox>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-checkbox [parentForm]="a_Seccion0FG"
+                                                    checkboxFormControlName="a_s0_CambioFrecFC"
+                                                    label="Cambio de Frecuencia">
+                                                </app-basic-checkbox>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-checkbox [parentForm]="a_Seccion0FG"
+                                                    checkboxFormControlName="a_s0_CancelaFrecFC"
+                                                    label="Cancelación de Frecuencia ">
+                                                </app-basic-checkbox>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg">
+                                                <app-basic-checkbox [parentForm]="a_Seccion0FG"
+                                                    checkboxFormControlName="a_s0_AmpliaHoraFC"
+                                                    label="Ampliación B. Horario ">
+                                                </app-basic-checkbox>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-checkbox [parentForm]="a_Seccion0FG"
+                                                    checkboxFormControlName="a_s0_CambioHoraFC"
+                                                    label="Cambio de Bloque Horario">
+                                                </app-basic-checkbox>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-checkbox [parentForm]="a_Seccion0FG"
+                                                    checkboxFormControlName="a_s0_CancelaHoraFC"
+                                                    label="Cancelación B. Horario ">
+                                                </app-basic-checkbox>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-checkbox [parentForm]="a_Seccion0FG"
+                                                    checkboxFormControlName="a_s0_OtrosFC" label="Otros">
+                                                </app-basic-checkbox>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="a_Seccion0FG.invalid && (a_Seccion0FG.dirty || a_Seccion0FG.touched)"
+                                            class="text-danger mt-2">
+                                            <div *ngIf="a_Seccion0FG.errors?.requireCheckboxesToBeChecked">
+                                                La cantidad de opciones marcadas permitidas es de mínimo {{
+                                                a_Seccion0FG.errors.requireCheckboxesToBeChecked.minRequired }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+                <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>I. INFORMACIÓN
+                                TÉCNICA DE LA ESTACIÓN A SER MODIFICADA</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" *ngIf="a_Seccion1FG.enabled" formGroupName="a_Seccion1FG">
+                            <div class="col-md-12">
+                                <div class="row gx-2">
+                                    <div class="col-lg-3">
+                                        <app-basic-input [parentForm]="a_Seccion1FG"
+                                            inputFormControlName="a_s1_IndicativoFC" label="Indicativo"
+                                            placeHolder="Ingrese el indicativo" [maxLength]="50">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <app-basic-input [parentForm]="a_Seccion1FG"
+                                            inputFormControlName="a_s1_UbicacionFC" label="Ubicación"
+                                            placeHolder="Ingrese la ubicación" [maxLength]="50">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <app-basic-input [parentForm]="a_Seccion1FG"
+                                            inputFormControlName="a_s1_FrecOperaFC" label="Frecuencia(s) de operación"
+                                            placeHolder="Ingrese la frecuencia de operación" [maxLength]="50">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <app-basic-input [parentForm]="a_Seccion1FG"
+                                            inputFormControlName="a_s1_HoraOperaFC" label="Horario de Operación"
+                                            placeHolder="Ingrese el horario de operación" [maxLength]="50">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+                <div ngbAccordionItem="seccion-2" *ngIf="a_Seccion2FG.enabled" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>II.CAMBIO DE
+                                UBICACIÓN: Indicar la nueva ubicación a continuación</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" formGroupName="a_Seccion2FG">
+                            <div class="col-lg-12">
+                                <div class="row" *ngIf="a_s2_EstaFijaFG.enabled" formGroupName="a_s2_EstaFijaFG">
+                                    <div class="col-lg-12 mb-2">
+                                        <strong class="mb-2">ESTACIÓN FIJA</strong>
+                                        <br>
+                                        <app-basic-input [parentForm]="a_s2_EstaFijaFG"
+                                            inputFormControlName="a_s2_ef_UbicacionFC" label="Ubicación"
+                                            placeHolder="Ingrese la ubicación de la estación" [maxLength]="100">
+                                        </app-basic-input>
+                                        <app-ubigeo #ubigeoCmpEstFija1 [parentForm]="a_s2_EstaFijaFG"
+                                            depaFormControlName="a_s2_ef_DepartamentoFC"
+                                            provFormControlName="a_s2_ef_ProvinciaFC"
+                                            distFormControlName="a_s2_ef_DistritoFC" depaFormLabel="Departamento"
+                                            provFormLabel="Provincia" distFormLabel="Distrito" [horizontal]="true">
+                                        </app-ubigeo>
+                                        <div class="row gx-2 mt-2" style="align-items: center;">
+                                            <div class="col-lg-auto">
+                                                <strong>Coordenadas Geográficas</strong>
+                                            </div>
+                                            <div class="col-lg-auto">
+                                                <strong>L.O.:</strong>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-input [parentForm]="a_s2_EstaFijaFG"
+                                                    inputFormControlName="a_s2_ef_LOGraFC" placeHolder="Grados"
+                                                    [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                     [customAppend]="true">
+                                                    <ng-container slot="customAppend">
+                                                        <span class="input-group-text">°</span>
+                                                    </ng-container>
+                                                </app-basic-input>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-input [parentForm]="a_s2_EstaFijaFG"
+                                                    inputFormControlName="a_s2_ef_LOMinFC" placeHolder="Minutos"
+                                                    [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                     [customAppend]="true">
+                                                    <ng-container slot="customAppend">
+                                                        <span class="input-group-text">'</span>
+                                                    </ng-container>
+                                                </app-basic-input>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-input [parentForm]="a_s2_EstaFijaFG"
+                                                    inputFormControlName="a_s2_ef_LOSegFC" placeHolder="Segundos"
+                                                    [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                     [customAppend]="true">
+                                                    <ng-container slot="customAppend">
+                                                        <span class="input-group-text">"</span>
+                                                    </ng-container>
+                                                </app-basic-input>
+                                            </div>
+                                            <div class="col-lg-auto">
+                                                <strong>L.S.:</strong>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-input [parentForm]="a_s2_EstaFijaFG"
+                                                    inputFormControlName="a_s2_ef_LSGraFC" placeHolder="Grados"
+                                                    [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                     [customAppend]="true">
+                                                    <ng-container slot="customAppend">
+                                                        <span class="input-group-text">°</span>
+                                                    </ng-container>
+                                                </app-basic-input>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-input [parentForm]="a_s2_EstaFijaFG"
+                                                    inputFormControlName="a_s2_ef_LSMinFC" placeHolder="Minutos"
+                                                    [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                     [customAppend]="true">
+                                                    <ng-container slot="customAppend">
+                                                        <span class="input-group-text">'</span>
+                                                    </ng-container>
+                                                </app-basic-input>
+                                            </div>
+                                            <div class="col-lg">
+                                                <app-basic-input [parentForm]="a_s2_EstaFijaFG"
+                                                    inputFormControlName="a_s2_ef_LSSegFC" placeHolder="Segundos"
+                                                    [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                     [customAppend]="true">
+                                                    <ng-container slot="customAppend">
+                                                        <span class="input-group-text">"</span>
+                                                    </ng-container>
+                                                </app-basic-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row gx-2" *ngIf="a_s2_EstaMovilFG.enabled" formGroupName="a_s2_EstaMovilFG">
+                                    <div class="col-lg-12 mb-2"><strong>ESTACIÓN MÓVIL</strong></div>
+                                    <br>
+                                    <div class="col-lg-3">
+                                        <app-basic-input [parentForm]="a_s2_EstaMovilFG"
+                                            inputFormControlName="a_s2_em_PortZonaOperFC"
+                                            label="Portátil - Zona de Operación"
+                                            placeHolder="Ingrese la zona de operación" [maxLength]="30">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <app-basic-input [parentForm]="a_s2_EstaMovilFG"
+                                            inputFormControlName="a_s2_em_VehiZonaOperFC"
+                                            label="Vehículo - Zona de Operación"
+                                            placeHolder="Ingrese la zona de operación" [maxLength]="30">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <app-basic-input [parentForm]="a_s2_EstaMovilFG"
+                                            inputFormControlName="a_s2_em_EmbarMatriFC" label="Embarcación - Matrícula"
+                                            placeHolder="Ingrese la matrícula de la embarcación" [maxLength]="30">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <app-basic-input [parentForm]="a_s2_EstaMovilFG"
+                                            inputFormControlName="a_s2_em_AeroMatriFC" label="N° Aeronave - Matrícula"
+                                            placeHolder="Ingrese la matrícula de la aeronave" [maxLength]="30">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+                <div ngbAccordionItem="seccion-3" *ngIf="a_Seccion3FG.enabled" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>III. MODIFICACIÓN
+                                DE FRECUENCIAS</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" formGroupName="a_Seccion3FG">
+                            <div class="col-lg-12">
+                                <div class="row gx-2" *ngIf="a_s3_AmpliaFrecFG.enabled"
+                                    formGroupName="a_s3_AmpliaFrecFG">
+                                    <div class="col-lg mb-3">
+                                        <app-basic-input [parentForm]="a_s3_AmpliaFrecFG"
+                                            inputFormControlName="a_s3_af_FrecAdicionaFC"
+                                            label="Frecuencia adicional solicitada"
+                                            placeHolder="Ingrese la frecuencia adicional solicitada" [maxLength]="40"
+                                            [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg mb-3">
+                                        <app-basic-input [parentForm]="a_s3_AmpliaFrecFG"
+                                            inputFormControlName="a_s3_af_HoraOperaFC" label="Horario de Operación"
+                                            placeHolder="Ingrese el horario de operación" [maxLength]="40"
+                                            [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div class="row gx-2" *ngIf="a_s3_CambioFrecFG.enabled"
+                                    formGroupName="a_s3_CambioFrecFG">
+                                    <div class="col-lg mb-3">
+                                        <app-basic-input [parentForm]="a_s3_CambioFrecFG"
+                                            inputFormControlName="a_s3_cf_FrecCambioFC" label="Frecuencia a cambiar"
+                                            placeHolder="Ingrese la frecuencia a cambiar" [maxLength]="40"
+                                            [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg mb-3">
+                                        <app-basic-input [parentForm]="a_s3_CambioFrecFG"
+                                            inputFormControlName="a_s3_cf_NuevaFrecFC" label="Nueva frecuencia"
+                                            placeHolder="Ingrese la nueva frecuencia" [maxLength]="40"
+                                            [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div class="row gx-2" *ngIf="a_s3_CancelaFrecFC.enabled">
+                                    <div class="col-lg">
+                                        <app-basic-input [parentForm]="a_Seccion3FG"
+                                            inputFormControlName="a_s3_CancelaFrecFC" label="Frecuencia a cancelar"
+                                            placeHolder="Ingrese la frecuencia a cancelar" [maxLength]="40"
+                                            [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+                <div ngbAccordionItem="seccion-4" *ngIf="a_Seccion4FG.enabled" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>IV. MODIFICACIÓN
+                                DE BLOQUE HORARIO</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" formGroupName="a_Seccion4FG">
+                            <div class="col-lg-12">
+                                <div class="row gx-2" *ngIf="a_s4_AmpliaHoraFG.enabled"
+                                    formGroupName="a_s4_AmpliaHoraFG">
+                                    <div class="col-lg mb-3">
+                                        <app-basic-input [parentForm]="a_s4_AmpliaHoraFG"
+                                            inputFormControlName="a_s4_ah_HoraAdicionaFC"
+                                            label="B. Horario adicional solicitado"
+                                            placeHolder="Ingrese el bloque horario adicional solicitado"
+                                            [maxLength]="40" [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <app-basic-input [parentForm]="a_s4_AmpliaHoraFG"
+                                            inputFormControlName="a_s4_ah_FrecuenciaFC" label="Frecuencia"
+                                            placeHolder="Ingrese la frecuencia" [maxLength]="30" [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div class="row gx-2" *ngIf="a_s4_CambioHoraFG.enabled"
+                                    formGroupName="a_s4_CambioHoraFG">
+                                    <div class="col-lg mb-3">
+                                        <app-basic-input [parentForm]="a_s4_CambioHoraFG"
+                                            inputFormControlName="a_s4_ch_HoraCambioFC" label="B. Horario para cambio"
+                                            placeHolder="Ingrese el bloque horario para cambio" [maxLength]="40"
+                                            [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg mb-3">
+                                        <app-basic-input [parentForm]="a_s4_CambioHoraFG"
+                                            inputFormControlName="a_s4_ch_NuevaHoraFC" label="Nuevo B. Horario"
+                                            placeHolder="Ingrese el nuevo bloque horario" [maxLength]="20"
+                                            [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <app-basic-input [parentForm]="a_s4_CambioHoraFG"
+                                            inputFormControlName="a_s4_ch_FrecuenciaFC" label="Frecuencia"
+                                            placeHolder="Ingrese la frecuencia" [maxLength]="30" [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                                <div class="row gx-2" *ngIf="a_s4_CancelaHoraFG.enabled"
+                                    formGroupName="a_s4_CancelaHoraFG">
+                                    <div class="col-lg mb-3">
+                                        <app-basic-input [parentForm]="a_s4_CancelaHoraFG"
+                                            inputFormControlName="a_s4_cah_HoraCancelaFC" label="B. Horario a cancelar"
+                                            placeHolder="Ingrese el bloque horario a cancelar" [maxLength]="40"
+                                            [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="a_s4_CancelaHoraFG"
+                                            inputFormControlName="a_s4_cah_FrecuenciaFC" label="Frecuencia"
+                                            placeHolder="Ingrese la frecuencia" [maxLength]="30" [horizontal]="true">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+                <div ngbAccordionItem="seccion-5" *ngIf="a_Seccion5FG.enabled" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>V. OTROS</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" formGroupName="a_Seccion5FG">
+                            <div class="col-lg-12 mb-3">
+                                <app-basic-input [parentForm]="a_Seccion5FG" inputFormControlName="a_s5_IndicaModifFC"
+                                    label="Indicar modificación" placeHolder="Ingrese la modificación a realizar"
+                                    [maxLength]="100" [horizontal]="true">
+                                </app-basic-input>
+                            </div>
+                            <div class="col-lg-12 mb-3">
+                                <app-basic-input [parentForm]="a_Seccion5FG" inputFormControlName="a_s5_CaracActualFC"
+                                    label="Característica Actual" placeHolder="Ingrese la característica actual"
+                                    [maxLength]="100" [horizontal]="true">
+                                </app-basic-input>
+                            </div>
+                            <div class="col-lg-12">
+                                <app-basic-input [parentForm]="a_Seccion5FG" inputFormControlName="a_s5_NuevaCaracFC"
+                                    label="Nueva caracterísitica" placeHolder="Ingrese la nueva característica"
+                                    [maxLength]="100" [horizontal]="true">
+                                </app-basic-input>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+                <div ngbAccordionItem="seccion-6" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>VI. DECLARACIONES
+                                JURADAS</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div formGroupName="a_Seccion6FG">
+                            <div class="mt-2 mb-4 ng-star-inserted" *ngIf="a_s6_declaracion1FC.enabled">
+                                <div class="alert alert-custom">
+                                    <div _ngcontent-ehx-c118="" class="row gx-2" style="align-items: center;">
+                                        <div _ngcontent-ehx-c118="" class="col">
+                                            <div _ngcontent-ehx-c118=""> 1 Toda la información proporcionada es veraz,
+                                                así como los documentos presentados son auténticos, en caso contrario,
+                                                me someto al procedimiento y a las sanciones previstas en la Ley N°
+                                                27444, Ley del Procedimiento Administrativo General y/o normas
+                                                complementarias.
+                                            </div>
+                                        </div>
+                                        <div _ngcontent-ehx-c118="" class="col-auto">
+                                            <div _ngcontent-ehx-c118="" class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s6_declaracion1FC"
+                                                    class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-active">
+                                <span style="text-align: justify; display: block;">
+                                    NOTA: En el presente documento electrónico se ha vinculado e identificado al
+                                    firmante, así como se ha garantizado la autenticación e integridad del mismo a
+                                    través de la firma electrónica utilizada atraves del usuario y clave de ingreso al
+                                    Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones , la cual tiene
+                                    la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el
+                                    artículo primero y segundo de la Ley N° 27269 - Ley de Firmas y Certificados
+                                    Digitales y lo establecido en el inciso c) del numeral 47.1 del Art 47 del
+                                    Reglamento de la Ley de Gobierno Digital, aprobado mediante Decreto Supremo
+                                    029-2021-PCM.
+                                </span>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-lg-12 d-flex">
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                        <i class="far fa-eye"></i>
+                        Visualizar
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="anexoFG.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                    (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

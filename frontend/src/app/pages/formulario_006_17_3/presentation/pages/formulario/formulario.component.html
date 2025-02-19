@@ -1,0 +1,575 @@
+<div class="modal-header anexo bg-danger text-white">
+   <h4 class="modal-title">{{codigoProcedimientoTupa}} {{descProcedimientoTupa}} </h4>
+   <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+
+   </button>
+</div>
+
+<div class="modal-body">
+   <div>
+      <form [formGroup]='formulario'>
+         <div class="center">
+            <h5>{{txtTituloCompleto}}</h5>
+         </div>
+
+         <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-2, seccion-3, seccion-4">
+
+            <div ngbAccordionItem="seccion-2" [collapsed]="false">
+               <h2 ngbAccordionHeader class="card-header aaa">
+
+                  <button ngbAccordionButton>
+                     MODALIDAD DE NOTIFICACIÓN (Marcar solo una modalidad)</button>
+               </h2>
+               <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                     <ng-template>
+                        <div class="row gx-2 text-center">
+                           <div class="text-center">La notificación del presente procedimiento, se realiza a través del
+                              Sistema de Casillas Electrónicas del Ministerio de Transportes y Comunicaciones. </div>
+                           <br>
+                           <div class="text-center">En virtud a ello, para la tramitación del presente procedimiento
+                              administrativo, usted debe contar con una casilla electrónica. Si aún no se ha afiliado,
+                              deberá hacerlo, ingresando al siguiente enlace:</div>
+                           <a text-align="center" href="https://casilla.mtc.gob.pe/"
+                              target="_blank">https://casilla.mtc.gob.pe/</a>
+                        </div>
+                     </ng-template>
+                  </div>
+               </div>
+            </div>
+
+            <div ngbAccordionItem="seccion-3" [collapsed]="false">
+               <h2 ngbAccordionHeader>
+
+                  <button ngbAccordionButton>III. DATOS
+                     SOLICITANTE</button>
+               </h2>
+
+               <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                     <ng-template>
+                        <div class="row" formGroupName="Seccion3">
+                           <div class="col-lg-12" formGroupName="PersonaJuridica">
+                              <div class="row gx-2">
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_PersonaJuridica" inputFormControlName="pj_ruc"
+                                       label="N° de Ruc" placeHolder="Ingrese el número de RUC" [onlyNumbers]="true"
+                                       [maxLength]="11">
+                                    </app-basic-input>
+
+                                 </div>
+                                 <div class="col-lg-8">
+                                    <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                       inputFormControlName="pj_razonSocial" label="Razón Social"
+                                       placeHolder="Ingrese la razón social" [maxLength]="100">
+                                    </app-basic-input>
+                                 </div>
+
+                              </div>
+                              <div class="row gx-2">
+                                 <div class="col-lg-12">
+                                    <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                       inputFormControlName="pj_domicilio" label="Domicilio Legal"
+                                       placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                                    </app-basic-input>
+
+                                 </div>
+                              </div>
+                              <div class="row gx-2">
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                       inputFormControlName="pj_departamento" label="Departamento">
+                                    </app-basic-input>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                       inputFormControlName="pj_provincia" label="Provincia">
+                                    </app-basic-input>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                       inputFormControlName="pj_distrito" label="Distrito">
+                                    </app-basic-input>
+                                 </div>
+
+                              </div>
+                              <hr>
+                           </div>
+                           <div class="col-lg-12" formGroupName="f_s3_datosEmpresa" *ngIf="this.activarDatosEmpresa">
+                              <div class="row gx-2">
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_datosEmpresa"
+                                       inputFormControlName="f_s3_de_partida" label="Partida registral"
+                                       placeHolder="Ingrese el número de partida registral" [onlyNumbers]="true"
+                                       [maxLength]="11">
+                                    </app-basic-input>
+
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_datosEmpresa"
+                                       inputFormControlName="f_s3_de_asiento" label="Asiento"
+                                       placeHolder="Ingrese el número de asiento" [maxLength]="100">
+                                    </app-basic-input>
+                                 </div>
+
+                              </div>
+                           </div>
+                           <div class="col-lg-12" formGroupName="RepresentanteLegal">
+                              <div class="mt-4"><strong>REPRESENTANTE LEGAL</strong></div>
+                              <br>
+                              <div class="row gx-2">
+                                 <div class="mb-3 col-lg-4">
+                                    <label class="control-label campo-obligatorio">Tipo Documento</label>
+                                    <select class="form-select" formControlName="rl_tipoDocumento"
+                                       [class.control-invalid]="formInvalid(rl_tipoDocumento)">
+                                       <option value=''>Seleccione</option>
+                                       <option *ngFor="let item of listaTiposDocumentos | slice:0:3" [value]="item.id">
+                                          {{
+                                          item.documento }}</option>
+                                    </select>
+                                    <div
+                                       *ngIf="f_s3_rl_TipoDocumento.invalid && (f_s3_rl_TipoDocumento.dirty || f_s3_rl_TipoDocumento.touched)"
+                                       class="text-danger">
+                                       <div *ngIf="f_s3_rl_TipoDocumento.errors?.required">
+                                          El campo es obligatorio
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_numeroDocumento" label="N° Documento"
+                                       [maxLength]="maxLengthNumeroDocumentoRepLeg"
+                                       placeHolder="Ingrese el número de documento" [onlyNumbers]="true"
+                                       [btnAppend]="true" iconBtnAppend="fa-search"
+                                       [disabledAppend]="f_s3_rl_TipoDocumento.value.trim() == '' || disableBtnBuscarRepLegal"
+                                       (clickAppend)="buscarNumeroDocumento($event)">
+                                    </app-basic-input>
+                                 </div>
+                              </div>
+                              <div class="row gx-2">
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_nombre" label="Nombres" placeHolder="" [maxLength]="50">
+                                    </app-basic-input>
+                                 </div>
+
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_apePaterno" label="Apellido Paterno" placeHolder=""
+                                       [maxLength]="50">
+                                    </app-basic-input>
+                                 </div>
+
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_apeMaterno" label="Apellido Materno" placeHolder=""
+                                       [maxLength]="50">
+                                    </app-basic-input>
+                                 </div>
+                              </div>
+                              <div class="row gx-2">
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_telefono" label="Teléfono Fijo"
+                                       placeHolder="Ingrese el teléfono fijo" [onlyNumbers]="true" [maxLength]="12">
+                                    </app-basic-input>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_celular" label="Celular"
+                                       placeHolder="Ingrese el número de celular" [onlyNumbers]="true" [maxLength]="9">
+                                    </app-basic-input>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_correo" label="Correo Electrónico (E-mail)"
+                                       placeHolder="Ingrese el correo electrónico" [maxLength]="50">
+                                    </app-basic-input>
+                                 </div>
+                              </div>
+
+                              <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                 inputFormControlName="rl_domicilio" label="Domicilio Legal"
+                                 placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                              </app-basic-input>
+                              <app-ubigeo #ubigeoCmpRepLeg [parentForm]="f_s3_RepresentanteLegal"
+                                 depaFormControlName="rl_departamento" provFormControlName="rl_provincia"
+                                 distFormControlName="rl_distrito" depaFormLabel="Departamento"
+                                 provFormLabel="Provincia" distFormLabel="Distrito" [horizontal]="true">
+                              </app-ubigeo>
+
+                              <div class="row gx-2">
+                                 <div class="col-lg-2">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_zona" label="Zona registral N°"
+                                       placeHolder="Ingrese zona registral" [onlyNumbers]="false" [maxLength]="20">
+                                    </app-basic-input>
+                                 </div>
+                                 <div class="mb-3 col-lg-2">
+                                    <label class="control-label">Oficina registral <span
+                                          class="text-danger">(*)</span></label>
+                                    <select class="form-select" formControlName="rl_oficina"
+                                       [class.control-invalid]="formInvalid(rl_oficina)">
+                                       <option value="">Seleccione</option>
+                                       <option *ngFor="let oficina of oficinasRegistral;" [value]="oficina.value">
+                                          {{oficina.text }}</option>
+                                    </select>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_partida" label="Poder registrado en la partida N°"
+                                       placeHolder="Ingrese el número de partida" [onlyNumbers]="true" [maxLength]="15">
+                                    </app-basic-input>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                       inputFormControlName="rl_asiento" label="Asiento N°"
+                                       placeHolder="Ingrese el número de asiento" [onlyNumbers]="false"
+                                       [maxLength]="15">
+                                    </app-basic-input>
+                                 </div>
+                              </div>
+                           </div>
+
+                        </div>
+
+                     </ng-template>
+                  </div>
+               </div>
+            </div>
+
+            <div ngbAccordionItem="seccion-4" [collapsed]="false">
+               <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>V. DECLARACIÓN
+                     JURADA</button>
+               </h2>
+
+               <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                     <ng-template>
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       Mi representada cumple con los requisitos establecidos en la Directiva Nº
+                                       003-2007-MTC/15 <span class="text-success" triggers="mouseenter:mouseclick"
+                                          popoverTitle="Nota" placement="right"
+                                          ngbPopover='Directiva Nº 003-2007-MTC/15 "Régimen de Autorización y Funcionamiento de las Entidades Verificadoras".'>
+                                          <i class="fas fa-info-circle"></i>
+                                       </span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_1"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       Mi representada cuenta con vigencia de poder con una antigüedad no mayor de 15
+                                       días a la fecha de la presentación de la solicitud, en la Partida Registral
+                                       N° <b>{{this.f_s3_de_partida.value}}</b> y Asiento
+                                       <b>{{this.f_s3_de_asiento.value}}</b>.
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_2"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       Mi representada no se encuentra inmersa en los impedimentos establecidos en el
+                                       inciso 4-A.1 del artículo 4-A de la Ley 27181, Ley General de Transporte y
+                                       Tránsito Terrestre.
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_3"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       Mi representada no se encuentra inmersa en ninguno de los impedimentos indicados
+                                       en el numeral 5.4 de la Directiva Nº 003-2007-MTC/15 <span class="text-success"
+                                          triggers="mouseenter:mouseclick" popoverTitle="Nota" placement="right"
+                                          ngbPopover='Directiva Nº 003-2007-MTC/15 "Régimen de Autorización y Funcionamiento de las Entidades Verificadoras".'>
+                                          <i class="fas fa-info-circle"></i>
+                                       </span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_4"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       Mi representada presta servicios de control de calidad, inspecciones técnicas y
+                                       certificaciones en el campo automotriz, y cuenta con una experiencia nacional o
+                                       internacional no menor de diez (10) años, para lo cual acompaño en copia simple
+                                       los documentos sustentatorios de ser el caso.
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_5"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       <b>En caso de no contar con</b> copia del certificado ISO 9001:2000 en caso de
+                                       haber sido obtenido en el Perú, caso contrario, copia visada por el Cónsul del
+                                       Perú en el país de origen, mi representada ofrece contar con dicho certificado
+                                       dentro del plazo de noventa (90) días de otorgada la autorización.
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_6"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       <b>En caso de no contar con</b> copias de los documentos que sustenten la
+                                       información detallada en el Anexo 3-A/17 "Relación del Personal", mi representada
+                                       se compromete a adjuntar los mismos dentro del plazo de (30) días de otorgada la
+                                       autorización.
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_7"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       <b>En caso de no contar con</b> copias de los documentos que sustenten la
+                                       información
+                                       detallada en el Anexo 3-B/17 "Relación de Equipamiento", mi representada se
+                                       compromete a adjuntar los mismos dentro del plazo de (30) días de otorgada la
+                                       autorización.
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_8"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       <b>En caso de no contar con</b> los planos de ubicación y de distribución de las
+                                       zonas
+                                       de Inspección Vehicular - ZIV's en este último caso detallando sus instalaciones
+                                       y diversas áreas que lo componen, con su respectiva memoria descriptiva, mi
+                                       representada se compromete a adjuntar los mismos dentro del plazo de (30) días de
+                                       otorgada la autorización.
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_9"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       <b>En caso de no contar con</b> copia simple del título de propiedad, contrato de
+                                       arrendamiento, cesión en uso, comodato o cualquier otro que acredite la posesión
+                                       legítima y el atributo de usar y usufructuar la infraestructura requerida en el
+                                       numeral 5.1.5 de la Directiva Nº 003-2007-MTC/15 <span class="text-success"
+                                          triggers="mouseenter:mouseclick" popoverTitle="Nota" placement="right"
+                                          ngbPopover='Directiva Nº 003-2007-MTC/15 "Régimen de Autorización y Funcionamiento de las Entidades Verificadoras".'>
+                                          <i class="fas fa-info-circle"></i>
+                                       </span>, mi representada ofrece
+                                       adjuntar dichos documentos dentro del plazo de treinta (30) días de otorgada la
+                                       autorización.
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_10"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                           <div class="alert alert-custom">
+                              <div class="row gx-2">
+                                 <div class="col-md-10">
+                                    <div>
+                                       Toda la información proporcionada es veraz, así como los documentos presentados
+                                       son auténticos, en caso contrario, me someto al procedimiento y a las sanciones
+                                       previstas en la Ley N° 27444, Ley del Procedimiento Administrativo General y/o
+                                       normas complementarias. <span class="text-success"
+                                          triggers="mouseenter:mouseclick" popoverTitle="Nota" placement="right"
+                                          ngbPopover='Articulo 34° numeral 34.3 del Texto Único Ordenado de la Ley N° 27444 – Ley del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS.'>
+                                          <i class="fas fa-info-circle"></i>
+                                       </span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                       <ui-switch formControlName="declaracion_11"></ui-switch>
+                                       <label class="col-form-label">&nbsp; NO/SI </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div *ngIf="this.codigoProcedimientoTupa=='DCV-020'">
+                           <div class="mt-2 mb-4">
+                              <div class="alert alert-custom">
+                                 <div class="row gx-2">
+                                    <div class="col-md-10">
+                                       <div>
+                                          Manifiesto con calidad de declaración jurada que, mantengo las condiciones
+                                          establecidas en los numerales 5.2.3, 5.2.8, 5.2.10 y 5.2.11, del acápite 5 de
+                                          la Directiva Nº 003-2007-MTC/15 "Régimen de Autorización y Funcionamiento de
+                                          las Entidades Verificadoras", caso contrario, adjuntar la documentación correspondiente.
+                                       </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                       <div class="d-flex flex-row p-2 ms-4">
+                                          <ui-switch formControlName="declaracion_12"></ui-switch>
+                                          <label class="col-form-label">&nbsp; NO/SI </label>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                           Al acceder al sistema TUPA Digital MTC y registrarme como usuario: (i) reconozco que
+                           entiendo y acepto los términos y condiciones de éste, (ii) acepto como auténtico y válido
+                           cualquier medio de prueba o proceso tecnológico que utilice el MTC para comprobar mi
+                           acceso y salida del sistema; y, (iii) me hago responsable por los efectos legales en la
+                           gestión del procedimiento administrativo o servicio exclusivo.
+                        </div>
+                        <hr>
+                        <div class="text-center texto-bajo-juramento"> DECLARO BAJO JURAMENTO QUE LOS DATOS EXPRESAN
+                           LA VERDAD</div>
+                        <div class="col-sm-12 mt-5 d-flex justify-content-center">
+                           <div class="alert alert-custom" role="alert">
+                              NOTA: En el presente documento electrónico se ha vinculado e identificado al firmante,
+                              así como se ha garantizado la autenticación e integridad del mismo a través de la firma
+                              electrónica utilizada a través del usuario y clave de ingreso al Sistema Tupa Digital
+                              del Ministerio de Transportes y Comunicaciones, la cual tiene la misma validez y
+                              eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y
+                              segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales
+                           </div>
+                        </div>
+
+                     </ng-template>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+      </form>
+   </div>
+
+</div>
+
+<div class="modal-footer anexo">
+   <div class="row">
+      <div class="col-sm-12 d-flex">
+         <div class="flex-1">
+            <div class="btn-group" role="group" aria-label="Basic example">
+               <button type="button" class="btn btn-secondary" [disabled]="id === 0" (click)="descargarPdf()">
+                  <i class="far fa-eye"></i>
+                  Visualizar
+               </button>
+            </div>
+         </div>
+
+         <div class="flex-1 text-end">
+            <button class="btn btn-success" (click)="guardarFormulario()"><!--[disabled]="this.formulario.invalid"-->
+               <i class="far fa-save"></i>
+               {{
+               (id === 0 ? 'Grabar' : 'Modificar')
+               }}
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,578 @@
+<div class="modal-header anexo bg-danger text-white">
+  <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+ 
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+      
+  </button>
+</div>
+
+
+<div class="modal-body anexo">
+
+  <form class="needs-validation"   novalidate   [formGroup]="contactForm"  (ngSubmit)="onSubmit()">
+  
+      <div class="center">
+        <h6><i></i> ANEXO 06-A/17 SOLICITUD DE CANJE DE LICENCIA DE CONDUCIR MILITAR O POLICIAL</h6>
+      
+    </div>
+   
+   <div ngbAccordion #acc="ngbAccordion" activeIds="ngb-anexo006-a17">
+          <div ngbAccordionItem="ngb-anexo006-a17" [collapsed]="false">
+             
+             
+              <h2 ngbAccordionHeader >
+                  
+                      <button ngbAccordionButton>I. DATOS DEL BENEFICIARIO</button>
+                  </h2>
+      
+  
+  
+              <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+      
+                  <div class="row">
+                      <div class="col-md-3">      
+                                 <div class="mb-3">
+                                     <label for="name">DOC. IDENTIDAD</label>
+                                     <input
+                                     type="text"
+                                     class="form-control"
+                                     id="validationCustom01"
+                                     placeholder="Documento de Identidad"
+                                     formControlName="Documento_Identidad"
+                                     [ngClass]="{
+                                       'is-invalid': isValidField('Documento_Identidad')
+                                     }"
+                                   />      
+                                     
+                                   <div class="invalid-feedback">
+                                      <span *ngIf="contactForm.get('Documento_Identidad').errors?.required">
+                                        Por favor, introduzca el Documento de Identidad
+                                      </span>
+                                      <span *ngIf="contactForm.get('Documento_Identidad').errors?.minlength">
+                                        El Documento de Identidad debe ser más largo que
+                                        {{
+                                          contactForm.get("Documento_Identidad").errors?.minlength?.requiredLength
+                                        }}
+                                        characters.
+                                      </span>
+                                    </div>
+  
+  
+                                 </div>
+                      </div>
+           
+           
+                      <div class="col-md-9">      
+                                 <div class="mb-3">
+                                     <label for="name">NOMBRES Y APELLIDOS</label>
+                                     
+                                     <input
+                                     type="text"
+                                     class="form-control"
+                                     id="validationCustom01"
+                                     placeholder="Nombres y Apellidos"
+                                     formControlName="Nombres_Apellidos"
+                                     [ngClass]="{
+                                       'is-invalid': isValidField('Nombres_Apellidos')
+                                     }" disabled
+                                   />      
+                                     
+                                   <div class="invalid-feedback">
+                                      <span *ngIf="contactForm.get('Nombres_Apellidos').errors?.required">
+                                        Por favor, introduzca su Nombre y Apellidos
+                                      </span>
+                                      <span *ngIf="contactForm.get('Nombres_Apellidos').errors?.minlength">
+                                        El Nombre y Apellidos debe ser más largo que
+                                        {{
+                                          contactForm.get("Nombres_Apellidos").errors?.minlength?.requiredLength
+                                        }}
+                                        characters.
+                                      </span>
+                                    </div>
+  
+                                     
+                                  </div>
+                      </div>
+                  </div>
+      
+                  <div class="row">
+                      <div class="col-md-12">      
+                                 <div class="mb-3">
+                                     <label for="name">DOMICILIO LEGAL</label>
+                                    
+                                     <input
+                                     type="text"
+                                     class="form-control"
+                                     id="validationCustom01"
+                                     placeholder="Domicilio Legal"
+                                     formControlName="Domicilio_Legal"
+                                     [ngClass]="{
+                                       'is-invalid': isValidField('Domicilio_Legal')
+                                     }" disabled
+                                   />      
+                                     
+                                   <div class="invalid-feedback">
+                                      <span *ngIf="contactForm.get('Domicilio_Legal').errors?.required">
+                                        Por favor, introduzca su Domicilio Legal
+                                      </span>
+                                      <span *ngIf="contactForm.get('Domicilio_Legal').errors?.minlength">
+                                        El Domicilio Legal debe ser más largo que
+                                        {{
+                                          contactForm.get("Domicilio_Legal").errors?.minlength?.requiredLength
+                                        }}
+                                        characters.
+                                      </span>
+                                    </div>
+  
+  
+                                 </div>
+                      </div>
+                  </div>
+      
+                  <div class="row">
+                      <div class="col-md-3">      
+                          <div class="mb-3">
+                              <label for="name">GRADO MILITAR</label>
+                            
+                            
+                            
+                <select class="form-select flex-2 me-1" formControlName="Grado_Militar">
+                  <option [value]="item.valor" *ngFor="let item of newsletterOp">{{ item.desc }}</option>
+                  </select>
+
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                           
+                              
+                            <div class="invalid-feedback">
+                               <span *ngIf="contactForm.get('Grado_Militar').errors?.required">
+                                 Por favor, introduzca su Grado Militar
+                               </span>
+                               <span *ngIf="contactForm.get('Grado_Militar').errors?.minlength">
+                                El Grado Militar debe ser más largo que
+                                 {{
+                                   contactForm.get("Grado_Militar").errors?.minlength?.requiredLength
+                                 }}
+                                 characters.
+                               </span>
+                             </div>
+  
+  
+  
+                          </div>
+                      </div>
+                      
+                      <div class="col-md-3">      
+                          <div class="mb-3">
+                              <label for="name">NRO DE LICENCIA DE CONDUCIR VIGENTE</label>
+                              <input
+                              type="text"
+                              class="form-control text-uppercase"
+                              id="validationCustom01"
+                              placeholder="Nro de Licencia de Conducir Vigente"
+                              formControlName="Vigencia_Licencia_Conducir"
+                              [ngClass]="{
+                                'is-invalid': isValidField('Vigencia_Licencia_Conducir')
+                              }" [maxlength]="11"
+                            />      
+                              
+                            <div class="invalid-feedback">
+                               <span *ngIf="contactForm.get('Vigencia_Licencia_Conducir').errors?.required">
+                                 Por favor, introduzca su Nro de Licencia de Conducir Vigente
+                               </span>
+                               <span *ngIf="contactForm.get('Vigencia_Licencia_Conducir').errors?.minlength">
+                                El Nro de Licencia de Conducir debe ser más largo que
+                                 {{
+                                   contactForm.get("Vigencia_Licencia_Conducir").errors?.minlength?.requiredLength
+                                 }}
+                                 characters.
+                               </span>
+                             </div>
+  
+                          </div>
+                      </div>
+      
+                      <div class="col-md-3">      
+                          <div class="mb-3">
+                              <label for="name">FECHA CADUCIDAD DE LA LICENCIA DE CONDUCIR</label>
+                              <div class="input-group">
+                                            <input class="form-control" readonly ngbDatepicker #fechaEmision2="ngbDatepicker" 
+                                            id="validationCustom01"
+                                            placeholder="Fecha Caducidad"
+                                            formControlName="Fecha_Caducidad"
+                                            [ngClass]="{
+                                              'is-invalid': isValidField('Fecha_Caducidad')
+                                            }"
+                                          />      
+                                                <button class="btn btn-outline-secondary calendar" (click)="fechaEmision2.toggle()" type="button">
+                                                <i class="far fa-calendar-alt"></i>
+                                                </button>
+                                            <div class="invalid-feedback">
+                                              <span *ngIf="contactForm.get('Fecha_Caducidad').errors?.required">
+                                                Por favor, introduzca su Fecha de Caducidad
+                                              </span>
+                                              <span *ngIf="contactForm.get('Fecha_Caducidad').errors?.minlength">
+                                                La Fecha de Caducidad debe ser más largo que
+                                                {{
+                                                  contactForm.get("Fecha_Caducidad").errors?.minlength?.requiredLength
+                                                }}
+                                                characters.
+                                              </span>
+                                            </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+      
+                  <div class="row">
+                      <div class="col-md-3">      
+                          <div class="mb-3">
+                              <label for="name">TELEFONO FIJO</label>
+                              <input type="text" class="form-control"  formControlName="telefono" (input)="inputNumeroDocumento($event)" [maxlength]="10"> 
+                             
+                          </div>
+                      </div>
+                      <div class="col-md-3">      
+                          <div class="mb-3">
+                              <label for="name">CELULAR</label>
+                              <input type="text" class="form-control"  formControlName="celular"  [maxlength]="9"> 
+                              
+                          </div>
+                      </div>
+                      <div class="col-md-6">      
+                          <div class="mb-3">
+                              <label for="name">EMAIL</label>
+                             
+
+                              <input
+                    type="text"
+                    class="form-control"
+                    id="validationCustom08"
+                    placeholder="Correo Electronico"
+                    formControlName="correo"
+                    [ngClass]="{
+                      'is-invalid': isValidField('correo')
+                    }"
+                  />
+
+                          </div>
+                      </div>
+                  </div>
+      
+      
+
+
+
+
+                <div class="row">
+                      
+                    <div class="col-md-3">      
+                        <div class="mb-3">
+                            <label for="name">NUMERO DE RESOLUCIÓN DIRECTORAL O DOCUMENTO QUE ACREDITE RETIRO O BAJA</label>
+                            <input type="text" class="form-control text-uppercase"  formControlName="nro_resolucion"  [maxlength]="20" > 
+                            
+                        </div>
+                    </div>
+    
+                    <div class="col-md-3">      
+                        <div class="mb-3">
+                            <label for="name">FECHA DE RESOLUCIÓN O DOCUMENTO</label>
+                            <div class="input-group">
+                              <input class="form-control" readonly ngbDatepicker #fechaEmision6="ngbDatepicker" 
+                              id="validationCustom11"
+                              placeholder="Fecha de Resolución"
+                              formControlName="fecha_resolucion"
+                              [ngClass]="{
+                                'is-invalid': isValidField('fecha_resolucion')
+                              }"
+                            />      
+                                  <button class="btn btn-outline-secondary calendar" (click)="fechaEmision6.toggle()" type="button">
+                                  <i class="far fa-calendar-alt"></i>
+                                  </button>
+                              <div class="invalid-feedback">
+                                <span *ngIf="contactForm.get('fecha_resolucion').errors?.required">
+                                  Por favor, introduzca la Fecha de Certificado
+                                </span>
+                                <span *ngIf="contactForm.get('fecha_resolucion').errors?.minlength">
+                                  La Fecha de Certificado debe ser más largo que
+                                  {{
+                                    contactForm.get("fecha_resolucion").errors?.minlength?.requiredLength
+                                  }}
+                                  Caracteres.
+                                </span>
+                              </div>
+                </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                      <div class="mb-3">
+                        <label for="name">NUMERO DE CERTIFICADO DE SALUD EXPEDIDO POR LA ESCUELA DE MATERIAL DE GUERRA O CENTRO MÉDICO POLICIAL</label>
+                        <input type="text" class="form-control text-uppercase"  formControlName="Numero_Certificado_Salud" [maxlength]="12" > 
+                        
+                    </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="mb-3">
+                        <label for="name">FECHA CERTIFICADO</label>
+                        <div class="input-group">
+                          <input class="form-control" readonly ngbDatepicker #fechaEmision3="ngbDatepicker" 
+                          id="validationCustom11"
+                          placeholder="Fecha de Certificado"
+                          formControlName="Fecha_Certificado"
+                          [ngClass]="{
+                            'is-invalid': isValidField('Fecha_Certificado')
+                          }"
+                        />      
+                              <button class="btn btn-outline-secondary calendar" (click)="fechaEmision3.toggle()" type="button">
+                              <i class="far fa-calendar-alt"></i>
+                              </button>
+                          <div class="invalid-feedback">
+                            <span *ngIf="contactForm.get('Fecha_Certificado').errors?.required">
+                              Por favor, introduzca la Fecha de Certificado
+                            </span>
+                            <span *ngIf="contactForm.get('Fecha_Certificado').errors?.minlength">
+                              La Fecha de Certificado debe ser más largo que
+                              {{
+                                contactForm.get("Fecha_Certificado").errors?.minlength?.requiredLength
+                              }}
+                              Caracteres.
+                            </span>
+                          </div>
+            </div>
+                    </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </ng-template>
+</div>
+</div>
+          </div>
+          <div  ngbAccordionItem>
+      
+              <h2 ngbAccordionHeader>
+                  
+                      <button ngbAccordionButton>II. RESTRICCIONES DEL CERTIFICADO DE SALUD</button>
+                  </h2>
+      
+              <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                <div class="row">
+                  <div class="col-md-12">  
+                          <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox"  formControlName="Vehiculo_Transmision_automatica" />
+                              <label class="form-check-label" for="Vehiculo_Transmision_automatica">Vehiculos Automotores con transmisión automática</label>
+                          </div>
+                  </div>
+              </div> 
+              
+              <div class="row">
+                  <div class="col-md-12">          
+                      <div class="form-check mb-3">
+                          <input class="form-check-input" type="checkbox"  formControlName="Vehiculo_acondicionado" />
+                          <label class="form-check-label" for="Vehiculo_acondicionado">Vehiculos Automotores con especialmente acondicionados</label>
+                      </div>
+  
+                  </div>
+              </div> 
+              
+              <div class="row">
+                  <div class="col-md-12">  
+                      <div class="form-check mb-3">
+                          <input class="form-check-input" type="checkbox"  formControlName="Con_lentes" />
+                          <label class="form-check-label" for="Con_lentes">Con lentes correctores externo o de contacto</label>
+                      </div>
+                  </div>
+              </div>
+  
+              <div class="row">
+                  <div class="col-md-12">  
+                      <div class="form-check mb-3">
+                          <input class="form-check-input" type="checkbox"  formControlName="Con_Audifonos" />
+                          <label class="form-check-label" for="Con_Audifonos">Con Audifonos</label>
+                      </div>
+                  </div>
+              </div>
+  
+  
+              <div class="row">
+                  <div class="col-md-12">  
+                      <div class="form-check mb-3">
+                          <input class="form-check-input" type="checkbox"  formControlName="Con_espejos_laterales" />
+                          <label class="form-check-label" for="Con_espejos_laterales">Con espejos retrovisores laterales y espejo con ángulo 180º</label>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="row">
+                  <div class="col-md-12">  
+                      <div class="form-check mb-3">
+                          <input class="form-check-input" type="checkbox"  formControlName="Sin_restricciones" (change)="inhabilitar()"/>
+                          <label class="form-check-label" for="Sin_restricciones">Sin restricciones</label>
+                      </div>
+  
+  
+                  </div>
+              </div>
+  
+             </ng-template>
+</div>
+</div>
+          </div>
+      
+          <div  ngbAccordionItem>
+      
+              <h2 ngbAccordionHeader>
+                  
+                      <button ngbAccordionButton>III. FACTOR Y GRUPO SANGUÍNEO</button>
+                  </h2>
+      
+              <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+      
+                  <div class="row">
+                      
+                      <div class="col-md-3">      
+                          <div class="mb-3">
+                              <label for="name">FACTOR Y GRUPO SANGUÍNEO</label>
+                               
+
+                               <select class="form-select flex-2 me-1" formControlName="Factor_grupo_sanguineo">
+                                <option [value]="item.valor" *ngFor="let item of newsletterOp3">{{ item.desc }}</option>
+                                </select>
+                    
+            
+                         
+                              </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                    
+                    <div class="col-md-12">
+                        <div class="card">
+                                    <h6 class="card-header">Seleccione licencia a postular</h6>
+                                                
+                            <div class="card-body">
+                                <div id="newsletter1" class="row">
+                                    <div class="col-sm-2" *ngFor="let item of newsletterOp1">
+                                         <label class="radio-inline">
+                                           <input type="radio" [value]="item.valor" formControlName="newsletter1" /> {{ item.desc }}
+                                         </label>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                
+                </div>
+
+
+              </ng-template>
+</div>
+</div>
+      
+          </div>
+      
+          <div  ngbAccordionItem>
+      
+              <h2 ngbAccordionHeader>
+                  
+                      <button ngbAccordionButton>IV. DECLARACIÓN</button>
+                  </h2>
+      
+              <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+      
+                    <P>En honor a la verdad y al amparo del principio de presunción de veracidad estipulada en el
+                      Art. IV inc. 1) numeral 1.7) del Texto Único Ordenado de la Ley Nº 27444 – Ley del
+                      Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS,
+                      declaro Bajo Responsabilidad, que los datos consignados en el presente anexo son ciertos
+                      y que conozco las sanciones a los que seré sometido (a) en caso de haber anotado /
+                      adjuntado información falsa.
+      
+                    </P>        
+                  
+                    <div class="row">
+                      <div class="col-md-12">  
+                          <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox"  formControlName="aceptacion" />
+                              <label class="form-check-label" for="aceptacion">Acepto</label>
+                          </div>
+  
+  
+                      </div>
+                  </div>
+  
+      
+              </ng-template>
+</div>
+</div>
+      
+          </div>
+      
+    </div>
+      
+  
+    <br><br>
+    <div >           
+              
+    </div>
+  
+  
+  
+   
+  </form>
+
+</div>
+
+
+<div class="modal-footer anexo">
+  <div class="row">
+      <div class="col-sm-12 d-flex">
+
+        <div class="flex-1">
+          <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-secondary" [disabled]="idAnexoMovimiento === 0" (click)="descargarPdf()">
+              <i class="far fa-eye"></i>
+              Visualizar
+          </button>
+          </div>
+      </div>
+
+      <div class="flex-1 text-end">
+          <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="this.contactForm.invalid">
+              <i class="far fa-save"></i>
+              {{
+                  (idAnexoMovimiento === 0 ? 'Grabar' : 'Modificar')
+              }}
+          </button>
+          </div>
+      </div>
+  </div>
+</div>

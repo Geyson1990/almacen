@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <h2>{{title}}</h2>
+    <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+    </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+    <div class="modal-body mat-typography">
+        <div class="content-modal-flexible-none">
+            <div class="col-md-12 m-b-10px">
+                <h3>INSUMOS <span class="text-danger">(*)</span></h3>
+                <!-- <select class="form-select" formControlName="Insumos">
+                    <option value="" [disabled]="true">--SELECCIONE--</option>
+                    <option value="tipo1">Tipo 1</option>
+                    <option value="tipo2">Tipo 2</option>
+                </select> -->
+                <select class="form-select" formControlName="Insumos">
+                    <option selected value="">--SELECCIONE--</option>
+                    <option *ngFor="let item of listaInsumo" [value]="item.idTipoInsumoBeneficio">
+                        {{ item.descripcion}}
+                    </option>
+                </select>
+                <div *ngIf="insumos.invalid && (insumos.dirty || insumos.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="insumos.errors?.invalidSelection">El insumo es obligatorio.</small>
+               </div>
+            </div>
+
+            <div class="col-md-12 m-b-10px">
+                <h3>CANTIDAD <span class="text-danger">(*)</span></h3>
+                <input type="text" class="form-control" placeholder="" min="0" formControlName="Cantidad" maxlength="10" (input)="soloDecimales($event,'Cantidad')" >
+                <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="cantidad.errors?.required">La cantidad es obligatorio.</small>
+                    <small *ngIf="cantidad.errors?.pattern">El formato de cantidad no es válido.</small>
+                </div>
+            </div>
+
+            <div class="col-md-12 m-b-10px">
+                <h3>UNIDAD DE MEDIDA <span class="text-danger">(*)</span></h3>
+                <!-- <select class="form-select" formControlName="UnidadMedida">
+                    <option value="" [disabled]="true">--SELECCIONE--</option>
+                    <option value="tipo1">Tipo 1</option>
+                    <option value="tipo2">Tipo 2</option>
+                </select> -->
+                <select class="form-select" formControlName="UnidadMedida">
+                    <option selected value="">--SELECCIONE--</option>
+                    <option *ngFor="let item of listaUnidadMedida" [value]="item.idUnidadMedida">
+                        {{ item.descripcion}}
+                    </option>
+                </select>
+                <div *ngIf="unidadMedida.invalid && (unidadMedida.dirty || unidadMedida.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="unidadMedida.errors?.invalidSelection">La unidad de medida es obligatorio.</small>
+               </div>
+            </div>
+
+            <div class="col-md-12 m-b-10px">
+                <h3>ALMACENAMIENTO</h3>
+                <textarea class="form-control" formControlName="Almacenamiento" rows="3" maxlength="2000"></textarea>
+                <div *ngIf="almacenamiento.invalid && (almacenamiento.dirty || almacenamiento.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="almacenamiento.errors?.required">El almacenamiento es obligatorio.</small>
+                </div>
+            </div>
+
+            <div class="col-md-12 m-b-10px">
+                <h3>MANEJO</h3>
+                <textarea class="form-control" formControlName="Manejo" rows="3" maxlength="2000"></textarea>
+                <div *ngIf="manejo.invalid && (manejo.dirty || manejo.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="manejo.errors?.required">El manejo es obligatorio.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+            Cancel</button>
+        <button *ngIf="viewControl" type="submit" class="mat-small"><i class="material-icons">save</i> Grabar</button>
+    </div>
+</form>

@@ -1,0 +1,1366 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light"
+    style="background-color: var(--color-mtc) !important;">
+    <div class="navbar-brand" style="display: flex;">
+        <img src="http://172.25.3.108/administrado/assets/img/GOB-PE.png" style="max-width: 110px;" />
+        <div class="flex-grow-1 ms-3 ps-3 fw-bold align-self-center"
+            style="border-start: 1px solid white; color: white; font-size: 16px;">Tupa Digital</div>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 100px;">
+    <div class="pb-4" style="text-align: center">
+        <h1>Regístrate aquí</h1>
+    </div>
+
+    <form [formGroup]="validacionFG">
+        <div class="row justify-content-center">
+            <div class="col-md-4" style="text-align: center">
+                <label class="control-label form__label">Seleccione tipo de persona: (*)</label>
+                <select class="form-select" formControlName="valTipoUsuarioFC">
+                    <option value="">Seleccione tipo de persona (*)</option>
+                    <option *ngFor="let item of listaTipoPersona" [value]="item.codigo">{{ item.descripcion }}
+                    </option>
+                </select>
+                <div *ngIf="valTipoUsuarioFC.invalid && (valTipoUsuarioFC.dirty || valTipoUsuarioFC.touched)"
+                    class="text-danger">
+                    <div *ngIf="valTipoUsuarioFC.errors?.required">
+                        El campo es obligatorio
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-2">
+            <div class="col-md-12">
+                <b>Campo requerido (*)</b>
+            </div>
+        </div>
+
+        <div class="pt-2" *ngIf="!mostrarPersonaJ && !mostrarPersonaNR">
+            <div class="g-recaptcha" data-sitekey="6LfKVlQUAAAAALDPF1YwxOmTQ8J4DkfA2uQYmxBG">
+
+            </div>
+        </div>
+
+        <div class="pt-2"
+            *ngIf="!mostrarPersonaJ && !mostrarPersonaN && !mostrarPersonaE && !mostrarPersonaNR && valTipoUsuarioFC.value">
+            <div class="alert alert-danger text-center" role="alert">
+                *** Por ahora no está disponible este tipo de registro ***
+            </div>
+        </div>
+
+        <div class="pt-2" *ngIf="mostrarPersonaE" formGroupName="valPerExtFG">
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label>Car/Extranjería (*)</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="vpjCeFC" appDigitOnly placeholder="Carné de extranjería"
+                                class="form-control" maxlength="9" />
+                            <span class="input-group-btn">
+                                <button #btnBuscarPCE class="btn btn-info" type="button"
+                                    [disabled]="validacionFG.invalid || valPerExtFG.disabled"
+                                    (click)="buscarPCE(btnBuscarPCE)">
+                                    <span class="fa fa-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div *ngIf="vpjCeFC.invalid && (vpjCeFC.dirty || vpjCeFC.touched)" class="text-danger">
+                            <div *ngIf="vpjCeFC.errors?.required">
+                                El campo es obligatorio
+                            </div>
+                            <div *ngIf="vpjCeFC.errors?.maxlength">
+                                El campo excede el tamaño máximo permitido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-2" *ngIf="mostrarPersonaJ || mostrarPersonaNR" formGroupName="valPerJurFG">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="mb-3">
+                        <label>Razón social</label>
+                        <input type="text" formControlName="vpjRazonSocialFC" placeholder="Razón Social" readonly
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-1" *ngIf="vpjRazonSocialFC.enabled">
+                    <div class="mb-3">
+                        <label>Validar</label>
+                        <br>
+                        <button #btnLoginSunat class="btn btn-success" type="button"
+                            (click)="loginOauthSunat(btnLoginSunat)">SUNAT</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-2" *ngIf="vpjRazonSocialFC.disabled">
+                <div class="col-sm-12">
+                    <div class="form-check">
+                        <input class="form-check-input" id="idCbDecJur" type="checkbox" formControlName="vpjDecJurFC">
+                        <label class="form-check-label" for="idCbDecJur">
+                            <a [routerLink]="[]" (click)="openModal(modalDecJur)">Declaro que la siguiente información
+                                corresponde al representante legal de la empresa</a>
+                        </label>
+                    </div>
+                    <div *ngIf="vpjDecJurFC.invalid && (vpjDecJurFC.dirty || vpjDecJurFC.touched)" class="text-danger">
+                        <div *ngIf="vpjDecJurFC.errors?.required">
+                            Debe de aceptar los términos para continuar
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-2" *ngIf="mostrarPersonaN" formGroupName="valPerNatFG">
+            <div class="row justify-content-center">
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label class="control-label textoellipsis">DNI (*)</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="vpnDniFC" appDigitOnly placeholder="DNI"
+                                class="form-control" maxlength="8" />
+                            <!-- <span class="input-group-btn">
+                                <button #btnBuscarPN class="btn btn-info" type="button"
+                                    [disabled]="vpnDniFC.invalid" (click)="buscarPN(btnBuscarPN)">
+                                    <span class="fa fa-search"></span>
+                                </button>
+                            </span> -->
+                        </div>
+                        <div *ngIf="vpnDniFC.invalid && (vpnDniFC.dirty || vpnDniFC.touched)" class="text-danger">
+                            <div *ngIf="vpnDniFC.errors?.required">
+                                El campo es obligatorio
+                            </div>
+                            <div *ngIf="vpnDniFC.errors?.maxlength">
+                                El campo excede el tamaño máximo permitido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label class="control-label textoellipsis">Nombres (*)
+                        </label>
+                        <div class="input-group">
+                            <input type="text" style="text-transform:uppercase;" class="form-control"
+                                formControlName="vpnNombresFC" placeholder="Nombres">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" data-toggle="tooltip" title="¿Dónde ubico este dato?"
+                                    (click)="openModalAyuda('prenombres')" type="button"
+                                    [disabled]="valPerNatFG.disabled"> <i class="fa fa-question-circle"
+                                        aria-hidden="true"></i> </button>
+                            </span>
+                        </div>
+                        <div *ngIf="vpnNombresFC.invalid && (vpnNombresFC.dirty || vpnNombresFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="vpnNombresFC.errors?.required">
+                                El campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label class="control-label textoellipsis">Estado civil (*)
+                        </label>
+                        <div class="input-group">
+                            <input type="text" style="text-transform:uppercase;" class="form-control"
+                                formControlName="vpnEstadoCivilFC" placeholder="Estado civil">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" data-toggle="tooltip" title="¿Dónde ubico este dato?"
+                                    (click)="openModalAyuda('estadoCivil')" type="button"
+                                    [disabled]="valPerNatFG.disabled"> <i class="fa fa-question-circle"
+                                        aria-hidden="true"></i> </button>
+                            </span>
+                        </div>
+                        <div *ngIf="vpnEstadoCivilFC.invalid && (vpnEstadoCivilFC.dirty || vpnEstadoCivilFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="vpnEstadoCivilFC.errors?.required">
+                                El campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label class="control-label textoellipsis">Departamento (*)
+                        </label>
+                        <div class="input-group">
+                            <input type="text" style="text-transform:uppercase;" class="form-control"
+                                formControlName="vpnDepartamentoFC" placeholder="Departamento">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" data-toggle="tooltip" title="¿Dónde ubico este dato?"
+                                    (click)="openModalAyuda('ubigeo')" type="button" [disabled]="valPerNatFG.disabled">
+                                    <i class="fa fa-question-circle" aria-hidden="true"></i> </button>
+                            </span>
+                        </div>
+                        <div *ngIf="vpnDepartamentoFC.invalid && (vpnDepartamentoFC.dirty || vpnDepartamentoFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="vpnDepartamentoFC.errors?.required">
+                                El campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="valPerNatFG.enabled">
+                    <div class="mb-3">
+                        <label class="control-label textoellipsis">RENIEC</label>
+                        <br>
+                        <button #btnValidaPN (click)="validaDniPN(btnValidaPN)" class="btn btn-success"
+                            [disabled]="validacionFG.invalid">
+                            <span class="fa fa-check"></span> Validar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="py-4" [hidden]="validacionFG.invalid || !mostrarSegundoForm">
+        <form [formGroup]="registroFG" (ngSubmit)="submitRegistro(btnSubmitRegistro)">
+            <div class="row">
+                <div class="col-md-12" *ngIf="mostrarPersonaJ" formGroupName="regDatosEmpFG">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 pb-4" style="text-align:center;">
+                                    <h3><strong>Datos de empresa para acceder a TUPA Digital Minem</strong></h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="control-label">Correo electrónico (*)</label>
+                                        <input type="email" class="form-control" formControlName="rdeEmailFC"
+                                            placeholder="Ingrese el correo electrónico">
+                                        <div *ngIf="rdeEmailFC.invalid && (rdeEmailFC.dirty || rdeEmailFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rdeEmailFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                            <div *ngIf="rdeEmailFC.errors?.email">
+                                                El correo electrónico no es válido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Dirección (*)</label>
+                                        <input type="text" class="form-control" formControlName="rdeDireccionFC"
+                                            placeholder="Ingrese la dirección" [readonly]="rdeConfirmDirFC.value">
+                                        <div *ngIf="rdeDireccionFC.invalid && (rdeDireccionFC.dirty || rdeDireccionFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rdeDireccionFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                        </div>
+                                        <div class="form-check pt-2">
+                                            <input class="form-check-input" id="idCbConfirmDirecc" type="checkbox"
+                                                formControlName="rdeConfirmDirFC">
+                                            <label class="form-check-label" for="idCbConfirmDirecc">
+                                                Confirmar dirección
+                                            </label>
+                                        </div>
+                                        <div *ngIf="rdeConfirmDirFC.invalid && (rdeConfirmDirFC.dirty || rdeConfirmDirFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rdeConfirmDirFC.errors?.required">
+                                                Debe confirmar su direccion para continuar
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="control-label">Número celular</label>
+                                        <input type="text" class="form-control me-2" formControlName="rdeCelularFC"
+                                            appDigitOnly maxlength="9" placeholder="Número celular">
+                                        <div *ngIf="rdeCelularFC.invalid && (rdeCelularFC.dirty || rdeCelularFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rdeCelularFC.errors?.maxlength">
+                                                El campo excede el tamaño máximo permitido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Número de teléfono</label>
+                                        <input type="text" class="form-control" formControlName="rdeTelefonoFC"
+                                            appDigitOnly maxlength="7" placeholder="Número de Teléfono">
+                                        <div *ngIf="rdeTelefonoFC.invalid && (rdeTelefonoFC.dirty || rdeTelefonoFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rdeTelefonoFC.errors?.maxlength">
+                                                El campo excede el tamaño máximo permitido
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 pt-4" formGroupName="regDatosUsuFG">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 pb-4" style="text-align:center">
+                                    <h3><strong>Datos de usuario para acceder a TUPA Digital Minem</strong></h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3" *ngIf="mostrarPersonaNR">
+                                        <label>RUC (*)</label>
+                                        <input type="text" class="form-control" formControlName="rduRucFC"
+                                            placeholder="Ingrese RUC" maxlength="11" appDigitOnly
+                                            [readonly]="mostrarPersonaNR">
+                                        <div *ngIf="rduRucFC.invalid && (rduRucFC.dirty || rduRucFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduRucFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                            <div *ngIf="rduRucFC.errors?.maxlength">
+                                                El campo excede el tamaño máximo permitido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3" *ngIf="mostrarPersonaJ">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="idRbTipoDocDni"
+                                                formControlName="rduTipoDocFC" value="DNI">
+                                            <label class="form-check-label" for="idRbTipoDocDni">DNI</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="idRbTipoDocCe"
+                                                formControlName="rduTipoDocFC" value="CE">
+                                            <label class="form-check-label" for="idRbTipoDocCe">Car.Extranjería</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3"
+                                        *ngIf="(mostrarPersonaNR || mostrarPersonaN) && rduTipoDocFC.value === 'DNI'">
+                                        <label class="control-label">DNI (*)</label>
+                                        <input type="text" class="form-control" formControlName="rduDniFC"
+                                            placeholder="Ingrese DNI" maxlength="8" appDigitOnly readonly>
+                                        <div *ngIf="rduDniFC.invalid && (rduDniFC.dirty || rduDniFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduDniFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                            <div *ngIf="rduDniFC.errors?.maxlength">
+                                                El campo excede el tamaño máximo permitido
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div formGroupName="rduValidaDniFG"
+                                        *ngIf="mostrarPersonaJ && rduTipoDocFC.value === 'DNI'">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Validar DNI</h5>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="control-label">DNI (*)</label>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="rduvDniFC" placeholder="Ingrese DNI"
+                                                                maxlength="8" appDigitOnly>
+                                                            <div *ngIf="rduvDniFC.invalid && (rduvDniFC.dirty || rduvDniFC.touched)"
+                                                                class="text-danger">
+                                                                <div *ngIf="rduvDniFC.errors?.required">
+                                                                    El campo es obligatorio
+                                                                </div>
+                                                                <div *ngIf="rduvDniFC.errors?.maxlength">
+                                                                    El campo excede el tamaño máximo permitido
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="control-label textoellipsis">Nombres (*)
+                                                            </label>
+                                                            <div class="input-group">
+                                                                <input type="text" style="text-transform:uppercase;"
+                                                                    class="form-control" formControlName="rduvNombresFC"
+                                                                    placeholder="Nombres">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-info" data-toggle="tooltip"
+                                                                        title="¿Dónde ubico este dato?"
+                                                                        (click)="openModalAyuda('prenombres')"
+                                                                        type="button"
+                                                                        [disabled]="rduValidaDniFG.disabled">
+                                                                        <i class="fa fa-question-circle"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                            <div *ngIf="rduvNombresFC.invalid && (rduvNombresFC.dirty || rduvNombresFC.touched)"
+                                                                class="text-danger">
+                                                                <div *ngIf="rduvNombresFC.errors?.required">
+                                                                    El campo es obligatorio
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="control-label textoellipsis">Estado civil (*)
+                                                            </label>
+                                                            <div class="input-group">
+                                                                <input type="text" style="text-transform:uppercase;"
+                                                                    class="form-control"
+                                                                    formControlName="rduvEstadoCivilFC"
+                                                                    placeholder="Estado civil">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-info" data-toggle="tooltip"
+                                                                        title="¿Dónde ubico este dato?"
+                                                                        (click)="openModalAyuda('estadoCivil')"
+                                                                        type="button"
+                                                                        [disabled]="rduValidaDniFG.disabled">
+                                                                        <i class="fa fa-question-circle"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                            <div *ngIf="rduvEstadoCivilFC.invalid && (rduvEstadoCivilFC.dirty || rduvEstadoCivilFC.touched)"
+                                                                class="text-danger">
+                                                                <div *ngIf="rduvEstadoCivilFC.errors?.required">
+                                                                    El campo es obligatorio
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="control-label textoellipsis">Departamento (*)
+                                                            </label>
+                                                            <div class="input-group">
+                                                                <input type="text" style="text-transform:uppercase;"
+                                                                    class="form-control"
+                                                                    formControlName="rduvDepartamentoFC"
+                                                                    placeholder="Departamento">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-info" data-toggle="tooltip"
+                                                                        title="¿Dónde ubico este dato?"
+                                                                        (click)="openModalAyuda('ubigeo')" type="button"
+                                                                        [disabled]="rduValidaDniFG.disabled"> <i
+                                                                            class="fa fa-question-circle"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                            <div *ngIf="rduvDepartamentoFC.invalid && (rduvDepartamentoFC.dirty || rduvDepartamentoFC.touched)"
+                                                                class="text-danger">
+                                                                <div *ngIf="rduvDepartamentoFC.errors?.required">
+                                                                    El campo es obligatorio
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid gap-2 col-md-6 mx-auto">
+                                                        <button #btnValidaDni (click)="validaDniPJ(btnValidaDni)"
+                                                            class="btn btn-block btn-success"
+                                                            [disabled]="rduValidaDniFG.invalid">
+                                                            <span class="fa fa-check"></span> Validar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3"
+                                        *ngIf="(mostrarPersonaE || mostrarPersonaJ) && rduTipoDocFC.value === 'CE'">
+                                        <label class="control-label">Carné de extranjería (*)</label>
+                                        <input type="text" class="form-control" formControlName="rduCeFC"
+                                            placeholder="Ingrese carné de extranjería" maxlength="9" appDigitOnly
+                                            [readonly]="mostrarPersonaE">
+                                        <div *ngIf="rduCeFC.invalid && (rduCeFC.dirty || rduCeFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduCeFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                            <div *ngIf="rduCeFC.errors?.maxlength">
+                                                El campo excede el tamaño máximo permitido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Nombres (*)</label>
+                                        <input type="text" class="form-control" formControlName="rduNombresFC" readonly
+                                            placeholder="Ingrese nombres">
+                                        <div *ngIf="rduNombresFC.invalid && (rduNombresFC.dirty || rduNombresFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduNombresFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Apellido paterno (*)</label>
+                                        <input type="text" class="form-control" formControlName="rduApPaternoFC"
+                                            readonly placeholder="Ingrese apellido paterno">
+                                        <div *ngIf="rduApPaternoFC.invalid && (rduApPaternoFC.dirty || rduApPaternoFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduApPaternoFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Apellido materno (*)</label>
+                                        <input type="text" class="form-control" formControlName="rduApMaternoFC"
+                                            readonly placeholder="Ingrese apellido materno">
+                                        <div *ngIf="rduApMaternoFC.invalid && (rduApMaternoFC.dirty || rduApMaternoFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduApMaternoFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Domicilio legal (*)</label>
+                                        <input type="text" class="form-control" formControlName="rduDomicilioFC"
+                                            [readonly]="rduConfirmDomFC.value" placeholder="Ingrese el domicilio legal">
+                                        <div *ngIf="rduDomicilioFC.invalid && (rduDomicilioFC.dirty || rduDomicilioFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduDomicilioFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                        </div>
+                                        <div class="form-check pt-2">
+                                            <input class="form-check-input" id="cbConfirmDL" type="checkbox"
+                                                formControlName="rduConfirmDomFC">
+                                            <label class="form-check-label" for="cbConfirmDL">Confirmar
+                                                domicilio
+                                                legal</label>
+                                        </div>
+                                        <div *ngIf="rduConfirmDomFC.invalid && (rduConfirmDomFC.dirty || rduConfirmDomFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduConfirmDomFC.errors?.required">
+                                                Debe confirmar su domicilio legal para continuar
+                                            </div>
+                                        </div>
+                                        <div class="form-check" *ngIf="mostrarPersonaJ">
+                                            <input class="form-check-input" id="idCbMosPerJur" type="checkbox"
+                                                formControlName="rduAceptaRepPriFC">
+                                            <label class="form-check-label" for="idCbMosPerJur">Acepto ser el
+                                                representante principal de la empresa</label>
+                                        </div>
+                                        <div *ngIf="rduAceptaRepPriFC.invalid && (rduAceptaRepPriFC.dirty || rduAceptaRepPriFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduAceptaRepPriFC.errors?.required">
+                                                Debe de aceptar los términos para continuar
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Género (*)</label>
+                                        <select class="form-select" formControlName="rduGeneroFC">
+                                            <option value="">Seleccione el género</option>
+                                            <option value="00001">MASCULINO</option>
+                                            <option value="00002">FEMENINO</option>
+                                        </select>
+                                        <div *ngIf="rduGeneroFC.invalid && (rduGeneroFC.dirty || rduGeneroFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduGeneroFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3"
+                                        *ngIf="mostrarPersonaE || (mostrarPersonaJ && rduTipoDocFC.value === 'CE')">
+                                        <label class="control-label">Pais de procedencia (*)</label>
+                                        <select class="form-select" formControlName="rduPaisFC">
+                                            <option value="">Seleccione el país</option>
+                                            <option *ngFor="let item of listaPaises"
+                                                [value]="item.alpha_2 + '-' + item.name"
+                                                [disabled]="item.alpha_2 === 'PE'">
+                                                {{ item.name }}</option>
+                                        </select>
+                                        <div *ngIf="rduPaisFC.invalid && (rduPaisFC.dirty || rduPaisFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduPaisFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3" *ngIf="usFoto" style="text-align: center;">
+                                        <img [src]="'data:image/BMP;base64,' + usFoto" alt="Foto de perfil"
+                                            class="img-thumbnail">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <app-ubigeo #ubigeoCmp [parentForm]="registroFG.get('regDatosUsuFG')"
+                                        depaFormControlName="rduDepaFC" provFormControlName="rduProvFC"
+                                        distFormControlName="rduDistFC" depaFormLabel="Departamento (*)"
+                                        provFormLabel="Provincia (*)" distFormLabel="Distrito (*)"></app-ubigeo>
+                                    <div class="mb-3">
+                                        <label class="control-label">Correo electrónico (*)</label>
+                                        <input type="email" class="form-control" formControlName="rduEmailFC"
+                                            placeholder="Ingrese su correo electrónico">
+                                        <div *ngIf="rduEmailFC.invalid && (rduEmailFC.dirty || rduEmailFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduEmailFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                            <div *ngIf="rduEmailFC.errors?.email">
+                                                El correo electrónico no es válido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Confirmar correo electrónico (*)</label>
+                                        <input type="email" class="form-control" formControlName="rduConfirmEmailFC"
+                                            placeholder="Confirmar correo electrónico">
+                                        <div *ngIf="rduConfirmEmailFC.invalid && (rduConfirmEmailFC.dirty || rduConfirmEmailFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduConfirmEmailFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                            <div *ngIf="rduConfirmEmailFC.errors?.email">
+                                                El correo electrónico no es válido
+                                            </div>
+                                            <div *ngIf="rduConfirmEmailFC.errors?.mustmatch">
+                                                El correo electrónico no coincide
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <app-password [parentForm]="registroFG.get('regDatosUsuFG')"
+                                        passFormControlName="rduPasswordFC" repassFormControlName="rduConfirmPassFC"
+                                        passFormLabel="Contraseña (*)" rePassFormLabel="Confirmar contraseña (*)"
+                                        passFormPlaceHolder="Ingrese la contraseña"
+                                        rePassFormPlaceHolder="Repita la contraseña"></app-password>
+
+                                    <div class="mb-3">
+                                        <label class="control-label">Número celular (*)</label>
+                                        <input type="text" class="form-control me-2" formControlName="rduCelularFC"
+                                            appDigitOnly maxlength="9" placeholder="Número celular">
+                                        <div *ngIf="rduCelularFC.invalid && (rduCelularFC.dirty || rduCelularFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduCelularFC.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                            <div *ngIf="rduCelularFC.errors?.maxlength">
+                                                El campo excede el tamaño máximo permitido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="control-label">Número de teléfono</label>
+                                        <input type="text" class="form-control" formControlName="rduTelefonoFC"
+                                            appDigitOnly maxlength="7" placeholder="Número de Teléfono">
+                                        <div *ngIf="rduTelefonoFC.invalid && (rduTelefonoFC.dirty || rduTelefonoFC.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="rduTelefonoFC.errors?.maxlength">
+                                                El campo excede el tamaño máximo permitido
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="mostrarPersonaJ">
+                                        <div class="mb-3">
+                                            <label class="control-label">Oficina (*)</label>
+                                            <select class="form-select" formControlName="rduOficinaFC">
+                                                <option value="">Seleccione una oficina</option>
+                                                <option *ngFor="let item of listaOficinaRegistral" [value]="item.value">
+                                                    {{ item.text }}</option>
+                                            </select>
+                                            <div *ngIf="rduOficinaFC.invalid && (rduOficinaFC.dirty || rduOficinaFC.touched)"
+                                                class="text-danger">
+                                                <div *ngIf="rduOficinaFC.errors?.required">
+                                                    El campo es obligatorio
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="control-label">Partida (*)</label>
+                                            <input type="text" class="form-control" formControlName="rduPartidaFC"
+                                                placeholder="Ingrese partida" maxlength="10" appDigitOnly>
+                                            <div *ngIf="rduPartidaFC.invalid && (rduPartidaFC.dirty || rduPartidaFC.touched)"
+                                                class="text-danger">
+                                                <div *ngIf="rduPartidaFC.errors?.required">
+                                                    El campo es obligatorio
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="control-label">Asiento (*)</label>
+                                            <input type="text" class="form-control" formControlName="rduAsientoFC"
+                                                placeholder="Ingrese asiento" maxlength="10" appDigitOnly>
+                                            <div *ngIf="rduAsientoFC.invalid && (rduAsientoFC.dirty || rduAsientoFC.touched)"
+                                                class="text-danger">
+                                                <div *ngIf="rduAsientoFC.errors?.required">
+                                                    El campo es obligatorio
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 pt-4" *ngIf="mostrarPersonaJ" formArrayName="regDatosRepLegalFA">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align:center">
+                                    <h3><strong>Datos de representantes legales para acceder a TUPA Digital Minem</strong>
+                                    </h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <div *ngFor="let _ of regDatosRepLegalFA.controls; let i=index">
+                                        <div class="pt-4" [formGroupName]="i">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12 pb-3" style="text-align:center">
+                                                            <h5 class="card-subtitle text-muted">Representante legal #
+                                                                {{ (i + 1) | number: '1.0-0' }}
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-md-12 pb-4" style="text-align:center">
+                                                            <button #btnEliminarRepLegal type="button"
+                                                                class="btn btn-danger"
+                                                                (click)="deleteRepLegal(btnEliminarRepLegal, i)">
+                                                                <span class="fa fa-trash"></span> Eliminar
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div formGroupName="rdrValidaDniFG" *ngIf="mostrarPersonaJ">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Validar DNI</h5>
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label class="control-label">DNI
+                                                                                        (*)</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        formControlName="rdrvDniFC"
+                                                                                        placeholder="Ingrese DNI"
+                                                                                        maxlength="8" appDigitOnly>
+                                                                                    <div *ngIf="rdrvDniFC(i).invalid && (rdrvDniFC(i).dirty || rdrvDniFC(i).touched)"
+                                                                                        class="text-danger">
+                                                                                        <div
+                                                                                            *ngIf="rdrvDniFC(i).errors?.required">
+                                                                                            El campo es obligatorio
+                                                                                        </div>
+                                                                                        <div
+                                                                                            *ngIf="rdrvDniFC(i).errors?.maxlength">
+                                                                                            El campo excede el tamaño
+                                                                                            máximo permitido
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label
+                                                                                        class="control-label textoellipsis">Nombres
+                                                                                        (*)
+                                                                                    </label>
+                                                                                    <div class="input-group">
+                                                                                        <input type="text"
+                                                                                            style="text-transform:uppercase;"
+                                                                                            class="form-control"
+                                                                                            formControlName="rdrvNombresFC"
+                                                                                            placeholder="Nombres">
+                                                                                        <span class="input-group-btn">
+                                                                                            <button class="btn btn-info"
+                                                                                                data-toggle="tooltip"
+                                                                                                title="¿Dónde ubico este dato?"
+                                                                                                (click)="openModalAyuda('prenombres')"
+                                                                                                type="button"
+                                                                                                [disabled]="rdrValidaDniFG(i).disabled">
+                                                                                                <i class="fa fa-question-circle"
+                                                                                                    aria-hidden="true"></i>
+                                                                                            </button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div *ngIf="rdrvNombresFC(i).invalid && (rdrvNombresFC(i).dirty || rdrvNombresFC(i).touched)"
+                                                                                        class="text-danger">
+                                                                                        <div
+                                                                                            *ngIf="rdrvNombresFC(i).errors?.required">
+                                                                                            El campo es obligatorio
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label
+                                                                                        class="control-label textoellipsis">Estado
+                                                                                        civil (*)
+                                                                                    </label>
+                                                                                    <div class="input-group">
+                                                                                        <input type="text"
+                                                                                            style="text-transform:uppercase;"
+                                                                                            class="form-control"
+                                                                                            formControlName="rdrvEstadoCivilFC"
+                                                                                            placeholder="Estado civil">
+                                                                                        <span class="input-group-btn">
+                                                                                            <button class="btn btn-info"
+                                                                                                data-toggle="tooltip"
+                                                                                                title="¿Dónde ubico este dato?"
+                                                                                                (click)="openModalAyuda('estadoCivil')"
+                                                                                                type="button"
+                                                                                                [disabled]="rdrValidaDniFG(i).disabled">
+                                                                                                <i class="fa fa-question-circle"
+                                                                                                    aria-hidden="true"></i>
+                                                                                            </button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div *ngIf="rdrvEstadoCivilFC(i).invalid && (rdrvEstadoCivilFC(i).dirty || rdrvEstadoCivilFC(i).touched)"
+                                                                                        class="text-danger">
+                                                                                        <div
+                                                                                            *ngIf="rdrvEstadoCivilFC(i).errors?.required">
+                                                                                            El campo es obligatorio
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label
+                                                                                        class="control-label textoellipsis">Departamento
+                                                                                        (*)
+                                                                                    </label>
+                                                                                    <div class="input-group">
+                                                                                        <input type="text"
+                                                                                            style="text-transform:uppercase;"
+                                                                                            class="form-control"
+                                                                                            formControlName="rdrvDepartamentoFC"
+                                                                                            placeholder="Departamento">
+                                                                                        <span class="input-group-btn">
+                                                                                            <button class="btn btn-info"
+                                                                                                data-toggle="tooltip"
+                                                                                                title="¿Dónde ubico este dato?"
+                                                                                                (click)="openModalAyuda('ubigeo')"
+                                                                                                type="button"
+                                                                                                [disabled]="rdrValidaDniFG(i).disabled">
+                                                                                                <i class="fa fa-question-circle"
+                                                                                                    aria-hidden="true"></i>
+                                                                                            </button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div *ngIf="rdrvDepartamentoFC(i).invalid && (rdrvDepartamentoFC(i).dirty || rdrvDepartamentoFC(i).touched)"
+                                                                                        class="text-danger">
+                                                                                        <div
+                                                                                            *ngIf="rdrvDepartamentoFC(i).errors?.required">
+                                                                                            El campo es obligatorio
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="d-grid gap-2 col-md-6 mx-auto">
+                                                                                <button #btnValidaDni
+                                                                                    (click)="validaDniRL(btnValidaDni, i)"
+                                                                                    class="btn btn-block btn-success"
+                                                                                    [disabled]="rdrValidaDniFG(i).invalid">
+                                                                                    <span class="fa fa-check"></span>
+                                                                                    Validar
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3 pt-3" *ngIf="rdrFotoFC(i).value"
+                                                                style="text-align: center;">
+                                                                <img [src]="'data:image/BMP;base64,' + rdrFotoFC(i).value"
+                                                                    alt="Foto de perfil" class="img-thumbnail">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="control-label">Nombres (*)</label>
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="rdrNombresFC" readonly
+                                                                    placeholder="Ingrese nombres">
+                                                                <div *ngIf="rdrNombresFC(i).invalid && (rdrNombresFC(i).dirty || rdrNombresFC(i).touched)"
+                                                                    class="text-danger">
+                                                                    <div *ngIf="rdrNombresFC(i).errors?.required">
+                                                                        El campo es obligatorio
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="control-label">Apellido paterno
+                                                                    (*)</label>
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="rdrApPaternoFC" readonly
+                                                                    placeholder="Ingrese apellido paterno">
+                                                                <div *ngIf="rdrApPaternoFC(i).invalid && (rdrApPaternoFC(i).dirty || rdrApPaternoFC(i).touched)"
+                                                                    class="text-danger">
+                                                                    <div *ngIf="rdrApPaternoFC(i).errors?.required">
+                                                                        El campo es obligatorio
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="control-label">Apellido materno
+                                                                    (*)</label>
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="rdrApMaternoFC" readonly
+                                                                    placeholder="Ingrese apellido materno">
+                                                                <div *ngIf="rdrApMaternoFC(i).invalid && (rdrApMaternoFC(i).dirty || rdrApMaternoFC(i).touched)"
+                                                                    class="text-danger">
+                                                                    <div *ngIf="rdrApMaternoFC(i).errors?.required">
+                                                                        El campo es obligatorio
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="control-label">Domicilio legal (*)</label>
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="rdrDomicilioFC"
+                                                                    placeholder="Ingrese el domicilio legal"
+                                                                    [readonly]="rdrConfirmDomFC(i).value">
+                                                                <div *ngIf="rdrDomicilioFC(i).invalid && (rdrDomicilioFC(i).dirty || rdrDomicilioFC(i).touched)"
+                                                                    class="text-danger">
+                                                                    <div *ngIf="rdrDomicilioFC(i).errors?.required">
+                                                                        El campo es obligatorio
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-check pt-2">
+                                                                    <input class="form-check-input"
+                                                                        [id]="'cbConfirmDLR_' + i" type="checkbox"
+                                                                        formControlName="rdrConfirmDomFC">
+                                                                    <label class="form-check-label"
+                                                                        [for]="'cbConfirmDLR_' + i">Confirmar
+                                                                        domicilio
+                                                                        legal</label>
+                                                                </div>
+                                                                <div *ngIf="rdrConfirmDomFC(i).invalid && (rdrConfirmDomFC(i).dirty || rdrConfirmDomFC(i).touched)"
+                                                                    class="text-danger">
+                                                                    <div *ngIf="rdrConfirmDomFC(i).errors?.required">
+                                                                        Debe confirmar su domicilio legal para continuar
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <app-ubigeo #ubigeoRepLegalCmp
+                                                                [parentForm]="registroFG.get(['regDatosRepLegalFA', i])"
+                                                                depaFormControlName="rdrDepaFC"
+                                                                provFormControlName="rdrProvFC"
+                                                                distFormControlName="rdrDistFC"
+                                                                depaFormLabel="Departamento (*)"
+                                                                provFormLabel="Provincia (*)"
+                                                                distFormLabel="Distrito (*)">
+                                                            </app-ubigeo>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 pt-4">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-4 text-center">
+                                            <div class="mb-3">
+                                                <label class="control-label textoellipsis">Agregar representante
+                                                    legal</label>
+                                                <br>
+                                                <button #btnAgregarRepLegal (click)="addRepLegalFG(btnAgregarRepLegal)"
+                                                    class="btn btn-success">
+                                                    <span class="fa fa-plus"></span> Agregar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offset-md-2 col-md-8 pt-4">
+                    <div class="form-check">
+                        <input class="form-check-input" id="idCbTerCod" type="checkbox" formControlName="regTerminosFC">
+                        <label class="form-check-label" for="idCbTerCod">
+                            Acepto los
+                            <a [routerLink]="[]" (click)="openModal(modalTerminosCondiciones)"><b>términos y
+                                    condiciones</b></a>
+                        </label>
+                    </div>
+                    <div *ngIf="regTerminosFC.invalid && (regTerminosFC.dirty || regTerminosFC.touched)"
+                        class="text-danger">
+                        <div *ngIf="regTerminosFC.errors?.required">
+                            Debe de aceptar los términos y condiciones para continuar
+                        </div>
+                    </div>
+                    <div class="form-check pt-2">
+                        <input class="form-check-input" id="idCbNotEmail" type="checkbox"
+                            formControlName="regNotificaFC">
+                        <label class="form-check-label" for="idCbNotEmail">Acepto ser notificado en la Bandeja
+                            del
+                            Sistema TUPA Digital y en la dirección de correo electrónico registrada en el
+                            sistema
+                            del Minem</label>
+                    </div>
+                    <div *ngIf="regNotificaFC.invalid && (regNotificaFC.dirty || regNotificaFC.touched)"
+                        class="text-danger">
+                        <div *ngIf="regNotificaFC.errors?.required">
+                            Debe de aceptar ser notificado para continuar
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offset-md-2 col-md-8 pt-4" *ngIf="messageError">
+                    <div class="text-danger" role="alert">
+                        <strong>{{ messageError }}</strong>
+                    </div>
+                </div>
+
+                <div class="offset-md-2 col-md-8 pt-4">
+                    <div style="text-align: center">
+                        <button #btnSubmitRegistro [disabled]="registroFG.invalid" type="submit"
+                            class="btn btn-lg btn-success mx-2 mb-2">
+                            Registrar
+                        </button>
+                        <a class="btn btn-lg btn-danger mx-2 mb-2"
+                            routerLink="/autenticacion/iniciar-sesion">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ng-template #modalTerminosCondiciones let-modal>
+    <div class="modal-header bg-danger text-white">
+        <h4 class="modal-title" id="modal-basic-title">TÉRMINOS Y CONDICIONES DE USO DEL SISTEMA TUPA DIGITAL Minem</h4>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row pb-4">
+            <div class="col-md-12">
+                <p data-v-6e8a0dfe="" align="justify">
+                    Cuando usted accede al TUPA Digital Minem y se inscribe para obtener su casilla electrónica,
+                    reconoce no sólo que ha leído, sino también que ha entendido y aceptado los Términos y
+                    Condiciones de uso del sistema que a continuación se desarrollan. Además, es responsable por los
+                    efectos legales de su solo acceso, reconoce como auténtico y válido cualquier medio de prueba o
+                    proceso tecnológico que utilice el Ministerio de Transportes y Comunicaciones, en adelante Minem.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    Los presentes términos y condiciones regulan el acceso y uso del sistema TUPA Digital Minem, a
+                    través de la dirección web <a href="http://tupadigital.minem.gob.pe"
+                        target="_blank">http://tupadigital.minem.gob.pe</a>, sin perjuicio de otras comunicaciones,
+                    condiciones e instrucciones que sean informadas oportunamente por el Minem
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">PRIMERA.– TUPA DIGITAL Minem</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    Es la denominación del sistema informático que permite establecer un canal virtual como una
+                    alternativa para los administrados. La plataforma ofrece una variedad de herramientas, servicios
+                    y documentos de ayuda que facilita la presentación de solicitudes y gestión de los
+                    procedimientos contenidos en el TUPA Minem; simplificando trámites a través de la digitalización,
+                    ahorrando tiempo y esfuerzo a los administrados y al minem.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">SEGUNDA.– ADMINISTRADO</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    Persona natural o jurídica que solicite la atención de un procedimiento administrativo, mediante
+                    el TUPA Digital Minem.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">TERCERA.– OBLIGACIONES Y PROHIBICIONES DEL ADMINISTRADO</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe=""><u>3.1 Obligaciones</u></strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    a) El usuario y contraseña obtenidos para el acceso a su casilla electrónica, deben ser
+                    mantenidos bajo absoluta reserva y confidencialidad, sin revelarlas o compartirlas, en ningún
+                    caso, con terceros, asumiendo las responsabilidades por su incumplimiento.
+                    <br /><br />
+                    b) Es responsable de todas las acciones realizadas mediante el uso de su contraseña, de este
+                    modo, toda acción realizada a través de su cuenta, se presume realizada por el ADMINISTRADO,
+                    como titular de dicha cuenta.
+                    <br /><br />
+                    c) Asimismo, es responsable de la legibilidad, autenticidad y veracidad de los documentos
+                    presentados a través del TUPA Digital Minem.
+                    <br /><br />
+                    d) En el caso identifique que un tercero conociera y usa su contraseña y su cuenta personal o si
+                    se recibe alguna queja o denuncia respecto al nombre de un usuario que viole derechos de
+                    terceros, debe notificarlo de manera inmediata a la Oficina de Atención al Ciudadano y Gestión
+                    Documental para su atención y trámite correspondiente, a través del correo electrónico <a
+                        href="mailto:tupadigital@minem.gob.pe">tupadigital&#64;mtc.gob.pe</a>.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe=""><u>3.2. Prohibiciones</u></strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    a) No utilizar el TUPA Digital Minem con fines ilícitos o contrarios al contenido de los presentes
+                    términos y condiciones, intereses o derechos de terceros, o que de cualquier forma puedan dañar,
+                    inutilizar, deteriorar la plataforma o impedir un normal uso del sistema.
+                    <br /><br />
+                    b) No debe alterar, inutilizar o dañar la información que se encuentre en el TUPA Digital Minem.
+                    <br /><br />
+                    c) No debe intentar penetrar o probar la vulnerabilidad del sistema o red propia del TUPA
+                    Digital Minem, así como a quebrantar las medidas de seguridad o de autenticación del mismo.
+                    <br /><br />
+                    d) No debe utilizar el sistema para enviar información con contenido amenazante, abusivo,
+                    hostil, ultrajante, difamatorio, vulgar, obsceno o injurioso. Asimismo, se obliga a no valerse
+                    de un lenguaje ilícito, abusivo, amenazante, obsceno, vulgar, racista, ni cualquiera que se
+                    considere inapropiado.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">CUARTA.– CONDICIONES DE ACCESIBILIDAD Y USO</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    4.1. Los servicios que se ofrecen a través del TUPA Digital se encuentran disponibles sólo para
+                    aquellas personas que puedan celebrar contratos legalmente vinculantes de acuerdo a lo
+                    establecido por la ley aplicable. Al acceder éste, el Usuario declara ser mayor de 18 años de
+                    edad y encontrarse facultado a asumir obligaciones vinculantes con respecto a cualquier tipo de
+                    responsabilidad que se produzca por el uso del TUPA Digital. Los actos que los menores de edad
+                    realicen en el TUPA Digital serán de responsabilidad de sus padres o tutores.
+                    <br /><br />
+                    4.2. El uso del TUPA Digital Minem se realiza sin perjuicio de los actos de instrucción necesarios
+                    para la determinación, conocimiento y comprobación de los datos en virtud de los cuales deba
+                    pronunciarse el Minem, conforme al procedimiento solicitado, de acuerdo con lo establecido en el
+                    artículo 168 del Texto Único Ordenado de la Ley N° 27444, Ley del Procedimiento Administrativo
+                    General.
+                    <br /><br />
+                    4.3. Para el uso del TUPA Digital Minem, el ADMINISTRADO debe inscribirse y proporcionar los datos
+                    personales solicitados. Asimismo, su acceso y navegación implica la aceptación sin reservas de
+                    todas las disposiciones incluidas en los presentes términos y condiciones.
+                    <br /><br />
+                    4.4. La solicitud de procedimientos administrativos por parte del ADMINISTRADO, a través del
+                    TUPA Digital Minem, se rige además por las condiciones particulares previstas en el Texto Único de
+                    Procedimientos Administrativos del Minem vigente.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">QUINTA.– DEL PAGO POR DERECHO DE TRÁMITE</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    5.1. El ADMINISTRADO, podrá efectuar en el TUPA Digital Minem el pago de forma electrónica por
+                    concepto de derecho de trámite o registrar los datos del recibo de pago efectuado, según
+                    corresponda.
+                    <br /><br />
+                    5.2. El monto consignado en el sistema es el aprobado en el Texto Único de Procedimientos
+                    Administrativos del Minem vigente.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">SEXTA.– PRIVACIDAD DE LA INFORMACIÓN</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    6.1. De conformidad con la Ley N° 29733, Ley de Protección de Datos Personales y Reglamento,
+                    aprobado mediante D.S. N° 003-2013-JUS, desde el momento que el ADMINISTRADO haya declarado la
+                    aceptación expresa del tratamiento de sus datos personales mediante su registro en el TUPA
+                    Digital Minem, autoriza al Minem a recolectar y tratar todos los datos personales facilitados o que
+                    se faciliten a través de su ingreso al sistema.
+                    <br /><br />
+                    6.2. El ADMINISTRADO autoriza que el Minem pueda conservar sus datos una vez finalizado su acceso
+                    al TUPA Digital Minem, dentro de los límites establecidos legalmente y declara estar informado que
+                    puede revocar el consentimiento para tratar sus datos personales, así como de la posibilidad de
+                    ejercer sus derechos de acceso, actualización, inclusión, rectificación, supresión y oposición
+                    respecto de sus datos personales en los términos previstos en la Ley de Protección de Datos
+                    Personales y su Reglamento. Para ejercer estos derechos o cualquier otro que la ley establezca,
+                    el ADMINISTRADO deberá presentar una solicitud escrita en la sede central del Minem, o a través
+                    del correo electrónico: <a href="mailto:tupadigital@Minem.gob.pe">tupadigital&#64;Minem.gob.pe</a>.
+                    <br /><br />
+                    6.3. El ADMINISTRADO que tenga acceso al TUPA Digital Minem acepta recibir archivos de datos que
+                    le transmitan el Minem, los cuales serán almacenados en el disco duro de la computadora del
+                    ADMINISTRADO cuando este accede al sistema. La información obtenida mediante estos archivos de
+                    datos está relacionada únicamente al tipo de navegador que los usuarios utilizan, sus sistemas
+                    operativos, el tipo de computadora empleada, los proveedores del servicio de internet, las
+                    secciones del sitio web que se visitan, la dirección del servidor que utilizan, el nombre de
+                    dominio, la fecha y hora de la visita al sitio, los documentos descargados y demás información
+                    similar.
+                    <br /><br />
+                    6.4. En ningún caso los archivos de datos mencionados en el párrafo precedente pueden leer
+                    información del disco rígido o archivos creados por otros sitios. Todos los datos personales del
+                    ADMINISTRADO, son administrados por el Minem y guardados en archivos automatizados y procesados
+                    bajo estrictas normas de seguridad y confidencialidad.
+                    <br /><br />
+                    6.5. El Minem se reserva la facultad de modificar los presentes Términos y Condiciones de Uso y
+                    adaptarlos a la normativa aplicable, dentro del marco de la Ley de Protección de Datos
+                    Personales y su Reglamento.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">SÉPTIMA.– COMUNICACIONES ENTRE EL MTC Y EL ADMINISTRADO</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    7.1. El ADMINISTRADO acepta expresamente que la dirección de correo electrónico registrada en el
+                    TUPA Digital Minem así como la casilla electrónica asignada en el TUPA Digital Minem son los medios
+                    de contacto oficial entre el Minem y el ADMINISTRADO, siendo de absoluta responsabilidad de este
+                    último verificar que dicho correo se encuentre activo y operativo, y consultar su casilla
+                    electrónica de manera regular para poder recibir todas las comunicaciones por parte del Minem.
+                    <br /><br />
+                    7.2. Las comunicaciones del TUPA Digital Minem a los ADMINISTRADOS sólo pueden provenir de la
+                    dirección web <a href="http://www.mtc.gob.pe/tupadigital"
+                        target="_blank">http://www.mtc.gob.pe/tupadigital</a>. En caso se detectara que algún
+                    usuario envía comunicaciones o realiza publicaciones en nombre del TUPA Digital Minem, el Minem
+                    iniciará las acciones legales pertinentes.
+                    <br /><br />
+                    7.3. Los horarios para el ingreso, registro virtual y recepción de las solicitudes de
+                    procedimientos administrativos mediante el TUPA Digital Minem, son los siguientes:
+                    <br />
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:30px">
+                    a) Para el ingreso y registro virtual de la solicitud: las veinticuatro horas del día, los siete
+                    días de la semana.
+                    <br /><br />
+                    b) Para el registro y recepción de las solicitudes: se realiza en el horario de atención del
+                    Minem. Aquellas solicitudes que sean presentadas después del horario de atención, serán
+                    recepcionadas al siguiente día hábil en el orden de registro virtual.
+                </p>
+                <p style="margin-left:15px">
+                    7.4. Toda comunicación que el ADMINISTRADO desee dirigir respecto a los procedimientos
+                    administrativos contenidos en el TUPA Digital Minem, podrá efectuarla a través del siguiente
+                    correo electrónico: <a href="mailto:tupadigital@mtc.gob.pe">tupadigital&#64;Minem.gob.pe</a>, incluida
+                    aquella que informe problemas de índole técnico respecto del sistema.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">OCTAVA.– EXENCIÓN DE RESPONSABILIDAD DEL Minem</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    Al amparo de lo previsto en el artículo 104° de la Ley N° 29571, Código de Protección y Defensa
+                    del Consumidor, el Minem no asume responsabilidad administrativa por caso fortuito o fuerza mayor,
+                    de hecho determinante de un tercero o de la imprudencia del ADMINISTRADO.
+                    <br /><br />
+                    El Minem no se hace responsable sobre los daños o perjuicios que pudiera derivarse del acceso o
+                    uso del TUPA Digital Minem, ni de los errores de seguridad que se produzcan en la casilla
+                    electrónica del ADMINISTRADO, o a los bancos de datos o documentos almacenados en la misma, como
+                    consecuencia de la presencia de un software malicioso en el computador del ADMINISTRADO.
+                    Asimismo, no se hace responsable del mal uso que el ADMINISTRADO efectúe respecto de la
+                    información que obtenga por medio del TUPA Digital Minem.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">NOVENA – MODIFICACIÓN DE LOS TÉRMINOS Y CONDICIONES</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    El MTC se reserva expresamente el derecho a modificar, actualizar o ampliar en cualquier momento
+                    los presentes Términos y Condiciones de Uso. Cualquier modificación, actualización o ampliación
+                    producida es comunicada a través del TUPA Digital Minem, siendo responsabilidad del ADMINISTRADO
+                    revisar los Términos y Condiciones de Uso vigentes al momento de la navegación.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">DÉCIMA – SUPERVISIÓN DEL Minem SOBRE EL USO DEL SISTEMA</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    El ADMINISTRADO brinda las facilidades al Minem para hacer efectiva la supervisión del
+                    cumplimiento de las estipulaciones sobre el uso, así como de las restricciones y prohibiciones
+                    que forman parte de los presentes términos y condiciones, de lo contrario, el Minem podrá cancelar
+                    la casilla electrónica del ADMINISTRADO, y en caso detecte el uso irregular del sistema,
+                    adoptará las acciones legales para la determinación de responsabilidades que correspondan.
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="acceptTerCon()">Aceptar</button>
+            <button type="button" class="btn btn-default" (click)="modal.dismiss('Cross click')">Cerrar</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #modalDecJur let-modal>
+    <div class="modal-header bg-danger text-white">
+        <h4 class="modal-title" id="modal-basic-title">Declaración jurada</h4>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row pb-4">
+            <div class="col-md-12">
+                <strong>INTRODUCCIÓN </strong>
+                <p>Todas las visitas, todos los actos y todas las operaciones que se ejecuten o
+                    celebren en el TUPA DIGITAL, así como sus efectos jurídicos, quedarán regidos por estas reglas, así
+                    como por la normativa aplicable en la República del Perú.</p>
+                <p>
+                    <strong>Si Usted no se encuentra de acuerdo con las cláusulas que a continuación
+                        se detallan, se le solicita que no se registre como usuario, &nbsp;haga uso, ni acceda, a la
+                        información ni a los servicios ofrecidos.</strong>
+                </p>
+                <p>
+                    Cuando Usted accede al <strong>TUPA DIGITAL y se registra como usuario</strong>,
+                    reconoce no sólo que ha leído, sino también que ha entendido y aceptado los Términos y Condiciones
+                    Generales que se desarrollan a continuación, además de ser responsable por los efectos legales de su
+                    sola entrada, aceptando el contenido de los demás avisos mencionados y reconoce como auténtico y
+                    válido cualquier medio de prueba o proceso tecnológico que utilice <strong>MTC</strong> para
+                    comprobar su entrada o salida del sitio web.
+                </p>
+                <p>
+                    Es obligación exclusiva de visitantes y usuarios leer (antes de acceder a los servicios y
+                    periódicamente) los Términos y Condiciones Generales de Uso del <strong>TUPA
+                        DIGITAL</strong>, así como las Políticas de Privacidad y Términos y Condiciones de los servicios
+                    ofrecidos por cada uno de los aliados del <strong>TUPA DIGITAL</strong>, a fin de
+                    estar al tanto de cualquier modificación que pudiera realizarse a los mismos, ya que el acceso
+                    repetido a cualquiera de las secciones o servicios que figuran en el <strong>TUPA
+                        DIGITAL,</strong> será considerado como una aceptación tácita de las nuevas condiciones o
+                    modificaciones.
+                </p>
+                <p>
+                    Usted acuerda que <strong>MTC</strong> de forma inmediata y sin notificación
+                    previa podrá cerrar, suspender o restringir el acceso a la Plataforma TUPA DIGITAL o a los servicios
+                    propios brindados a través de su Plataforma TUPA DIGITAL.
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="acceptDecJur()">Aceptar</button>
+            <button type="button" class="btn btn-default" (click)="modal.dismiss('Cross click')">Cerrar</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #modalDecJur let-modal>
+    <div class="modal-header bg-danger text-white">
+        <h4 class="modal-title" id="modal-basic-title">Declaración jurada</h4>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row pb-4">
+            <div class="col-md-12">
+                <strong>INTRODUCCIÓN </strong>
+                <p>Todas las visitas, todos los actos y todas las operaciones que se ejecuten o
+                    celebren en el TUPA DIGITAL, así como sus efectos jurídicos, quedarán regidos por estas reglas, así
+                    como por la normativa aplicable en la República del Perú.</p>
+                <p>
+                    <strong>Si Usted no se encuentra de acuerdo con las cláusulas que a continuación
+                        se detallan, se le solicita que no se registre como usuario, &nbsp;haga uso, ni acceda, a la
+                        información ni a los servicios ofrecidos.</strong>
+                </p>
+                <p>
+                    Cuando Usted accede al <strong>TUPA DIGITAL y se registra como usuario</strong>,
+                    reconoce no sólo que ha leído, sino también que ha entendido y aceptado los Términos y Condiciones
+                    Generales que se desarrollan a continuación, además de ser responsable por los efectos legales de su
+                    sola entrada, aceptando el contenido de los demás avisos mencionados y reconoce como auténtico y
+                    válido cualquier medio de prueba o proceso tecnológico que utilice <strong>MTC</strong> para
+                    comprobar su entrada o salida del sitio web.
+                </p>
+                <p>
+                    Es obligación exclusiva de visitantes y usuarios leer (antes de acceder a los servicios y
+                    periódicamente) los Términos y Condiciones Generales de Uso del <strong>TUPA
+                        DIGITAL</strong>, así como las Políticas de Privacidad y Términos y Condiciones de los servicios
+                    ofrecidos por cada uno de los aliados del <strong>TUPA DIGITAL</strong>, a fin de
+                    estar al tanto de cualquier modificación que pudiera realizarse a los mismos, ya que el acceso
+                    repetido a cualquiera de las secciones o servicios que figuran en el <strong>TUPA
+                        DIGITAL,</strong> será considerado como una aceptación tácita de las nuevas condiciones o
+                    modificaciones.
+                </p>
+                <p>
+                    Usted acuerda que <strong>MTC</strong> de forma inmediata y sin notificación
+                    previa podrá cerrar, suspender o restringir el acceso a la Plataforma TUPA DIGITAL o a los servicios
+                    propios brindados a través de su Plataforma TUPA DIGITAL.
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="acceptDecJur()">Aceptar</button>
+            <button type="button" class="btn btn-default" (click)="modal.dismiss('Cross click')">Cerrar</button>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,282 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoTupa}} {{ this.descripcionTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+      
+  </button>
+</div>
+
+<div class="modal-body anexo">
+    <div class="container mt-2 mb-3">
+        <form novalidate [formGroup]="formulario">
+            <div class="center">
+                <h6><i class="far fa-list-alt"></i> FORMULARIO 002-17 SERVICIO DE TRANSPORTE TERRESTRE DE ÁMBITO NACIONAL (PERSONAS Y MERCANCÍAS)</h6>
+            </div>
+
+            <div ngbAccordion #acc="ngbAccordion">
+                <div ngbAccordionItem="datos-solicitante" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton> DATOS DEL SOLICITANTE</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="container">
+                            <div class="mb-3">
+                                <label class="col-form-label campo-obligatorio">Razon Social</label>
+                                <input type="text" class="form-control" formControlName="s1_razonSocial" [class.control-invalid]="formInvalid('s1_razonSocial')">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label campo-obligatorio">Domicilio Legal</label>
+                                <input type="text" class="form-control" formControlName="s1_domicilioLegal" [class.control-invalid]="formInvalid('s1_domicilioLegal')">
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Distrito</label>
+                                    <input type="text" class="form-control" formControlName="s1_distrito" [class.control-invalid]="formInvalid('s1_distrito')">
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Provincia</label>
+                                    <input type="text" class="form-control" formControlName="s1_provincia" [class.control-invalid]="formInvalid('s1_provincia')">
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Departamento</label>
+                                    <input type="text" class="form-control" formControlName="s1_departamento" [class.control-invalid]="formInvalid('s1_departamento')">
+                                </div>
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">D.N.I. / R.U.C.</label>
+                                    <input type="text" class="form-control" formControlName="s1_nroDocumento" [class.control-invalid]="formInvalid('s1_nroDocumento')">
+                                </div>
+
+                                <div class="mb-3 col-md-8">
+                                    <label class="col-form-label campo-obligatorio">Correo electrónico</label>
+                                    <input type="text" class="form-control" formControlName="s1_correo" [class.control-invalid]="formInvalid('s1_correo')">
+                                </div>
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Teléfono</label>
+                                    <input type="text" class="form-control" formControlName="s1_telefono">
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Celular</label>
+                                    <input type="text" class="form-control" formControlName="s1_celular" [class.control-invalid]="formInvalid('s1_celular')">
+                                </div>
+
+                                <div class="row gx-2 col-md-4">
+                                    <div *ngIf="extranjero" class="row gx-2 col-md-6">
+                                        <div>C.I.</div>
+                                        <input type="checkbox" class="checkbox mt-1 ms-2" formControlName="s1_ci" />
+                                    </div>
+
+                                    <div *ngIf="extranjero" class="row gx-2 col-md-6">
+                                        <div>C.E.</div>
+                                        <input type="checkbox" class="checkbox mt-1 ms-2" formControlName="s1_ce" />
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="mt-2 mb-4">
+                                <div class="alert alert-custom">
+                                    <div class="row gx-2">
+                                        <div class="col-md-10">
+                                            <div>
+                                                Solicito que todo acto administrativo derivado del presente procedimiento, se me notifique en el correo electrónico (e-mail) consignado en el presente formulario. (ArtÍculo 20° numeral 20.4 del Texto Único Ordenado de la Ley N° 27444 – Ley del Procedimiento
+                                                Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <!-- <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="marcadoObligatorio">
+                                                <label class="custom-control-label" for="customSwitch1">NO / SI</label>
+                                            </div> -->
+                                            <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch (change)="onChangeNotificacion($event)" formControlName="s1_notificacion">
+                                                    
+                                                </ui-switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4"><strong>DATOS DEL REPRESENTANTE LEGAL</strong></div>
+                            <hr>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Tipo de documento</label>
+                                    <select class="form-select" (change)="changeTipoDocumento()" formControlName="s1_tipoDocumentoRepresentante">
+                                        <option value=''>Seleccione</option>
+                                        <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Número de documento</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-uppercase" (input)="inputNumeroDocumento($event)" [readonly]="this.formulario.controls['s1_tipoDocumentoRepresentante'].value === ''" [maxlength]="getMaxLengthNumeroDocumento()" formControlName="s1_numeroDocumentoRepresentante"
+                                        />
+                                            <button class="btn btn-outline-secondary" [disabled]="this.formulario.controls['s1_numeroDocumentoRepresentante'].value.trim().length === 0" type="button" (click)="buscarNumeroDocumento()">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Nombres</label>
+                                    <input type="text" class="form-control" formControlName="s1_nombresRepresentante" [class.control-invalid]="formInvalid('s1_nombresRepresentante')">
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Apellido paterno</label>
+                                    <input type="text" class="form-control" formControlName="s1_apellidoPaternoRepresentante" [class.control-invalid]="formInvalid('s1_apellidoPaternoRepresentante')">
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Apellido materno</label>
+                                    <input type="text" class="form-control" formControlName="s1_apellidoMaternoRepresentante" [class.control-invalid]="formInvalid('s1_apellidoMaternoRepresentante')">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label">Domicilio</label>
+                                <input type="text" class="form-control" formControlName="s1_domicilioRepresentante">
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Poder Registrado en la Ficha/Partida Nro</label>
+                                    <input type="text" class="form-control" formControlName="s1_nroPartida">
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Fecha de Inscripción de la partida</label>
+                                    <div class="input-group">
+                                        <input class="form-control" (dateSelect)="onDateSelectPartida($event)" readonly ngbDatepicker #fechaPartida="ngbDatepicker" formControlName="s1_fechaPartida">
+                                            <button class="btn btn-outline-secondary calendar" (click)="fechaPartida.toggle()" type="button">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label">Oficina registral</label>
+                                    <input type="text" class="form-control" formControlName="s1_oficinaRegistral">
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Adjuntar vigencia de poder </label>&nbsp;
+                                    <button class="btn btn-danger btn-sm" type="button" (click)="inputFile.click($event)">
+                                        <i class="fas fa-upload"></i>
+                                        Adjuntar
+                                    </button>
+                                    <input type="file" class="d-none" #inputFile accept="application/pdf" (change)="onChangeInputFile($event)"  /><!--(change)="onChangeInputFile($event)"-->
+                                    <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa" *ngIf="filePdfSeleccionado !== null || filePdfPathName !== null" (click)="visualizarVigenciaPoderPdf()"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="declaracion-jurada" [collapsed]="false">
+
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton> DECLARACIÓN JURADA</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="container">
+                            <div class="mt-2 mb-4" *ngIf="activarDeclaracionJurada">
+                                <div class="alert alert-custom">
+                                    <div class="row gx-2">
+                                        <div class="col-md-10">
+                                            <div>
+                                                Declaro bajo juramento que los socios, accionistas o asociados, miembros del directorio o consejo directivo, gerentes, apoderados o representantes legales de la misma, no están incursos en alguno de los impedimentos e incompatibilidades previstos en el
+                                                artículo 4-A de la Ley Nº 27181 – Ley General de Transporte y Tránsito Terrestre incorporado mediante Decreto de Urgencia Nº 019-2020.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <!-- <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="marcadoObligatorio">
+                                                <label class="custom-control-label" for="customSwitch1">NO / SI</label>
+                                            </div> -->
+                                            <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch (change)="onChangeNotificacion($event)" formControlName="s3_declaracionjurada">
+                                                    
+                                                </ui-switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-danger">
+                                <span style="text-align: justify; display: block;">
+                                    Al acceder al sistema TUPA Digital MTC y registrarme como usuario: (i) reconozco que entiendo y acepto los términos y condiciones de éste, (ii) acepto como auténtico y válido cualquier medio de prueba o proceso tecnológico que utilice el MTC para comprobar mi acceso y salida del sistema; y, (iii) me hago responsable por los efectos legales en la gestión del procedimiento administrativo o servicio exclusivo.
+                                </span><br>
+                                <span style="text-align: center; display: block;">
+                                    <b>DECLARO BAJO JURAMENTO QUE LOS DATOS EXPRESAN LA VERDAD.</b>
+                                </span>
+                            </div>
+
+                            <div class="alert alert-danger">
+                                <span style="text-align: justify; display: block;">
+                                NOTA: En el presente documento electrónico se ha vinculado e identificado al firmante, así como se ha garantizado la autenticación e integridad del mismo a través de la firma electrónica utilizada atraves del usuario y clave de ingreso al Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones , la cual tiene la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales.
+                            </span>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <button type="button" class="btn btn-secondary" [disabled]="idFormularioMovimiento === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success w-50" (click)="guardarFormulario()" [disabled]="this.formulario.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                        (idFormularioMovimiento === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

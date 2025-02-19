@@ -1,0 +1,408 @@
+<body class="container-flex"><!-- 
+    <header class="bg-dark text-white p-3">
+        <h1>Encabezado</h1>
+    </header>
+ -->
+    <div class="container-fluid flexible">
+        <div class="row container-cuerpo">
+            <main role="main" class="col-12 col-md-12 col-lg-9 row carousel-container">
+                <div >
+                    <div class="col">
+                        <ngb-carousel #carousel [interval]="5000" [pauseOnHover]="false" class="carousel-fade">
+                            <ng-template ngbSlide>
+                            <img class="carousel-img" src="assets/img/autenticacion/backgroundLogIn04.jpg" width="100%" alt="Second slide">
+                            </ng-template>
+                            <ng-template ngbSlide>
+                            <img class="carousel-img" src="assets/img/autenticacion/backgroundLogIn05.jpg" width="100%" alt="Third slide">
+                            </ng-template>
+                            <ng-template ngbSlide>
+                            <img class="carousel-img" src="assets/img/autenticacion/backgroundLogIn06.jpg" width="100%" alt="Fourth slide">
+                            </ng-template>
+                        </ngb-carousel> 
+                       <!--  <ng-template ngbSlide>
+                            <img class="carousel-img" src="http://172.25.3.108/administrado/assets/img/autenticacion/backgroundLogIn04.jpg" width="100%" alt="Five slide">
+                          </ng-template>
+                          <ng-template ngbSlide>
+                            <img class="carousel-img" src="http://172.25.3.108/administrado/assets/img/autenticacion/backgroundLogIn05.jpg" width="100%" alt="Six slide">
+                          </ng-template>
+                          <ng-template ngbSlide>
+                            <img class="carousel-img" src="http://172.25.3.108/administrado/assets/img/autenticacion/backgroundLogIn06.jpg" width="100%" alt="Seven slide">
+                          </ng-template>
+                      </ngb-carousel> -->
+                    </div>
+                  </div>
+            </main>
+            <nav class="col-12 col-md-12 col-lg-3 d-md-block bg-light sidebar" style="align-content: center;">
+                <div class="formBx">
+                    <div class="logo-minem">
+                        <img src="http://172.25.3.108/administrado/assets/img/autenticacion/log-energia-y-minas.jpg" style="max-width: 85%" />
+                    </div>
+            <br><br>
+                    <!-- <div class="logo-admin" style="text-align: center;">
+                        <img src="/assets/img/autenticacion/logo-administrado.png" style="max-width: 60%" />
+                    </div> -->
+                    <div class="encabezado2">
+                        <b><span> Ciudadano y Empresa</span></b>
+                    </div>
+                    <br>
+            
+                    <form [formGroup]="loginFormGroup" (ngSubmit)="submitLogin(loginFormGroup.value, btnSubmitLogin)">
+                        <div class="inputBx">
+                            <select class="form-select" formControlName="tipoUsuarioFormControl">
+                                <option selected value="">Seleccione Tipo de Persona</option>
+                                <option *ngFor="let item of listaTipoPersona" [value]="item.codTabTipoPersona">{{ item.denominacion }}
+                                </option>
+                            </select>
+                            <div *ngIf="tipoUsuarioFormControl.invalid && (tipoUsuarioFormControl.dirty || tipoUsuarioFormControl.touched)"
+                                class="text-danger">
+                                <small *ngIf="tipoUsuarioFormControl.errors?.required">
+                                    El campo es obligatorio
+                                </small>
+                            </div>
+                        </div>
+            
+                        <div class="inputBx" *ngIf="tipoDocumentoPEFormControl.enabled">
+                            <select class="form-select" formControlName="tipoDocumentoPEFormControl"
+                                (change)="onChangeTipoDocumentoPE($event.target.value)">
+                                <option value="">Tipo de documento</option>
+                                <option *ngFor="let item of listaTipoDocumentoPE" [value]="item.codMaeDocumento">{{ item.denominacion }}
+                                </option>
+                            </select>
+                            <div *ngIf="tipoDocumentoPEFormControl.invalid && (tipoDocumentoPEFormControl.dirty || tipoDocumentoPEFormControl.touched)"
+                                class="text-danger">
+                                <small *ngIf="tipoDocumentoPEFormControl.errors?.required">
+                                    El campo es obligatorio
+                                </small>
+                            </div>
+                        </div>
+            
+                        <div class="inputBx" *ngIf="rucFormControl.enabled">
+                            <input type="text" formControlName="rucFormControl" appDigitOnly placeholder="RUC"
+                                class="form-control input-lg" maxlength="11" />
+                            <div *ngIf="rucFormControl.invalid && (rucFormControl.dirty || rucFormControl.touched)"
+                                class="text-danger">
+                                <small *ngIf="rucFormControl.errors?.required">El campo es obligatorio</small>
+                                <small *ngIf="rucFormControl.errors?.exactlength">El campo debe contener 11 dígitos</small>
+                            </div>
+                        </div>
+            
+                        <div class="inputBx" *ngIf="dniCeFormControl.enabled">
+                            <input type="text" formControlName="dniCeFormControl" appDigitOnly [placeholder]="dniCePlaceHolder"
+                                class="form-control input-lg" maxlength="12" />
+                            <div *ngIf="dniCeFormControl.invalid && (dniCeFormControl.dirty || dniCeFormControl.touched)"
+                                class="text-danger">
+                                <small *ngIf="dniCeFormControl.errors?.required">El campo es obligatorio</small>
+                                <small *ngIf="dniCeFormControl.errors?.exactlength">El campo debe contener {{ dniCeLenght }}
+                                    dígitos</small>
+                            </div>
+                        </div>
+            
+                        <div class="inputBx" *ngIf="passwordFormControl.enabled">
+                            <input type="password" formControlName="passwordFormControl" class="form-control input-lg"
+                                placeholder="Contraseña" />
+                            <div *ngIf="passwordFormControl.invalid && (passwordFormControl.dirty || passwordFormControl.touched)"
+                                class="text-danger">
+                                <small *ngIf="passwordFormControl.errors?.required">El campo es obligatorio</small>
+                                <small *ngIf="passwordFormControl.errors?.whitespace">El campo no debe contener espacios en
+                                    blanco al inicio ni al final</small>
+                            </div>
+                        </div>
+            
+                        <span class="label-text">Seleccione el recaptcha</span>
+                        <div class="text-center small-recaptcha">
+                            <re-captcha (resolved)="resolved($event)" [siteKey]="siteKey"></re-captcha>
+                        </div>
+            
+                        <div *ngIf="messageError" class="text-danger" role="alert">
+                            {{ messageError }}
+                        </div>
+            
+                        <div class="inputBx">
+                            <button #btnSubmitLogin [disabled]="!loginFormGroup.valid" type="submit"
+                                class="btn btn-info btn-block btn-iniciar">
+                                Iniciar Sesión
+                            </button>
+                        </div>
+            
+                        <!-- <div class="inputBx">
+                            <button #btnLoginSunat type="button" class="btn btn-info btn-block btn-clavesol"
+                                (click)="loginOauthSunat(btnLoginSunat)">
+                                Continuar con Clave SOL
+                            </button>
+                        </div> -->
+                    </form>
+                    <div class="footer">
+                        <div>
+                            <a [href]="urlRecuperarPassCasilla">Olvide mi contraseña</a>
+                        </div>
+                        <div>
+                            <a [href]="urlRegistroCasilla">Solicitar una cuenta de TUPA DIGITAL</a>
+                        </div>
+                    </div>
+            <br><br>
+                    <div class="adress">
+                        <div>Av. Las Artes Sur 260 San Borja. Lima - Perú</div>
+                        <div>Teléfono (+511) 4111100, 5100300</div>
+                        <div>{{ 'webmaster@minem.gob.pe' }}</div>
+                        <div>Horario de atención de lunes-viernes de 8:30 am - 5:30 pm</div>
+                    </div>
+            
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <footer class="footer-carousel text-white mt-auto" style="height: 5%;">
+        <div>Copyright © Ministerio de Energía y Minas. Todos los derechos reservados</div>
+    </footer>
+</body>
+
+
+    <!-- <div class="imgBx">
+
+    </div>
+    <div class="formBx">
+        <div class="logo-minem">
+            <img src="/assets/img/autenticacion/log-energia-y-minas.jpg" style="max-width: 85%" />
+        </div>
+
+        <div class="logo-admin" style="text-align: center;">
+            <img src="/assets/img/autenticacion/logo-administrado.png" style="max-width: 60%" />
+        </div>
+        <div class="encabezado2">
+            <span> Ciudadano y Empresa</span>
+        </div>
+
+        <form [formGroup]="loginFormGroup" (ngSubmit)="submitLogin(loginFormGroup.value, btnSubmitLogin)">
+            <div class="inputBx">
+                <select class="form-select" formControlName="tipoUsuarioFormControl">
+                    <option selected value="">Seleccione Tipo de Persona</option>
+                    <option *ngFor="let item of listaTipoPersona" [value]="item.codTabTipoPersona">{{ item.denominacion }}
+                    </option>
+                </select>
+                <div *ngIf="tipoUsuarioFormControl.invalid && (tipoUsuarioFormControl.dirty || tipoUsuarioFormControl.touched)"
+                    class="text-danger">
+                    <small *ngIf="tipoUsuarioFormControl.errors?.required">
+                        El campo es obligatorio
+                    </small>
+                </div>
+            </div>
+
+            <div class="inputBx" *ngIf="tipoDocumentoPEFormControl.enabled">
+                <select class="form-select" formControlName="tipoDocumentoPEFormControl"
+                    (change)="onChangeTipoDocumentoPE($event.target.value)">
+                    <option value="">Tipo de documento</option>
+                    <option *ngFor="let item of listaTipoDocumentoPE" [value]="item.codMaeDocumento">{{ item.denominacion }}
+                    </option>
+                </select>
+                <div *ngIf="tipoDocumentoPEFormControl.invalid && (tipoDocumentoPEFormControl.dirty || tipoDocumentoPEFormControl.touched)"
+                    class="text-danger">
+                    <small *ngIf="tipoDocumentoPEFormControl.errors?.required">
+                        El campo es obligatorio
+                    </small>
+                </div>
+            </div>
+
+            <div class="inputBx" *ngIf="rucFormControl.enabled">
+                <input type="text" formControlName="rucFormControl" appDigitOnly placeholder="RUC"
+                    class="form-control input-lg" maxlength="11" />
+                <div *ngIf="rucFormControl.invalid && (rucFormControl.dirty || rucFormControl.touched)"
+                    class="text-danger">
+                    <small *ngIf="rucFormControl.errors?.required">El campo es obligatorio</small>
+                    <small *ngIf="rucFormControl.errors?.exactlength">El campo debe contener 11 dígitos</small>
+                </div>
+            </div>
+
+            <div class="inputBx" *ngIf="dniCeFormControl.enabled">
+                <input type="text" formControlName="dniCeFormControl" appDigitOnly [placeholder]="dniCePlaceHolder"
+                    class="form-control input-lg" maxlength="12" />
+                <div *ngIf="dniCeFormControl.invalid && (dniCeFormControl.dirty || dniCeFormControl.touched)"
+                    class="text-danger">
+                    <small *ngIf="dniCeFormControl.errors?.required">El campo es obligatorio</small>
+                    <small *ngIf="dniCeFormControl.errors?.exactlength">El campo debe contener {{ dniCeLenght }}
+                        dígitos</small>
+                </div>
+            </div>
+
+            <div class="inputBx" *ngIf="passwordFormControl.enabled">
+                <input type="password" formControlName="passwordFormControl" class="form-control input-lg"
+                    placeholder="Contraseña" />
+                <div *ngIf="passwordFormControl.invalid && (passwordFormControl.dirty || passwordFormControl.touched)"
+                    class="text-danger">
+                    <small *ngIf="passwordFormControl.errors?.required">El campo es obligatorio</small>
+                    <small *ngIf="passwordFormControl.errors?.whitespace">El campo no debe contener espacios en
+                        blanco al inicio ni al final</small>
+                </div>
+            </div>
+
+            <span class="label-text">Seleccione el recaptcha</span>
+            <div class="text-center small-recaptcha">
+                <re-captcha (resolved)="resolved($event)" [siteKey]="siteKey"></re-captcha>
+            </div>
+
+            <div *ngIf="messageError" class="text-danger" role="alert">
+                {{ messageError }}
+            </div>
+
+            <div class="inputBx">
+                <button #btnSubmitLogin [disabled]="!loginFormGroup.valid" type="submit"
+                    class="btn btn-info btn-block btn-iniciar">
+                    Iniciar Sesión
+                </button>
+            </div>
+
+            <div class="inputBx">
+                <button #btnLoginSunat type="button" class="btn btn-info btn-block btn-clavesol"
+                    (click)="loginOauthSunat(btnLoginSunat)">
+                    Continuar con Clave SOL
+                </button>
+            </div>
+        </form>
+        <div class="footer">
+            <div>
+                <a [href]="urlRecuperarPassCasilla">Olvide mi contraseña</a>
+            </div>
+            <div>
+                <a [href]="urlRegistroCasilla">Solicitar una cuenta de TUPA DIGITAL</a>
+            </div>
+        </div>
+
+        <div class="adress">
+            <div>Av. Las Artes Sur 260 San Borja. Lima - Perú</div>
+            <div>Teléfono (+511) 4111100, 5100300</div>
+            <div>{{ 'webmaster@minem.gob.pe' }}</div>
+            <div>Horario de atención de lunes-viernes de 8:30 am - 5:30 pm</div>
+        </div>
+
+        
+    </div>
+     <footer class="navigate">
+        <div>Copyright © Ministerio de Energía y MinasTodos los derechos reservados</div>
+    </footer>
+     -->
+   
+  
+
+<!-- <section>
+    <div class="imgBx">
+        <img src="/assets/img/autenticacion/backgroundLogin.jpg" />
+    </div>
+    <div class="contentBx">
+        <div class="formBx" >
+            <div style="text-align: center;">
+                <img src="/assets/img/autenticacion/logo-administrado.png" style="max-width: 60%" />
+            </div>
+            <div style="text-align: center" class="encabezado2">
+                <span> Ciudadano y Empresa</span>
+            </div>
+
+            <form [formGroup]="loginFormGroup" (ngSubmit)="submitLogin(loginFormGroup.value, btnSubmitLogin)">
+                <div class="inputBx">
+                    <select class="form-select" formControlName="tipoUsuarioFormControl">
+                        <option selected value="">Seleccione Tipo de Persona</option>
+                        <option *ngFor="let item of listaTipoPersona" [value]="item.codTabTipoPersona">{{ item.denominacion }}
+                        </option>
+                    </select>
+                    <div *ngIf="tipoUsuarioFormControl.invalid && (tipoUsuarioFormControl.dirty || tipoUsuarioFormControl.touched)"
+                        class="text-danger">
+                        <small *ngIf="tipoUsuarioFormControl.errors?.required">
+                            El campo es obligatorio
+                        </small>
+                    </div>
+                </div>
+
+                <div class="inputBx" *ngIf="tipoDocumentoPEFormControl.enabled">
+                    <select class="form-select" formControlName="tipoDocumentoPEFormControl"
+                        (change)="onChangeTipoDocumentoPE($event.target.value)">
+                        <option value="">Tipo de documento</option>
+                        <option *ngFor="let item of listaTipoDocumentoPE" [value]="item.codMaeDocumento">{{ item.denominacion }}
+                        </option>
+                    </select>
+                    <div *ngIf="tipoDocumentoPEFormControl.invalid && (tipoDocumentoPEFormControl.dirty || tipoDocumentoPEFormControl.touched)"
+                        class="text-danger">
+                        <small *ngIf="tipoDocumentoPEFormControl.errors?.required">
+                            El campo es obligatorio
+                        </small>
+                    </div>
+                </div>
+
+                <div class="inputBx" *ngIf="rucFormControl.enabled">
+                    <input type="text" formControlName="rucFormControl" appDigitOnly placeholder="RUC"
+                        class="form-control input-lg" maxlength="11" />
+                    <div *ngIf="rucFormControl.invalid && (rucFormControl.dirty || rucFormControl.touched)"
+                        class="text-danger">
+                        <small *ngIf="rucFormControl.errors?.required">El campo es obligatorio</small>
+                        <small *ngIf="rucFormControl.errors?.exactlength">El campo debe contener 11 dígitos</small>
+                    </div>
+                </div>
+
+                <div class="inputBx" *ngIf="dniCeFormControl.enabled">
+                    <input type="text" formControlName="dniCeFormControl" appDigitOnly [placeholder]="dniCePlaceHolder"
+                        class="form-control input-lg" maxlength="12" />
+                    <div *ngIf="dniCeFormControl.invalid && (dniCeFormControl.dirty || dniCeFormControl.touched)"
+                        class="text-danger">
+                        <small *ngIf="dniCeFormControl.errors?.required">El campo es obligatorio</small>
+                        <small *ngIf="dniCeFormControl.errors?.exactlength">El campo debe contener {{ dniCeLenght }}
+                            dígitos</small>
+                    </div>
+                </div>
+
+                <div class="inputBx" *ngIf="passwordFormControl.enabled">
+                    <input type="password" formControlName="passwordFormControl" class="form-control input-lg"
+                        placeholder="Contraseña" />
+                    <div *ngIf="passwordFormControl.invalid && (passwordFormControl.dirty || passwordFormControl.touched)"
+                        class="text-danger">
+                        <small *ngIf="passwordFormControl.errors?.required">El campo es obligatorio</small>
+                        <small *ngIf="passwordFormControl.errors?.whitespace">El campo no debe contener espacios en
+                            blanco al inicio ni al final</small>
+                    </div>
+                </div>
+
+                <span>Seleccione el recaptcha</span>
+                <div class="text-center mt-2 mb-3">
+                    <re-captcha (resolved)="resolved($event)" [siteKey]="siteKey"></re-captcha>
+                </div>
+
+                <div *ngIf="messageError" class="text-danger" role="alert">
+                    {{ messageError }}
+                </div>
+
+                <div class="inputBx">
+                    <button #btnSubmitLogin [disabled]="!loginFormGroup.valid" type="submit"
+                        class="btn btn-block btn-danger">
+                        Iniciar Sesión
+                    </button>
+                </div>
+
+                <div class="inputBx">
+                    <button #btnLoginSunat type="button" class="btn btn-info btn-block btn-clavesol"
+                        (click)="loginOauthSunat(btnLoginSunat)">
+                        Continuar con Clave SOL
+                    </button>
+                </div>
+            </form>
+
+            <div class="footer">
+                <div>
+                    <a [href]="urlRecuperarPassCasilla">Olvide mi contraseña</a>
+                </div>
+                <div>
+                    <a [href]="urlRegistroCasilla">Solicitar una cuenta de TUPA DIGITAL</a>
+                </div>
+            </div>
+
+            <div class="adress">
+                <div>Sede Central: Jr Zorritos 1203, Cercado de Lima, Lima-Perú</div>
+                <div>Central telefónica: (01)615 7900 - (01)615 7800</div>
+                <div>Mesa de Ayuda: Teléf.(511)615 - 7800 Anexo: 5777</div>
+                <div>Horario de atención de lunes-viernes de 8:30 am - 5:30 pm</div>
+            </div>
+
+            <div class="navigate">
+                <div>Navegador recomendado Google Chrome.</div>
+                <div>MTC-Todos los derechos reservados © 2021</div>
+            </div>
+        </div>
+    </div>
+</section> -->

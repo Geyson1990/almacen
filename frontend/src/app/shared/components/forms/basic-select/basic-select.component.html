@@ -1,0 +1,110 @@
+<div [formGroup]="parentForm">
+  <div [ngClass]="{ 'mb-3': !horizontal }">
+    <div [ngClass]="{ 'row gx-2': horizontal }">
+      <label
+        [ngClass]="{
+          'control-label': !horizontal,
+          'col-form-label': horizontal
+        }"
+        *ngIf="label"
+        [for]="'selectControl-' + inputUUID"
+        >{{ label }}{{ horizontal ? ": " : " " }}
+        <span class="text-danger" *ngIf="isRequired()">(*)</span>
+      </label>
+      <div
+        [ngClass]="{
+          col: horizontal,
+          inpGroupSize: horizontal && inputGroup,
+          inpSize: horizontal && !inputGroup
+        }"
+      >
+        <div [ngClass]="{ 'input-group': inputGroup }">
+          <ng-container *ngIf="!customPrepend; else elsePrependTemplate">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              *ngIf="btnPrepend"
+              [disabled]="disableBtnPrepend || selectFormControl.disabled"
+              (click)="onClickBtnPrepend($event)"
+            >
+              <i class="fas" [ngClass]="iconBtnPrepend"></i>{{ textBtnPrepend }}
+            </button>
+          </ng-container>
+          <ng-template #elsePrependTemplate>
+            <ng-content select="[slot=customPrepend]"></ng-content>
+          </ng-template>
+
+          <ng-container
+            *ngIf="readOnly || selectFormControl.disabled; else elseTemplate"
+          >
+            <select
+              class="form-select"
+              [id]="'selectControl-' + inputUUID"
+              disabled="true"
+              [class.control-invalid]="
+                selectFormControl.invalid &&
+                (selectFormControl.dirty || selectFormControl.touched)
+              "
+            >
+              <option [value]="defaultItemValue">{{ defaultItemText }}</option>
+              <option
+                *ngFor="let item of itemList"
+                [value]="item.value"
+                [selected]="item.value === selectFormControl.value"
+              >
+                {{ item.text }}
+              </option>
+            </select>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <select
+              class="form-select"
+              [id]="'selectControl-' + inputUUID"
+              [formControlName]="selectFormControlName"
+              [class.control-invalid]="
+                selectFormControl.invalid &&
+                (selectFormControl.dirty || selectFormControl.touched)
+              "
+            >
+              <option [value]="defaultItemValue">{{ defaultItemText }}</option>
+              <option *ngFor="let item of itemList" [value]="item.value">
+                {{ item.text }}
+              </option>
+            </select>
+          </ng-template>
+
+          <ng-container *ngIf="!customAppend; else elseAppendTemplate">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              *ngIf="btnAppend"
+              [disabled]="disableBtnAppend || selectFormControl.disabled"
+              (click)="onClickBtnAppend($event)"
+            >
+              <i class="fas" [ngClass]="iconBtnAppend"></i>{{ textBtnAppend }}
+            </button>
+          </ng-container>
+          <ng-template #elseAppendTemplate>
+            <ng-content select="[slot=customAppend]"></ng-content>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        selectFormControl.invalid &&
+        (selectFormControl.dirty || selectFormControl.touched)
+      "
+      class="text-danger"
+    >
+      <div *ngIf="selectFormControl.errors?.required">
+        El campo es obligatorio
+      </div>
+      <ng-content select="[slot=customValidators]"></ng-content>
+      <!-- Para usar los validadores personalizados llamarlo de esta forma: -->
+      <!-- <div slot="customValidators">Aqui colocamos los validadores personalizados</div> -->
+      <!-- o -->
+      <!-- <ng-container slot="customValidators">Aqui colocamos los validadores personalizados</ng-container> -->
+    </div>
+  </div>
+</div>

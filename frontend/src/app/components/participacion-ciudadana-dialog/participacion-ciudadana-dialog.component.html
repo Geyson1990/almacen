@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <h2 mat-dialog-title>{{ title }}<span class="mat-tooltip-informacion" placement="bottom" ngbTooltip="">Contenido
+      Mínimo</span></h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body mat-typography">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="content-contorno">
+        <h3>4.1. PARTICIPACIÓN CIUDADANA</h3>
+        <div class="m-0-5px">
+          <button *ngIf="viewControl" (click)="openModalParticipacionCiudadana('PARTICIPACIÓN CIUDADANA')"
+          type="button" class="mat-small" style="width: 180px;">
+          <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns41" [data]="tableData41"></tupa-table>
+          <br>
+          <div class="mensaje-dialog-ambar d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 w-5 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-ambar"> warning </i>
+            </div>
+            <div class="col-sm-11 col-md-11 ml-3">
+              <p class="m-0">Para este estudio es necesario registrar los siguientes mecanismos:<br>
+                -Acceso de la población a Resúmenes Ejecutivos y al contenido del texto completo del estudio ambiental en la
+                fase ANTES DE LA PRESENTACION DE ESTUDIO<br>
+                SE -Talleres Informativos y Participativos en la fase ANTES DE LA PRESENTACION DE ESTUDIO</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3 class="mt-3">4.2. ADJUNTAR DOCUMENTOS</h3>
+        <div class="m-0-5px">
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 w-5 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-rojo"> info </i>
+            </div>
+            <div class="col-sm-11 col-md-11 ml-3">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 20 MB.<br>
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES
+                (OCR).</p>
+            </div>
+          </div>
+          <!-- <tupa-attach-button (documentoSeleccionado)="agregarDocumento($event)"></tupa-attach-button> -->
+          <tupa-attach-button *ngIf="viewControl" [showTipoDocumento]="showTipoDocumento" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="20" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"
+          (documentoSeleccionado)="agregarDocumento($event)"></tupa-attach-button>
+          <br>
+          <app-document-grid  
+            [viewOnly]="viewOnly" 
+            [documentos]="documentos"
+            (documentosActualizados)="actualizarDocumentos($event)"
+          ></app-document-grid>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+        Cancel</button>
+      <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>
+</form>

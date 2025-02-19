@@ -1,0 +1,437 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body anexo">
+    <div class="container mt-2 mb-3">
+        <form [formGroup]='anexoFG'>
+            <div class="center">
+                <h6>{{txtTitulo}}</h6>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1,seccion-2,seccion-3,seccion-4,seccion-5">
+                <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>I.
+                               Relación de equipamiento de los centros de inspección técnica vehicular - CITV Fijo y Móvil </button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div formGroupName="a_Seccion1" >
+                            <div class="row gx-2">
+                                <div class="col-md-10">
+                                    <div>
+                                        De conformidad con lo señalado en el numeral 34.1 del artículo 34 del Reglamento1 declaro bajo juramento que cada 
+                                        Línea de Inspección Técnica Vehicular que acredito en el Centro de Inspección Técnica Vehicular - CITV 
+                                        cuenta con el siguiente equipamiento en buen estado de funcionamiento:
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        a) Un (01) Regloscopio con Luxómetro. El equipo debe permitir el ajuste de la altura y corrección de profundidad de la luz, así como el 
+                                        desplazamiento transversal de un faro a otro. Para el caso de una línea de inspección técnica tipo menor, 
+                                        el Regloscopio podrá ser reemplazado por un (1) Luxómetro que permita medir la intensidad de las luces.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_1">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        b) Un (01) Reflectómetro, para verificar el grado reflectividad de las láminas reflectivas y de la Placa Única Nacional de Rodaje.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_2">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        c) Un (01) medidor de alineación de ruedas al paso para la verificación de convergencia o divergencia de 
+                                        cada una de las ruedas. <b>Esto no será aplicable para una línea de inspección técnica tipo menor</b>.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_3">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        d) Un (01) frenómetro de rodillos para medir la eficiencia de frenado de las ruedas en conjunto o en forma individual.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_4">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        e) Un (01) detector de holguras. El equipo debe permitir detectar el desgaste de terminales, rótulas y elementos
+                                         articulados del vehículo y debe operar en ambas ruedas de un mismo eje. Esto no será aplicable para una línea 
+                                         de inspección técnica tipo menor.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_5">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        f) Un (01) banco de pruebas de suspensiones que permita medir el estado de la suspensión de los vehículos 
+                                        livianos inspeccionados. <b>Este equipo únicamente es exigible para las Líneas de Inspección 
+                                        Técnica Vehicular tipo liviano</b>.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_6">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        g) Un (01) analizador de gases homologado en el país de acuerdo a la reglamentación vigente. 
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_7">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        h) Un (01) Opacímetro homologado en el país de acuerdo a la reglamentación vigente.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_8">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        i) Un (01) sonómetro, para verificar los límites máximos de emisiones sonoras de los vehículos.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_9">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        j) Una (01) torre de inflado de llantas.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_10">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        k) Un (01) detector de profundidad de las ranuras de los neumáticos.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_11">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        l) Una (01) cámara fotográfica digital con fechador incorporado.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_12">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        m) Un (01) equipo para realizar mediciones de calibración y medidas generales de los vehículos.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_13">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        n) Fosa o zanja para la inspección visual del vehículo desde la parte inferior del mismo o, 
+                                        alternativamente para las líneas de inspección técnica tipo liviano, un elevador con una 
+                                        capacidad mínima de levante de 3,500 kilogramos y una altura de elevación mínima de 1600 mm. 
+                                        Excepcionalmente, para el caso de los Centros de Inspección Técnica Vehicular Móvil, la DGTT 
+                                        deberá determinar el sistema o mecanismo similar. <b>Esto no será aplicable para una línea de 
+                                        inspección técnica tipo menor.</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_14">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom" *ngIf="this.codigoProcedimientoTupa=='DCV-022'">
+                                <div class="col-md-10">
+                                    <div>
+                                        o) Una (01) cámara filmadora.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s1_declaracion_15">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div formGroupName="a_Seccion2" >
+                            <div class="row gx-2">
+                                <div class="col-md-10">
+                                    <div>
+                                        De conformidad con lo señalado en el numeral 34.2 del articulo 34 del Reglamento1, declaro bajo 
+                                        juramento que el Centro de Inspección Técnica Vehicular - CITV cuenta con el siguiente equipamiento 
+                                        en buen estado de funcionamiento:
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        a) Extintores tipo ABC de acuerdo a la Norma Técnica NFPA 10, a razón de 50 g. por m2 de área de terreno, 
+                                        o su equivalente en extintores de tecnología diferente.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s2_declaracion_1">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        b) Un (01) sistema de extracción de aire viciado en la zona de análisis de gases para el caso de Centros 
+                                        de Inspección Técnica Vehicular-CITV con líneas de inspección instalados en ambientes cerrados.
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s2_declaracion_2">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        c) Sistema informático y de comunicaciones con conexión permanente a Internet para facilitar la transmisión 
+                                        electrónica de información a la DGTT y demás organismos que éste designe de ser el caso. Para tal efecto, 
+                                        se deberá acreditar la posición legítima del software y hardware exigido en el artículo 33 del Reglamento1. 
+                                        Excepcionalmente, para el caso de los Centros de Inspección Técnica Vehicular Móvil, también se deberá contar 
+                                        con el Sistema informático y de comunicaciones, sin embargo podrá dispensarse que el sistema no esté en red 
+                                        en función al lugar en que se haga la inspección.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s2_declaracion_3">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        d) Equipos o sistema de seguridad para casos de siniestro, conforme a las normas municipales correspondientes.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s2_declaracion_4">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        e) Gases patrón para la calibración de los equipos analizadores de gases.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s2_declaracion_5">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2 alert alert-custom">
+                                <div class="col-md-10">
+                                    <div>
+                                        f) Sistema automático de monitoreo y determinación de la posición del vehículo.
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch formControlName="a_s2_declaracion_6">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label ms-2"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-lg-12 d-flex">
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                        <i class="far fa-eye"></i>
+                        Visualizar
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="anexoFG.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                    (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

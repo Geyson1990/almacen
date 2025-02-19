@@ -1,0 +1,256 @@
+#btnSendComment {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+.mat-small-flecha {
+    background-color: #ffffff !important;
+    border-radius: 5px;
+    border: 1px solid rgb(0, 86, 172) !important;
+    height: 40px !important;
+    width: 40px !important;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font: 400 15px / 20px Roboto, sans-serif;
+    letter-spacing: .0333333333em;
+    color: rgb(0, 86, 172) !important;
+    box-shadow: none!important;
+}
+.mat-small-flecha:hover {
+    background-color: #0062cc!important;
+    color: rgb(255, 255, 255)!important;
+}
+.mat-small-flecha-disabled {
+    background-color: rgb(219 219 219) !important;
+    border-radius: 5px;
+    border: 1px solid rgb(124, 124, 124) !important;
+    height: 40px !important;
+    width: 40px !important;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font: 400 15px / 20px Roboto, sans-serif;
+    letter-spacing: .0333333333em;
+    color: rgb(133 132 132) !important;
+    box-shadow: none !important;
+}
+¨.button-blue-disabled{
+    background-color: rgb(219 219 219) !important;
+    border-radius: 5px;
+    border: 1px solid rgb(124, 124, 124) !important;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font: 400 15px / 20px Roboto, sans-serif;
+    letter-spacing: .0333333333em;
+    color: rgb(133 132 132) !important;
+    box-shadow: none !important;
+}
+.parentComment {
+    background-color: #f1f6f8;
+    padding: 5px;
+    border-radius: 0px 15px 15px 15px;
+}
+
+.fldComment {
+    border: 1.6px solid #757575fc;
+    border-radius: 10px;
+    padding-top: 10px;
+}
+
+ul li {
+    border: 0;
+}
+
+ul li ul li {
+    padding-right: 2px;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    height: auto!important;
+  }
+
+
+
+  /********bostrap**********/
+  .comentario-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    position: relative;
+    background-color: #F0FAFF;
+  }
+  .comentario-header {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .comentario-fecha {
+    font-size: 0.8rem;
+    color: gray;
+  }
+  .comentario-texto {
+    margin-top: 5px;
+  }
+  .opciones-comentario {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  .icono-seleccion {
+    margin-right: 10px;
+  }
+  .input-comentario {
+    max-width: 500px;
+    margin-top: 15px;
+  }
+
+
+/* Estilos generales */
+.opciones-comentario {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* El menú está oculto inicialmente */
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    padding: 0;
+    list-style: none;
+    min-width: 160px;
+  }
+  
+  /* Estilo para los elementos del menú */
+  .dropdown-item {
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Mostrar el menú cuando el botón o el contenedor tienen el foco */
+  .opciones-comentario:focus-within .dropdown-menu {
+    display: block;
+  }
+  
+  /* Estilo para cuando el botón está en foco */
+  button:focus {
+    outline: none;
+  }
+  
+
+  .comentario-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .comentario-header {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .comentario-fecha {
+    font-size: 0.8rem;
+    color: gray;
+  }
+  .comentario-texto {
+    margin-top: 5px;
+  }
+  .opciones-comentario {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  .input-comentario {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    max-width: 100%;
+  }
+  .textarea-comentario {
+    flex: 1;
+    resize: none;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    margin-right: 10px;
+  }
+  .btn-enviar {
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: none;
+    position: absolute;
+    right: 40px;
+  }
+  .btn-enviar:hover {
+    background-color: #0056b3;
+  }
+  .caracteres-info {
+    font-size: 0.8rem;
+    color: #777;
+    text-align: right;
+    padding-right: 30px;
+  }
+
+  .header-titulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+.btn-cerrar{
+    border: none;
+    color: #686868;
+    font-size: 24px;
+    background: no-repeat;
+}
+.icono-color-respuesta{
+   color: #0F7FED;
+}
+
+.titulo-comentario {
+    position: relative;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding-left: 20px; /* Espacio para la línea */
+    color: #333;
+  }
+  .titulo-comentario::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px; /* Longitud de la línea */
+    height: 100%; /* Altura de la línea */
+    border-left: 4px solid #c60000; /* Color y grosor de la línea */
+  }
+ 
+  

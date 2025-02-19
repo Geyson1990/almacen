@@ -1,0 +1,329 @@
+<div class="modal-header anexo bg-danger text-white">
+   <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+   <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+
+   </button>
+</div>
+<div class="modal-body anexo">
+   <div class="container mt-2 mb-3">
+      <form [formGroup]='anexoFG'>
+         <div class="center">
+            <h6>{{txtTitulo}}</h6>
+         </div>
+         <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1,seccion-2,seccion-3,seccion-4,seccion-5">
+            <div ngbAccordionItem="seccion-1" [collapsed]="false">
+               <h2 ngbAccordionHeader>
+
+                  <button ngbAccordionButton>I.
+                     DECLARACION JURADA </button>
+               </h2>
+               <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                     <ng-template>
+                        <div class="alert alert-custom" formGroupName="a_Seccion1">
+                           <div class="row gx-2" *ngIf="this.activarGLP">
+                              <div class="col-md-10">
+                                 <div>
+                                    De conformidad con el numeral 6.2.6 y 7.2 de la Directiva Nº 005-2007-MTC/15
+                                    “Régimen de Autorización y Funcionamiento de las Entidades Certificadoras de
+                                    Conversiones a GLP y de los Talleres de Conversión a GLP”
+                                 </div>
+                              </div>
+                              <div class="col-md-2">
+                                 <div class="d-flex flex-row p-2 ms-4">
+                                    <ui-switch formControlName="a_s1_declaracion_1">
+
+                                    </ui-switch>
+                                    <label class="col-form-label"> NO/SI </label>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row gx-2" *ngIf="this.activarGNV">
+                              <div class="col-md-10">
+                                 <div>
+                                    De conformidad con el numeral 6.2.6 y 7.2 de la Directiva Nº 001-2005-MTC/15
+                                    “Régimen de Autorización y Funcionamiento de las Entidades Certificadoras de
+                                    Conversiones y Talleres de Conversión a GNV”
+                                 </div>
+                              </div>
+                              <div class="col-md-2">
+                                 <div class="d-flex flex-row p-2 ms-4">
+                                    <ui-switch formControlName="a_s1_declaracion_2">
+
+                                    </ui-switch>
+                                    <label class="col-form-label"> NO/SI </label>
+                                 </div>
+                              </div>
+                           </div>
+
+                        </div>
+                     </ng-template>
+                  </div>
+               </div>
+            </div>
+
+            <div ngbAccordionItem="seccion-2" [collapsed]="false">
+               <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>DATOS DEL PERSONAL</button>
+               </h2>
+               <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                     <ng-template>
+                        <div>De conformidad con normativa vigente declaro bajo juramento que la información de nómina de
+                           personal que se detalla a continuación es verdadera:</div>
+                        <div class="row mt-3" formGroupName="a_Seccion2">
+                           <div class="row">
+                              <div class="col-lg-3">
+                                 <label class="control-label campo-obligatorio">Tipo Documento</label>
+                                 <select class="form-select" formControlName="a_s2_tipoDocumento"
+                                    (change)="changeTipoDocumento()">
+                                    <option value=''>Seleccione</option>
+                                    <option *ngFor="let item of listaTiposDocumentos" [value]="item.id">
+                                       {{ item.documento }}</option>
+                                 </select>
+                              </div>
+                              <div class="col-lg-3">
+                                 <app-basic-input [parentForm]="a_Seccion2" inputFormControlName="a_s2_numeroDocumento"
+                                    label="Número de Documento" [maxLength]="getMaxLengthNumeroDocumento()"
+                                    placeHolder="Ingrese el número de documento" [onlyNumbers]="true" [btnAppend]="true"
+                                    iconBtnAppend="fa-search"
+                                    [disabledAppend]="this.a_s2_numeroDocumento.value.trim().length === 0"
+                                    (clickAppend)="buscarNumeroDocumento($event)">
+                                 </app-basic-input>
+                              </div>
+                              <div class="col-lg-6">
+                                 <app-basic-input [parentForm]="a_Seccion2" inputFormControlName="a_s2_nombresApellidos"
+                                    label="Apellidos y nombres" placeHolder="" [maxLength]="100">
+                                 </app-basic-input>
+                              </div>
+                           </div>
+
+                           <div class="row">
+                              <div class="col-lg-6">
+                                 <label class="control-label campo-obligatorio">Título académico o certificación</label>
+                                 <select class="form-select" formControlName="a_s2_titulo" (change)="changeFuncion()">
+                                    <option value="">Seleccione</option>
+                                    <option *ngFor="let item of listaFuncion" [value]="item.value">{{ item.text
+                                       }}</option>
+                                 </select>
+                              </div>
+                              <div class="col-lg-3" *ngIf="this.a_s2_titulo.value == '7'">
+                                 <app-basic-input [parentForm]="a_Seccion2" inputFormControlName="a_s2_otro"
+                                    label="Otro" placeHolder="" [maxLength]="100">
+                                 </app-basic-input>
+                              </div>
+                              <div class="col-lg-3">
+                                 <div class="d-flex align-items-center mt-4">
+
+                                    <div class="d-flex" id="boton-agregar-modificar">
+                                       <button class="btn btn-danger btn-sm flex-1" (click)="agregarPersonal()">
+                                          <div *ngIf="indexEditTabla === -1; else elseBlock">
+                                             <i class="fas fa-plus-circle"></i>
+                                             Agregar
+                                          </div>
+                                          <ng-template #elseBlock>
+                                             <i class="fas fa-pencil-alt"></i>
+                                             Modificar
+                                          </ng-template>
+                                       </button>
+                                       <button *ngIf="indexEditTabla !== -1"
+                                          class="btn btn-warning btn-sm  ms-2 btn-cancelar"
+                                          (click)="cancelarModificacion()">
+                                          Cancelar
+                                       </button>
+                                    </div>
+
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row mt-3">
+                           <div class="col-sm-12">
+                              <div class="table-responsive">
+
+                                 <table class="table table-bordered">
+                                    <thead class="bg-secondary text-white text-center">
+                                       <tr>
+                                          <th>N°</th>
+                                          <th>Apellidos y nombres</th>
+                                          <th>N° DNI/CE</th>
+                                          <th>Titulo académico o certificación (*)</th>
+                                          <th>Acciones</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody *ngIf="listaPersonal.length > 0; else sinRegistros">
+                                       <tr class="text-center" [class.registro-edit]="indexEditTabla === i"
+                                          *ngFor="let item of listaPersonal, let i = index">
+                                          <td>{{ i + 1}}</td>
+                                          <td class="text-start">
+                                             {{ item.apellidosNombres }}
+                                          </td>
+                                          <td>{{ item.tipoDocumento.documento +' '+ item.nroDocumento}} </td>
+                                          <td>{{ (item.titulo.value=='7' ? item.otroTitulo : item.titulo.text) }}</td>
+                                          <td>
+                                             <div>
+                                                <i class="far fa-edit pe-2 text-primary cursor-pointer"
+                                                   [class.opacity-icon]="indexEditTabla !== -1" title="Editar"
+                                                   (click)="modificarPersonal(item, i)"></i>
+                                                <i class="far fa-trash-alt ps-2 text-danger cursor-pointer"
+                                                   [class.opacity-icon]="indexEditTabla !== -1" title="Eliminar"
+                                                   (click)="eliminarPersonal(item, i)"></i>
+                                             </div>
+                                          </td>
+                                       </tr>
+                                    </tbody>
+                                    <ng-template #sinRegistros>
+                                       <tbody>
+                                          <tr>
+                                             <td colspan="5" class="text-center">No se encontraron registros</td>
+                                          </tr>
+                                       </tbody>
+                                    </ng-template>
+                                 </table>
+                              </div>
+                           </div>
+                           <div class="col-sm-12">
+                              <div class="row gx-2" *ngIf="this.activarDocumentos">
+                                 <div class="col-lg-7 col-md-12 text-justify">
+                                    <ul
+                                       *ngIf="this.codigoProcedimientoTupa=='DCV-015' || this.codigoProcedimientoTupa=='DCV-016' ">
+                                       <li>
+                                          Declaración jurada de contar con los títulos y/o certificaciones que acrediten
+                                          su calificación en conversiones vehiculares del sistema de combustión a GNV.
+                                          Dicho documento deberá ser expedido por el Proveedor de Equipos Completos -
+                                          PEO con el cual el taller mantiene vínculo contractual. Sólo tendrán validez
+                                          aquellas certificaciones expedidas por los Proveedores de Equipos Completos -
+                                          PEC’s que hayan acreditado ante la DCV a sus ingenieros y/o técnicos
+                                          instructores conforme a lo establecido en el numeral 7.2 de la directiva.
+                                       </li>
+                                       <li>
+                                          Copia del documento que acredite relación laboral o vínculo contractual con el
+                                          taller.
+                                       </li>
+                                    </ul>
+                                    <ul
+                                       *ngIf="this.codigoProcedimientoTupa=='DCV-017' || this.codigoProcedimientoTupa=='DCV-018'">
+                                       <li>
+                                          Copia simple de los títulos y/o certificaciones que acrediten su calificación
+                                          en mecánica automotriz, electricidad y/o electrónica automotriz.
+                                       </li>
+                                       <li>
+                                          Copia simple de los títulos y/o certificaciones que acrediten su calificación
+                                          en conversiones vehiculares del sistema de combustión a GLP. Dicho documento
+                                          deberá ser expedido por el Proveedor de Equipos Completos de Conversión a GLP
+                                          (PEC-GLP) con el cual el taller mantiene vínculo contractual. Sólo tendrán
+                                          validez aquellas certificaciones expedidas por los Proveedores de Equipos
+                                          Completos de Conversión a GLP (PEC-GLP) que hayan acreditado ante la DCV a sus
+                                          ingenieros y/o técnicos instructores conforme a lo establecido en el numeral 7.2 de la presente Directiva.
+
+                                       </li>
+                                       <li>
+                                          Copia simple del documento que acredite relación laboral o vínculo contractual con el taller.
+                                       </li>
+                                    </ul>
+                                 </div>
+                                 <div class="col-lg-5 col-md-12">
+                                    <div class="d-flex mt-2">
+                                       <div class="flex-1 text-left">
+                                          
+                                          <button class="btn btn-danger btn-sm align-self-center mb-3"
+                                             *ngIf="visibleButtonDocumentos || this.pathPdfDocumentosSeleccionado !== null"
+                                             (click)="inputFileDocumentos.click($event)">
+                                             <i class="fas fa-upload"></i>
+                                             Adjuntar documentos (Pdf máx. 10Mb)
+                                          </button>
+                                          <input type="file" class="d-none" #inputFileDocumentos
+                                             accept="application/pdf" (change)="onChangeInputDocumentos($event)" />
+                                          <i class="far fa-file-pdf text-danger fa-2x ms-2 mt-2" title="Vista previa"
+                                             *ngIf="filePdfDocumentosSeleccionado !== null || this.pathPdfDocumentosSeleccionado !==null "
+                                             (click)="vistaPreviaDocumentos()"></i>
+                                       </div>
+                                       
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row mt-3">
+                           <div>
+                              (*) <b>Para talleres de conversión a Gas Licuado de Petróleo - GNV</b> deberá acreditar
+                              como mínimo un técnico en mecánica automotriz y un técnico en electrónica o electricidad
+                              automotriz o en su defecto, un técnico calificado en mecánica automotriz y en electrónica
+                              o electricidad automotriz.
+                           </div>
+                           <div>
+                              <b>Para talleres de conversión a Gas Licuado de Petróleo - GLP</b> deberá acreditar como
+                              mínimo un técnico en mecánica automotriz y un técnico en electrónica o electricidad
+                              automotriz.
+                           </div>
+                        </div>
+
+                        <div class="col-sm-12 mt-5 justify-content-center">
+                           <div class="alert alert-custom" role="alert">
+                              Lo declarado se sujeta a lo señalado en el numeral 34.3 del artículo 34 del Texto Único
+                              Ordenado de la Ley Nº 27444, Ley del Procedimiento Administrativo General <span
+                                 class="text-success" triggers="mouseenter:mouseclick" popoverTitle="Nota"
+                                 placement="right"
+                                 ngbPopover="Numeral 34.3 del artículo 34°  del Texto Único Ordenado de la Ley N° 27444 – Ley del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS.">
+                                 <i class="fas fa-info-circle"></i>
+                              </span> y demás normas pertinentes.
+                           </div>
+                        </div>
+
+                        <div class="col-sm-12 d-flex justify-content-center">
+                           <div class="alert alert-custom" role="alert">
+                              En honor a la verdad y al amparo del principio de presunción de veracidad estipulado en el
+                              numeral 1.7) del inc. 1) del Art. IV del TUO de la Ley N° 27444 del Procedimiento
+                              Administrativo General, declaro Bajo Responsabilidad, que los datos consignados en este
+                              anexo son ciertos y que conozco las sanciones a los que seré sometido (a) en caso de haber
+                              anotado/adjuntado información falsa.
+                           </div>
+                        </div>
+
+                        <div class="col-sm-12 d-flex justify-content-center">
+                           <div class="alert alert-warning" role="alert">
+                              En caso de comprobar fraude o falsedad en la declaración, información o en la
+                              documentación presentada por el administrado, la entidad considerará no satisfecha la
+                              exigencia respectiva para todos sus efectos, procediendo a declarar la nulidad del acto
+                              administrativo sustentado en dicha declaración, información o documento; e imponer a quien
+                              haya empleado esa declaración, información o documento una multa en favor de la entidad de
+                              entre cinco (5) y diez (10) Unidades Impositivas Tributarias vigentes a la fecha de pago;
+                              y, además, si la conducta se adecua a los supuestos previstos en el Título XIX Delitos
+                              contra la Fe Pública del Código Penal, ésta deberá ser comunicada al Ministerio Público
+                              para que interponga la acción penal correspondiente.
+                           </div>
+                        </div>
+
+                     </ng-template>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+<div class="modal-footer anexo">
+   <div class="row">
+      <div class="col-lg-12 d-flex">
+         <div class="flex-1">
+            <div class="btn-group" role="group" aria-label="Basic example">
+               <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                  <i class="far fa-eye"></i>
+                  Visualizar
+               </button>
+            </div>
+         </div>
+         <div class="flex-1 text-end">
+            <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="anexoFG.invalid">
+               <i class="far fa-save"></i>
+               {{
+               (idAnexo === 0 ? 'Grabar' : 'Modificar')
+               }}
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

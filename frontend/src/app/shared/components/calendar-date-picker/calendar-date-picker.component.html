@@ -1,0 +1,21 @@
+<div class="input-group">
+  <input
+    class="form-control"
+    [minDate]="_minDate"
+    [maxDate]="_maxDate"
+    (blur)="onBlur()"
+    name="dp"
+    readonly
+    [(ngModel)]="_fecha"
+    (ngModelChange)="fechaModelChange()"
+    ngbDatepicker
+    #ngDate="ngbDatepicker"
+  />
+  <button
+    class="btn btn-outline-secondary calendar"
+    (click)="ngDate.toggle()"
+    type="button"
+  >
+    <i class="far fa-calendar-alt"></i>
+  </button>
+</div>

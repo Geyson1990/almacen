@@ -1,0 +1,170 @@
+<div class="modal-header">
+  <h2>{{ title }} <span class="mat-tooltip-informacion" placement="bottom" ngbTooltip="http://">Contenido Mínimo</span>
+  </h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="content-contorno">
+        <h3 class="row  d-flex flex-row m-0">
+          <div class="col-sm-12 col-md-12 col-lg-6">
+            8.1. ¿Solicitar título de habilitante? A la ANA
+          </div>
+          <div class="" class="col-sm-12 col-md-12 col-lg-3" style="display: flex;">
+            <input class="form-check-input" type="radio" name="SolicitaTitulo" id="radioSi" value="1"
+              formControlName="SolicitaTitulo">
+            <label class="label-radio" for="radioSi">
+              Sí
+            </label>
+          </div>
+          <div class="" class="col-sm-12 col-md-12 col-lg-3">
+            <input class="form-check-input" type="radio" name="SolicitaTitulo" id="radioNo" value="0"
+              formControlName="SolicitaTitulo">
+            <label class="label-radio" for="radioNo">
+              No
+            </label>
+          </div>
+        </h3>
+        <div class="table-responsive m-0-5px" *ngIf="solicita">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" class="header-t-pago"></th>
+                <th scope="col" class="header-t-pago">Requisito</th>
+                <th scope="col" class="text-center header-t-pago">Adjuntar formato</th>
+                <th scope="col" class="text-center header-t-pago">Adjuntar Pago</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <input class="form-check-input" type="checkbox" id="checkboxExample" formControlName="reqA">
+                </th>
+                <td>a. Autorización de uso de agua</td>
+                <td class="centrar-icon">
+                  <div *ngIf="requisitoA.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'FA'" [nombreArchivo]="requisitoA.Formato"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div *ngIf="requisitoA.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'PA'" [nombreArchivo]="requisitoA.Pago"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <input class="form-check-input" type="checkbox" id="checkboxExample" formControlName="reqB">
+                </th>
+                <td>b. Acreditación de disponibilidad hídrica para autorización de uso de agua, de ser el caso.</td>
+                <td class="centrar-icon">
+                  <div *ngIf="requisitoB.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'FB'" [nombreArchivo]="requisitoB.Formato"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div *ngIf="requisitoB.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'PB'" [nombreArchivo]="requisitoB.Pago"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <input class="form-check-input" type="checkbox" id="checkboxExample" formControlName="reqC">
+                </th>
+                <td>c. Autorización de ejecución de obras de aprovechamiento hídrico para autorización de uso de agua,
+                  de ser el caso.</td>
+                <td class="centrar-icon">
+                  <div *ngIf="requisitoC.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'FC'" [nombreArchivo]="requisitoC.Formato"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+
+                </td>
+                <td class="text-center">
+                  <div *ngIf="requisitoC.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'PC'" [nombreArchivo]="requisitoC.Pago"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <input class="form-check-input" type="checkbox" id="checkboxExample" formControlName="reqD">
+                </th>
+                <td>d. Autorización de ejecución de obras en los bienes naturales asociados al agua y en la
+                  infraestructura hidráulica multisectorial, tales como cruce, badenes, alcantarillas e instalaciones de
+                  instrumentos de medición. </td>
+                <td class="centrar-icon">
+                  <div *ngIf="requisitoD.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'FD'" [nombreArchivo]="requisitoD.Formato"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div *ngIf="requisitoD.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'PD'" [nombreArchivo]="requisitoD.Pago"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <input class="form-check-input" type="checkbox" id="checkboxExample" formControlName="reqE">
+                </th>
+                <td>e. Autorización de vertimientos de aguas residuales tratadas a los cuerpos naturales de agua</td>
+                <td class="centrar-icon">
+                  <div *ngIf="requisitoE.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'FE'" [nombreArchivo]="requisitoE.Formato"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div *ngIf="requisitoE.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'PE'" [nombreArchivo]="requisitoE.Pago"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <input class="form-check-input" type="checkbox" id="checkboxExample" formControlName="reqF">
+                </th>
+                <td>f. Autorización de reúso de agua residuales tratadas.</td>
+                <td class="centrar-icon">
+                  <div *ngIf="requisitoF.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'FF'" [nombreArchivo]="requisitoF.Formato"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div *ngIf="requisitoF.Requisito">
+                    <tupa-attach-icon [viewOnly]="viewOnly" [tipo]="'PF'" [nombreArchivo]="requisitoF.Pago"
+                      [tamano]="20" [onArchivoSeleccionado]="onArchivoSeleccionado.bind(this)"></tupa-attach-icon>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i
+        class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+        Cancel</button>
+      <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i
+        class="material-icons">navigate_next</i></button>
+  </div>
+</form>

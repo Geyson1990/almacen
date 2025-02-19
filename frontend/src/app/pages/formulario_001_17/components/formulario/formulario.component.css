@@ -1,0 +1,58 @@
+.campo-resolucion-jurada {
+    margin: 0 5px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.campo-declaracion-jurada {
+    /* content: "XXXXXXXXXXXXXXXXX"; */
+    border-bottom: 1px solid #828282;
+    /* text-decoration: underline; */
+    margin: 0 5px;
+    display: inline-block;
+    /* background-color: red; */
+    font-weight: bold;
+}
+
+.contenedor-check-paises {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 20px;
+}
+
+.contenedor-check-paises .check {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.contenedor-check-paises input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.input-group-text.initial {
+    background-color: initial;
+    border: none;
+}
+
+.check-declaracion {
+    width: 30px;
+    height: 30px;
+}
+
+.check-declaracion-jurada {
+    width: 80px;
+    height: 50px;
+    padding: 8px 5px;
+    font-weight: bold;
+}
+
+.alert-custom {
+    color: #717171;
+    background-color: #e6e6e6;
+    border-color: #9c9c9c;
+}

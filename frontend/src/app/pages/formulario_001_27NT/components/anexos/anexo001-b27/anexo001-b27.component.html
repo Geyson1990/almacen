@@ -1,0 +1,145 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body anexo">
+    <form novalidate [formGroup]="formulario">
+        <div class="center">
+            <h6 class="mb-0">{{txtTitulo}}</h6>
+            <h6 class="text-muted">{{txtTituloHelp}}</h6>
+        </div>
+        <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2">
+
+            <div ngbAccordionItem="seccion-1" [collapsed]="false">
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton>I. DATOS PERSONALES</button>
+                    </h2>
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                    <div class="mx-2">
+                        <div class="mb-3 row my-0">
+                            <label class="col-md-2 fw-bold py-0">Nombres y apellidos</label>
+                            <div class="col-md-10">
+                                <span class=" border-0 py-0">{{this.nombresApellidos}}</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row my-0">
+                            <label class="col-md-2 fw-bold py-0">Documento de Identidad</label>
+                            <div class="col-md-10">
+                                <span class=" border-0 py-0">{{this.tipoDocumento?.documento}} {{this.nroDocumento}}</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row my-0">
+                            <label class="col-md-2 fw-bold py-0">R.U.C.</label>
+                            <div class="col-md-10">
+                                <span class=" border-0 py-0">{{this.ruc}}</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row my-0">
+                            <label class="col-md-2 fw-bold py-0">Teléfono Fijo</label>
+                            <div class="col-md-10">
+                                <span class=" border-0 py-0">{{this.telefono}}</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row my-0">
+                            <label class="col-md-2 fw-bold py-0">Celular</label>
+                            <div class="col-md-10">
+                                <span class=" border-0 py-0">{{this.celular}}</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row my-0">
+                            <label class="col-md-2 fw-bold py-0">Correo electrónico</label>
+                            <div class="col-md-10">
+                                <span class=" border-0 py-0">{{this.correo}}</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row my-0">
+                            <label class="col-md-2 fw-bold py-0">Domicilio Legal</label>
+                            <div class="col-md-10">
+                                <span class=" border-0 py-0">{{this.domicilio}} {{this.distrito}}, {{this.provincia}}, {{this.departamento}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+            </div>
+
+            <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton>II. DECLARACIÓN JURADA</button>
+                    </h2>
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="px-2 py-3">
+                        <p>
+                            En mi calidad de solicitante del otorgamiento de concesión única para prestar el (los) Servicio (s) Público (s) de Telecomunicaciones indicado (s) en el Formulario de la solicitud, y en aplicación del principio de presunción de veracidad estipulada en el numeral 1.7 del Art. IV del Texto Único Ordenado de la Ley Nº 27444 del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019 JUS.
+                        </p>
+
+                        <p class="fw-bold">
+                            DECLARO:
+                        </p>
+
+                        <div class="alert alert-custom">
+                            <ul>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <p>No estar impedido de contratar con el Estado, en razón de lo dispuesto en los artículos 1366º y 1367º del Código Civil, la Ley General del Sistema Concursal, por resolución judicial o del Tribunal de Contrataciones y Adquisiciones del Estado, u otros, ni incurso en las limitaciones establecidas en el Texto Único Ordenado de la Ley de Telecomunicaciones ni en los artículos 113º, 125º y otros que correspondan del Texto Único Ordenado del Reglamento General de la Ley de Telecomunicaciones aprobado con Decreto Supremo Nº 020-2007-MTC.</p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="Declaracion1" class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p>
+                            Lima, {{this.dia}} de {{this.mes}} del {{this.anio}}
+                        </p>
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+            <div class="flex-1">
+                <button type="button" class="btn btn-secondary" [disabled]="id === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i> Visualizar
+                </button>
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success boton-guardar" (click)="guardarAnexo()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="activeModal.close(graboUsuario)">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

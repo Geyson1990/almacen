@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h2>{{ title }}</h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body mat-typography">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="content-contorno">
+        <h3>3.4.1. INDICES DEMOGRÁFICOS, SOCIALES, ECONÓMICOS, DE OCUPACIÓN LABORAL Y OTROS SIMILARES</h3>
+        <div class="form-group mt-2 mb-4">
+          <textarea class="form-control" placeholder="" rows="3" formControlName="Indices" maxlength="3500"></textarea>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3>3.4.2. DESCRIPCIÓN Y ANÁLISIS DE USO ACTUAL DEL TERRITORIO , TENIENDO EN CUENTA SU APTITUD Y TENENCIA DE LA
+          TIERRA</h3>
+        <div class="form-group mt-2 mb-4">
+          <textarea class="form-control" placeholder="" rows="3" formControlName="Descripcion"
+            maxlength="3500"></textarea>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>3.4.3. OTROS ASPECTOS QUE LA AUTORIDAD COMPETENTE DETERMINE (EN CASO APLIQUE)</h3>
+        <div class="form-group mt-2 mb-4">
+          <textarea class="form-control" placeholder="" rows="3" formControlName="OtrosAspectos"
+            maxlength="3500"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+      Cancel</button>
+      <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>
+</form>

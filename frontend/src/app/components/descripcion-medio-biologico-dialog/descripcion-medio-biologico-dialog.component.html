@@ -1,0 +1,82 @@
+<div class="modal-header">
+  <h2>{{ title }}<span class="mat-tooltip-informacion" placement="bottom"
+      ngbTooltip="Comprende la descripción cualitativa del medio biológico, en cuanto a sus características y dinámica, la información podrá provenir de evaluaciones de campo, reconocimiento visual de la zona, estudios ambientales o de la revisión de fuentes de información secundaria (con antigüedad que no exceda de los cinco [05] años de registro) procedente de revisión bibliográfica, publicaciones científicas, informes y reportes de monitoreo.">Contenido Mínimo</span></h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body mat-typography">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="content-contorno">
+        <h3>3.2.1. CRITERIOS DE EVALUACIÓN DEL CAMPO DE FLORA Y FAUNA</h3>
+        <div class="form-group mt-2 mb-4">
+          <textarea class="form-control" placeholder="" rows="3" formControlName="CriteriosEvaluacion" maxlength="3500"></textarea>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3>3.2.2. DESCRIPCIÓN DE ECOSISTEMAS, FLORA Y FAUNA</h3>
+        <div class="m-0-5px">
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="DescripcionEcosistemas" maxlength="3500"></textarea>
+          </div>
+  
+          <h3>3.2.2.1. ECOSISTEMAS</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="Ecosistemas" maxlength="3500"></textarea>
+          </div>
+  
+          <h3>3.2.2.2. FLORA TERRESTRE</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="FloraTerrestre" maxlength="3500"></textarea>
+          </div>
+          <h3>3.2.2.3. FAUNA TERRESTRE</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="FaunaTerrestre" maxlength="3500"></textarea>
+          </div>
+          <h3>3.2.2.4. HIDROBIOLOGIA</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="Hidrobiologia" maxlength="3500"></textarea>
+          </div>
+          <h3>3.2.2.5. ECOSISTEMAS FRÁGILES</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="EcosistemasFragiles" maxlength="3500"></textarea>
+          </div>
+          <h3>3.2.2.6. ÁREAS NATURALES PROTEGIDAS</h3>
+          <div class="form-group mt-2 mb-4">
+            <textarea class="form-control" placeholder="" rows="3" formControlName="AreasNaturales" maxlength="3500"></textarea>
+          </div>
+  
+          <h3>ADJUNTAR DOCUMENTOS</h3>
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 w-5 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-rojo"> info </i>
+            </div>
+            <div class="col-sm-11 col-md-11 ml-3">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES (OCR).</p> 
+            </div>
+          </div>
+          <!-- <tupa-attach-button (documentoSeleccionado)="agregarDocumento($event)"></tupa-attach-button> -->
+          <tupa-attach-button *ngIf="viewControl" [showTipoDocumento]="showTipoDocumento" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"
+          (documentoSeleccionado)="agregarDocumento($event)"></tupa-attach-button>
+          <br>
+          <app-document-grid [documentos]="documentos" 
+          (documentosActualizados)="actualizarDocumentos($event)"
+          [viewOnly]="viewOnly" ></app-document-grid>
+          <br>
+        </div>
+      </div> 
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+        Cancel</button>
+      <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>
+</form>

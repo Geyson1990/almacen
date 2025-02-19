@@ -1,0 +1,18 @@
+<div class="col-sm-12 col-md-12 mt-2 m-0-5px">
+    <div class="row">
+        <div *ngIf="showTipoDocumento" class="col-sm-4 col-md-4 mt-2">
+            <label>TIPO DOCUMENTO</label>
+            <select class="form-select" [(ngModel)]="valorSeleccionado" >    
+                <option *ngFor="let item of optsTipoDocumento" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </div>
+
+        <div class="col-sm-6 col-md-6 mt-2">
+            <label></label> 
+            <button type="button" (click)="fileInput.click()" class="mat-small">
+                <i class="material-icons">attach_file</i> Adjuntar Archivo
+            </button>
+            <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
+        </div>
+    </div>
+</div>

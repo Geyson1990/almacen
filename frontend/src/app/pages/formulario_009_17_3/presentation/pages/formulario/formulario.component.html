@@ -1,0 +1,602 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{codigoProcedimientoTupa}} {{descProcedimientoTupa}} </h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+<div class="modal-body">
+    <div>
+        <form [formGroup]='formulario'>
+            <div class="center">
+                <h5>{{txtTituloCompleto}}</h5>
+            </div>
+
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-2,  seccion-3, seccion-4, seccion-5">
+
+                <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                    <h2 ngbAccordionHeader class="card-header aaa" >
+                        
+                            <button ngbAccordionButton>II.
+                                MODALIDAD DE NOTIFICACIÓN (Marcar solo una modalidad)</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row gx-2 text-center">
+                            <div class="text-center">La notificación del presente procedimiento, se realiza a través del Sistema de Casillas Electrónicas del Ministerio de Transportes y Comunicaciones. </div>
+                            <br>
+                            <div class="text-center">En virtud a ello, para la tramitación del presente procedimiento administrativo, usted debe contar con una casilla electrónica. Si aún no se ha afiliado, deberá hacerlo, ingresando al siguiente enlace:</div>  
+                            <a text-align="center" href="http://casilla.mtc.gob.pe/" target="_blank">http://casilla.mtc.gob.pe/</a>                   
+                        </div>   
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-3" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>III. DATOS
+                                SOLICITANTE</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row" formGroupName="Seccion3">
+                            <div class="col-lg-12" formGroupName="PersonaJuridica">
+                                <div class="row gx-2">
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                            inputFormControlName="pj_ruc" label="N° de Ruc"
+                                            placeHolder="Ingrese el número de RUC" [onlyNumbers]="true"
+                                            [maxLength]="11">
+                                        </app-basic-input>
+
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                            inputFormControlName="pj_razonSocial" label="Razón Social"
+                                            placeHolder="Ingrese la razón social" [maxLength]="100">
+                                        </app-basic-input>
+                                    </div>
+
+                                </div>
+                                <div class="row gx-2">
+                                    <div class="col-lg-12">
+                                        <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                            inputFormControlName="pj_domicilio" label="Domicilio Legal"
+                                            placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                                        </app-basic-input>
+
+                                    </div>
+                                </div>
+                                <div class="row gx-2">
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                            inputFormControlName="pj_departamento" label="Departamento">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                            inputFormControlName="pj_provincia" label="Provincia">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_PersonaJuridica"
+                                            inputFormControlName="pj_distrito" label="Distrito">
+                                        </app-basic-input>
+                                    </div>
+
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="col-lg-12" formGroupName="RepresentanteLegal">
+                                <div class="mt-4"><strong>REPRESENTANTE LEGAL</strong></div>
+                                <br>
+                                <div class="row gx-2">
+                                    <div class="mb-3 col-lg-4">
+                                        <label class="control-label campo-obligatorio">Tipo Documento</label>
+                                        <select class="form-select" formControlName="rl_tipoDocumento"
+                                            [class.control-invalid]="formInvalid(rl_tipoDocumento)">
+                                            <option value=''>Seleccione</option>
+                                            <option *ngFor="let item of listaTiposDocumentos | slice:0:3"
+                                                [value]="item.id">{{
+                                                item.documento }}</option>
+                                        </select>
+                                        <div *ngIf="f_s3_rl_TipoDocumento.invalid && (f_s3_rl_TipoDocumento.dirty || f_s3_rl_TipoDocumento.touched)"
+                                            class="text-danger">
+                                            <div *ngIf="f_s3_rl_TipoDocumento.errors?.required">
+                                                El campo es obligatorio
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_numeroDocumento" label="N° Documento"
+                                            [maxLength]="maxLengthNumeroDocumentoRepLeg"
+                                            placeHolder="Ingrese el número de documento" [onlyNumbers]="true"
+                                            [btnAppend]="true" iconBtnAppend="fa-search"
+                                            [disabledAppend]="f_s3_rl_TipoDocumento.value.trim() == '' || disableBtnBuscarRepLegal"
+                                            (clickAppend)="buscarNumeroDocumento($event)">
+                                        </app-basic-input>
+
+
+                                    </div>
+                                </div>
+                                <div class="row gx-2">
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_nombre" label="Nombres"
+                                            placeHolder="Ingrese el nombre" [maxLength]="50">
+                                        </app-basic-input>
+
+
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_apePaterno" label="Apellido Paterno"
+                                            placeHolder="Ingrese el apellido paterno" [maxLength]="50">
+                                        </app-basic-input>
+
+
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_apeMaterno" label="Apellido Materno"
+                                            placeHolder="Ingrese el apellido materno" [maxLength]="50">
+                                        </app-basic-input>
+
+
+                                    </div>
+                                </div>
+                                <div class="row gx-2">
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_telefono" label="Teléfono Fijo"
+                                            placeHolder="Ingrese el teléfono fijo" [onlyNumbers]="true" [maxLength]="11">
+                                        </app-basic-input>
+
+
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_celular" label="Celular"
+                                            placeHolder="Ingrese el número de celular" [onlyNumbers]="true"
+                                            [maxLength]="9">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_correo" label="Correo Electrónico (E-mail)"
+                                            placeHolder="Ingrese el correo electrónico" [maxLength]="50">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+
+                                <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                    inputFormControlName="rl_domicilio" label="Domicilio Legal"
+                                    placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                                </app-basic-input>
+
+                                <app-ubigeo #ubigeoCmpRepLeg [parentForm]="f_s3_RepresentanteLegal"
+                                    depaFormControlName="rl_departamento" provFormControlName="rl_provincia"
+                                    distFormControlName="rl_distrito" depaFormLabel="Departamento"
+                                    provFormLabel="Provincia" distFormLabel="Distrito" [horizontal]="true">
+                                </app-ubigeo>
+
+                                <div class="row gx-2">
+                                    <div class="mb-3 col-lg-4">
+                                        <label class="control-label">Oficina registral <span
+                                                class="text-danger">(*)</span></label>
+                                        <select class="form-select" formControlName="rl_oficina"
+                                            [class.control-invalid]="formInvalid(rl_oficina)">
+                                            <option value="">Seleccione</option>
+                                            <option *ngFor="let oficina of oficinasRegistral;" [value]="oficina.value">
+                                                {{oficina.text }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_partida" label="Poder registrado en la partida N°"
+                                            placeHolder="Ingrese el número de partida" [onlyNumbers]="true"
+                                            [maxLength]="15">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <app-basic-input [parentForm]="f_s3_RepresentanteLegal"
+                                            inputFormControlName="rl_asiento" label="Asiento N°"
+                                            placeHolder="Ingrese el número de asiento" [onlyNumbers]="true"
+                                            [maxLength]="15">
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion-4" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>V. INFORMACION COMPLEMENTARIA</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="col-lg-12 mt-2 mb-4" formGroupName="Seccion5">
+                            <div class="row gx-2">
+                                <div class="col-md-12 alert-info">
+                                    <div class="pt-2 pb-2 ps-2">
+                                            Programas de Formación de Conductores                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="col-lg d-flex custom-control custom-checkbox custom-control-inline mt-3">
+                                        <input type="checkbox" formControlName="f_s5_IIa">
+                                        <label class="ms-2 mt-1"  for="f_s5_IIa" >Clase A: IIa</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="col-lg d-flex custom-control custom-checkbox custom-control-inline mt-3">
+                                        <input type="checkbox" formControlName="f_s5_IIb"> 
+                                        <label class="ms-2 mt-1">IIb</label>                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="col-lg d-flex custom-control custom-checkbox custom-control-inline mt-3">
+                                        <input type="checkbox" formControlName="f_s5_IIIa">
+                                        <label class="ms-2 mt-1">IIIa</label>                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="col-lg d-flex custom-control custom-checkbox custom-control-inline mt-3">
+                                        <input type="checkbox" formControlName="f_s5_IIIb">
+                                        <label class="ms-2 mt-1">IIIb</label>                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="col-lg d-flex custom-control custom-checkbox custom-control-inline mt-3">
+                                        <input type="checkbox" formControlName="f_s5_IIIc">
+                                        <label class="ms-2 mt-1">IIIc</label>                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gx-2">
+                                <div class="col-md-2">
+                                    <div class="col-lg d-flex custom-control custom-checkbox custom-control-inline mt-2">
+                                        <input type="checkbox"  formControlName="f_s5_IIc">
+                                        <label class="ms-2 mt-1">Clase B: IIc</label>                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="col-lg d-flex custom-control custom-checkbox custom-control-inline mt-2">
+                                        <input type="checkbox"  formControlName="f_s5_tallerActitud">
+                                        <label class="ms-2 mt-1">Taller: Cambiemos de Actitud</label>                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="col-lg d-flex custom-control custom-checkbox custom-control-inline mt-2">
+                                        <input type="checkbox"  formControlName="f_s5_otro" (change)="onChangeOtro()">
+                                        <label class="ms-2 mt-1">Otros</label>                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-start" *ngIf="this.f_s5_otro.value">
+                                    <app-basic-input [parentForm]="f_Seccion5"
+                                        inputFormControlName="f_s5_OtroTaller" 
+                                        placeHolder="Ingrese el nombre del taller" [onlyNumbers]="false"
+                                        [maxLength]="200" [horizontal]="true" >
+                                    </app-basic-input>
+                                </div>
+                            </div>
+                            <div class="row gx-2 mt-3">
+                                <div class="col-md-12 alert-info">
+                                    <div class="pt-2 pb-2 ps-2">
+                                            Programa de formación de conductores - Ubicación de Locales                                       
+                                    </div>
+                                </div>
+                                <div class="row gx-2 col-lg">
+                                    <div class="mb-3 col-lg-3 mt-3">
+                                        <label class="control-label campo-obligatorio">Tipo local</label>
+                                        <select class="form-select" formControlName="f_s5_tipoLocal" 
+                                            >
+                                            <option value=''>Seleccione</option>
+                                            <option *ngFor="let item of listaTipoLocal" 
+                                                [value]="item.value">{{
+                                                item.text }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg mt-3">
+                                        <app-ubigeo #ubigeoCmpLocales [parentForm]="f_Seccion5"
+                                            depaFormControlName="f_s5_departamento" 
+                                            provFormControlName="f_s5_provincia"
+                                            distFormControlName="f_s5_distrito" depaFormLabel="Departamento"
+                                            provFormLabel="Provincia" distFormLabel="Distrito" [horizontal]="true"
+                                            (change)="onChangeUbigeoLocal()">
+                                        </app-ubigeo>
+                                    </div>
+                                </div>
+                                <div class="row gx-2 col-lg-12">
+                                    <div class="mb-3 col-lg-9 mt-1">
+                                        <app-basic-input [parentForm]="f_Seccion5"
+                                            inputFormControlName="f_s5_direccion" label="Dirección"
+                                            placeHolder="Ingrese la dirección de local" [onlyNumbers]="false"
+                                            [maxLength]="150">
+                                        </app-basic-input>
+                                    </div>
+                                    <div class="col-lg mt-4">
+                                        <button class="btn btn-danger btn-sm mt-3" (click)="addLocal()">
+                                            <div>
+                                                <i class="fas fa-plus-circle"></i>
+                                                Agregar
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row gx-2 col-lg-12">
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="tabla-header-mtc">
+                                                    <tr>
+                                                        <th>N°</th>
+                                                        <th>Local</th>
+                                                        <th>Dirección</th>
+                                                        <th>Distrito</th>
+                                                        <th>Provincia</th>
+                                                        <th>Departamento</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="listaLocales.length > 0; else sinRegistros">
+                                                    <tr class="text-center" [class.registro-edit]="indexEditTabla === i"
+                                                        *ngFor="let item of listaLocales, let i = index">
+                                                        <td>{{ i + 1}}</td>
+                                                        <td class="text-start">
+                                                            {{ item.tipoLocal.text }}
+                                                        </td>
+                                                        <td>{{ item.direccion}} </td>
+                                                        <td>{{ item.distrito.descripcion }}</td>
+                                                        <td>{{ item.provincia.descripcion }}</td>
+                                                        <td>{{ item.departamento.descripcion }}</td>
+                                                        <td width="60">
+                                                            <div>
+                                                                <i class="far fa-trash-alt ps-2 text-danger cursor-pointer"
+                                                                    [class.opacity-icon]="indexEditTabla !== -1"
+                                                                    title="Eliminar" (click)="eliminarLocal(item, i)"></i>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <ng-template #sinRegistros>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="7" class="text-center">No se encontraron registros</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </ng-template>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+                </div>
+                
+                <div ngbAccordionItem="seccion-5" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>VI. DECLARACIÓN
+                                JURADA</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                        <div class="mt-2 mb-4">
+                            <div class="alert alert-custom">
+                                <div class="row gx-2">
+                                    <div class="col-md-10">
+                                        <div>
+                                            Mi representada cuenta con el circuito de manejo o infraestructura 
+                                            cerrada a la circulación vial de acuerdo a las características establecidas 
+                                            en la normativa vigente.                                        
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex flex-row p-2 ms-4">
+                                            <ui-switch 
+                                                formControlName="f_declaracion_1">
+                                                
+                                            </ui-switch>
+                                            <label class="col-form-label">&nbsp; NO/SI </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                            <div class="alert alert-custom">
+                                <div class="row gx-2">
+                                    <div class="col-md-10">
+                                        <div>
+                                            Mi representada cuenta con los bienes muebles, objetos, artefactos, aparatos electrónicos, 
+                                            identificador biométrico de huella dactilar, aparatos mecánicos, físicos y otros enseres, 
+                                            que constituyen el equipamiento requerido para el funcionamiento de una Escuela de Conductores, 
+                                            tanto en el local donde se imparten las clases teóricas como en el circuito de manejo.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex flex-row p-2 ms-4">
+                                            <ui-switch 
+                                                formControlName="f_declaracion_2">
+                                                
+                                            </ui-switch>
+                                            <label class="col-form-label">&nbsp; NO/SI </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                            <div class="alert alert-custom">
+                                <div class="row gx-2">
+                                    <div class="col-md-10">
+                                        <div>
+                                            Mi representada cuenta con la estructura del Programa de Formación de Conductores que guarda correspondencia 
+                                            con las materias que son objeto de evaluación de conocimientos y habilidades en la conducción o con el 
+                                            contenido que pueda aprobar el MTC sobre el particular.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex flex-row p-2 ms-4">
+                                            <ui-switch 
+                                                formControlName="f_declaracion_3">
+                                                
+                                            </ui-switch>
+                                            <label class="col-form-label">&nbsp; NO/SI </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                            <div class="alert alert-custom">
+                                <div class="row gx-2">
+                                    <div class="col-md-10">
+                                        <div>
+                                            De contar con un simulador de manejo, acredito que este cuenta con las características establecidas 
+                                            por la DGTT mediante Resolución Directoral, indicando la marca, modelo,  número de serie y demás especificaciones técnicas.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex flex-row p-2 ms-4">
+                                            <ui-switch 
+                                                formControlName="f_declaracion_4">
+                                                
+                                            </ui-switch>
+                                            <label class="col-form-label">&nbsp; NO/SI </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 mb-4">
+                            <div class="alert alert-custom">
+                                <div class="row gx-2">
+                                    <div class="col-md-10">
+                                        <div>
+                                            Mi representada no se encuentra inmersa en los impedimentos establecidos en el inciso 4-A.1 
+                                            del artículo 4-A de la Ley 27181, Ley General de Transporte y Tránsito Terrestre.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex flex-row p-2 ms-4">
+                                            <ui-switch 
+                                                formControlName="f_declaracion_5" >
+                                                
+                                            </ui-switch>
+                                            <label class="col-form-label">&nbsp; NO/SI </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2 mb-4" *ngIf="this.activarDJ2">
+                            <div class="alert alert-custom">
+                                <div class="row gx-2">
+                                    <div class="col-md-10">
+                                        <div>
+                                            Mi representada mantiene mantienen las condiciones establecidas en los numerales 
+                                            55.3, 55.5 y 55.6 del artículo 55 del Reglamento.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex flex-row p-2 ms-4">
+                                            <ui-switch 
+                                                formControlName="f_declaracion_6">
+                                                
+                                            </ui-switch>
+                                            <label class="col-form-label">&nbsp; NO/SI </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            Al acceder al sistema TUPA Digital MTC y registrarme como usuario: (i) reconozco que
+                            entiendo y acepto los términos
+                            y condiciones de éste, (ii) acepto como auténtico y válido cualquier medio de prueba o
+                            proceso tecnológico que utilice
+                            el MTC para comprobar mi acceso y salida del sistema; y, (iii) me hago responsable por los
+                            efectos legales en la
+                            gestión del procedimiento administrativo o servicio exclusivo.
+                        </div>
+                        <hr>
+                        <div class="text-center texto-bajo-juramento"> DECLARO BAJO JURAMENTO QUE LOS DATOS EXPRESAN LA
+                            VERDAD</div>
+                        <div class="col-sm-12 mt-5 d-flex justify-content-center">
+                            <div class="alert alert-custom" role="alert">
+                                NOTA: En el presente documento electrónico se ha vinculado e identificado al firmante,
+                                así como se ha garantizado la autenticación e integridad del mismo a través de la firma
+                                electrónica utilizada a través del usuario y clave de ingreso al Sistema Tupa Digital
+                                del Ministerio de Transportes y Comunicaciones, la cual tiene la misma validez y
+                                eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y
+                                segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales
+                            </div>
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="id === 0" (click)="descargarPdf()">
+                        <i class="far fa-eye"></i>
+                        Visualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" (click)="guardarFormulario()" [disabled]="this.formulario.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                    (id === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

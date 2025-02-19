@@ -1,0 +1,358 @@
+<div class="modal-header">
+  <h2>{{ title }}<span class="mat-tooltip-informacion" placement="bottom"
+    ngbTooltip="Comprenderá la descripción de los antecedentes y de la descripción del proyecto de exploración y sus componentes, en sus diferentes etapas: construcción, operación y mantenimiento (en caso aplique), cierre y post cierre teniendo en cuenta su tiempo de ejecución y los componentes. Asimismo, considerará un cronograma el cual indicará el tiempo de ejecución del proyecto. Toda la cartografía debe encontrarse con sistema de coordenadas UTM Datum horizontal WGS84 (Según lo establecido por el Decreto Supremo Nº 025-2016-EM, Reglamentan la Ley que Oficializa el Sistema de Cuadrículas Mineras en Coordenadas UTM WGS84). Se deberá adjuntar un plano de ubicación del proyecto y de los componentes principales.">Contenido
+    Mínimo</span></h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body">
+      <!-- Contenido del modal -->
+    <div class="content-contorno">   
+      <h3>2.1.1 Datos Generales del Proyecto</h3>
+      <div class="m-0-5px">
+        <h3>Nombre con el que se conocerá el proyecto</h3>
+        <div class="col-12 mt-2">
+          <input formControlName="NombreProyecto" type="text" class="form-control" maxlength="100"
+            placeholder="Nombre con el que se conocerá el proyecto">
+        </div>
+        
+        <div class="col-12 mt-4">
+          <h3>Clasificación</h3>
+          <input type="text" [disabled]="true" class="form-control" placeholder="DECLARACIÓN DE IMPACTO AMBIENTAL (DIA)">
+        </div>
+        
+        <div class="col-12 mt-4">
+          <h3>Inversión estimada del proyecto (US$)</h3>
+          <input type="text" class="form-control" formControlName="InversionEstimada" maxlength="60"  (input)="soloDecimales($event, 'InversionEstimada')"
+            placeholder="Inversión estimada del proyecto (US$)">        
+            <div *ngIf="inversionEstimada.invalid && (inversionEstimada.dirty || inversionEstimada.touched)" style="color: red;font-size: 12px;">
+              <small *ngIf="inversionEstimada.errors?.required">La inversión estimada es obligatorio.</small>
+              <small *ngIf="inversionEstimada.errors?.pattern">El formato de la inversión estimada no es válido.</small>
+            </div>
+        </div>
+        <div class="col-12 mt-4">
+            <h3>Nombre de unidad</h3>
+            <div class="col-3">
+              <label class="form-label m-0">Unidad Minera</label>
+            </div>
+            <div class="col-9">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Tipo" (change)="rbUnidadMineraSelect($event)"
+                  id="existente" value="existente" formControlName="Tipo">
+                <label class="form-check-label" for="existente">Unidad Minera Existente</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Tipo" (change)="rbUnidadMineraSelect($event)"
+                  id="nueva" value="nueva" formControlName="Tipo">
+                <label class="form-check-label" for="nueva">Nueva Unidad Minera</label>
+              </div>
+          </div>
+          <div class="row align-items-center g-3 mt-2">
+            <div class="col-md-6" *ngIf="!selectedUnitNueva">
+              <select [disabled]="selectedUnitNueva" id="selectTipo" class="form-select" formControlName="UnidadMinera" (change)="onUnidadMinera($event)">
+                <option value="0" [disabled]="true">--SELECCIONAR--</option>
+                <option *ngFor="let item of listaUnidadMinera" [value]="item.idUnidadMinera">{{
+                  item.nombreUnidadMinera
+                  }}
+                </option>
+  
+              </select>
+            </div>
+            <div *ngIf="selectedUnitNueva === true" class="col-md-6">
+              <input type="text" id="nombreUnidad" class="form-control" maxlength="60"
+                placeholder="Introduce el nombre de la nueva unidad" formControlName="NuevaUnidadMinera">
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+      
+      <div class="m-0-5px">
+        
+        <h3>2.1.1.1. DATOS DEL TITULAR</h3>
+        <div class="mensaje-dialog row align-items-center m-0">
+          <div class="w-5 p-0">
+            <i class="material-icons icon-ambar">warning</i>
+          </div>
+          <div class="w-95 p-0">
+            <p class="m-0">Nota: La actualización de los Datos Generales del Titular se realiza a través de la Oficina de
+              Caja Trámite
+              del Ministerio de Energía y Minas o enviando un correo sustentando el cambio a
+              <span>rpizarrominem.gob.pe.</span>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          
+          <div class="col-sm-12 col-md-12 mt-4">
+            <h3>Nombre del titular de la actividad minera</h3>
+            <input type="text" class="form-control" placeholder="Nombre del titular de la actividad minera"
+              formControlName="NombreTitular" readonly>
+          </div>
+          <div class="col-sm-12 col-md-6 mt-3">
+            <h3>Dirección</h3>
+            <input type="text" class="form-control" placeholder="Dirección" formControlName="Direccion" readonly>
+          </div>
+          <div class="col-sm-12 col-md-6 mt-3">
+            <h3>Region - Provincia - Distrito</h3>
+            <input type="text" class="form-control" placeholder="Región Provincia Distrito" formControlName="Region" readonly>
+          </div>
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>Teléfono</h3>
+            <input type="text" class="form-control" placeholder="Teléfonos" formControlName="Telefono" readonly>
+          </div>
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>Fax</h3>
+            <input type="text" class="form-control" placeholder="Fax" formControlName="Fax" readonly>
+          </div>
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>RUC</h3>
+            <input type="text" class="form-control" placeholder="RUC" formControlName="Ruc" readonly>
+          </div>
+          <div class="col-sm-12 col-md-6 mt-3">
+            <h3>Email</h3>
+            <input type="text" class="form-control" placeholder="Email" formControlName="Email" readonly>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+              <small *ngIf="email.errors?.required">El correo es obligatorio.</small>
+              <small *ngIf="email.errors?.pattern">El formato del correo no es válido.</small>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 mt-3">
+            <h3>Página Web</h3>
+            <input type="text" class="form-control" placeholder="Página Web" formControlName="PaginaWeb" readonly>
+          </div>
+        </div>
+        <div class="mt-4"></div>
+        <div class="mensaje-dialog row align-items-center m-0">
+          <div class="w-5 p-0">
+            <i class="material-icons icon-ambar">warning</i>
+          </div>
+          <div class="w-95 p-0">
+            <p class="m-0">Nota: Si desea agregar un representante legal o actualizar los datos de un representante
+              existente, se sugiere enviar un correo a
+              <span>rpizarrominem.gob.pe.</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-3 mb-3">
+          <h3>Representantes acreditados en el MEM:</h3>
+          <select id="selectTipo" class="form-select" formControlName="IdRepresentante">
+            <!-- <option value="" [disabled]="true">--SELECCIONE--</option> -->
+            <option *ngFor="let item of representantesAcreditados" [value]="item.idRepresentante">{{ item.nombres }}
+            </option>
+          </select>
+          <!-- <select id="selectTipo" class="form-select" formControlName="TipoRepresentante">
+          <option value="" [disabled]="true">Representantes Acreditados en el MEM:</option>
+          <option value="tipo1">Tipo 1</option>
+          <option value="tipo2">Tipo 2</option>
+        </select> -->
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>Apellido Paterno</h3>
+            <input type="text" class="form-control" placeholder="Ap. Paterno" [readOnly]="true" [disabled]="true" readonly
+              formControlName="ApellidoPaterno">
+          </div>
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>Apellido Materno</h3>
+            <input type="text" class="form-control" placeholder="Ap. Materno" [readOnly]="true" [disabled]="true" readonly
+              formControlName="ApellidoMaterno">
+          </div>
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>Nombres</h3>
+            <input type="text" class="form-control" placeholder="Nombres" [readOnly]="true" [disabled]="true" readonly
+              formControlName="Nombres">
+          </div>
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>Cargo</h3>
+            <input type="text" class="form-control" placeholder="Cargo" [readOnly]="true" [disabled]="true" readonly
+              formControlName="Cargo">
+          </div>
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>Documento de identidad</h3>
+            <input type="text" class="form-control" placeholder="Documento de identidad" [readOnly]="true" readonly
+              [disabled]="true" formControlName="DocumentoIdentidad">
+          </div>
+          <div class="col-sm-12 col-md-4 mt-3">
+            <h3>Email</h3>
+            <input type="text" class="form-control" placeholder="Email" [readOnly]="true" [disabled]="true" readonly
+              formControlName="EmailRepresentante">
+              <div *ngIf="emailRepresentante.invalid && (emailRepresentante.dirty || emailRepresentante.touched)" class="error">
+                <small *ngIf="emailRepresentante.errors?.required">El correo es obligatorio.</small>
+                <small *ngIf="emailRepresentante.errors?.pattern">El formato del correo no es válido.</small>
+              </div>
+          </div>
+        </div>
+        <div class="mt-4"></div>
+        <h3>CORREO DE NOTIFICACIÓN</h3>
+        <div class="row">
+          <div class="col-sm-12 col-md-6 mt-2">
+            <input type="text" class="form-control" placeholder="Email 1 (*)" formControlName="EmailNotificacion1">
+            <div *ngIf="emailNotificacion1.invalid && (emailNotificacion1.dirty || emailNotificacion1.touched)" style="color: red!important;font-size: 12px;">
+              <small *ngIf="emailNotificacion1.errors?.required">El correo es obligatorio.</small>
+              <small *ngIf="emailNotificacion1.errors?.pattern">El formato del correo no es válido.</small>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 mt-2">
+            <input type="text" class="form-control" placeholder="Email 2 (*)" formControlName="EmailNotificacion2">
+            <div *ngIf="emailNotificacion2.invalid && (emailNotificacion2.dirty || emailNotificacion2.touched)" style="color: red;font-size: 12px;">
+              <small *ngIf="emailNotificacion2.errors?.required">El correo es obligatorio.</small>
+              <small *ngIf="emailNotificacion2.errors?.pattern">El formato del correo no es válido.</small>
+            </div>
+          </div>
+        </div>
+        <br>
+        <h3>TELÉFONOS</h3>
+        <div class="row">
+          <div class="col-sm-12 col-md-6 mt-2">
+            <input type="text" class="form-control" placeholder="Teléfono 1" formControlName="Telefono1">
+          </div>
+          <div class="col-sm-12 col-md-6 mt-2">
+            <input type="text" class="form-control" placeholder="Teléfono 2" formControlName="Telefono2">
+          </div>
+        </div>
+        <div class="mt-4"></div>
+      </div>
+    </div>
+    <div class="content-contorno"> 
+      <h3>2.1.2. DERECHOS MINEROS DEL SOLICITANTE</h3>
+      <div class="m-0-5px">
+        <tupa-table *ngIf="tableDataDerechoMineroSolicitante.length > 0" [columns]="tableColumnsDerechoMineroSolicitante"
+          [data]="tableDataDerechoMineroSolicitante"></tupa-table>
+        <div *ngIf="tableDataDerechoMineroSolicitante.length === 0" class="text_empty">NO HAY DERECHOS MINEROS DEL
+          SOLICITANTE...</div>
+      </div>
+    </div>
+    <div class="content-contorno"> 
+      <h3>2.1.3. DERECHOS MINEROS DE TERCEROS</h3>
+      <div class="m-0-5px">
+        <tupa-table *ngIf="tableDataDerechoMineroTercero.length > 0" [columns]="tableColumnsDerechoMineroTercero"
+          [data]="tableDataDerechoMineroTercero"></tupa-table>
+        <div *ngIf="tableDataDerechoMineroTercero.length === 0" class="text_empty">NO HAY DERECHOS MINEROS DE TERCEROS
+          SUPERPUESTOS EN EL ÁREA DEL PROYECTO</div>
+      </div>
+    </div>
+    <div class="content-contorno"> 
+      <h3>2.1.4. PASIVOS AMBIENTALES MINEROS EN EL ÁREA DE ESTUDIO</h3>
+      <div class="m-0-5px">
+        <tupa-table [columns]="tableColumns214" [data]="tableData214" [message]="mensaje"></tupa-table>
+        <br>
+      </div>
+    </div>
+    <div class="content-contorno">
+      <h3>2.1.5. COMPONENTES NO CERRADOS</h3>
+      <div class="m-0-5px">
+        <button *ngIf="viewControl" (click)="openModalComponent('PASIVO DE LABORES E INFRAESTRUCTURA')" type="button" class="mat-small"
+          style="width: 180px;">
+          <i class="material-icons">add</i> Agregar
+        </button>
+        <tupa-table [columns]="tableColumns215" [data]="tableData215"></tupa-table>
+        <br>
+
+        <h3>2.1.5.1. ADJUNTAR MAPA DE UBICACIÓN DE COMPONENTES PREVIOS</h3>
+        <div class="mensaje-dialog d-flex flex-row m-0">
+          <div class="col-sm-1 col-md-3 d-flex justify-content-center p-0">
+            <i class="material-icons icon-rojo"> info </i>
+          </div>
+          <div class="col-sm-11 col-md-9 ml-3">
+            <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.</p>
+          </div>
+        </div>
+        <!-- <tupa-attach-button></tupa-attach-button> -->
+        <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarDocumento($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+        <br>
+        <app-document-grid [viewOnly]="viewOnly" [showTipoDocumento]="showTipoDocumento" [documentos]="documentos" (documentosActualizados)="actualizarDocumentos($event)"></app-document-grid>
+        <br>
+      </div>
+    </div>
+    <div class="content-contorno">
+      <h3>2.1.6. ESTUDIOS E INVESTIGACIONES PREVIAS <span class="contenido-min-dialog" placement="bottom"
+        ngbTooltip="Estudios e investigaciones previas. Se describe, en caso corresponda, la realización de estudios e investigaciones previas en el área efectiva, trámites administrativos realizados en el marco de los estudios ambientales anteriores relacionados con el proyecto si fuera el caso, describir derechos preexistentes en el área efectiva del proyecto.">Contenido Mínimo</span></h3>
+      <div class="m-0-5px">
+        <button *ngIf="viewControl" (click)="openModalEstudios('ESTUDIOS E INVESTIGACIONES PREVIAS')" type="button" class="mat-small"
+        style="width: 180px;">
+        <i class="material-icons">add</i> Agregar
+        </button>
+        <tupa-table [columns]="tableColumns216" [data]="tableData216"></tupa-table>
+        <br>
+      </div>
+    </div>
+    <div class="content-contorno">
+      <h3>2.1.7. PERMISOS, LICENCIAS Y/O PERMISOS EXISTENTES<span class="color-red">(*)</span><span class="contenido-min-dialog" placement="bottom"
+        ngbTooltip="Permisos existentes. Se listarán las licencias, autorizaciones y permisos otorgados por las autoridades administrativas de nivel nacional, regional y municipal, que se hubieran obtenido en etapas previas, en caso aplique. Precisar la (s) certificación (es) ambiental (es) que aprobaron los instrumentos de gestión ambiental y actividades mineras previas correspondientes (en caso corresponda)">Contenido
+        Mínimo</span></h3>       
+      <div class="m-0-5px">
+        <button *ngIf="viewControl" (click)="openModalPermisos('PERMISOS, LICENCIAS Y/O PERMISOS EXISTENTES')" type="button" class="mat-small"
+          style="width: 180px;">
+          <i class="material-icons">add</i> Agregar
+        </button>
+        <tupa-table [columns]="tableColumns217" [data]="tableData217"></tupa-table>
+        <br>
+      </div>
+    </div>
+    <div class="content-contorno">
+      <h3>2.1.8. PROPIEDAD SUPERFICIAL<span class="contenido-min-dialog" placement="bottom"
+        ngbTooltip="Propiedad superficial. Identificar e indicar a los posesionarios/propietarios de los terrenos superficiales que abarquen la totalidad del área efectiva, indicando la fuente de información. Presentar plano donde se indique lo anterior.">Contenido Mínimo</span></h3>
+      <div class="m-0-5px">
+        <div class="mensaje-dialog d-flex flex-row m-0">
+        <div class="col-sm-1 col-md-3 d-flex justify-content-center p-0">
+          <i class="material-icons icon-rojo"> info </i>
+        </div>
+        <div class="col-sm-11 col-md-9 ml-3">
+          <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+            Adjuntar mapa indicando los posesionarios y/o propietarios de los terrenos superficiales.</p>
+        </div>
+        </div>
+        <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarPropiedadSuperficial($event)" [showTipoDocumento]="showTipoDocumento" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+        <br>
+        <app-document-grid [viewOnly]="viewOnly" [showTipoDocumento]="showTipoDocumento" [documentos]="propiedadSuperficial" (documentosActualizados)="actualizarDocumentosPropiedad($event)"></app-document-grid>
+        <br>
+      </div> 
+    </div>  
+    <div class="content-contorno">
+      <h3>2.1.9. DISTANCIA DEL PROYECTO A AREAS NATURALES Y/O ZONA DE AMORTIGUAMIENTO Y ÁREAS DE CONSERVACIÓN REGIONAL
+        (ACR)<span class="contenido-min-dialog" placement="bottom"
+        ngbTooltip="Áreas Naturales Protegidas. Se deberá evidenciar la no existencia de áreas naturales protegidas de administración nacional (ANP) y/o sus zonas de amortiguamiento (ZA) y áreas de conservación regional (ACR) en el área de influencia ambiental directa del proyecto según lo establece el marco normativo vigente.">Contenido Mínimo</span></h3>
+      <div class="m-0-5px">
+        <h3>2.1.9.1. AREAS NATURALES PROTEGIDAS</h3>
+        <tupa-table [columns]="tableColumns2191" [data]="tableData2191" [message]="mensaje2191"></tupa-table>
+        <br>
+
+        <h3>2.1.9.2. DISTANCIA DEL PROYECTO A ÁREAS NATURALES Y/O ZONA DE AMORTIGUAMIENTO Y ÁREAS DE CONSERVACIÓN REGIONAL
+          (ACR)</h3>
+        <button *ngIf="viewControl" (click)="openModalDistancia('DISTANCIA DEL PROYECTO A ÁREAS NATURALES Y/O ZONA DE AMORTIGUAMIENTO Y ÁREAS DE CONSERVACIÓN REGIONAL
+        (ACR)')" type="button" class="mat-small" style="width: 180px;">
+          <i class="material-icons">add</i> Agregar
+        </button>
+        <tupa-table [columns]="tableColumns2192" [data]="tableData2192"></tupa-table>
+        <br>
+
+        <h3>2.1.9.3. ADJUNTAR MAPA DE ÁREAS NATURALES PROTEGIDAS</h3>
+        <div class="mensaje-dialog d-flex flex-row m-0">
+          <div class="col-sm-1 col-md-3 d-flex justify-content-center p-0">
+            <i class="material-icons icon-rojo"> info </i>
+          </div>
+          <div class="col-sm-11 col-md-9 ml-3">
+            <p>IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.</p>
+          </div>
+        </div>
+        <tupa-attach-button *ngIf="viewControl" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"
+          (documentoSeleccionado)="agregarMapaAreasNaturales($event)"></tupa-attach-button>
+        <br>
+        <app-document-grid [viewOnly]="viewOnly" [showTipoDocumento]="showTipoDocumento" [documentos]="mapasAreasNaturales" (documentosActualizados)="actualizarDocumentosMapas($event)"></app-document-grid>
+        <br>
+      </div> 
+    </div> 
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+        Cancel</button>
+      <button *ngIf="viewControl"  class="mat-small" ><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>  
+</form>

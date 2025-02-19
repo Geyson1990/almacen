@@ -1,0 +1,30 @@
+<div style="text-align:center">
+    <h1>Cambiar contraseña</h1>
+</div>
+<br />
+
+<div class="row">
+    <div class="offset-md-3 col-md-6">
+        <form [formGroup]="cambiarPassFormGroup" (ngSubmit)="submitRecuperarPass(submitBtn)">
+            <div class="mb-3">
+                <label for="exampleInputEmail1">Contraseña actual</label>
+                <input type="password" formControlName="passActualFormGroup" class="form-control"
+                    placeholder="Ingrese su contraseña actual">
+                <div *ngIf="passActualFormGroup.invalid && (passActualFormGroup.dirty || passActualFormGroup.touched)"
+                    class="text-danger">
+                    <div *ngIf="passActualFormGroup.errors?.required">
+                        El campo es obligatorio
+                    </div>
+                </div>
+            </div>
+            <app-password [parentForm]="cambiarPassFormGroup" [passFormControlName]="'passNuevoFormGroup'"
+                [repassFormControlName]="'confirmPassNuevoFormGroup'" [passFormLabel]="'Nueva contraseña'"
+                [rePassFormLabel]="'Confirmar nueva contraseña'" [passFormPlaceHolder]="'Ingrese la nueva contraseña'"
+                [rePassFormPlaceHolder]="'Repita la nueva contraseña'">
+            </app-password>
+            <button #submitBtn [disabled]="!cambiarPassFormGroup.valid" type="submit" class="btn btn-block btn-primary">
+                Cambiar contraseña
+            </button>
+        </form>
+    </div>
+</div>

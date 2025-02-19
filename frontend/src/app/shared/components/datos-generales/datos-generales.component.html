@@ -1,0 +1,203 @@
+<div class="row" formGroupName="f_Seccion3FG">
+    <div class="col-md-12" *ngIf="fg_PerNatFG.enabled" formGroupName="fg_PerNatFG">
+        <div class="mt-4"><strong>PERSONA NATURAL</strong></div>
+        <br>
+        <div class="row gx-2">
+            <div class="col-md-12">
+                <app-basic-input [parentForm]="fg_PerNatFG" inputFormControlName="fg_pn_NombresFC"
+                    label="Apellidos y Nombres" placeHolder="Ingrese los apellidos y nombres" [maxLength]="50"
+                    [readonly]="true">
+                </app-basic-input>
+            </div>
+        </div>
+        <div class="row gx-2">
+            <div class="col-md-4">
+                <app-basic-input [parentForm]="fg_PerNatFG" inputFormControlName="fg_pn_TipoDocSolicitanteFC"
+                    label="Tipo Doc." placeHolder="Ingrese el tipo de documento" [readonly]="true" [maxLength]="20">
+                </app-basic-input>
+            </div>
+            <div class="mb-3 col-md-4">
+                <app-basic-input [parentForm]="fg_PerNatFG" inputFormControlName="fg_pn_NroDocSolicitanteFC"
+                    label="Nro. Documento" placeHolder="Ingrese el número de documento" [readonly]="true"
+                    [maxLength]="9">
+                </app-basic-input>
+            </div>
+            <div class="mb-3 col-md-4">
+                <app-basic-input [parentForm]="fg_PerNatFG" inputFormControlName="fg_pn_RucFC" label="N° de RUC"
+                    placeHolder="Ingrese el número de RUC" [onlyNumbers]="true" [maxLength]="11">
+                </app-basic-input>
+            </div>
+        </div>
+        <div class="row gx-2">
+            <div class="mb-3 col-md-4">
+                <app-basic-input [parentForm]="fg_PerNatFG" inputFormControlName="fg_pn_TelefonoFC"
+                    label="Teléfono Fijo" placeHolder="Ingrese el número de teléfono" [onlyNumbers]="true"
+                    [maxLength]="9">
+                </app-basic-input>
+            </div>
+            <div class="mb-3 col-md-4">
+                <app-basic-input [parentForm]="fg_PerNatFG" inputFormControlName="fg_pn_CelularFC" label="Celular"
+                    placeHolder="Ingrese el número de celular" [onlyNumbers]="true" [maxLength]="9">
+                </app-basic-input>
+            </div>
+            <div class="mb-3 col-md-4">
+                <app-basic-input [parentForm]="fg_PerNatFG" inputFormControlName="fg_pn_CorreoFC"
+                    label="Correo Electrónico (E-mail)" placeHolder="Ingrese el correo electrónico" [maxLength]="50">
+                </app-basic-input>
+            </div>
+        </div>
+        <div class="row gx-2">
+            <div class="mb-3 col-md-12">
+                <app-basic-input [parentForm]="fg_PerNatFG" inputFormControlName="fg_pn_DomicilioFC"
+                    label="Domicilio Legal" placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                </app-basic-input>
+            </div>
+        </div>
+        <app-ubigeo #ubigeoCmpPerNat [parentForm]="fg_PerNatFG" depaFormControlName="fg_pn_DepartamentoFC"
+            provFormControlName="fg_pn_ProvinciaFC" distFormControlName="fg_pn_DistritoFC" depaFormLabel="Departamento"
+            provFormLabel="Provincia" distFormLabel="Distrito" [horizontal]="true">
+        </app-ubigeo>
+        <hr>
+    </div>
+    <div class="col-md-12" *ngIf="fg_PerJurFG.enabled" formGroupName="fg_PerJurFG">
+        <div class="mt-4"><strong>PERSONA JURÍDICA</strong></div>
+        <br>
+        <div class="row gx-2">
+            <div [ngClass]="{'col-md-8': tipoSolicitante !== 'PNR', 'col-md-12': tipoSolicitante === 'PNR'}">
+                <app-basic-input [parentForm]="fg_PerJurFG" inputFormControlName="fg_pj_RazonSocialFC"
+                    label="Razón Social" placeHolder="Ingrese la razón social" [maxLength]="100">
+                </app-basic-input>
+            </div>
+            <div class="col-md-4" *ngIf="tipoSolicitante !== 'PNR'">
+                <app-basic-input [parentForm]="fg_PerJurFG" inputFormControlName="fg_pj_RucFC" label="N° de Ruc"
+                    placeHolder="Ingrese el número de RUC" [onlyNumbers]="true" [maxLength]="11">
+                </app-basic-input>
+            </div>
+        </div>
+        <div class="row gx-2">
+            <div class="col-md-12">
+                <app-basic-input [parentForm]="fg_PerJurFG" inputFormControlName="fg_pj_DomicilioFC"
+                    label="Domicilio Legal" placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                </app-basic-input>
+            </div>
+        </div>
+        <div *ngIf="tipoSolicitante !== 'PNR'" class="row gx-2">
+            <div class="col-md-4">
+                <app-basic-input [parentForm]="fg_PerJurFG" inputFormControlName="fg_pj_DepartamentoFC"
+                    label="Departamento">
+                </app-basic-input>
+            </div>
+            <div class="col-md-4">
+                <app-basic-input [parentForm]="fg_PerJurFG" inputFormControlName="fg_pj_ProvinciaFC" label="Provincia">
+                </app-basic-input>
+            </div>
+            <div class="col-md-4">
+                <app-basic-input [parentForm]="fg_PerJurFG" inputFormControlName="fg_pj_DistritoFC" label="Distrito">
+                </app-basic-input>
+            </div>
+        </div>
+        <hr>
+        <div formGroupName="fg_pj_RepLegalFG">
+            <div class="mt-4"><strong>REPRESENTANTE LEGAL</strong></div>
+            <br>
+            <div class="row gx-2">
+                <div class="mb-3 col-md-4">
+                    <label class="control-label campo-obligatorio">Tipo Documento</label>
+                    <select class="form-select" formControlName="fg_pj_rl_TipoDocumentoFC"
+                        [class.control-invalid]="formInvalid(fg_pj_rl_TipoDocumentoFC)">
+                        <option value=''>Seleccione</option>
+                        <option *ngFor="let item of listaTiposDocumentos | slice:0:3" [value]="item.id">{{
+                            item.documento }}</option>
+                    </select>
+                    <div *ngIf="fg_pj_rl_TipoDocumentoFC.invalid && (fg_pj_rl_TipoDocumentoFC.dirty || fg_pj_rl_TipoDocumentoFC.touched)"
+                        class="text-danger">
+                        <div *ngIf="fg_pj_rl_TipoDocumentoFC.errors?.required">
+                            El campo es obligatorio
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_NumeroDocumentoFC"
+                        label="N° Documento" [maxLength]="maxLengthNumeroDocumentoRepLeg"
+                        placeHolder="Ingrese el número de documento" [onlyNumbers]="true" 
+                        [btnAppend]="true" iconBtnAppend="fa-search"
+                        [disabledAppend]="!fg_pj_rl_TipoDocumentoFC.value?.trim() || disableBtnBuscarRepLegal"
+                        (clickAppend)="buscarNumeroDocumento($event)">
+                    </app-basic-input>
+                </div>
+            </div>
+            <div class="row gx-2">
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_NombreFC"
+                        label="Nombres" placeHolder="Ingrese el nombre" [maxLength]="50">
+                    </app-basic-input>
+                </div>
+
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_ApePaternoFC"
+                        label="Apellido Paterno" placeHolder="Ingrese el apellido paterno" [maxLength]="50">
+                    </app-basic-input>
+                </div>
+
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_ApeMaternoFC"
+                        label="Apellido Materno" placeHolder="Ingrese el apellido materno" [maxLength]="50">
+                    </app-basic-input>
+                </div>
+            </div>
+            <div class="row gx-2">
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_TelefonoFC"
+                        label="Teléfono Fijo" placeHolder="Ingrese el teléfono fijo" [onlyNumbers]="true"
+                        [maxLength]="9">
+                    </app-basic-input>
+                </div>
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_CelularFC"
+                        label="Celular" placeHolder="Ingrese el número de celular" [onlyNumbers]="true" [maxLength]="9">
+                    </app-basic-input>
+                </div>
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_CorreoFC"
+                        label="Correo Electrónico (E-mail)" placeHolder="Ingrese el correo electrónico"
+                        [maxLength]="50">
+                    </app-basic-input>
+                </div>
+            </div>
+
+            <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_DomicilioFC"
+                label="Domicilio Legal" placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+            </app-basic-input>
+
+            <app-ubigeo #ubigeoCmpRepLeg [parentForm]="fg_pj_RepLegalFG" depaFormControlName="fg_pj_rl_DepartamentoFC"
+                provFormControlName="fg_pj_rl_ProvinciaFC" distFormControlName="fg_pj_rl_DistritoFC"
+                depaFormLabel="Departamento" provFormLabel="Provincia" distFormLabel="Distrito" [horizontal]="true">
+            </app-ubigeo>
+
+            <div class="row gx-2">
+                <div class="mb-3 col-md-4">
+                    <label class="control-label">Oficina registral <span class="text-danger">(*)</span></label>
+                    <select class="form-select" formControlName="fg_pj_rl_OficinaFC"
+                        [class.control-invalid]="formInvalid(fg_pj_rl_OficinaFC)">
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let oficina of oficinasRegistral;" [value]="oficina.value">{{
+                            oficina.text }}</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_PartidaFC"
+                        label="Poder registrado en la partida N°" placeHolder="Ingrese el número de partida"
+                        [onlyNumbers]="true" [maxLength]="15">
+                    </app-basic-input>
+                </div>
+                <div class="col-md-4">
+                    <app-basic-input [parentForm]="fg_pj_RepLegalFG" inputFormControlName="fg_pj_rl_AsientoFC"
+                        label="Asiento N°" placeHolder="Ingrese el número de asiento" [onlyNumbers]="true"
+                        [maxLength]="15">
+                    </app-basic-input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

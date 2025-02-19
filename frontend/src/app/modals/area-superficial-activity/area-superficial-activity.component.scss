@@ -1,0 +1,58 @@
+iframe {
+    max-width: 100%;
+    height: 100%;
+}
+.aling-end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.mat-small-icon {
+    background-color: #ffffff !important;
+    border-radius: 5px;
+    border: 1px solid rgb(0, 86, 172) !important;
+    height: 30px !important;
+    width: 30px !important;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font: 400 15px / 20px Roboto, sans-serif;
+    letter-spacing: .0333333333em;
+    color: rgb(0, 86, 172) !important;
+}
+
+@media (max-width: 1000px) {
+    .responsive-column {
+        display: block;
+        width: 100%;
+    }
+
+    .wt-100 {
+        width: 100% !important;
+    }
+
+    .pwt-40 {
+        padding: 40px !important;
+    }
+
+    .wpl-40 {
+        padding-left: 40px !important;
+    }
+}
+
+.mr-2 {
+    margin-left: 10px !important;
+}
+
+.fullscreen-modal .modal-dialog {
+    width: 80% !important;
+    height: 80% !important;
+    max-width: 80% !important;
+    max-height: 80% !important;
+  }
+  
+  .fullscreen-modal .modal-content {
+    height: 100% !important; /* Asegura que el contenido ocupe todo el modal */
+  }

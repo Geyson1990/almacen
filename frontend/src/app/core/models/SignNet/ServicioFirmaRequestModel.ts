@@ -1,0 +1,32 @@
+export interface ServicioFirmaRequestModel {
+    urlServicioFirma: string;
+    rutaOrigen: string;
+    rutaDestino: string;
+    nombreArchivos: string;
+    alias?: string;
+    usarPersonalizado?: string;
+    cargo?: string;
+    ubicacion?: string;
+    razon?: string;
+    comentario?: string;
+    rutaImagen?: string;
+    imagen?: string;
+    invisible?: string;
+    activarDescripcion?: string;
+    posicionFirma?: string;
+    nombreTag?: string;
+    ubicacionPagina?: string;
+    numeroPagina?: string;
+    estiloFirma?: string;
+    altoRubrica?: string;
+    anchoRubrica?: string;
+    aplicarImagen?: string;
+    tipoFirma?: string;
+    visor?: string;
+    listarArchivos?: string;
+    tipoCades?: string;
+    nomarch?: string;
+    tamanoFuente?: string;
+    coordenadas?: string;
+    extra1?: string;
+}

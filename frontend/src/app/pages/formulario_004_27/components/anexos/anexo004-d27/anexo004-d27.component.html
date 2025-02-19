@@ -1,0 +1,449 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body anexo">
+    <div class="container-fluid">
+        <form novalidate>
+            <div class="mt-1 mb-3">
+                <h6 class="mb-0">{{txtTitulo}}</h6>
+            </div>
+
+              <div class="card">
+                <div class="card-body">
+
+                      <div class="lista-anexos mx-2">
+                          <div class="justify-content-between">
+                              <h5>Lista de anexos</h5>
+                              <button class="btn btn-success" (click)="abrirModalDeclarante(modalagregar)"><i class="fas fa-plus"></i> Agregar</button>
+                          </div>
+                          <hr class="mt-2">
+
+                          <div ngbAccordion #a="ngbAccordion">
+                              <div  ngbAccordionItem *ngFor="let item of listaHojaDatos; let i = index">
+                                <h2 ngbAccordionHeader>
+                                  
+                                    <span class="text-bold m-0 me-4 text-nowrap"><h4 class="m-0">{{ i+1 }}</h4></span>
+                                    <span class="text-bold m-0 w-100">{{item.seccion1.nombres}} {{item.seccion1.apellidoPaterno}} {{item.seccion1.apellidoMaterno}}
+                                    </span>
+                                    <div class="text-nowrap">
+                                      <button ngbAccordionButton>
+                                          <i class="fas" [ngClass]="(opened)?'fa-eye-slash':'fa-eye'"></i>
+                                      </button>
+                                      <button class="btn btn-sm btn-primary ms-1" (click)="abrirModalDeclarante(modalagregar,item,i)"><i class="fas fa-pencil-alt"></i></button>
+                                      <button class="btn btn-sm btn-danger ms-1" (click)="eliminarDeclarante(i)"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    </h2>
+                                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                  <div class="mx-2">
+                                      <div class="row">
+
+                                          <div class="col-md">
+                                              <div class="mb-3 row my-0">
+                                                  <label class="col-md-3 text-bold py-0 my-0">Documento de Identidad</label>
+                                                  <div class="col-md-9">
+                                                      <span class="border-0 py-0 my-0">{{item.seccion1.numeroDocumento}}</span>
+                                                  </div>
+                                              </div>
+
+                                              <div class="mb-3 row my-0">
+                                                  <label class="col-md-3 text-bold py-0 my-0">Domicilio Legal</label>
+                                                  <div class="col-md-9">
+                                                      <span class="border-0 py-0 my-0">
+                                                          {{item.seccion1.domicilioLegal}} - {{item.seccion1.distrito}}, {{item.seccion1.provincia}}, {{item.seccion1.departamento}}
+                                                      </span>
+                                                  </div>
+                                              </div>
+
+                                              <div class="mb-3 row my-0">
+                                                  <label class="col-md-3 text-bold py-0 my-0">Teléfono Fijo</label>
+                                                  <div class="col-md-9">
+                                                      <span class="border-0 py-0 my-0">{{item.seccion1.telefono}}</span>
+                                                  </div>
+                                              </div>
+
+                                              <div class="mb-3 row my-0">
+                                                  <label class="col-md-3 text-bold py-0 my-0">Celular</label>
+                                                  <div class="col-md-9">
+                                                      <span class="border-0 py-0 my-0">{{item.seccion1.celular}}</span>
+                                                  </div>
+                                              </div>
+
+                                              <div class="mb-3 row my-0">
+                                                  <label class="col-md-3 text-bold py-0 my-0">Correo electrónico</label>
+                                                  <div class="col-md-9">
+                                                      <span class="border-0 py-0 my-0">{{item.seccion1.email}}</span>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <!-- <div class="col-md-auto" *ngIf="i>0">
+                                              <div class="mb-3 my-0">
+                                                  <div class="col-md text-bold text-md-right">Declaración Jurada:</div>
+                                                  <div *ngIf="item.declaracion" class="col-md text-bold text-end text-success"><i class="fas fa-check-square"></i> SI</div>
+                                                  <div *ngIf="!item.declaracion" class="col-md text-bold text-end text-danger">PENDIENTE</div>
+                                              </div>
+                                          </div> -->
+                                      </div>
+
+                                  </div>
+                                </ng-template>
+</div>
+</div>
+                              </div>
+                          </div>
+
+                      </div>
+                </div>
+              </div>
+
+        </form>
+    </div>
+</div>
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+            <div class="flex-1">
+                <button type="button" class="btn btn-secondary" [disabled]="id === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i> Visualizar
+                </button>
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success boton-guardar" (click)="guardarAnexo()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="activeModal.close(graboUsuario)">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #modalagregar let-modal>
+    <div class="modal-header bg-secondary text-white">
+      <h5 class="modal-title">Agregar</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss()">
+        
+      </button>
+    </div>
+    <div class="modal-body p-4">
+        <form  [formGroup]="formularioDeclarante">
+          <ng-container formGroupName="seccion1">
+            <span class="d-block px-3 py-2 bg-secondary text-white mb-3">I. DATOS DEL SOLICITANTE</span>
+
+            <div class="d-block p-2 mb-3">
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Tipo Documento</label>
+                            <select #tipoDoc class="form-select form-select-sm" (change)="changeTipoDocumento(tipoDoc.value); resetDatosRepresentante();"
+                                formControlName="idTipoDocumento" [class.control-invalid]="formInvalid(idTipoDocumento)">
+                                <option value="">- Seleccionar -</option>
+                                <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                            </select>
+                            <div *ngIf="idTipoDocumento.hasError('required')" class="invalid-feedback">
+                              Este campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Nro. Documento</label>
+                            <div class="input-group input-group-sm">
+                                <input #nroDoc type="text" class="form-control form-control-sm text-uppercase" [maxLength]="maxLengthNroDocumento"
+                                    (keypress)="soloNumeros($event); onPressEnterNroDoc($event, tipoDoc.value, nroDoc.value)"
+                                    (input)="onInputNroDoc()"
+                                    formControlName="numeroDocumento" [class.control-invalid]="formInvalid(numeroDocumento)">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        [disabled]="numeroDocumento.invalid || idTipoDocumento.invalid || !habilitarBusquedaRepresentante"
+                                        (click)="buscarRepresentanteLegal(tipoDoc.value, nroDoc.value)">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                <div *ngIf="numeroDocumento.hasError('required')" class="invalid-feedback">
+                                  Este campo es obligatorio
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Nombres</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="nombres" [class.control-invalid]="formInvalid(nombres)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Apellido paterno</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="apellidoPaterno" [class.control-invalid]="formInvalid(apellidoPaterno)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Apellido materno</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="apellidoMaterno" [class.control-invalid]="formInvalid(apellidoMaterno)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Domiciilio legal</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="domicilioLegal" [class.control-invalid]="formInvalid(domicilioLegal)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Departamento</label>
+                            <select class="form-select form-select-sm" formControlName="departamento" #dep
+                                (change)="onChangeDepartamento(dep.value)"
+                                [class.control-invalid]="formInvalid(departamento)">
+                                <option value="">- Seleccionar -</option>
+                                <option *ngFor="let item of listaDepartamentos;" [value]="item.value">{{ item.text }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Provincia</label>
+                            <select class="form-select form-select-sm" formControlName="provincia" #prov
+                                (change)="onChangeProvincia(dep.value, prov.value)"
+                                [class.control-invalid]="formInvalid(provincia)">
+                                <option value=""> Seleccionar -</option>
+                                <option *ngFor="let item of listaProvincias;" [value]="item.value">{{ item.text }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Distrito</label>
+                            <select class="form-select form-select-sm" formControlName="distrito" #dist
+                                [class.control-invalid]="formInvalid(distrito)">
+                                <option value="">- Seleccionar -</option>
+                                <option *ngFor="let item of listaDistritos;" [value]="item.value">{{ item.text }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-2">
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Teléfono fijo</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase" maxlength="9"
+                              (keypress)="soloNumeros($event);"
+                              formControlName="telefono" [class.control-invalid]="formInvalid(telefono)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Celular</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase" maxlength="12"
+                            (keypress)="soloNumeros($event);"
+                                formControlName="celular" [class.control-invalid]="formInvalid(celular)">
+                            <div *ngIf="celular.hasError('required')" class="invalid-feedback">
+                              Este campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label class="text-bold mb-1">Correo electrónico</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase"
+                                formControlName="email" [class.control-invalid]="formInvalid(email)">
+                            <div *ngIf="email.hasError('required')" class="invalid-feedback">
+                              Este campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </ng-container>
+
+          <ng-container formGroupName="seccion2">
+            <span class="d-block px-3 py-2 bg-secondary text-white mb-3">II. GRADOS Y TITULOS PROFESIONALES</span>
+
+            <div class="d-block p-2 mb-3">
+
+              <div class="row gx-2">
+                <div class="col-md-12">
+                    <div class="mb-2">
+                        <label class="text-bold mb-1">Maestría y/o Postgrado</label>
+                        <input type="text" class="form-control form-control-sm text-uppercase"
+                          formControlName="maestriaPostgrado" [class.control-invalid]="formInvalid(maestriaPostgrado)">
+                        <div *ngIf="maestriaPostgrado.hasError('required')" class="invalid-feedback">
+                          Este campo es obligatorio
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row gx-2">
+                <div class="col-md-12">
+                    <div class="mb-2">
+                        <label class="text-bold mb-1">Institución</label>
+                        <input type="text" class="form-control form-control-sm text-uppercase"
+                        formControlName="institucion" [class.control-invalid]="formInvalid(institucion)">
+                        <div *ngIf="institucion.hasError('required')" class="invalid-feedback">
+                          Este campo es obligatorio
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row gx-2">
+                <div class="col-md-12">
+                    <div class="mb-2">
+                        <label class="text-bold mb-1">Título profesional</label>
+                        <input type="text" class="form-control form-control-sm text-uppercase"
+                        formControlName="titulo" [class.control-invalid]="formInvalid(titulo)">
+                        <div *ngIf="titulo.hasError('required')" class="invalid-feedback">
+                          Este campo es obligatorio
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row gx-2">
+                <div class="col-md-12">
+                    <div class="mb-2">
+                        <label class="text-bold mb-1">Institución</label>
+                        <input type="text" class="form-control form-control-sm text-uppercase"
+                        formControlName="institucionTitulo" [class.control-invalid]="formInvalid(institucionTitulo)">
+                        <div *ngIf="institucionTitulo.hasError('required')" class="invalid-feedback">
+                          Este campo es obligatorio
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+
+          <ng-container formGroupName="seccion3">
+            <span class="d-block px-3 py-2 bg-secondary text-white mb-3">III. HABILITACIÓN PROFESIONAL</span>
+
+            <div class="d-block p-2 mb-3">
+
+              <div class="row gx-2">
+                <div class="col-md-12">
+                    <div class="mb-2">
+                        <label class="text-bold mb-1">Colegio profesional</label>
+                        <input type="text" class="form-control form-control-sm text-uppercase"
+                        formControlName="colegioProfesional" [class.control-invalid]="formInvalid(colegioProfesional)">
+                        <div *ngIf="colegioProfesional.hasError('required')" class="invalid-feedback">
+                          Este campo es obligatorio
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row gx-2">
+                <div class="col-md-12">
+                    <div class="mb-2">
+                        <label class="text-bold mb-1">Número de colegiatura</label>
+                        <input type="text" class="form-control form-control-sm text-uppercase" maxlength="10"
+                        (keypress)="soloNumeros($event);"
+                        formControlName="nroColegiatura" [class.control-invalid]="formInvalid(nroColegiatura)">
+                        <div *ngIf="nroColegiatura.hasError('required')" class="invalid-feedback">
+                          Este campo es obligatorio
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+
+          <ng-container formGroupName="seccion4">
+            <span class="d-block px-3 py-2 bg-secondary text-white mb-3">IV. EXPERIENCIA</span>
+
+            <table class="table text-dark m-0 small">
+              <thead class="">
+                <tr>
+                  <th scope="col" class="text-center" style="width: 200px;">INSTITUCIÓN</th>
+                  <th scope="col" class="text-center text-nowrap">CARGO</th>
+                  <th scope="col" class="text-center text-nowrap">PERIODO</th>
+                  <th scope="col" class="text-center">FUNCIÓN</th>
+                </tr>
+              </thead>
+              <tbody class="text-small" formArrayName="experiencia">
+                <ng-container *ngFor="let item of formularioDeclarante.get('seccion4.experiencia').controls; let i = index">
+                  <tr class="text-sm" [formGroupName]="i">
+                    <td class="text-center text-nowrap">
+                      <textarea type="text" class="form-control form-control-sm" formControlName="institucion" maxlength="50"
+                      [class.control-invalid]="formInvalid(item.get(['institucion']))"></textarea>
+                    </td>
+                    <td class="text-center text-nowrap">
+                      <textarea type="text" class="form-control form-control-sm" formControlName="cargo"  maxlength="50"
+                      [class.control-invalid]="formInvalid(item.get('cargo'))"></textarea>
+                    </td>
+                    <td class="text-center text-nowrap">
+                      <textarea type="text" class="form-control form-control-sm" formControlName="periodo"  maxlength="50"
+                      [class.control-invalid]="formInvalid(item.get('periodo'))"></textarea>
+                    </td>
+                    <td class="text-center text-nowrap">
+                      <textarea type="text" class="form-control form-control-sm" formControlName="funcion"  maxlength="50"
+                      [class.control-invalid]="formInvalid(item.get('funcion'))"></textarea>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+
+          </ng-container>
+
+          <ng-container >
+            <div class="d-block p-2 mb-3 small">
+
+                <p class="text-bold">
+                    DECLARACIÓN:
+                </p>
+
+                <div class="alert alert-custom">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-md">
+                                    <p>
+                                      <b>DECLARO BAJO JURAMENTO QUE LOS DATOS EXPRESAN LA VERDAD</b>
+                                    </p>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="d-flex flex-row ms-4">
+                                        <ui-switch formControlName="declaracion" class="ng-valid ng-touched ng-dirty"></ui-switch>&nbsp;&nbsp;NO / SI
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          </ng-container>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="guardarDeclarante()" [disabled]="this.formularioDeclarante.invalid">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-light" (click)="modal.close()">Cancelar</button>
+    </div>
+</ng-template>

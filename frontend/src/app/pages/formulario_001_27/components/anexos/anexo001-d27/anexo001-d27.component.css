@@ -1,0 +1,57 @@
+.anexo001-d17-contenedor-check-paises {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 20px;
+}
+
+.anexo001-d17-contenedor-check-paises .check {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.anexo001-d17-contenedor-check-paises input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.campo-resolucion-jurada {
+    margin: 0 5px;
+    display: inline-block;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+@media screen and (max-width:767px) {
+    #anexo001-d17-paises-operar {
+        flex-direction: column;
+    }
+    .anexo001-d17-contenedor-check-paises {
+        margin-top: 10px;
+    }
+    .anexo001-d17-contenedor-check-paises label.check {
+        justify-content: center;
+    }
+    /*---------------------------------*/
+    #anexo001-d17-placarodaje-soat,
+    #anexo001-d17-citv-caf,
+    #anexo001-d17-boton-agregar-modificar {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #anexo001-d17-citv-caf,
+    #anexo001-d17-boton-agregar-modificar {
+        margin-top: 20px;
+    }
+    #anexo001-d17-boton-agregar-modificar {
+        flex-direction: row !important;
+        padding: 0 70px;
+    }
+    button.anexo001-d17-btn-cancelar {
+        margin-left: 10px;
+        margin-top: 0 !important;
+    }
+}

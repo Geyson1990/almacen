@@ -1,0 +1,12 @@
+<div class="lots-file-selector">
+    <div class="activity">
+        <h4> TIPO DE ACTIVIDAD </h4>
+        <select (change)="onSelectChange($event)" [value]="selectedValue"> 
+            <option *ngFor="let typeArea of typesArea" [value]="typeArea.idTipoArea">{{ typeArea.nombreActividad }}</option>
+        </select>
+    </div>
+    <div class="file">
+        <h4> ARCHIVO </h4>
+        <input type="file"  (change)="onCsvSelected($event)" />
+    </div>
+</div>

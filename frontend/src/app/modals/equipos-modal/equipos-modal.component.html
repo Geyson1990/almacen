@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h2>{{title}}</h2>
+    <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+    </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+    <div class="modal-body mat-typography">
+        <div class="content-modal-flexible-none">
+            <h3>EQUIPOS</h3>
+            <div class="col-md-12 m-b-10px">
+                <h3>EQUIPOS <span class="text-danger">(*)</span></h3>
+                <input type="text" class="form-control" placeholder="" formControlName="Equipo" maxlength="2500">
+                <mat-error *ngIf="equipoErrors" style="color: red;">{{ equipoErrors }}</mat-error>
+            </div>
+            <div class="col-md-12 m-b-10px">
+                <h3>DESCRIPCIONES TÉCNICAS <span class="text-danger">(*)</span></h3>
+                <input type="text" class="form-control" placeholder="" formControlName="Descripcion" maxlength="2500">
+                <mat-error *ngIf="descripcionErrors" style="color: red;">{{ descripcionErrors }}</mat-error>
+            </div>
+            <div class="col-md-12 m-b-10px">
+                <h3>CANTIDAD <span class="text-danger">(*)</span></h3>
+                <input type="text" class="form-control" placeholder="" formControlName="Cantidad" maxlength="10" (input)="soloNumeros($event, 'Cantidad')">
+                <mat-error *ngIf="cantidadErrors" style="color: red;">{{ cantidadErrors }}</mat-error>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+            Cancel</button>
+        <button *ngIf="viewControl" type="submit" class="mat-small" [ngClass]="{'btn-disabled': form.invalid}" [disabled]="form.invalid"><i class="material-icons">save</i> Grabar</button>
+    </div>
+</form>

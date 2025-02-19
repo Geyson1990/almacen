@@ -1,0 +1,730 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{this.codigoTupa}}  {{this.descripcionTupa}} </h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close"  (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+<div class="modal-body anexo">
+    <div class="container-fluid mt-2 mb-3">
+        <form class="needs-validation" novalidate [formGroup]="contactForm">
+                
+            <div class="center">
+                <h6>FORMULARIO 012/17.03 LICENCIA DE CONDUCIR</h6>
+            </div>
+
+            <div class="alert alert-info">
+                <span style="text-align: justify; display: block;">
+                    <strong>IMPORTANTE:<br> {{ this.mensajeInicial }}</strong>
+                </span>
+            </div>
+
+            <div ngbAccordion #acc="ngbAccordion" activeIds="datos-solicitante, servicio-solicitado, entidades-complementarias, notificacion, declaracion">
+
+                <div ngbAccordionItem="datos-solicitante" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>I. DATOS DEL SOLICITANTE</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row">
+                            
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="campo-obligatorio">Tipo de Documento</label>
+                                    <div class="flex-1">
+                                        <select id="validationCustom06" class="form-select" (change)="changeTipoDocumento()" formControlName="tipoDocIdentidad">
+                                            <option value=''>Seleccione</option>
+                                            <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- <input type="text" class="form-control" id="validationCustom06" formControlName="tipoDocIdentidad"
+                                        [ngClass]="{'is-invalid': isValidField('tipoDocIdentidad')}" [readOnly]="!this.ingresarDataManualmente" /> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="campo-obligatorio">Número</label>
+                                    <div class="input-group">
+                                        <!--<input type="text" id="validationCustom07" class="form-control text-uppercase" formControlName="numeroDocIdentidad"
+                                            (input)="inputNumeroDocumento($event)" 
+                                            [readonly]="this.contactForm.controls['tipoDocIdentidad'].value === ''" 
+                                            [maxlength]="getMaxLengthNumeroDocumento()" />
+                                            <button class="btn btn-outline-secondary" type="button" 
+                                                [disabled]="this.contactForm.controls['numeroDocIdentidad'].value.trim().length === 0"
+                                                (click)="buscarNumeroDocumento()">
+                                                <i class="fas fa-search"></i>
+                                            </button>-->
+                                        <input type="text" id="validationCustom07" class="form-control text-uppercase" formControlName="numeroDocIdentidad"
+                                             />
+                                        
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        <span *ngIf="contactForm.get('numeroDocIdentidad').errors?.required">
+                                            Por favor, introduzca su Numero
+                                        </span>
+                                        <span *ngIf="contactForm.get('numeroDocIdentidad').errors?.minlength">
+                                            El Numero debe ser más largo que
+                                            {{
+                                                contactForm.get("numeroDocIdentidad").errors?.minlength?.requiredLength
+                                            }}
+                                            caracteres
+                                        </span>
+                                    </div>  
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="campo-obligatorio">Nombres y Apellidos</label>
+                                    <input type="text" class="form-control" id="validationCustom01" formControlName="nombres"
+                                        [ngClass]="{'is-invalid': isValidField('nombres')}" disabled/>
+                                        <div class="invalid-feedback">
+                                            <span *ngIf="contactForm.get('nombres').errors?.required">
+                                                Por favor, introduzca su Nombre y Apellidos
+                                            </span>
+                                            <span *ngIf="contactForm.get('nombres').errors?.minlength">
+                                                El nombre debe ser más largo que
+                                                {{
+                                                    contactForm.get("nombres").errors?.minlength?.requiredLength
+                                                }}
+                                                caracteres
+                                            </span>
+                                        </div>  
+                                </div> 
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="campo-obligatorio">Domicilio Legal</label>
+                                    <input type="text" class="form-control" id="validationCustom02" formControlName="domicilio"
+                                        [ngClass]="{'is-invalid': isValidField('domicilio')}" disabled/>
+                                    <div class="invalid-feedback">
+                                        <span *ngIf="contactForm.get('domicilio').errors?.required">
+                                            Por favor, introduzca su Domicilio Legal
+                                        </span>
+                                        <span *ngIf="contactForm.get('domicilio').errors?.minlength">
+                                            El nombre debe ser más largo que
+                                            {{
+                                                contactForm.get("domicilio").errors?.minlength?.requiredLength
+                                            }}
+                                            caracteres
+                                        </span>
+                                    </div>  
+                                </div> 
+                            </div> 
+
+                            <div class="col-md-6">
+                                <label class="campo-obligatorio">Correo Electrónico</label>
+                                <input type="text" class="form-control" id="validationCustom08" formControlName="correo"
+                                    [ngClass]="{'is-invalid': isValidField('correo')}"/>
+                                <div class="invalid-feedback">
+                                    <span *ngIf="contactForm.get('correo').errors?.required">
+                                        Por favor, introduzca su Correo Electrónico
+                                    </span>
+                                </div>   
+                            </div>    
+                        </div>
+
+                        <div class="row">
+                        
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="campo-obligatorio">Distrito</label>
+                                    <input type="text" class="form-control" id="validationCustom03" formControlName="distrito"
+                                            [ngClass]="{'is-invalid': isValidField('distrito')}" disabled />
+                                    <div class="invalid-feedback">
+                                        <span *ngIf="contactForm.get('distrito').errors?.required">
+                                            Por favor, introduzca su Distrito
+                                        </span>
+                                        <span *ngIf="contactForm.get('distrito').errors?.minlength">
+                                            El nombre debe ser más largo que
+                                            {{
+                                                contactForm.get("distrito").errors?.minlength?.requiredLength
+                                            }}
+                                            caracteres
+                                        </span>
+                                    </div>  
+                                </div> 
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="campo-obligatorio">Provincia</label>
+                                    <input type="text" class="form-control" id="validationCustom04" formControlName="provincia"
+                                                [ngClass]="{'is-invalid': isValidField('provincia')}" disabled />
+                                    <div class="invalid-feedback">
+                                        <span *ngIf="contactForm.get('provincia').errors?.required">
+                                            Por favor, introduzca su Provincia
+                                        </span>
+                                        <span *ngIf="contactForm.get('provincia').errors?.minlength">
+                                            El nombre debe ser más largo que
+                                            {{
+                                                contactForm.get("provincia").errors?.minlength?.requiredLength
+                                            }}
+                                            caracteres
+                                        </span>
+                                    </div>  
+                                </div> 
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="campo-obligatorio">Región</label>
+                                    <input type="text" class="form-control" id="validationCustom05" formControlName="region"
+                                            [ngClass]="{'is-invalid': isValidField('region')}" disabled />
+                                    <div class="invalid-feedback">
+                                        <span *ngIf="contactForm.get('region').errors?.required">
+                                            Por favor, introduzca su Región
+                                        </span>
+                                        <span *ngIf="contactForm.get('region').errors?.minlength">
+                                            La Región debe ser más largo que
+                                            {{
+                                                contactForm.get("region").errors?.minlength?.requiredLength
+                                            }}
+                                            caracteres
+                                        </span>
+                                    </div>  
+                                
+                                </div> 
+                            </div> 
+                            
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="provincia">Teléfono / Celular</label>
+                                    <input type="text" class="form-control" id="validationCustom09" formControlName="telefono"
+                                    [ngClass]="{'is-invalid': isValidField('telefono')}"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="campo-obligatorio">Licencia de conducir de Clase A</label>
+                            </div>
+                        </div>
+                        <div class="row">          
+                            <div class="col-sm-3" *ngFor="let item of tiposServicio">
+                                <label class="radio-inline">
+                                    <input type="radio" [value]="item.valor" formControlName="tiposServicio"/>
+                                    {{ item.desc }}
+                                </label>
+                            </div>
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="notificacion" [collapsed]="false">
+                
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>II. NOTIFICACIÓN</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row gx-2">
+                            <div>La notificación del presente procedimiento, se realiza a través del Sistema de Casillas Electrónicas del Ministerio de Transportes y Comunicaciones. </div>
+                            <br />
+                            <div>En virtud a ello, para la tramitación del presente procedimiento administrativo, usted debe contar con una casilla electrónica. Si aún no se ha afiliado, deberá hacerlo, ingresando al siguiente enlace: <br/></div> 
+                            <br /> 
+                            <div><a text-align="center" href="http://casilla.mtc.gob.pe/" target="_blank">http://casilla.mtc.gob.pe/</a></div>                
+                        </div>                   
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+
+                <div ngbAccordionItem="servicio-solicitado" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton>III. PROCEDIMIENTO A SOLICITAR</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                                                                      
+                        <div class="card" aria-disabled="true" *ngIf="this.codigoTupa==='DCV-045'">
+                            <h6 class="card-header campo-obligatorio">CANJE - MILITAR O POLICIAL (DCV-045)</h6>
+                            <div class="card-body"> 
+                                <div class="row">
+                                    <div class="col-sm-2" *ngFor="let item of tiposCanjeMilitar">
+                                        <label class="radio-inline">
+                                            <input type="radio" [value]="item.valor" formControlName="tiposCanjeMilitar" />
+                                            {{ item.desc }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br *ngIf="this.codigoTupa==='DCV-046'"/>
+                        <div class="card" aria-disabled="true"  *ngIf="this.codigoTupa==='DCV-046'">
+                            <h6 class="card-header campo-obligatorio">OBTENCION DIPLOMATICO (DCV-046)</h6>
+                            <div class="card-body"> 
+                                <div class="row">
+                                    <div class="col-sm-2" *ngFor="let item of tiposCanjeDiplomatico">
+                                        <label class="radio-inline">
+                                            <input type="radio" [value]="item.valor" formControlName="tiposCanjeDiplomatico" />
+                                            {{ item.desc }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br *ngIf="this.codigoTupa==='DCV-051'"/>
+                        <div class="card"  *ngIf="this.codigoTupa==='DCV-051'"> 
+                            <div class="card-header header-flag container-fluid" >
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <h6 class="campo-obligatorio">CANJE - OTORGADA EN OTRO PAIS (DCV-051)</h6>
+                                    </div>
+                                    <div class="col-md-3 float-end" *ngIf="this.activarEquivalencias" > Ver equvalencia: 
+                                        <button class="btn btn-sm btn-link" (click)="onEquivalencias('espana')"><img src="/assets/img/flags/espana.png"></button>
+                                        <button class="btn btn-sm btn-link" (click)="onEquivalencias('bolivia')"><img src="/assets/img/flags/bolivia.png"></button>
+                                        <button class="btn btn-sm btn-link" (click)="onEquivalencias('chile')"><img src="/assets/img/flags/chile.png"></button>
+                                        <button class="btn btn-sm btn-link" (click)="onEquivalencias('corea')"><img src="/assets/img/flags/corea-del-sur.png"></button>
+                                        <button class="btn btn-sm btn-link" (click)="onEquivalencias('colombia')"><img src="/assets/img/flags/colombia.png"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-2" *ngFor="let item of tiposCanjeExtranjero">
+                                        <label class="radio-inline">
+                                            <input type="radio" [value]="item.valor" formControlName="tiposCanjeExtranjero"/>
+                                            {{ item.desc }}
+                                        </label>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                        <br *ngIf="this.codigoTupa==='S-DCV-002'"/>
+                        <div class="card" aria-disabled="true"  *ngIf="this.codigoTupa==='S-DCV-002'">
+                            <h6 class="card-header campo-obligatorio">CANJE - MODIFICACIÓN DE LA INFORMACIÓN (S-DCV-002)</h6>
+                            <div class="card-body"> 
+                                <div class="row">
+                                    <div class="col-sm-2" *ngFor="let item of tiposModificacion">
+                                        <label class="radio-inline">
+                                            <input type="radio" [value]="item.valor" formControlName="tiposModificacion" />
+                                            {{ item.desc }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="entidades-complementarias" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>IV. ENTIDADES COMPLEMENTARIAS</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <h6 class="card-header" *ngIf="this.codigoTupa!=='DCV-051'">Establecimiento de Salud</h6>
+                                    <h6 class="card-header" *ngIf="this.codigoTupa=='DCV-051'">Establecimiento de Salud (en caso que no cuente con Nro. de Certificado de Salud, será verificado por el MTC a través del Sistema Nacional de Conductores)</h6>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            
+                                            <div [ngClass]="{'col-md-6': !this.OtroEstablecimiento, 'col-md-3': this.OtroEstablecimiento}">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Nombre/Razón Social</label>
+                                                    <input type="text" class="form-control" id="validationCustom12" formControlName="nombreES" *ngIf="this.codigoTupa!=='DCV-045'"
+                                                        [ngClass]="{'is-invalid': isValidField('nombreES')}" />
+                                                    <select class="form-select d-inline" formControlName="nombreES" *ngIf="this.codigoTupa==='DCV-045'" (change)="onChangeEstablecimientoSalud($event)">
+                                                        <option *ngFor="let item of listaEstablecimientosSalud; let i = index" [value]="item">{{ item }}</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('nombreES').errors?.required">
+                                                            Por favor, introduzca el Nombre o Razón Social
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('nombreES').errors?.minlength">
+                                                            El nombre o Razón Social debe ser más largo que
+                                                            {{
+                                                                contactForm.get("nombreES").errors?.minlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3" *ngIf="this.codigoTupa==='DCV-045' && this.OtroEstablecimiento">
+                                                <div class="mb-3">
+                                                    <label >&nbsp;&nbsp;</label>
+                                                    <input type="text" class="form-control" id="validationCustom12" formControlName="otroEstablecimientoSalud" 
+                                                        [ngClass]="{'is-invalid': isValidField('nombreES')}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3"> 
+                                                <div class="mb-3">
+                                                    <label >Nro de Certificado</label>
+                                                    <input type="text" class="form-control" id="validationCustom13" formControlName="certificadoES"
+                                                         />
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('certificadoES').errors?.required">
+                                                            Este campo es obligatorio
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('certificadoES').errors?.minlength">
+                                                            El Nro. de Certificado debe ser más largo que
+                                                            {{
+                                                                contactForm.get("certificadoES").errors?.minlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Fecha de Emisión</label>
+                                                    <div class="input-group">                                 
+                                                        <div class="input-group"> 
+                                                            <input class="form-control" formControlName="fechaES" (dateSelect)="onSelectFechaES($event)" readonly 
+                                                            [ngClass]="{'is-invalid': isValidField('fechaES')}" ngbDatepicker #fechaES="ngbDatepicker"/>
+                                                                <button class="btn btn-outline-secondary calendar" type="button" (click)="fechaES.toggle()" >
+                                                                    <i class="far fa-calendar-alt"></i>
+                                                                </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('fechaES').errors?.required">
+                                                            Por favor, introduzca la Fecha de Emisión
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('fechaES').errors?.minlength">
+                                                            La Fecha de Emisión debe ser más largo que
+                                                            {{
+                                                                contactForm.get("fechaES").errors?.minlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br *ngIf="this.activarEC"/>
+                        <div class="row" *ngIf="this.activarEC">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <h6 class="card-header">Escuela de Conductores</h6>
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Nombre/Razón Social</label>
+                                                    <input type="text" class="form-control" formControlName="nombreEC"
+                                                        [ngClass]="{ 'is-invalid': isValidField('nombreEC') }" />
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('nombreEC').errors?.required">
+                                                            Por favor, introduzca el Nombre o Razón Social
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('nombreEC').errors?.minlength">
+                                                            El nombre o razón social debe ser más largo que
+                                                            {{
+                                                                contactForm.get("nombreEC").errors?.minlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>     
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Nro de Certificado</label>
+                                                    <input type="text" class="form-control" formControlName="certificadoEC"
+                                                        [ngClass]="{'is-invalid': isValidField('certificadoEC')}" />
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('certificadoEC').errors?.required">
+                                                            Este campo es obligatorio
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('certificadoEC').errors?.minlength">
+                                                            El nombre debe ser más largo que
+                                                            {{
+                                                                contactForm.get("certificadoEC").errors?.minlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Fecha de Emisión</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" formControlName="fechaEC" (dateSelect)="onSelectFechaEC($event)" readonly
+                                                        [ngClass]="{'is-invalid': isValidField('fechaEC')}" ngbDatepicker #fechaEC="ngbDatepicker"/>
+                                                            <button class="btn btn-outline-secondary calendar" type="button" (click)="fechaEC.toggle()">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </button>
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('fechaEC').errors?.required">
+                                                            Por favor, introduzca la Fecha de Emisión
+                                                        </span>
+                                                    </div> 
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br *ngIf="this.activarCE"/>
+                        <div class="row" *ngIf="this.activarCE">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <h6 class="card-header" *ngIf="this.codigoTupa!=='DCV-051'">Evaluación de Conocimientos</h6>
+                                    <h6 class="card-header" *ngIf="this.codigoTupa=='DCV-051'">Evaluación de Conocimientos (en caso que no cuente con la información de la nota aprobatoria, será verificado por el MTC a través del Sistema Nacional de Conductores)</h6>
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Nombre/Razón Social</label>
+                                                    <input type="text" class="form-control" formControlName="nombreCE"
+                                                        [ngClass]="{'is-invalid': isValidField('nombreCE')}" />
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('nombreCE').errors?.required">
+                                                            Por favor, introduzca el Nombre o Razón Social
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('nombreCE').errors?.minlength">
+                                                            El nombre o razón social debe ser más largo que
+                                                            {{
+                                                                contactForm.get("nombreCE").errors?.minlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>      
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label>Nota aprobatoria</label>
+                                                    <input type="text" class="form-control" formControlName="certificadoCE" maxlength="3"
+                                                        [ngClass]="{'is-invalid': isValidField('certificadoCE')}"/>
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('certificadoCE').errors?.required">
+                                                            Este campo es obligatorio
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('certificadoCE').errors?.maxlength">
+                                                            La nota aprobatoria debe ser más largo que
+                                                            {{
+                                                                contactForm.get("certificadoCE").errors?.maxlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Fecha de Evaluación</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" formControlName="fechaCE" (dateSelect)="onSelectFechaCE($event)" readonly
+                                                            [ngClass]="{'is-invalid': isValidField('fechaCE')}" ngbDatepicker #fechaCE="ngbDatepicker"/>
+                                                            <button class="btn btn-outline-secondary calendar" type="button" (click)="fechaCE.toggle()">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </button>
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('fechaCE').errors?.required">
+                                                            Por favor, introduzca la Fecha de Evaluación
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br *ngIf="this.activarHC" />
+                        <div class="row" *ngIf="this.activarHC">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <h6 class="card-header">Evaluación de habilidades en la conducción</h6>
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Nombre/Razón Social</label>
+                                                    <input type="text" class="form-control" formControlName="nombreHC"
+                                                        [ngClass]="{'is-invalid': isValidField('nombreHC')}" />
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('nombreHC').errors?.required">
+                                                            Por favor, introduzca el Nombre o Razón Social
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('nombreHC').errors?.minlength">
+                                                            El nombre o razón social debe ser más largo que
+                                                            {{
+                                                                contactForm.get("nombreHC").errors?.minlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>      
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Nota aprobatoria</label>
+                                                    <input type="text" class="form-control" formControlName="notaHC"
+                                                        [ngClass]="{'is-invalid': isValidField('notaHC')}"/>
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('notaHC').errors?.required">
+                                                            Este campo es obligatorio
+                                                        </span>
+                                                        <span *ngIf="contactForm.get('notaHC').errors?.minlength">
+                                                            La nota aprobatoria debe ser más largo que
+                                                            {{
+                                                                contactForm.get("notaHC").errors?.minlength?.requiredLength
+                                                            }}
+                                                            caracteres
+                                                        </span>
+                                                    </div>    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label class="campo-obligatorio">Fecha de Evaluación</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" formControlName="fechaHC" (dateSelect)="onSelectFechaHC($event)" readonly
+                                                            [ngClass]="{'is-invalid': isValidField('fechaHC')}" ngbDatepicker #fechaHC="ngbDatepicker"/>
+                                                            <button class="btn btn-outline-secondary calendar" type="button" (click)="fechaHC.toggle()">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </button>
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        <span *ngIf="contactForm.get('fechaHC').errors?.required">
+                                                            Por favor, introduzca la Fecha de Evaluación
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="declaracion" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton>V. DECLARACIÓN</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <p>
+                            Para los trámites de revalidación, recategorización, canje y duplicado declaro bajo juramento efectuar la devolución (*) de la Licencia de Conducir anterior, o en su defecto declaro bajo juramento la pérdida o robo, de forma previa a la entrega de la nueva Licencia de Conducir.
+                        </p>
+                        <p>
+                            Declaro bajo juramento tener conocimiento que en caso de proporcionar información falsa, uso de documentación falsificada o adulterada, cuando la 
+                            información registrada en el Sistema Nacional de Conductores difiere de la realidad, cuando el titular no se hubiera sometido a cualquiera de los 
+                            exámenes o por incumplimiento de los requisitos establecidos, la autoridad administrativa podrá declarar la nulidad del acto sustentado en dicha 
+                            declaración, información o documento (Art. 27 D.S. N° 007-2016-MTC), así como imponer las multas respectivas establecidas en el Reglamento Nacional 
+                            del Sistema de Emisión de Licencias de Conducir, sin perjuicio del inicio de la acción penal en caso corresponda, (Numeral 34.3 del Art. 34 del 
+                            Texto Único Ordenado de la Ley Nº 27444 Ley de Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS).
+                        </p>
+                        <p>      
+                            Declaro bajo juramento no estar privado por resolución judicial firme con calidad de cosa juzgada del derecho a conducir vehículos del transporte 
+                            terrestre ni contar con mandatos de reexaminación médica y psicológica, y en el caso de refugiados contar con la respectiva licencia de conducir 
+                            vigente, la cual estará sujeta a la verificación posterior por el Ministerio de Relaciones Exteriores de conformidad al D.S. N° 007-2016-MTC.
+                        </p>
+                        <p>
+                            Declaro bajo juramento no contar con multas pendientes de pago ni sanciones pendientes de cumplimiento por infracciones tipificadas en el Texto 
+                            Único Ordenado del Reglamento Nacional de Tránsito, impuestas mediante actos administrativos firmes o que hayan agotado la vía administrativa, 
+                            según la información del Registro Nacional de Sanciones. En caso el solicitante haya impugnado en la vía contencioso administrativa, se dará por 
+                            cumplido este requisito con la presentación de la copia certificada de la sentencia judicial o de la resolución judicial que dicta medida cautelar 
+                            favorables a los intereses del solicitante; así como no contar con multas electorales.
+                        </p>
+                        <p>
+                            (*) En el caso de duplicado por deterioro deberá entregar la licencia de conducir.<br/>
+                            Para el trámite "Canje de licencia de conducir provisional para extranjeros que solicitan refugio o asilo" declaro bajo juramento que cuento con la respectiva licencia de conducir, la cual estará sujeta a la verificación posterior por el Ministerio de Relaciones Exteriores. 
+                        </p>
+                        <!--
+                        <div class="mb-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" formControlName="acepto"/> Acepto recibir notificaciones de alerta antes del vencimiento de mi licencia y otra información de los servicios brindados por el Ministerio de Transportes y Comunicaciones
+                            </label>
+                        </div>
+                        -->
+                    </ng-template>
+</div>
+</div>
+
+                </div>
+
+            </div>   
+
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <button type="button" class="btn btn-secondary" [disabled]="idFormularioMovimiento === 0" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success w-50" (click)="guardarFormulario()" [disabled]="this.contactForm.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                        (idFormularioMovimiento === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

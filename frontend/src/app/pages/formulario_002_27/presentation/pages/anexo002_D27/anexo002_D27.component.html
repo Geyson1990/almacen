@@ -1,0 +1,558 @@
+<div class="modal-header anexo bg-danger text-white">
+  <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+
+  </button>
+</div>
+<div class="modal-body anexo">
+  <div class="container mt-2 mb-3">
+    <form [formGroup]='anexoFG'>
+      <div class="center">
+        <h6>{{txtTitulo}}</h6>
+      </div>
+      <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1,seccion-2,seccion-3,seccion-4,seccion-5,seccion-6">
+
+        <div ngbAccordionItem="seccion-1" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>I.
+              DESCRIPCIÓN</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+
+                <div div class="row" formGroupName="d_Seccion1">
+
+                  <div class="col-md-8">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Empresa</label>
+                      <input type="text" formControlName="d_s1_empresa" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Servicio</label>
+                      <input type="text" formControlName="d_s1_servicio" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Nombre de la Estación</label>
+                      <input type="text" formControlName="d_s1_nombre_estacion" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Tipo (VSAT, SCPC, etc.) </label>
+                      <input type="text" formControlName="d_s1_tipo" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Ubicación de la Estación</label>
+                      <input type="text" formControlName="d_s1_ubicacion_estacion" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+
+
+                  <div class="col-md-12">
+                    <app-ubigeo #ubigeoCmpEstFija1 [parentForm]="d_Seccion1" depaFormControlName="d_s1_departamento"
+                      provFormControlName="d_s1_provincia" distFormControlName="d_s1_distrito"
+                      depaFormLabel="Departamento" provFormLabel="Provincia" distFormLabel="Distrito"
+                      [horizontal]="true"></app-ubigeo>
+                  </div>
+
+
+                  <div class="col-md-12">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Localidad</label>
+                      <input type="text" formControlName="d_s1_localidad" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="text-bold mb-1">Coordenadas geográficas WGS-84 L.O</label>
+                    <div class="mb-2 d-flex">
+                      <input type="text" formControlName="d_s1_corGradoLO" title="Grados"
+                        class="form-control text-uppercase"> <b> &nbsp;°&nbsp;</b>
+                      <input type="text" formControlName="d_s1_corMinutoLO" title="Minutos"
+                        class="form-control text-uppercase"> <b>&nbsp;'&nbsp;</b>
+                      <input type="text" formControlName="d_s1_corSegundosLO" title="Segundos"
+                        class="form-control text-uppercase"> <b>&nbsp;"&nbsp;</b>
+
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="text-bold mb-1">Coordenadas geográficas WGS-84 L.S</label>
+                    <div class="mb-2 d-flex">
+                      <input type="text" formControlName="d_s1_corGradoLS" title="Grados"
+                        class="form-control text-uppercase"> <b> &nbsp;°&nbsp;</b>
+                      <input type="text" formControlName="d_s1_corMinutoLS" title="Minutos"
+                        class="form-control text-uppercase"> <b>&nbsp;'&nbsp;</b>
+                      <input type="text" formControlName="d_s1_corSegundosLS" title="Segundo"
+                        class="form-control text-uppercase"> <b>&nbsp;"&nbsp;</b>
+
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Altitud (m.s.n.m.)</label>
+                      <input type="text" formControlName="d_s1_altitud" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Indicativo (dejar en blanco si se trata de nueva
+                        estación)</label>
+                      <input type="text" formControlName="d_s1_indicativo" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">N° de portadoras de transmisión</label>
+                      <input type="text" formControlName="d_s1_nroportadorastransmision"
+                        class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Frecuencia (MHz-Uplink) </label>
+                      <input type="text" formControlName="d_s1_frecuenciaUplink" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Frecuencia (MHz-downlink) </label>
+                      <input type="text" formControlName="d_s1_frecuenciaDownlink" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Bloque Horario </label>
+                      <input type="text" formControlName="d_s1_bloqueHorario" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Fecha de instalación </label>
+                      <input type="date" formControlName="d_s1_fechaInstalacion" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div ngbAccordionItem="seccion-2" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>II.
+              EQUIPAMIENTO</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+
+                <div class="row" formGroupName="e_Seccion2">
+                  <div class="col-md-3">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Marca</label>
+                      <input type="text" formControlName="d_s2_marca" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Modelo</label>
+                      <input type="text" formControlName="d_s2_modelo" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Potencia(W)</label>
+                      <input type="text" formControlName="d_s2_potenciaW" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Potencia(dBm)</label>
+                      <input type="text" formControlName="d_s2_potenciadBm" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Rango de Frecuencias (MHz) </label>
+                      <input type="text" formControlName="d_s2_rangoFrecuencia" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Capacidad por portadora (Mbps) </label>
+                      <input type="text" formControlName="d_s2_capacidadPortadora" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Tipo de Emisión </label>
+                      <input type="text" formControlName="d_s2_tipoEmision" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">N° de Transpondedor </label>
+                      <input type="text" formControlName="d_s2_nroTranspondedor" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Tipo de amplificador (HPA) </label>
+                      <input type="text" formControlName="d_s2_amplificadorHPA" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Tipo de amplificador (SSPA) </label>
+                      <input type="text" formControlName="d_s2_amplificadorSSPA" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div ngbAccordionItem="seccion-3" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>III. SISTEMA
+              RADIANTE</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+
+                <div class="row" formGroupName="s_Seccion3">
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Tipo de Antena</label>
+                      <input type="text" formControlName="d_s3_tipoAntena" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Marca </label>
+                      <input type="text" formControlName="d_s3_marca" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Modelo </label>
+                      <input type="text" formControlName="d_s3_modelo" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Ganancia (dBi) </label>
+                      <input type="text" formControlName="d_s3_ganancia" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Diámetro de la antena </label>
+                      <input type="text" formControlName="d_s3_diametroAntena" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Angulo de elevación de la antena (°) </label>
+                      <input type="text" formControlName="d_s3_anguloEleva" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Azimut (°) </label>
+                      <input type="text" formControlName="d_s3_azimut" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Pire (W) </label>
+                      <input type="text" formControlName="d_s3_pireW" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Pire (dBm) </label>
+                      <input type="text" formControlName="d_s3_pireDbm" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Altura de Torre (m) </label>
+                      <input type="text" formControlName="d_s3_alturaTorre" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Altura de Edificio (m) </label>
+                      <input type="text" formControlName="d_s3_alturaEdificio" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Altura Instalada</label>
+                      <input type="text" formControlName="d_s3_alturaInstalada" class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Distancia de la antena a todo punto accesible por las
+                        personas (m)</label>
+                      <input type="text" formControlName="d_s3_distanciaDeAnteanaPuntoAccesible"
+                        class="form-control text-uppercase">
+                    </div>
+                  </div>
+
+                </div>
+
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div ngbAccordionItem="seccion-4" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>IV.
+              ENLACE</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div class="row" formGroupName="s_Seccion4">
+                  <div class="col-md-6">
+                    <div class="mb-2">
+                      <label class="text-bold mb-1">Nombre y posición orbital del satélite con el que se
+                        enlaza</label>
+                      <input type="text" formControlName="d_s4_orbitalSatelite" class="form-control text-uppercase">
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div ngbAccordionItem="seccion-5" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>V. DATOS DEL
+              INGENIERO</button>
+          </h2>
+
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div class="row" formGroupName="s_Seccion5">
+
+                  <div class="col-lg-12" formGroupName="DatosContacto">
+
+
+                    <div class="row gx-2">
+                      <div class="mb-3 col-lg-4">
+                        <label class="control-label campo-obligatorio">Tipo Documento</label>
+                        <select class="form-select" formControlName="dc_tipoDocumento"
+                          [class.control-invalid]="formInvalid(dc_tipoDocumento)">
+                          <option value=''>Seleccione</option>
+                          <option *ngFor="let item of listaTiposDocumentos | slice:0:3" [value]="item.id">{{
+                            item.documento }}</option>
+                        </select>
+                        <div
+                          *ngIf="f_s5_dc_TipoDocumento.invalid && (f_s5_dc_TipoDocumento.dirty || f_s5_dc_TipoDocumento.touched)"
+                          class="text-danger">
+                          <div *ngIf="f_s5_dc_TipoDocumento.errors?.required">
+                            El campo es obligatorio
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4">
+
+
+                        <app-basic-input [parentForm]="f_s5_DatosContacto" inputFormControlName="dc_numeroDocumento"
+                          label="N° Documento" [maxLength]="maxLengthNumeroDocumentoDatCont"
+                          placeHolder="Ingrese el número de documento" [onlyNumbers]="true" [inputGroup]="true"
+                          [append]="true" iconBtnAppend="fa-search" [btnAppend]="true"
+                          (clickAppend)="buscarNumeroDocumentoDatosContacto($event)">
+                        </app-basic-input>
+
+
+                      </div>
+                    </div>
+
+
+                    <div class="row gx-2">
+                      <div class="col-lg-4">
+                        <app-basic-input [parentForm]="f_s5_DatosContacto" inputFormControlName="dc_nombre"
+                          label="Nombres" placeHolder="Ingrese el nombre" [maxLength]="50">
+                        </app-basic-input>
+                      </div>
+
+                      <div class="col-lg-4">
+                        <app-basic-input [parentForm]="f_s5_DatosContacto" inputFormControlName="dc_apePaterno"
+                          label="Apellido Paterno" placeHolder="Ingrese el apellido paterno" [maxLength]="50">
+                        </app-basic-input>
+                      </div>
+
+                      <div class="col-lg-4">
+                        <app-basic-input [parentForm]="f_s5_DatosContacto" inputFormControlName="dc_apeMaterno"
+                          label="Apellido Materno" placeHolder="Ingrese el apellido materno" [maxLength]="50">
+                        </app-basic-input>
+                      </div>
+                    </div>
+
+                    <div class="row gx-2">
+
+                      <div class="col-lg-4">
+                        <app-basic-input [parentForm]="f_s5_DatosContacto" inputFormControlName="dc_cip"
+                          label="C.I.P. N°" placeHolder="Ingrese C.I.P. N°" [maxLength]="30">
+                        </app-basic-input>
+                      </div>
+
+                      <div class="col-lg-4">
+                        <app-basic-input [parentForm]="f_s5_DatosContacto" inputFormControlName="dc_telefono"
+                          label="Teléfono Fijo" placeHolder="Ingrese el teléfono fijo" [onlyNumbers]="true"
+                          [maxLength]="9">
+                        </app-basic-input>
+
+
+                      </div>
+                      <div class="col-lg-4">
+                        <app-basic-input [parentForm]="f_s5_DatosContacto" inputFormControlName="dc_celular"
+                          label="Celular" placeHolder="Ingrese el número de celular" [onlyNumbers]="true"
+                          [maxLength]="9">
+                        </app-basic-input>
+
+
+                      </div>
+
+                    </div>
+
+
+
+                  </div>
+
+                </div>
+
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div ngbAccordionItem="seccion-6" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+
+            <button ngbAccordionButton>V. DECLARACION
+              JURADA</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div formGroupName="a_Seccion6">
+                  <div class="mt-2 mb-4 ng-star-inserted" *ngIf="a_s6_declaracion1FC.enabled">
+                    <div class="alert alert-custom">
+                      <div _ngcontent-ehx-c118="" class="row gx-2" style="align-items: center;">
+                        <div _ngcontent-ehx-c118="" class="col">
+                          <div _ngcontent-ehx-c118=""> 1 Toda la información proporcionada es veraz,
+                            así como los documentos presentados son auténticos, en caso contrario,
+                            me someto al procedimiento y a las sanciones previstas en la Ley N°
+                            27444, Ley del Procedimiento Administrativo General y/o normas
+                            complementarias.
+                          </div>
+                        </div>
+                        <div _ngcontent-ehx-c118="" class="col-auto">
+                          <div _ngcontent-ehx-c118="" class="d-flex flex-row p-2 ms-4">
+                            <ui-switch formControlName="a_s6_declaracion1FC" (change)="cambio()"
+                              class="ng-valid ng-touched ng-dirty"></ui-switch> NO / SI
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="alert alert-active">
+                    <span style="text-align: justify; display: block;">
+                      NOTA: En el presente documento electrónico se ha vinculado e identificado al
+                      firmante, así como se ha garantizado la autenticación e integridad del mismo a
+                      través de la firma electrónica utilizada atraves del usuario y clave de ingreso al
+                      Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones , la cual tiene
+                      la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el
+                      artículo primero y segundo de la Ley N° 27269 - Ley de Firmas y Certificados
+                      Digitales y lo establecido en el inciso c) del numeral 47.1 del Art 47 del
+                      Reglamento de la Ley de Gobierno Digital, aprobado mediante Decreto Supremo
+                      029-2021-PCM.
+                    </span>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer anexo">
+  <div class="row">
+    <div class="col-lg-12 d-flex">
+      <div class="flex-1">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+            <i class="far fa-eye"></i>
+            Visualizar
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 text-end">
+        <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="anexoFG.invalid">
+          <i class="far fa-save"></i>
+          {{
+          (idAnexo === 0 ? 'Grabar' : 'Modificar')
+          }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

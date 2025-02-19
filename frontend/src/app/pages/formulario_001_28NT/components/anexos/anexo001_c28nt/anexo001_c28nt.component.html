@@ -1,0 +1,898 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+<div class="modal-body anexo">
+    <div class="container mt-2 mb-3">
+        <form [formGroup]='anexoFG'>
+            <div class="center">
+                <h6>{{txtTitulo}}</h6>
+                <h5>SERVICIO SOLICITADO :  {{this.descTipoSolicitudTupa}} {{this.txtServicioSolicitado}}</h5>
+            </div>
+            
+            <div formArrayName="a_AnexosFA">
+                <div *ngFor="let _ of a_AnexosFA.controls; let i=index">
+                    <div class="mt-2" [formGroupName]="i">
+                        <!--<div class="row mt-4 mb-2" style="text-align: center;">
+                            <div class="col-lg-12">
+                                <h5>SOLICITUD DE ENLACE #{{ (i + 1) | number: '1.0-0' }}</h5>
+                            </div>
+                            <div class="col-lg-12 m-2" *ngIf="i >= 1">
+                                <button #btnEliminarEnlaceSolicitado type="button" class="btn btn-danger"
+                                    (click)="deleteEnlaceSolicitado(btnEliminarEnlaceSolicitado, i)">
+                                    <span class="fa fa-trash"></span> Eliminar
+                                </button>
+                            </div>
+                        </div>-->
+                        <div class="row">
+                            <div ngbAccordion
+                                activeIds="seccion-2, seccion-3, seccion-3a, seccion-4, seccion-4a, seccion-5, seccion-6">
+                                <div ngbAccordionItem="seccion-2" [collapsed]="false">
+                                    <h2 ngbAccordionHeader>
+                                        
+                                            <button ngbAccordionButton>II. TIPO DE ENLACE
+                                                SOLICITADO</button>
+                                        </h2>
+                                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                        <div class="row" formGroupName="a_Seccion2FG"
+                                            style="text-align: center;">
+                                            <div class="col-lg-6">
+                                                <div class="alert alert-custom row gx-2">
+                                                    <div class="col-lg">
+                                                        <strong>ANALÓGICO</strong>
+                                                    </div>
+                                                    <div class="col-lg d-flex -form form-check custom-control-inline">
+                                                        <input type="radio" class="form-check-input" value="fijo" formControlName="a_s2_AnalogicoFG">
+                                                        <label class="form-check-label">FIJO</label>
+                                                    </div>
+                                                    <div class="col-lg d-flex -form form-check custom-control-inline">
+                                                        <input type="radio" class="form-check-input" value="movil" formControlName="a_s2_AnalogicoFG">
+                                                        <label class="form-check-label">MOVIL</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="alert alert-custom row gx-2">
+                                                    <div class="col-lg">
+                                                        <strong>DIGITAL</strong>
+                                                    </div>
+                                                    <div class="col-lg d-flex -form form-check custom-control-inline">
+                                                        <input type="radio" class="form-check-input" value="fijo" formControlName="a_s2_DigitalFG">
+                                                        <label class="form-check-label">FIJO</label>
+                                                    </div>
+                                                    <div class="col-lg d-flex -form form-check custom-control-inline">
+                                                        <input type="radio" class="form-check-input" value="movil" formControlName="a_s2_DigitalFG">
+                                                        <label class="form-check-label">MOVIL</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-12 m-2" *ngIf="i == 0" >
+                                            <div class="py-2">
+                                                <div class="col-md-12 alert alert-info" role="alert">
+                                                    <h5 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Importante</h5>
+                                                    <ul>
+                                                        <li>Deberá descargar la plantilla de Excel, registrar sus estaciones y adjuntarla haciendo clic en el botón "Adjuntar Excel".</li>
+                                                        <li>La cantidad y nombres de las columnas de la plantilla NO DEBEN SER MODIFICADOS.</li>
+                                                        <li>La información completada en el presente anexo corresponde al primer registro del archivo excel adjunto.</li>
+                                                        <li>Confirme la ubicación de la estación fija del primer registro.</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="row gx-2 mt-2" style="align-items: center;"  formGroupName="a_Seccion21FG">
+                                                <div class="col-lg-auto">
+                                                    <strong>Plantilla:</strong>
+                                                </div>
+                                                <div class="col-lg-auto">
+                                                    <button class="btn btn-danger btn-sm align-self-center"
+                                                        (click)="downloadPlantilla(this.plantilla)">
+                                                        <i class="fas fa-download"></i>
+                                                        Descargar Plantilla
+                                                    </button>
+                                                </div>
+                                                <!--<div class="col-lg-auto">
+                                                    <app-basic-file-upload [parentForm]="a_Seccion21FG"
+                                                        fileFormControlName="a_s2_FileFC(0)" [horizontal]="true" >
+                                                    </app-basic-file-upload>
+                                                </div>-->
+                                                <div class="col-lg-auto" *ngIf="a_s2_FileFC(0).value || a_s2_PathNameFC(0).value">
+                                                    <i class="far fa-file-pdf fa-2x cursor-pointer" title="Vista previa"
+                                                        (click)="vistaPreviaAdjunto(a_s2_FileFC(0), a_s2_PathNameFC(0))"></i>
+                                                </div>
+                                                <div class="col-lg-auto" *ngIf="a_s2_FileFC(0).value || a_s2_PathNameFC(0).value">
+                                                    <i class="far fa-trash-alt fa-2x text-danger cursor-pointer" title="Eliminar"
+                                                        (click)="eliminarAdjunto(a_s2_FileFC(0), a_s2_PathNameFC(0))"></i>
+                                                </div>
+
+                                                <div class="col-lg-auto">
+                                                <button class="btn btn-danger btn-sm me-2 align-self-center"
+                                                     (click)="inputFileExcel.click($event)">
+                                                    <i class="fas fa-upload"></i>
+                                                    Adjuntar Excel
+                                                </button>
+
+                                                <input type="file" class="d-none" #inputFileExcel accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                                    (change)="onChangeInputExcel($event)" />
+                                                </div>
+
+                                                <div *ngIf="a_s2_PathNameExcelFC(0).value">
+                                                    <button class="btn btn-success btn-sm align-self-center"
+                                                        (click)="downloadFileExcel()">
+                                                        <i class="fas fa-file-excel"></i>
+                                                        Adjunto
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-auto" *ngIf="this.fileExcelSeleccionado || a_s2_FileExcelFC(0).value || a_s2_PathNameExcelFC(0).value">
+                                                    <i class="far fa-trash-alt fa-2x text-danger cursor-pointer" title="Eliminar"
+                                                        (click)="eliminarAdjuntoExcel(a_s2_FileExcelFC(0), a_s2_PathNameExcelFC(0))"></i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </ng-template>
+</div>
+</div>
+                                </div>
+
+                                <div  [disabled]="a_Seccion3FG(i).disabled" ngbAccordionItem="seccion-3">
+                                    <h2 ngbAccordionHeader >
+                                        
+                                            <button ngbAccordionButton>III. UBICACIÓN DE LA
+                                                ESTACIÓN TRANSMISORA</button>
+                                        </h2>
+                                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                        <div class="row" *ngIf="a_Seccion3FG(i).enabled" formGroupName="a_Seccion3FG">
+                                            <div class="col-lg-12">
+                                                <app-basic-input class="mt-3" [parentForm]="a_Seccion3FG(i)"
+                                                    inputFormControlName="a_s3_UbicacionFC" label="Ubicación"
+                                                    placeHolder="Ingrese la ubicación de la estación" [maxLength]="100">
+                                                </app-basic-input>
+                                                <app-ubigeo #ubigeoCmpEstFija1 [parentForm]="a_Seccion3FG(i)"
+                                                    depaFormControlName="a_s3_DepartamentoFC"
+                                                    provFormControlName="a_s3_ProvinciaFC"
+                                                    distFormControlName="a_s3_DistritoFC" depaFormLabel="Departamento"
+                                                    provFormLabel="Provincia" distFormLabel="Distrito"
+                                                    [horizontal]="true">
+                                                </app-ubigeo>
+                                                <div class="row gx-2 mt-2" style="align-items: center;">
+                                                    <div class="col-lg-auto">
+                                                        <strong>Coordenadas Geográficas</strong>
+                                                    </div>
+                                                    <div class="col-lg-auto">
+                                                        <strong>L.O.:</strong>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion3FG(i)"
+                                                            inputFormControlName="a_s3_LOGraFC" placeHolder="Grados"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">°</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion3FG(i)"
+                                                            inputFormControlName="a_s3_LOMinFC" placeHolder="Minutos"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">'</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion3FG(i)"
+                                                            inputFormControlName="a_s3_LOSegFC" placeHolder="Segundos"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">"</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-auto">
+                                                        <strong>L.S.:</strong>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion3FG(i)"
+                                                            inputFormControlName="a_s3_LSGraFC" placeHolder="Grados"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">°</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion3FG(i)"
+                                                            inputFormControlName="a_s3_LSMinFC" placeHolder="Minutos"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">'</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion3FG(i)"
+                                                            inputFormControlName="a_s3_LSSegFC" placeHolder="Segundos"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">"</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+</div>
+</div>
+                                </div>
+                                <div  [disabled]="a_Seccion3aFG(i).disabled" ngbAccordionItem="seccion-3a">
+                                    <h2 ngbAccordionHeader >
+                                        
+                                            <button ngbAccordionButton>III.a
+                                                EQUIPAMIENTO</button>
+                                        </h2>
+                                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                        <div class="row" *ngIf="a_Seccion3aFG(i).enabled" formGroupName="a_Seccion3aFG">
+                                            <div class="col-lg-12">
+                                                <div class="row gx-2 mt-3">
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_EquipoFC"
+                                                            label="Equipo o Aparato"
+                                                            placeHolder="Ingrese el nombre del equipo o aparato"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_MarcaFC" label="Marca"
+                                                            placeHolder="Ingrese la marca del equipo" [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_ModeloFC" label="Modelo"
+                                                            placeHolder="Ingrese el modelo del equipo" [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_NroSerieFC" label="N° de Serie"
+                                                            placeHolder="Ingrese el número de serie del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                                <div class="row gx-2">
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_PotenciaFC"
+                                                            label="Potencia de Salida (W)"
+                                                            placeHolder="Ingrese la potencia de salida del equipo"
+                                                            [maxLength]="10" [onlyNumbers]="true" [decimals]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">W</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_BandFrecFC"
+                                                            label="Rango o Banda de Frecuencia"
+                                                            placeHolder="Ingrese el rango o banda de frecuencia del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3" >
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_VelocidadFC"
+                                                            label="Velocidad de Transmisión"
+                                                            placeHolder="Ingrese la velocidad de transmisión del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3" >
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_NroCanalesFC"
+                                                            label="Número de canales"
+                                                            placeHolder="Ingrese el número de canales del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                                <div class="row gx-2">
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_ConfiguraFC"
+                                                            label="Configuración"
+                                                            placeHolder="Ingrese la configuración del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_AnchoBandFC"
+                                                            label="Ancho de Banda por canal RF"
+                                                            placeHolder="Ingrese el ancho de banda por canal RF del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion3aFG(i)"
+                                                            inputFormControlName="a_s3a_CodHomoFC"
+                                                            label="Código de Homologación"
+                                                            placeHolder="Ingrese el código de homologación del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div formGroupName="a_s3a_AntenaFG">
+                                                    <div class="mt-4"><strong>ANTENA</strong></div>
+                                                    <br>
+                                                    <div class="row gx-2">
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_TipoFC" label="Tipo"
+                                                                placeHolder="Ingrese el tipo de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_MarcaFC" label="Marca"
+                                                                placeHolder="Ingrese la marca de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_ModeloFC" label="Modelo"
+                                                                placeHolder="Ingrese el modelo de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_CodHomoFC"
+                                                                label="Código de Homologación"
+                                                                placeHolder="Ingrese el código de homologación de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row gx-2">
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_GananciaFC"
+                                                                label="Ganancia"
+                                                                placeHolder="Ingrese la ganancia de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_DiametroFC"
+                                                                label="Diámetro (m)"
+                                                                placeHolder="Ingrese el diámetro de la antena"
+                                                                [maxLength]="10" [onlyNumbers]="true" [decimals]="true"
+                                                                 [customAppend]="true">
+                                                                <ng-container slot="customAppend">
+                                                                    <span class="input-group-text">m</span>
+                                                                </ng-container>
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_AcimutRadFC"
+                                                                label="Acimut de máxima radiación"
+                                                                placeHolder="Ingrese el acimut de máxima radiación de la antena"
+                                                                [maxLength]="10" 
+                                                                [customAppend]="true" [onlyNumbers]="true"
+                                                                [decimals]="true">
+                                                                <ng-container slot="customAppend">
+                                                                    <span class="input-group-text">°</span>
+                                                                </ng-container>
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_ElevacionFC"
+                                                                label="Elevación"
+                                                                placeHolder="Ingrese la elevación de la antena"
+                                                                [maxLength]="10" 
+                                                                [customAppend]="true" [onlyNumbers]="true"
+                                                                [decimals]="true">
+                                                                <ng-container slot="customAppend">
+                                                                    <span class="input-group-text">°</span>
+                                                                </ng-container>
+                                                            </app-basic-input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row gx-2">
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s3a_AntenaFG(i)"
+                                                                inputFormControlName="a_s3a_an_DistanciaFC"
+                                                                label="Distancia entre estaciones (km)"
+                                                                placeHolder="Ingrese la distancia entre estaciones"
+                                                                [maxLength]="10" [onlyNumbers]="true" [decimals]="true"
+                                                                 [customAppend]="true">
+                                                                <ng-container slot="customAppend">
+                                                                    <span class="input-group-text">km</span>
+                                                                </ng-container>
+                                                            </app-basic-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+</div>
+</div>
+                                </div>
+                                <div  [disabled]="a_Seccion4FG(i).disabled" ngbAccordionItem="seccion-4">
+                                    <h2 ngbAccordionHeader >
+                                        
+                                            <button ngbAccordionButton>IV. UBICACIÓN DE LA
+                                                ESTACIÓN A ENLAZAR</button>
+                                        </h2>
+                                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                        <div class="row" *ngIf="a_Seccion4FG(i).enabled" formGroupName="a_Seccion4FG">
+                                            <div class="col-lg-12">
+                                                <app-basic-input class="mt-3" [parentForm]="a_Seccion4FG(i)"
+                                                    inputFormControlName="a_s4_UbicacionFC" label="Ubicación"
+                                                    placeHolder="Ingrese la ubicación de la estación" [maxLength]="100">
+                                                </app-basic-input>
+                                                <app-ubigeo #ubigeoCmpEstFija2 [parentForm]="a_Seccion4FG(i)"
+                                                    depaFormControlName="a_s4_DepartamentoFC"
+                                                    provFormControlName="a_s4_ProvinciaFC"
+                                                    distFormControlName="a_s4_DistritoFC" depaFormLabel="Departamento"
+                                                    provFormLabel="Provincia" distFormLabel="Distrito"
+                                                    [horizontal]="true">
+                                                </app-ubigeo>
+                                                <div class="row gx-2 mt-2" style="align-items: center;">
+                                                    <div class="col-lg-auto">
+                                                        <strong>Coordenadas Geográficas</strong>
+                                                    </div>
+                                                    <div class="col-lg-auto">
+                                                        <strong>L.O.:</strong>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion4FG(i)"
+                                                            inputFormControlName="a_s4_LOGraFC" placeHolder="Grados"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">°</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion4FG(i)"
+                                                            inputFormControlName="a_s4_LOMinFC" placeHolder="Minutos"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">'</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion4FG(i)"
+                                                            inputFormControlName="a_s4_LOSegFC" placeHolder="Segundos"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">"</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-auto">
+                                                        <strong>L.S.:</strong>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion4FG(i)"
+                                                            inputFormControlName="a_s4_LSGraFC" placeHolder="Grados"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">°</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion4FG(i)"
+                                                            inputFormControlName="a_s4_LSMinFC" placeHolder="Minutos"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">'</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg">
+                                                        <app-basic-input [parentForm]="a_Seccion4FG(i)"
+                                                            inputFormControlName="a_s4_LSSegFC" placeHolder="Segundos"
+                                                            [maxLength]="3" [onlyNumbers]="true" [horizontal]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">"</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+</div>
+</div>
+                                </div>
+                                <div  [disabled]="a_Seccion4aFG(i).disabled" ngbAccordionItem="seccion-4a">
+                                    <h2 ngbAccordionHeader >
+                                        
+                                            <button ngbAccordionButton>IV.a
+                                                EQUIPAMIENTO</button>
+                                        </h2>
+                                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                        <div class="row" *ngIf="a_Seccion4aFG(i).enabled" formGroupName="a_Seccion4aFG"><!---->
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-info" role="alert">
+                                                    (*) Para cualquier trámite posterior a la autorización, se deberá
+                                                    comunicar los números de serie de los equipos.
+                                                </div>
+                                                <div class="row gx-2 mt-3">
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_EquipoFC"
+                                                            label="Equipo o Aparato"
+                                                            placeHolder="Ingrese el nombre del equipo o aparato"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_MarcaFC" label="Marca"
+                                                            placeHolder="Ingrese la marca del equipo" [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_ModeloFC" label="Modelo"
+                                                            placeHolder="Ingrese el modelo del equipo" [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_NroSerieFC" label="N° de Serie"
+                                                            placeHolder="Ingrese el número de serie del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                                <div class="row gx-2">
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_PotenciaFC"
+                                                            label="Potencia de Salida (W)"
+                                                            placeHolder="Ingrese la potencia de salida del equipo"
+                                                            [maxLength]="10" [onlyNumbers]="true" [decimals]="true"
+                                                             [customAppend]="true">
+                                                            <ng-container slot="customAppend">
+                                                                <span class="input-group-text">W</span>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_BandFrecFC"
+                                                            label="Rango o Banda de Frecuencia"
+                                                            placeHolder="Ingrese el rango o banda de frecuencia del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3" >
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_VelocidadFC"
+                                                            label="Velocidad de Transmisión"
+                                                            placeHolder="Ingrese la velocidad de transmisión del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_NroCanalesFC"
+                                                            label="Número de canales"
+                                                            placeHolder="Ingrese el número de canales del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                                <div class="row gx-2">
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_ConfiguraFC"
+                                                            label="Configuración"
+                                                            placeHolder="Ingrese la configuración del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_AnchoBandFC"
+                                                            label="Ancho de Banda por canal RF"
+                                                            placeHolder="Ingrese el ancho de banda por canal RF del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <app-basic-input [parentForm]="a_Seccion4aFG(i)"
+                                                            inputFormControlName="a_s4a_CodHomoFC"
+                                                            label="Código de Homologación"
+                                                            placeHolder="Ingrese el código de homologación del equipo"
+                                                            [maxLength]="20">
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div formGroupName="a_s4a_AntenaFG">
+                                                    <div class="mt-4"><strong>ANTENA</strong></div>
+                                                    <br>
+                                                    <div class="row gx-2">
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s4a_AntenaFG(i)"
+                                                                inputFormControlName="a_s4a_an_TipoFC" label="Tipo"
+                                                                placeHolder="Ingrese el tipo de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s4a_AntenaFG(i)"
+                                                                inputFormControlName="a_s4a_an_MarcaFC" label="Marca"
+                                                                placeHolder="Ingrese la marca de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s4a_AntenaFG(i)"
+                                                                inputFormControlName="a_s4a_an_ModeloFC" label="Modelo"
+                                                                placeHolder="Ingrese el modelo de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s4a_AntenaFG(i)"
+                                                                inputFormControlName="a_s4a_an_CodHomoFC"
+                                                                label="Código de Homologación"
+                                                                placeHolder="Ingrese el código de homologación de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row gx-2">
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s4a_AntenaFG(i)"
+                                                                inputFormControlName="a_s4a_an_GananciaFC"
+                                                                label="Ganancia"
+                                                                placeHolder="Ingrese la ganancia de la antena"
+                                                                [maxLength]="20">
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s4a_AntenaFG(i)"
+                                                                inputFormControlName="a_s4a_an_DiametroFC"
+                                                                label="Diámetro (m)"
+                                                                placeHolder="Ingrese el diámetro de la antena"
+                                                                [maxLength]="10" [onlyNumbers]="true" [decimals]="true"
+                                                                 [customAppend]="true">
+                                                                <ng-container slot="customAppend">
+                                                                    <span class="input-group-text">m</span>
+                                                                </ng-container>
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s4a_AntenaFG(i)"
+                                                                inputFormControlName="a_s4a_an_AcimutRadFC"
+                                                                label="Acimut de máxima radiación"
+                                                                placeHolder="Ingrese el acimut de máxima radiación de la antena"
+                                                                [maxLength]="10" 
+                                                                [customAppend]="true" [onlyNumbers]="true"
+                                                                [decimals]="true">
+                                                                <ng-container slot="customAppend">
+                                                                    <span class="input-group-text">°</span>
+                                                                </ng-container>
+                                                            </app-basic-input>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <app-basic-input [parentForm]="a_s4a_AntenaFG(i)"
+                                                                inputFormControlName="a_s4a_an_ElevacionFC"
+                                                                label="Elevación"
+                                                                placeHolder="Ingrese la elevación de la antena"
+                                                                [maxLength]="10" 
+                                                                [customAppend]="true" [onlyNumbers]="true"
+                                                                [decimals]="true">
+                                                                <ng-container slot="customAppend">
+                                                                    <span class="input-group-text">°</span>
+                                                                </ng-container>
+                                                            </app-basic-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+</div>
+</div>
+                                </div>
+                                <div  [disabled]="a_Seccion5FG(i).disabled" ngbAccordionItem="seccion-5">
+                                    <h2 ngbAccordionHeader >
+                                        
+                                            <button ngbAccordionButton>V.
+                                                HABILITACIÓN
+                                                PROFESIONAL DE INGENIERO ELECTRÓNICO O TELECOMUNICACIONES</button>
+                                        </h2>
+                                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                        <div class="row" *ngIf="a_Seccion5FG(i).enabled" formGroupName="a_Seccion5FG">
+                                            <div class="col-lg-12">
+                                                <div class="row gx-2">
+                                                    <div class="col-lg-6">
+                                                        <app-basic-input [parentForm]="a_Seccion5FG(i)"
+                                                            inputFormControlName="a_s5_ColegioProfFC"
+                                                            label="Colegio Profesional"
+                                                            placeHolder="Ingrese el colegio profesional del ingeniero"
+                                                            [maxLength]="100" [horizontal]="true">
+                                                        </app-basic-input>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <app-basic-input [parentForm]="a_Seccion5FG(i)"
+                                                            inputFormControlName="a_s5_NroColegiaFC"
+                                                            label="Número de Colegiatura"
+                                                            placeHolder="Ingrese el número de colegiatura del ingeniero"
+                                                            [maxLength]="20" [horizontal]="true">
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+</div>
+</div>
+                                </div>
+                                <div  [disabled]="a_Seccion6FG(i).disabled" ngbAccordionItem="seccion-6">
+                                    <h2 ngbAccordionHeader >
+                                        
+                                            <button ngbAccordionButton>VI.
+                                                DECLARACIONES
+                                                JURADAS</button>
+                                        </h2>
+                                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                                        <div formGroupName="a_Seccion6FG">
+                                            <div class="mt-2 mb-4 ng-star-inserted"
+                                                *ngIf="a_s6_declaracion1FC(i).enabled">
+                                                <div class="alert alert-custom">
+                                                    <div _ngcontent-ehx-c118="" class="row gx-2"
+                                                        style="align-items: center;">
+                                                        <div _ngcontent-ehx-c118="" class="col">
+                                                            <div _ngcontent-ehx-c118=""> 1 Toda la información
+                                                                proporcionada
+                                                                es veraz,
+                                                                así como los documentos presentados son auténticos, en
+                                                                caso
+                                                                contrario,
+                                                                me someto al procedimiento y a las sanciones previstas
+                                                                en la
+                                                                Ley N°
+                                                                27444, Ley del Procedimiento Administrativo General y/o
+                                                                normas
+                                                                complementarias.
+                                                            </div>
+                                                        </div>
+                                                        <div _ngcontent-ehx-c118="" class="col-auto">
+                                                            <div _ngcontent-ehx-c118=""
+                                                                class="d-flex flex-row p-2 ms-4">
+                                                                <ui-switch formControlName="a_s6_declaracion1FC"
+                                                                    class="ng-valid ng-touched ng-dirty"></ui-switch> NO
+                                                                /
+                                                                SI
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="alert alert-active">
+                                                <span style="text-align: justify; display: block;">
+                                                    NOTA: En el presente documento electrónico se ha vinculado e
+                                                    identificado al
+                                                    firmante, así como se ha garantizado la autenticación e integridad
+                                                    del
+                                                    mismo a
+                                                    través de la firma electrónica utilizada atraves del usuario y clave
+                                                    de
+                                                    ingreso al
+                                                    Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones
+                                                    , la
+                                                    cual tiene
+                                                    la misma validez y eficacia jurídica que la firma manuscrita, de
+                                                    conformidad con el
+                                                    artículo primero y segundo de la Ley N° 27269 - Ley de Firmas y
+                                                    Certificados
+                                                    Digitales y lo establecido en el inciso c) del numeral 47.1 del Art
+                                                    47
+                                                    del
+                                                    Reglamento de la Ley de Gobierno Digital, aprobado mediante Decreto
+                                                    Supremo
+                                                    029-2021-PCM.
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+</div>
+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row mt-4 mb-2" style="text-align: center;">
+                <div class="col-lg-12">
+                    <h5>SOLICITAR NUEVO ENLACE</h5>
+                </div>
+                <div class="col-lg-12 m-2">
+                    <button #btnAgregarEnlaceSolicitado type="button" class="btn btn-success"
+                        (click)="addEnlaceSolicitado(btnAgregarEnlaceSolicitado)">
+                        <span class="fa fa-plus"></span> Agregar
+                    </button>
+                </div>
+            </div>-->
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-lg-12 d-flex">
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                        <i class="far fa-eye"></i>
+                        Visualizar
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="anexoFG.invalid">
+                    <i class="far fa-save"></i>
+                    {{
+                    (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

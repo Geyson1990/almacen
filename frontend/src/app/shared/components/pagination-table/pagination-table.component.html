@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+    [(page)]="page"
+    [pageSize]="pageSize"
+    (pageChange)="changePaginationEmit()"
+    [collectionSize]="totalRegistros"
+    [maxSize]="5"
+    [rotate]="true"
+    [boundaryLinks]="true"
+  >
+    <ng-template ngbPaginationFirst>Inicio</ng-template>
+    <ng-template ngbPaginationLast>Final</ng-template>
+    <ng-template ngbPaginationPrevious>Anterior</ng-template>
+    <ng-template ngbPaginationNext>Siguiente</ng-template>
+    <ng-template ngbPaginationEllipsis>...</ng-template>
+    <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+  </ngb-pagination>
+
+  <select
+    class="form-select"
+    style="width: auto"
+    [(ngModel)]="pageSize"
+    (ngModelChange)="changePaginationEmitSelect()"
+  >
+    <option [ngValue]="25">25 registros</option>
+    <option [ngValue]="50">50 registros</option>
+    <option [ngValue]="100">100 registros</option>
+  </select>
+</div>

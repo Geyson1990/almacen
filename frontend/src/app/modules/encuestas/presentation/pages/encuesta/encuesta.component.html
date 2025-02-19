@@ -1,0 +1,81 @@
+<app-header-public></app-header-public>
+
+<div class="body-encuesta">
+  <div class="contenedor-principal">
+
+    <div class="card mb-5 shadow">
+      <div class="card-header py-3 d-flex">
+          <img src="http://172.25.3.108/administrado/assets/img/GOB-PE.png" style="max-width: 110px;" />
+          <div class="flex-grow-1 ms-3 ps-3 fw-bold align-self-center"
+          style="border-left: 1px solid white; color: white; font-size: 16px;">Encuestas en línea</div>
+      </div>
+
+      <div class="card-body p-5">
+        <div *ngIf="!errores; else error">
+          <div *ngIf="!encuestaEnviada; else encuesta_enviada">
+            <div *ngIf="encuestaForm" class="form-wrapper">
+
+              <ng-container [formGroup]="encuestaForm">
+
+                <ng-container *ngIf="encuestaPlantilla.encuestaConfig.idTipoEncuesta == this.TipoEncuestaEnum.GENERAL">
+                  <app-form-encuesta-general formGroupName="encuestaConfig"></app-form-encuesta-general>
+                </ng-container>
+
+                <ng-container *ngIf="encuestaPlantilla.encuestaConfig.idTipoEncuesta == this.TipoEncuestaEnum.SATISFACCION_ESCALA_LIKERT">
+                  <app-form-encuesta-escala-likert formGroupName="encuestaConfig"></app-form-encuesta-escala-likert>
+                </ng-container>
+
+                <div *ngIf="encuestaPlantilla.encuestaConfig.flagComentarios" class="row mt-4" formGroupName="encuestaConfig">
+                  <div class="col-md-12">
+                    <label class="text-bold mb-1">Déjenos su comentario (opcional)</label>
+                    <textarea type="text" class="form-control" formControlName="comentarios" rows="5" maxlength="1000"></textarea>
+                    <small class="d-block text-end mt-1">{{ CountCaracteresComentarios + ' / 1000' }}</small>
+                  </div>
+                </div>
+
+                <br>
+                <h6>¡Su opinión es muy importante para nosotros!</h6>
+                <p>Muchas gracias por atender esta encuesta.</p>
+
+                <div class="w-100 text-center">
+                  <button class="btn btn-success mx-auto my-2" (click)="enviar()"><i class="fas fa-check"></i> Finalizar</button>
+                </div>
+
+              </ng-container>
+
+              <hr>
+              <footer>
+                <small class="text-muted">Para cualquier consulta sobre las encuestas o la plataforma Tupa Digital, puedes llamar nuestra Central telefónica: (01)615 7900 - (01)615 7800 o Mesa de Ayuda: Teléf.(511)615 - 7800 Anexo: 5777, y con gusto resolveremos tus dudas.</small>
+              </footer>
+
+              <!-- <pre style="border: 1px solid red; width: fit-content; padding: 20px;">
+                {{encuestaForm?.value | json}}
+              </pre> -->
+
+            </div>
+          </div>
+
+          <ng-template #encuesta_enviada>
+            <h4><i class="fas fa-check-circle"></i> Se ha registrado su respuesta con éxito</h4>
+            <p>Agradecemos tu tiempo y comentarios</p>
+            <div class="w-100 text-center">
+              <a class="btn btn-light mx-auto my-2" [routerLink]="['/mis-tramites']"><i class="fas fa-inbox"></i> Mis trámites</a>
+            </div>
+          </ng-template>
+        </div>
+
+        <ng-template #error>
+          <div class="alert alert-danger" *ngFor="let er of errores">
+            <h5><i class="fas fa-exclamation-circle"></i> {{er}}</h5>
+          </div>
+          <div class="w-100 text-center">
+            <a class="btn btn-light mx-auto my-2" [routerLink]="['/mis-tramites']"><i class="fas fa-inbox"></i> Mis trámites</a>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

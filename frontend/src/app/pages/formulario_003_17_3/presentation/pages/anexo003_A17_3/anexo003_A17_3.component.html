@@ -1,0 +1,188 @@
+<div class="modal-header anexo bg-danger text-white">
+   <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+   <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+
+   </button>
+</div>
+<div class="modal-body anexo">
+   <div class="container mt-2 mb-3">
+      <form [formGroup]='anexoFG'>
+         <div class="center">
+            <h6>{{txtTitulo}}</h6>
+         </div>
+         <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-2,seccion-3,seccion-4,seccion-5">
+            
+
+            <div ngbAccordionItem="seccion-2" [collapsed]="false">
+               <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>DATOS DEL PERSONAL</button>
+               </h2>
+               <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                     <ng-template>
+                        <div class="row mt-3" formGroupName="a_Seccion2">
+
+                           <div class="col-sm-3 d-flex flex-column">
+                              <div class="d-flex align-items-center">
+                                 <div class="flex-1 campo-obligatorio me-2">Tipo de Documento:</div>
+                                 <div class="flex-1">
+                                    <select class="form-select" (change)="changeTipoDocumento()"
+                                       formControlName="a_s2_tipoDocumento">
+                                       <option value=''>Seleccione</option>
+                                       <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{
+                                          item.documento }}</option>
+                                    </select>
+                                 </div>
+                              </div>
+
+                              <div class="d-flex align-items-center mt-3">
+                                 <div class="campo-obligatorio flex-1">Función:</div>
+                                 <div class="flex-1">
+                                    <select class="form-select" formControlName="a_s2_funcion">
+                                       <option value="">Seleccione</option>
+                                       <option *ngFor="let item of listaFuncion" [value]="item.value">{{ item.text
+                                          }}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="col-sm-4 d-flex flex-column">
+                              <div class="d-flex align-items-center">
+                                 <div class="flex-1 campo-obligatorio me-2">Nro de Documento:</div>
+                                 <div class="flex-1">
+                                    <div class="input-group">
+                                       <input type="text" class="form-control text-uppercase"
+                                          (input)="inputNumeroDocumento($event)"
+                                          [readonly]="this.a_s2_tipoDocumento.value === ''"
+                                          [maxlength]="getMaxLengthNumeroDocumento()"
+                                          formControlName="a_s2_numeroDocumento" />
+                                       <button class="btn btn-outline-secondary"
+                                          [disabled]="this.a_s2_numeroDocumento.value.trim().length === 0" type="button"
+                                          (click)="buscarNumeroDocumento()">
+                                          <i class="fas fa-search"></i>
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="d-flex align-items-center mt-3">
+                                 <div class="campo-obligatorio me-2">Nro. CIP:</div>
+                                 <div class="flex-1">
+                                    <input type="text" class="form-control" [readonly]="false"
+                                       formControlName="a_s2_cip" [maxlength]="8" />
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="col-sm-5 d-flex flex-column">
+                              <div class="d-flex align-items-center">
+                                 <div class="campo-obligatorio me-2">Apellidos y nombres:</div>
+                                 <div class="flex-1">
+                                    <input type="text" class="form-control" [readonly]="true"
+                                       formControlName="a_s2_nombresApellidos" />
+                                 </div>
+                              </div>
+                              <div class="d-flex align-items-center mt-3">
+                                 &nbsp;
+                                 <div class="d-flex" id="boton-agregar-modificar">
+                                    <button class="btn btn-danger btn-sm flex-1" (click)="agregarPersonal()">
+                                       <div *ngIf="indexEditTabla === -1; else elseBlock">
+                                          <i class="fas fa-plus-circle"></i>
+                                          Agregar
+                                       </div>
+                                       <ng-template #elseBlock>
+                                          <i class="fas fa-pencil-alt"></i>
+                                          Modificar
+                                       </ng-template>
+                                    </button>
+                                    <button *ngIf="indexEditTabla !== -1"
+                                       class="btn btn-warning btn-sm  ms-2 btn-cancelar"
+                                       (click)="cancelarModificacion()">
+                                       Cancelar
+                                    </button>
+                                 </div>
+
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row mt-3">
+                           <div class="col-sm-12">
+                              <div class="table-responsive">
+
+                                 <table class="table table-bordered">
+                                    <thead class="tabla-header-mtc">
+                                       <tr>
+                                          <th>N°</th>
+                                          <th>Apellidos y nombres</th>
+                                          <th>N° DNI/CE</th>
+                                          <th>Función</th>
+                                          <th>N° CIP</th>
+                                          <th>Acciones</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody *ngIf="listaPersonal.length > 0; else sinRegistros">
+                                       <tr class="text-center" [class.registro-edit]="indexEditTabla === i"
+                                          *ngFor="let item of listaPersonal, let i = index">
+                                          <td>{{ i + 1}}</td>
+                                          <td class="text-start">
+                                             {{ item.apellidosNombres }}
+                                          </td>
+                                          <td>{{ (item.tipoDocumento.id=='1' ? 'DNI' : item.tipoDocumento.id=='2' ? 'CE' : '') +' '+ item.nroDocumento}} </td>
+                                          <td>{{ item.funcion.text }}</td>
+                                          <td>{{ item.cip }}</td>
+                                          <td>
+                                             <div>
+                                                <i class="far fa-edit pe-2 text-primary cursor-pointer"
+                                                   [class.opacity-icon]="indexEditTabla !== -1" title="Editar"
+                                                   (click)="modificarPersonal(item, i)"></i>
+                                                <i class="far fa-trash-alt ps-2 text-danger cursor-pointer"
+                                                   [class.opacity-icon]="indexEditTabla !== -1" title="Eliminar"
+                                                   (click)="eliminarPersonal(item, i)"></i>
+                                             </div>
+                                          </td>
+                                       </tr>
+                                    </tbody>
+                                    <ng-template #sinRegistros>
+                                       <tbody>
+                                          <tr>
+                                             <td colspan="7" class="text-center">No se encontraron registros</td>
+                                          </tr>
+                                       </tbody>
+                                    </ng-template>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </ng-template>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+<div class="modal-footer anexo">
+   <div class="row">
+      <div class="col-lg-12 d-flex">
+         <div class="flex-1">
+            <div class="btn-group" role="group" aria-label="Basic example">
+               <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                  <i class="far fa-eye"></i>
+                  Visualizar
+               </button>
+            </div>
+         </div>
+         <div class="flex-1 text-end">
+            <button class="btn btn-success" (click)="guardarAnexo()" [disabled]="anexoFG.invalid">
+               <i class="far fa-save"></i>
+               {{
+               (idAnexo === 0 ? 'Grabar' : 'Modificar')
+               }}
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

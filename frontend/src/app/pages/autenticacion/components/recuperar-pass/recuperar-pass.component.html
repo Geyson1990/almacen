@@ -1,0 +1,48 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light"
+    style="background-color: var(--color-mtc) !important;">
+    <div class="navbar-brand" style="display: flex;">
+        <img src="assets/img/GOB-PE.png" style="max-width: 110px;" />
+        <div class="flex-grow-1 ms-3 ps-3 fw-bold align-self-center"
+            style="border-left: 1px solid white; color: white; font-size: 16px;">Tupa Digital</div>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 100px;">
+    <div style="text-align:center">
+        <h1>Recuperar contraseña</h1>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger text-center" role="alert">
+                *** Debe ingresar el correo electrónico con el que se registró en el sistema ***
+            </div>
+        </div>
+        <div class="offset-md-3 col-md-6">
+            <form [formGroup]="recuperarPassFormGroup"
+                (ngSubmit)="submitRecuperarPass(recuperarPassFormGroup.value, submitBtn)">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Correo electrónico</label>
+                    <input type="email" formControlName="emailFormControl" class="form-control"
+                        placeholder="Ingrese su correo electrónico">
+                    <div *ngIf="emailFormControl.invalid && (emailFormControl.dirty || emailFormControl.touched)"
+                        class="text-danger">
+                        <div *ngIf="emailFormControl.errors?.required">
+                            El campo es obligatorio
+                        </div>
+                        <div *ngIf="emailFormControl.errors?.email">
+                            El correo electrónico no es válido
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center">
+                    <button #submitBtn [disabled]="!recuperarPassFormGroup.valid" type="submit" class="btn btn-primary mx-2 mb-2">
+                        Recuperar contraseña
+                    </button>
+                    <a class="btn btn-danger mx-2 mb-2" routerLink="/autenticacion/iniciar-sesion">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,518 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">ANEXO 001-A/27</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+</button>
+</div>
+
+<div class="modal-body anexo">
+
+    <form novalidate [formGroup]="anexoFormulario">
+
+        <div ngbAccordion #acc="ngbAccordion" activeIds="ngb-anexo001-A27">
+            <div ngbAccordionItem="ngb-anexo001-A27" [collapsed]="false">
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton> DATOS PERSONALES
+                  </button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row gx-2">
+                        <div class="col-md-2 mb-2">
+                            <label>Tipo Documento <span class="text-danger">(*)</span></label>
+                            <select disabled class="form-select form-select-sm" formControlName="tipoDocumentoForm">
+                            <option value=''>Seleccione</option>
+                            <option *ngFor="let item of listaTiposDocumentos | slice:0:4" [value]="item.id">{{ item.documento }}</option>
+                        </select>
+
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label for="razonSocial" class="col-form-label">Número de Documento <span
+                        class="text-danger">(*)</span></label>
+                            <input disabled formControlName="numeroDocumentoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-7 mb-2">
+                            <label for="razonSocial" class="col-form-label">Nombres y  Apellidos  <span
+                        class="text-danger">(*)</span></label>
+                            <input disabled formControlName="nombresApellidosRazonSocialForm" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+
+
+                    <!-- Telefono, Celular, Correo -->
+                    <!-- <div class="row gx-2 mb-2">
+                        <div class="col-md-2 mb-1">
+                            <label class="mb-0">RUC <span class="text-danger"></span></label>
+                            <input formControlName="rucForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-2 mb-1">
+                            <label class="mb-0">Teléfono <span class="text-danger"></span></label>
+                            <input formControlName="telefonoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Celular <span class="text-danger">(*)</span></label>
+                            <input formControlName="celularForm" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <label class="mb-0">Correo Electrónico ( E-mail ) <span class="text-danger">(*)</span></label>
+                            <input formControlName="correoElectronicoForm" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div> -->
+
+                </ng-template>
+</div>
+</div>
+
+            </div>
+
+            <div  ngbAccordionItem>
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>A. SERVICIO Y MODALIDADES</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row mt-sm-2 mt-md-1">
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Portador Local (Modalidades: Conmutado y/o No Conmutado)
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>C<input type="checkbox" class="float-end m-2" formControlName="portadorLocalConmutadoForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>NC <input type="checkbox" class="float-end m-2" formControlName="portadorLocalNoConmutadoForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Distribución de Radiodifusión por Cable:Cable alámbrico u óptico
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="distribucionRadiodifusiionCableAlambricoOpticoForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <p class="text-justify small">
+                                Móvil por Satélite
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="movilporSateliteForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-sm-2 mt-md-1">
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Portador de Larga Distancia Internacional (Modalidades: Conmutado y/o No Conmutado
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> C<input type="checkbox" class="float-end m-2" formControlName="portadorLargaDistanciaInternacionalConmutadoForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>NC <input type="checkbox" class="float-end m-2" formControlName="portadorLargaDistanciaInternacionalNoConmutadoForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Distribución de Radiodifusión por Cable:Difusión directa por satélite
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="distribucionRadiodifusionCableDifusionDirectaSateliteForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <p class="text-justify small">
+                                Móvil de Datos Marítimo por Satelite
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="movildDatosMarítimoSateliteForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-sm-2 mt-md-1">
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Portador de Larga Distancia Nacional (Modalidades: Conmutado y/o No Conmutado)
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>C <input type="checkbox" class="float-end m-2" formControlName="portadorLargaDistanciaNacionalConmutadoForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>NC <input type="checkbox" class="float-end m-2" formControlName="portadorLargaDistanciaNacionalNoConmutadoForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Distribución de Radiodifusión por Cable MMDS
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="distribucionRadiodifusionCableMMDSForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <p class="text-justify small">
+                                Otros (Establecidos en el artículo 53º del D.S. Nº 020-2007-MTC)
+                                <input type="text" class="form-control flex-3 text-uppercase" formControlName="otrosDescripcionForm" />
+
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="otrosEstablecidosArticulo53Form" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Telefonía Fija(Modalidades: Abonados y/o Teléfonos Públicos)
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> C<input type="checkbox" class="float-end m-2" formControlName="telefoníaFijaAbonadosForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>NC <input type="checkbox" class="float-end m-2" formControlName="telefoníaFijaTelefonosPublicosForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Servicio Móvil de Canales Múltiples de Selección Automática (Trocalizado
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="servicioMovilCanalesMultiplesSeleccionAutomaticaTrocalizadoForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <p class="text-justify small">
+
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+
+
+                        </div>
+
+                    </div>
+                    <div class="row mt-sm-2 mt-md-1">
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Telefonía Móvil(Modalidades: Abonados y/o Teléfonos Públicos)
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>C <input type="checkbox" class="float-end m-2" formControlName="telefoniaMovilAbonadosForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>NC <input type="checkbox" class="float-end m-2" formControlName="telefoniaMovilTelefonosPublicosForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            <p class="text-justify small">
+                                Servicio de Comunicaciones Personales (PCS)
+
+
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="checkbox" class="float-end m-2" formControlName="servicioComunicacionesPersonalesPCSForm" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-2">
+
+                        </div>
+                        <div class="col-md-1">
+
+
+                        </div>
+
+                    </div>
+
+
+                </ng-template>
+</div>
+</div>
+
+            </div>
+
+            <div  ngbAccordionItem>
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>B. PROYECCIÓN DE INVERSIÓN</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+
+                    <div class="row mt-sm-2 mt-md-1">
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="Dolares" name="MonedaForm" formControlName="MonedaForm" class="float-end m-2" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-justify small">
+                                Dolares de los Estados Unidos de America
+
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p> <input type="radio" value="Soles" name="MonedaForm" formControlName="MonedaForm" class="float-end m-2" /> </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-justify small">
+                                Nuevos Soles
+                            </p>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row mt-sm-2 mt-md-1">
+
+                        <div class="col-md-2">
+                            Año
+                        </div>
+                        <div class="col-md-4">
+                            <div class="flex-2">
+                                <select class="form-select" formControlName="anioForm">
+                                    <option value=''>Seleccione</option>
+                                    <option *ngFor="let item of listaAnioInversion;" [value]="item.id">{{ item.anio }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            Cantidad
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" formControlName="cantidadForm" (keypress)="numberOnly($event)" class="form-control flex-3 text-uppercase" />
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <button class="btn btn-danger" (click)="validacionSeccion3()">
+                                <i class="fas fa-plus "></i>
+                                Agregar
+                            </button>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered">
+                                <thead class="bg-secondary text-white text-center">
+                                    <th>N°</th>
+                                    <th>Año</th>
+                                    <th>Cantidad</th>
+                                    <!-- <th>Moneda</th> -->
+                                    <th>Acciones</th>
+                                </thead>
+                                <tbody *ngIf="relacionProyeccion.proyeccion.length > 0; else sinRegistros">
+                                    <tr *ngFor="let item of relacionProyeccion.proyeccion; let i = index">
+                                        <td class="text-center">{{i + 1}}</td>
+                                        <td>{{item.Anio}}</td>
+                                        <td>{{item.Cantidad}}</td>
+                                        <!-- <td>{{item.}}</td> -->
+
+                                        <td class="text-center">
+                                            <!-- <i class="far fa-edit pe-2 text-primary cursor-pointer" ((click)="editar( i)" title="Editar"></i> -->
+                                            <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" (click)="eliminar(i)" title="Eliminar"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <ng-template #sinRegistros>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="6" class="text-center">No se encontraron registros</td>
+                                        </tr>
+                                    </tbody>
+                                </ng-template>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </ng-template>
+            </div>
+            </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer anexo">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" (click)="descargarPdf()">
+                    <i class="far fa-eye"></i>
+                    Visualizar
+                </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" *ngIf="errorAlCargarData === false || true" (click)="guardarAnexo()">
+                <i class="far fa-save"></i>
+                {{
+                    (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                }}
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

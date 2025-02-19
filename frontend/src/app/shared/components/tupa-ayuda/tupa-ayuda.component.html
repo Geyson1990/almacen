@@ -1,0 +1,460 @@
+<table class="table-body" cellpadding="2" cellspacing="0">
+  <tr class="text-center">
+    <th class="title pb-2">¿Necesitas ayuda?</th>
+  </tr>
+  <!-- <tr>
+            <th  style="font-size: medium;text-align: center;">Contáctenos en:</th>
+        </tr>
+        <tr>
+            <td><img src="assets/img/icon_whatsapp.png" style="width: 24px;" /></td>
+            <td><a href="https://wa.me/51995117099" target="_blank" style="color: #ffffff;"
+                    title="Déjanos tu mensaje y te responderemos en breve"><b>995 117 099</b></a>
+            </td>
+        </tr> -->
+  <!--tr>
+            <td><img src="assets/img/icon_email.png" style="width: 24px;" /></td>
+            <td><a href="mailto:tupadigital@mtc.gob.pe" style="color: #ffffff;" title="Envíanos un correo con tu consulta con el mayor detalle posible"><b>tupadigital@mtc.gob.pe</b></a>
+            </td>
+        </tr-->
+  <tr>
+    <td>
+      <a
+        type="button"
+        class="btn btn-link"
+        style="color: #ffffff; padding: 0px !important"
+        title="Revisa los manuales disponibles del sistema"
+        href="assets/docs/MTC_TUPA_DIGITAL-MANUAL_USUARIO_WEB_v.1.5.pdf"
+        target="_blank"
+      >
+        <div class="row gx-2 link-body">
+          <div class="col-auto">
+            <img src="assets/img/icon_book.png" style="width: 24px" />
+          </div>
+          <div class="col">
+            <span class="text-link"><b>Manual de usuario</b></span>
+          </div>
+        </div>
+      </a>
+      <!-- <button
+          (click)="openModal(modalManuales)"
+          type="button"
+          class="btn btn-link"
+          style="color: #ffffff; padding: 0px !important"
+          title="Revisa los manuales disponibles del sistema"
+        >
+          <div class="row gx-2 align-items-center">
+            <div class="col-auto">
+              <img src="assets/img/icon_book.png" style="width: 24px" />
+            </div>
+            <div class="col-auto">
+              <b>Manual de usuario</b>
+            </div>
+          </div>
+        </button> -->
+    </td>
+  </tr>
+  <tr>
+    <td class="pb-2">
+      <button
+        (click)="openModalValVoucher()"
+        type="button"
+        class="btn btn-link"
+        style="color: #ffffff; padding: 0px !important"
+        title="Valida tu voucher pagado en el Banco de la Nación"
+      >
+        <div class="row gx-2 link-body">
+          <div class="col-auto">
+            <img src="assets/img/icon_cash.png" style="width: 24px" />
+          </div>
+          <div class="col">
+            <span class="text-link">
+              <b>Herramienta de validación de voucher (opcional)</b>
+            </span>
+          </div>
+        </div>
+      </button>
+    </td>
+  </tr>
+  <!-- <tr>
+            <td><img src="assets/img/icon_form.png" style="width: 24px;" /></td>
+            <td>
+                <button (click)="openModalIncidencia(modalIncidencia)" type="button" class="btn btn-link"
+                    style="color: #ffffff;padding: 0px !important;"
+                    title="Si tienes problemas con el funcionamiento del sistema haz clic aquí"><b>Registrar
+                        incidencia</b></button>
+            </td>
+        </tr> -->
+  <!-- <tr>
+      <td >
+        <button
+          (click)="openModalLista(modalListaTupas)"
+          type="button"
+          class="btn btn-link"
+          style="color: #ffffff; padding: 0px !important"
+          title="Revisa la lista de procedimientos TUPA"
+        >
+          <img src="assets/img/icon_list.png" style="width: 24px" />
+          <b>Resumen de TUPAs</b>
+        </button>
+      </td>
+    </tr> -->
+  <tr>
+    <td><b>Horario:</b> Lunes a viernes de 8:30am a 5:30pm</td>
+  </tr>
+  <tr>
+    <td>
+      <b>Atención Presencial:</b> Sede Central del MTC; CDT Piura; CDT Ucayali;
+      CDT Arequipa; CDT La Libertad; CDT Loreto; CDT Lambayeque; CDT Cusco; CDT
+      Tacna; CDT Junín; CDT Ayacucho; CDT Huánuco; CDT Apurímac; CDT San Martín.
+    </td>
+  </tr>
+</table>
+
+<ng-template #modalManuales let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">Manuales del Sistema</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row pb-4">
+      <div class="col-md-10">
+        <div>
+          <h3>Manual general</h3>
+        </div>
+        <ul>
+          <li>
+            <a
+              href="assets/docs/MTC_TUPA_DIGITAL-MANUAL_USUARIO_WEB_v.1.5.pdf"
+              target="_blank"
+              >Manual de usuario ADMINISTRADO</a
+            >
+          </li>
+        </ul>
+        <div>
+          <h3>Manuales espec&iacute;ficos</h3>
+        </div>
+        <ul>
+          <li><b>Direcci&oacute;n General de Aeron&aacute;utica Civil</b></li>
+          <ul>
+            <li>
+              <a href="assets/docs/MTC_DGAC-002.pdf" target="_blank"
+                >DGAC-002: AUTORIZACIÓN DE FUNCIONAMIENTO PARA ESCUELAS Y
+                CENTROS DE INSTRUCCIÓN</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-003.pdf" target="_blank"
+                >DGAC-003: INSCRIPCIÓN DE AEROCLUBES</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-004.pdf" target="_blank"
+                >DGAC-004: APROBACIÓN DE MEMORIA TÉCNICA DE REPARACIONES O
+                ALTERACIONES MAYORES</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-005.pdf" target="_blank"
+                >DGAC-005: AUTORIZACIÓN PARA TALLERES DE MANTENIMIENTO
+                AERONÁUTICO (TMA)</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-011.pdf" target="_blank"
+                >DGAC-011: PERMISO DE OPERACIÓN-SERVICIO DE TRANSPORTE AÉREO NO
+                REGULAR NACIONAL</a
+              >
+            </li>
+            <li>
+              <a href="assets/docs/MTC_DGAC-023.pdf" target="_blank"
+                >DGAC-023: APROBACIÓN DE ACUERDOS DE COOPERACIÓN COMERCIAL Y DE
+                CÓDIGO COMPARTIDO</a
+              >
+            </li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalListaTupas let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">
+      Lista de Procedimientos TUPA
+    </h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body small">
+        <div class="row mb-3 align-items-center">
+          <div class="col-sm-auto">
+              <b>BUSCAR: </b>
+            </div>
+            <div class="input-group input-group-sm col-sm">
+              <input
+                class="form-control"
+                type="text"
+                name="searchTerm"
+                [(ngModel)]="txtBuscarTupa"
+                (input)="onChangeBuscarTupa()"
+                style="text-transform: uppercase"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                (click)="onChangeFilter()"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-hover table-striped">
+                <thead class="bg-secondary text-white text-center">
+                  <tr class="align-self-center">
+                    <th class="align-middle">Código TUPA</th>
+                    <th class="align-middle">Grupo</th>
+                    <th class="align-middle">Denominación</th>
+                    <th class="align-middle">Clasificación</th>
+                    <th class="align-middle">Plazo de atención</th>
+                    <th class="align-middle">Requisitos</th>
+                    <th class="align-middle">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let item of listadoProcedimientosFilter
+                        | slice
+                          : (page - 1) * pageSize
+                          : (page - 1) * pageSize + pageSize
+                    "
+                  >
+                    <td class="align-middle text-nowrap">{{ item.codigo }}</td>
+                    <td class="align-middle text-nowrap">
+                      {{ item.acronimo }}
+                    </td>
+                    <td class="align-middle" [innerHTML]="item.nombre"></td>
+                    <td class="align-middle">{{ item.tipoEvaluacion }}</td>
+                    <td class="align-middle text-center">
+                      {{ item.plazoDias }} DÍAS HÁBILES
+                    </td>
+                    <td class="text-center align-middle">
+                      <!-- <img (click)="openModalRequisitos(requisitos,item)" height="20%" style="height: 25px;" src="/assets/icon/list.svg"> -->
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-light"
+                        (click)="openModalRequisitos(requisitos, item)"
+                      >
+                        <i class="fas fa-list"></i>
+                      </button>
+                    </td>
+                    <td class="align-middle text-center py-0">
+                      <!-- <a class="btn btn-link" (click)="iniciarTramite(item)">Iniciar Trámite</a> -->
+                      <a
+                        class="btn btn-sm btn-link text-bold"
+                        (click)="iniciarTramite(item)"
+                        >Iniciar Trámite</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- <table class="table table-hover table-striped">
+                        <thead class="bg-secondary text-white text-center">
+                            <tr class="align-self-center">
+                                <th>#</th>
+                                <th>C&oacute;digo</th>
+                                <th>Denominaci&oacute;n</th>
+                                <th>Tipo de persona</th>
+                                <th>Acceso</th>
+                                <th>Plazo</th>
+                                <th>Ficha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of listadoFiltro  | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+                                <td>{{ item.rowId }}</td>
+                                <td>{{ item.codTupa }}</td>
+                                <td>{{ item.denominacion }}</td>
+                                <td>{{ item.tipoPersona }}</td>
+                                <td>
+                                    <div *ngIf="item.origen === 'MP'">Mesa de Partes Virtual</div>
+                                    <div *ngIf="item.origen === 'TD'">TUPA Digital</div>
+                                    <div *ngIf="item.origen === 'V'">VUCE</div>
+                                </td>
+                                <td>
+                                    <div *ngIf="item.plazo === '0'">INMEDIATO</div>
+                                    <div *ngIf="item.plazo !== '0' && item.plazo !== ''">{{ item.plazo }}
+                                        DÍAS</div>
+                                </td>
+                                <td><a href="{{ item.urlDocumento }}" target="_blank" title="Ver ficha">
+                                        <img src="assets/img/icon_pdf.png" border="0" /></a>
+                                </td>
+                        </tbody>
+                    </table> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- <app-pagination-table [page]="page" [pageSize]="pageSize" [totalRegistros]="listSize"
+            (changePagination)="refreshPagination($event)"></app-pagination-table> -->
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="listSize"
+            [maxSize]="5"
+            [rotate]="true"
+            [boundaryLinks]="true"
+          >
+            <ng-template ngbPaginationFirst>Inicio</ng-template>
+            <ng-template ngbPaginationLast>Final</ng-template>
+            <ng-template ngbPaginationPrevious>Anterior</ng-template>
+            <ng-template ngbPaginationNext>Siguiente</ng-template>
+            <ng-template ngbPaginationEllipsis>...</ng-template>
+            <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+          </ngb-pagination>
+
+          <select
+            class="form-select"
+            style="width: auto"
+            [(ngModel)]="pageSize"
+          >
+            <option [ngValue]="10">10 registros</option>
+            <option [ngValue]="25">25 registros</option>
+            <option [ngValue]="50">50 registros</option>
+            <option [ngValue]="100">100 registros</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #requisitos let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h5 class="modal-title" id="modal-basic-title">
+      <i class="fas fa-list"></i> Listado de requisitos
+    </h5>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      
+    </button>
+  </div>
+  <div class="modal-body card bg-light p-4">
+    <!-- <div class="card bg-light"> -->
+    <div class="card-body py-2 small">
+      <h6 class="card-title text-danger">Datos del procedimiento</h6>
+      <hr class="border-danger opacity-75" />
+      <div class="row mb-2">
+        <div class="col-md-2 text-bold">Código TUPA:</div>
+        <div class="col-md-10">
+          {{ procedimientoSeleccionado?.codigo || "DETERMINADO" }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-2 text-bold">Descripción:</div>
+        <div class="col-md-10">
+          {{ procedimientoSeleccionado?.nombre || "DETERMINADO" }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-2 text-bold">Tipo Evaluación:</div>
+        <div class="col-md-10">
+          {{ tipoSolicitudSeleccionado?.tipoEvaluacion || "DETERMINADO" }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-2 text-bold">Plazo Atención:</div>
+        <div class="col-md-10">
+          {{
+            tipoSolicitudSeleccionado?.plazoAtencion > 0
+              ? tipoSolicitudSeleccionado.plazoAtencion + " DÍAS HÁBILES"
+              : "DETERMINADO"
+          }}
+        </div>
+      </div>
+
+      <br />
+
+      <h6 class="card-title text-danger">Requisitos</h6>
+      <hr class="border-danger opacity-75" />
+      <div class="row mt-3 align-items-center">
+        <div class="col-md-auto col-form-label text-bold">Tipo de Solicitud:</div>
+        <div class="col-md">
+          <select
+            class="form-select form-select-sm"
+            [(ngModel)]="tipoSolicitudModel"
+            data-container="body"
+            (ngModelChange)="onTipoSolicitudChange($event)"
+          >
+            <option
+              *ngFor="let item of listadoTipoSolicitud"
+              [value]="item.codigostr"
+            >
+              {{ item.descripcion }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr class="align-self-center">
+                <th>Nro</th>
+                <th>Denominación del requisito</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let item of listadoDetalleTupaFilter; index as indice"
+              >
+                <td class="align-middle text-center text-bold">
+                  {{ indice + 1 }}
+                </td>
+                <ng-container *ngIf="item.tieneCosto; else elseTemplate">
+                  <td class="align-middle">
+                    {{ item.descripcion }} <br />
+                    <strong class="text-muted"
+                      >Monto a Pagar: S/ {{ item.costoFormatted }}</strong
+                    >
+                  </td>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  <td class="align-middle">{{ item.descripcion }}</td>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+</ng-template>

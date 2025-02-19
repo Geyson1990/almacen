@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h2>{{title}}</h2>
+</div>
+<div class="modal-body">
+    <div class="mensaje-dialog d-flex flex-row m-0">
+        <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+          <i class="material-icons icon-ambar"> warning </i>
+        </div>
+        <div class="col-sm-11 col-md-11 w-90">
+          <p class="m-0">NOTA : Si quiere agregar un profesional o actualizar los datos de un profesional existente, enviar un correo a declaraciones&commat;minem.gob.pe.</p>
+        </div>
+    </div>
+    <form (submit)="saveX(form)" [formGroup]="form">
+        <div class="sub-grupo">
+            <div class="col-sm-12 col-md-12 mt-2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 mt-2">
+                        <h3>RESULTADOS DE LA BUSQUEDA</h3>
+                        <div style="height: 200px; overflow-y: auto;">
+                            <tupa-table [columns]="headersProfesionales" [data]="dataTablaProfesionales"></tupa-table>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 mt-2">
+                        <h3>PROFESIONALES SELECCIONADOS</h3>
+                        <div style="height: 200px; overflow-y: auto;">
+                            <tupa-table [columns]="headersProfesionalesSeleccionados"
+                            [data]="dataTablaProfesionalesSeleccionados"></tupa-table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+                Cancel</button>
+            <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,105 @@
+<div [formGroup]="parentForm">
+    <div [ngClass]="{'row gx-2': horizontal}">
+        <div [ngClass]="{'col-lg-4': horizontal}">
+            <div class="mb-3">
+                <label class="control-label" [for]="'inputControl-' + depaFormControlName">{{ depaFormLabel }}
+                    <span class="text-danger" *ngIf="isRequiredDepa()">(*)</span>
+                </label>
+
+                <ng-container *ngIf="readOnly || depaFormControl.disabled; else elseTemplateDepa">
+                    <select class="form-select" [id]="'inputControl-' + depaFormControlName"
+                        [class.control-invalid]="depaFormControl.invalid && (depaFormControl.dirty || depaFormControl.touched)"
+                        [disabled]="readOnly || depaFormControl.disabled">
+                        <option value="">{{ depaPlaceHolder }}</option>
+                        <option *ngFor="let item of listaDepartamento" [value]="item.value"
+                            [selected]="item.value === depaFormControl.value">{{ item.text }}
+                        </option>
+                    </select>
+                </ng-container>
+                <ng-template #elseTemplateDepa>
+                    <select class="form-select" [formControlName]="depaFormControlName"
+                        [class.control-invalid]="depaFormControl.invalid && (depaFormControl.dirty || depaFormControl.touched)">
+                        <option value="">{{ depaPlaceHolder }}</option>
+                        <option *ngFor="let item of listaDepartamento" [value]="item.value">{{ item.text }}
+                        </option>
+                    </select>
+                </ng-template>
+
+                <div *ngIf="depaFormControl.invalid && (depaFormControl.dirty || depaFormControl.touched)"
+                    class="text-danger">
+                    <div *ngIf="depaFormControl.errors?.required">
+                        El campo es obligatorio
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [ngClass]="{'col-lg-4': horizontal}">
+            <div class="mb-3">
+                <label class="control-label" [for]="'inputControl-' + provFormControlName">{{ provFormLabel }}
+                    <span class="text-danger" *ngIf="isRequiredProv()">(*)</span>
+                </label>
+
+                <ng-container *ngIf="readOnly || provFormControl.disabled; else elseTemplateProv">
+                    <select class="form-select" [id]="'inputControl-' + provFormControlName"
+                        [class.control-invalid]="provFormControl.invalid && (provFormControl.dirty || provFormControl.touched)"
+                        [disabled]="readOnly || provFormControl.disabled">
+                        <option value="">{{ provPlaceHolder }}</option>
+                        <option *ngFor="let item of listaProvincia" [value]="item.value"
+                            [selected]="item.value === provFormControl.value">{{ item.text }}
+                        </option>
+                    </select>
+                </ng-container>
+                <ng-template #elseTemplateProv>
+                    <select class="form-select" [formControlName]="provFormControlName"
+                        [id]="'inputControl-' + provFormControlName"
+                        [class.control-invalid]="provFormControl.invalid && (provFormControl.dirty || provFormControl.touched)">
+                        <option value="">{{ provPlaceHolder }}</option>
+                        <option *ngFor="let item of listaProvincia" [value]="item.value">{{ item.text }}
+                        </option>
+                    </select>
+                </ng-template>
+
+                <div *ngIf="provFormControl.invalid && (provFormControl.dirty || provFormControl.touched)"
+                    class="text-danger">
+                    <div *ngIf="provFormControl.errors?.required">
+                        El campo es obligatorio
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [ngClass]="{'col-lg-4': horizontal}">
+            <div class="mb-3">
+                <label class="control-label" [for]="'inputControl-' + distFormControlName">{{ distFormLabel }}
+                    <span class="text-danger" *ngIf="isRequiredDist()">(*)</span>
+                </label>
+
+                <ng-container *ngIf="readOnly || distFormControl.disabled; else elseTemplateDist">
+                    <select class="form-select" [id]="'inputControl-' + distFormControlName"
+                        [class.control-invalid]="distFormControl.invalid && (distFormControl.dirty || distFormControl.touched)"
+                        [disabled]="readOnly || distFormControl.disabled">
+                        <option value="">{{ distPlaceHolder }}</option>
+                        <option *ngFor="let item of listaDistrito" [value]="item.value"
+                            [selected]="item.value === distFormControl.value">{{ item.text }}
+                        </option>
+                    </select>
+                </ng-container>
+                <ng-template #elseTemplateDist>
+                    <select class="form-select" [formControlName]="distFormControlName"
+                        [id]="'inputControl-' + distFormControlName"
+                        [class.control-invalid]="distFormControl.invalid && (distFormControl.dirty || distFormControl.touched)">
+                        <option value="">{{ distPlaceHolder }}</option>
+                        <option *ngFor="let item of listaDistrito" [value]="item.value">{{ item.text }}
+                        </option>
+                    </select>
+                </ng-template>
+
+                <div *ngIf="distFormControl.invalid && (distFormControl.dirty || distFormControl.touched)"
+                    class="text-danger">
+                    <div *ngIf="distFormControl.errors?.required">
+                        El campo es obligatorio
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

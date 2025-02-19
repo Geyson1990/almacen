@@ -1,0 +1,31 @@
+::ng-deep .customModal .modal-dialog {
+  min-width: calc(100vw - 400px);
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-header {
+    background-color: rgba(0,0,0,.03);
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.btn-actions{
+  width: 34px;
+}
+
+.btn-actions.dropdown-toggle::after {
+  content: none;
+}
+
+.requisito-desc ::ng-deep .ql-editor {
+  padding: 0px;
+  font-size: 13px;
+}

@@ -1,0 +1,107 @@
+<ng-container [formGroup]="form">
+  <h4>{{form.get('titulo').value}}</h4>
+  <hr>
+  <p class="mb-0">{{form.get('descripcion').value}}</p>
+
+  <div class="card-body table-responsive p-1">
+
+      <ng-container formArrayName="secciones">
+        <ng-container *ngFor="let seccion of this.Secciones.controls; let isec = index" [formGroupName]="isec">
+          <!-- <ng-container [formGroupName]="isec"> -->
+            <div class="d-block bg-secondary px-3 py-2 rounded mt-4">
+              <span class="mb-1 text-white fw-bold">{{ seccion.get('nombre').value }}</span>
+            </div>
+
+            <ng-container formArrayName="preguntas">
+              <ng-container *ngFor="let pregunta of seccion.get('preguntas').controls; let ipre = index" [formGroupName]="ipre">
+                <!-- <ng-container > -->
+                  <p class="mt-4">
+                    <b>{{ ipre + 1 }}. {{ pregunta.get('descripcion').value }}
+                      <span *ngIf="pregunta.get('flagObligatorio').value" class="text-danger">(*)</span>
+                    </b>
+                  </p>
+
+                  <div *ngIf="pregunta.get('idTipoPregunta').value == this.TipoPreguntaEnum.TEXTO_CORTO">
+                      <input type="text" class="form-control"
+                      [class.control-invalid]="formInvalid(pregunta.get('respuesta'))" formControlName="respuesta">
+                  </div>
+
+                  <div *ngIf="pregunta.get('idTipoPregunta').value == this.TipoPreguntaEnum.TEXTO_LARGO">
+                    <textarea class="form-control" rows="3"
+                    [class.control-invalid]="formInvalid(pregunta.get('respuesta'))" formControlName="respuesta"></textarea>
+                  </div>
+
+                  <div *ngIf="pregunta.get('idTipoPregunta').value == this.TipoPreguntaEnum.SELECCION_UNICA">
+                      <div *ngFor="let opcion of pregunta.get('opciones').value; let i = index;">
+                        <div class=" form-check">
+                          <input type="radio" class="form-check-input" formControlName="respuesta" [class.is-invalid]="formInvalid(pregunta.get('respuesta'))"
+                          id="{{pregunta.get('idSeccionConfig').value+'-'+pregunta.get('idPreguntaConfig').value+'-'+opcion.idOpcionRespuesta}}"
+                          value="{{opcion.idOpcionRespuesta}}">
+                          <label class="form-check-label"
+                          for="{{pregunta.get('idSeccionConfig').value+'-'+pregunta.get('idPreguntaConfig').value+'-'+opcion.idOpcionRespuesta}}"> {{opcion.descripcion}}
+                          </label>
+                        </div>
+                        <!-- <span>{{pregunta.value | json}}</span> -->
+                      </div>
+                      <!-- <div *ngFor="let opcion of pregunta.get('opciones').value; let i = index;">
+                        <div class=" form-check">
+                          <input type="radio" class="form-check-input"
+                          id="{{pregunta.get('idSeccionConfig').value+'-'+pregunta.get('idPreguntaConfig').value+'-'+opcion.idOpcionRespuesta}}"
+                          name="{{pregunta.get('idSeccionConfig').value+'-'+pregunta.get('idPreguntaConfig').value}}"
+                          value="{{opcion.idOpcionRespuesta}}"
+                          (change)="onChangeOpcionsSeleccionUnica($event, opcion.idOpcionRespuesta, pregunta)">
+
+                          <label class="form-check-label"
+                          for="{{pregunta.get('idSeccionConfig').value+'-'+pregunta.get('idPreguntaConfig').value+'-'+opcion.idOpcionRespuesta}}"> {{opcion.descripcion}}
+                          </label>
+                        </div>
+                      </div> -->
+
+                  </div>
+
+                  <div *ngIf="pregunta.get('idTipoPregunta').value == this.TipoPreguntaEnum.SELECCION_MULTIPLE">
+                    <ng-container formArrayName="opciones">
+                      <div *ngFor="let opcion of pregunta.get('opciones').controls; let iopc = index;" [formGroupName]="iopc">
+                        <div class="d-flex flex-row align-items-center">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" formControlName="seleccionado" [class.is-invalid]="formInvalid(pregunta.get('opciones'))"
+                            id="{{pregunta.get('idSeccionConfig').value + '-' + pregunta.get('idPreguntaConfig').value + '-' + opcion.get('idOpcionRespuesta').value}}"
+                            [value]="opcion.get('idOpcionRespuesta').value">
+
+                            <label class="form-check-label"
+                            for="{{pregunta.get('idSeccionConfig').value + '-' + pregunta.get('idPreguntaConfig').value + '-' + opcion.get('idOpcionRespuesta').value}}">
+                              {{opcion.get('descripcion').value}}
+                            </label>
+                          </div>
+                          <input *ngIf="opcion.get('flagOtro').value" type="text"
+                          class="form-control form-control-sm d-inline ms-3 w-50" formControlName="respuestaOtro" [attr.disabled]="opcion.get('seleccionado').value ? null : ''">
+                        </div>
+                        <!-- <span>{{pregunta.value | json}}</span> -->
+                      </div>
+                    </ng-container>
+                      <!-- <div *ngFor="let opcion of pregunta.get('opciones').value; let i = index;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox"
+                          value="{{opcion.idOpcionRespuesta}}"
+                          id="{{pregunta.get('idSeccionConfig').value + '-' + pregunta.get('idPreguntaConfig').value + '-' + opcion.idOpcionRespuesta}}">
+                          <label class="form-check-label"
+                          for="{{pregunta.get('idSeccionConfig').value + '-' + pregunta.get('idPreguntaConfig').value + '-' + opcion.idOpcionRespuesta}}">
+                            {{opcion.descripcion}}
+                          </label>
+                        </div>
+                      </div> -->
+
+                  </div>
+
+
+
+                <!-- </ng-container> -->
+              </ng-container>
+            </ng-container>
+
+          <!-- </ng-container> -->
+        </ng-container>
+      </ng-container>
+
+  </div>
+</ng-container>

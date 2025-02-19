@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h2>{{title}}</h2>
+</div>
+<div class="modal-body" *ngIf="form">
+    <form (submit)="save(form)" [formGroup]="form">
+        <div>
+            <h3>NOMBRE <span class="text-danger">(*)</span></h3>
+            <div class="col-sm-12 col-md-12 mt-2">
+                <input type="hidden" formControlName="Id">
+                <input type="text" class="form-control" placeholder="" formControlName="Nombre">
+            </div>
+            <br>
+
+            <h3>TIPO <span class="text-danger">(*)</span></h3>
+            <div class="col-md-12">
+                <select class="form-select" formControlName="Tipo">
+                    <option selected value="" [disabled]="true">--SELECCIONE--</option>
+                    <option *ngFor="let item of listaTipoPasivo" [value]="item.idTipoPasivoAmbiental">{{ item.descripcion }}</option>
+                </select>
+            </div>
+            <br>
+
+            <h3 *ngIf="listaSubtipoPasivo.length > 0">SUBTIPO <span class="text-danger">(*)</span></h3>
+            <div *ngIf="listaSubtipoPasivo.length > 0" class="col-sm-12 col-md-12 mt-2">
+                <select class="form-select" formControlName="Subtipo">
+                    <option value="" [disabled]="true">--SELECCIONE--</option>
+                    <option *ngFor="let item of listaSubtipoPasivo" [value]="item.idTipoIntegrante">{{ item.descripcion }} </option>
+                </select>
+            </div>
+            <br *ngIf="listaSubtipoPasivo.length > 0">
+
+            <h3>ESTE <span class="text-danger">(*)</span></h3>
+            <div class="col-sm-12 col-md-12 mt-2">
+                <input type="number" class="form-control" min="0" placeholder="" formControlName="Este">
+            </div>
+            <br>
+
+            <h3>NORTE <span class="text-danger">(*)</span></h3>
+            <div class="col-sm-12 col-md-12 mt-2">
+                <input type="number" class="form-control" min="0" placeholder="" formControlName="Norte">
+            </div>
+            <br>
+
+            <h3>ZONA <span class="text-danger">(*)</span></h3>
+
+            <div class="col-md-12">
+                <select class="form-select" formControlName="Zona">
+                    <option selected value="" [disabled]="true">--SELECCIONE--</option>
+                    <option *ngFor="let item of listaZona" [value]="item.idZona">{{ item.descripcion }}</option>
+                </select>
+            </div>
+            <br>
+
+            <h3>DATUM <span class="text-danger">(*)</span></h3>
+            <div class="col-sm-12 col-md-12 mt-2">
+                <select class="form-select" formControlName="Datum">
+                    <option *ngFor="let item of listaDatum" [value]="item.idDatum">{{ item.descripcion }} </option>
+                </select>
+            </div>
+            <br>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+                Cancel</button>
+            <button class="mat-small" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+        </div>
+    </form>
+</div>

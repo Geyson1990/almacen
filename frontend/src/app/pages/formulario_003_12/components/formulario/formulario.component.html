@@ -1,0 +1,292 @@
+<!-- <div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoTupa}} {{ this.descripcionTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+      
+  </button>
+</div>
+
+<div class="modal-body anexo">
+    <div class="container mt-2 mb-3">
+        <form novalidate [formGroup]="formulario">
+            <div class="center">
+                <h6><i class="far fa-list-alt"></i> FORMULARIO 003-12 SERVICIO DE TERMINALES TERRESTRES, TRANSPORTE TURÍSTICO Y TRABAJADORES</h6>
+            </div>
+
+            <div ngbAccordion #acc="ngbAccordion">
+                <div ngbAccordionItem="datos-solicitante" [collapsed]="false">
+                    <h2 ngbAccordionHeader >
+                        
+                            <button ngbAccordionButton> DATOS DEL SOLICITANTE</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="container">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="tipoPersona" value="1" disabled>
+                                    <label class="form-check-label" for="inlineRadio1">PERSONA NATURAL</label>&nbsp;&nbsp;&nbsp;
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="tipoPersona" value="2" disabled>
+                                    <label class="form-check-label" for="inlineRadio2">PERSONA JURIDICA</label>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-3" *ngIf="tipoPersona==2">
+                                <label class="col-form-label campo-obligatorio">Razon Social</label>
+                                <input type="text" class="form-control" formControlName="s1_razonSocial" [class.control-invalid]="formInvalid('s1_razonSocial')" />
+                            </div>
+
+                            <div class="row gx-2" *ngIf="tipoPersona==1 || tipoPersona==3">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Apellido paterno</label>
+                                    <input type="text " class="form-control" formControlName="s1_apellidoPaterno" [class.control-invalid]="formInvalid('s1_apellidoPaterno')" />
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Apellido materno</label>
+                                    <input type="text " class="form-control" formControlName="s1_apellidoMaterno" [class.control-invalid]="formInvalid('s1_apellidoMaterno')" />
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Nombres</label>
+                                    <input type="text " class="form-control" formControlName="s1_nombres" [class.control-invalid]="formInvalid('s1_nombres')" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label campo-obligatorio">Domicilio Legal</label>
+                                <input type="text " class="form-control" formControlName="s1_domicilioLegal" [class.control-invalid]="formInvalid('s1_domicilioLegal')" />
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Distrito</label>
+                                    <input type="text" class="form-control" formControlName="s1_distrito" [class.control-invalid]="formInvalid('s1_distrito')" />
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Provincia</label>
+                                    <input type="text" class="form-control" formControlName="s1_provincia" [class.control-invalid]="formInvalid('s1_provincia')" />
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Departamento</label>
+                                    <input type="text" class="form-control" formControlName="s1_departamento" [class.control-invalid]="formInvalid('s1_departamento')" />
+                                </div>
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4" *ngIf="tipoPersona==1 || tipoPersona==3">
+                                    <label class="col-form-label campo-obligatorio">D.N.I.</label>
+                                    <input type="text " class="form-control" formControlName="s1_dni" [class.control-invalid]="formInvalid('s1_dni')" />
+                                </div>
+
+                                <div class="mb-3 col-md-4" *ngIf="tipoPersona==1 || tipoPersona==3">
+                                    <label class="col-form-label campo-obligatorio">>C.E. / PASAPORTE</label>
+                                    <input type="text " class="form-control" formControlName="s1_cePasaporte" />
+                                </div>
+
+                                <div class="mb-3 col-md-4" *ngIf="tipoPersona==2 || tipoPersona==3">
+                                    <label class="col-form-label campo-obligatorio">N° de RUC</label>
+                                    <input type="text " class="form-control" formControlName="s1_nroRuc" [class.control-invalid]="formInvalid('s1_nroRuc')" />
+                                </div>
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Teléfono</label>
+                                    <input type="text " class="form-control" formControlName="s1_telefono" />
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Celular</label>
+                                    <input type="text" class="form-control" formControlName="s1_celular" [class.control-invalid]="formInvalid('s1_celular')" />
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Correo Electrónico</label>
+                                    <input type="text " class="form-control" formControlName="s1_correo" [class.control-invalid]="formInvalid('s1_correo')" />
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Nro. R.U.C. del operador</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-uppercase" (input)="inputNumeroRuc($event)" [maxlength]="11" formControlName="s1_numeroRucOperador" [class.control-invalid]="formInvalid('s1_numeroRucOperador')"/>
+                                            <button class="btn btn-outline-secondary" type="button" (click)="buscarNumeroRuc()">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 col-md-8">
+                                    <label class="col-form-label campo-obligatorio">Razón Social / Operador</label>
+                                    <input type="text " class="form-control" formControlName="s1_razonSocialOperador" [class.control-invalid]="formInvalid('s1_razonSocialOperador')" />
+                                </div>
+
+                            </div>
+
+                            <div class="mt-4"><strong>DATOS DEL REPRESENTANTE LEGAL</strong></div>
+                            <hr>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Tipo de documento</label>
+                                    <select class="form-select" [attr.disabled]="this.representanteLegal.length === 0 ? '' : null" (change)="changeTipoDocumento()" formControlName="s1_tipoDocumentoRepresentante" [class.control-invalid]="formInvalid('s1_tipoDocumentoRepresentante')">
+                                        <option value=''>Seleccione</option>
+                                        <option *ngFor="let item of listaTiposDocumentos;" [value]="item.id">{{ item.documento }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Número de documento</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-uppercase" (input)="inputNumeroDocumento($event)" [readonly]="this.formulario.controls['s1_tipoDocumentoRepresentante'].value === ''" [maxlength]="getMaxLengthNumeroDocumento()" formControlName="s1_numeroDocumentoRepresentante" [class.control-invalid]="formInvalid('s1_numeroDocumentoRepresentante')"/>
+                                            <button class="btn btn-outline-secondary" [disabled]="this.formulario.controls['s1_numeroDocumentoRepresentante'].value.trim().length === 0" type="button" (click)="buscarNumeroDocumento()">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Nombres</label>
+                                    <input type="text " class="form-control" formControlName="s1_nombresRepresentante" [class.control-invalid]="formInvalid('s1_nombresRepresentante')" />
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Apellido paterno</label>
+                                    <input type="text " class="form-control" formControlName="s1_apellidoPaternoRepresentante" [class.control-invalid]="formInvalid('s1_apellidoPaternoRepresentante')" />
+                                </div>
+
+                                <div class="mb-3 col-md-4">
+                                    <label class="col-form-label campo-obligatorio">Apellido materno</label>
+                                    <input type="text " class="form-control" formControlName="s1_apellidoMaternoRepresentante" [class.control-invalid]="formInvalid('s1_apellidoMaternoRepresentante')" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label campo-obligatorio">Domicilio</label>
+                                <input type="text " class="form-control" formControlName="s1_domicilioRepresentante" [class.control-invalid]="formInvalid('s1_domicilioRepresentante')" />
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-6">
+                                    <label class="col-form-label campo-obligatorio">Poder Registrado en la Ficha / Partida Nro:</label>
+                                    <input type="text" class="form-control" formControlName="s1_nroPartida" [class.control-invalid]="formInvalid('s1_nroPartida')" />
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="col-form-label campo-obligatorio">Oficina registral</label>
+                                    <input type="text" class="form-control" formControlName="s1_oficinaRegistral" [class.control-invalid]="formInvalid('s1_oficinaRegistral')" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="licencia-funcionamiento" *ngIf="codigoTupa=='DGAC-024'" [collapsed]="false">
+
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton> LICENCIA DE FUNCIONAMIENTO</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                        <div class="container">
+                            <div class="row gx-2">
+                                <div class="mb-3 col-md-6">
+                                    <label class="col-form-label campo-obligatorio">Licencia de funcionamiento vigente Nº</label>
+                                    <input type="text" class="form-control" formControlName="s2_nroLicencia">
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="col-form-label campo-obligatorio">Municipalidad que la otorgó</label>
+                                    <input type="text" class="form-control" formControlName="s2_municipalidad">
+                                </div>
+                            </div>
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="declaracion-jurada" [collapsed]="false">
+
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton> DECLARACIÓN JURADA</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="container">
+                        <div class="alert alert-danger">
+                            <span style="text-align: justify; display: block;">
+                                Al acceder al TUPA Digital MTC y registrarme como usuario, reconozco no sólo que leí, sino también que he entendido y aceptado los Términos y Condiciones de uso del sistema. Además, soy responsable por los efectos legales de su solo acceso, reconozco como auténtico y válido cualquier medio de prueba o proceso tecnológico que utilice el Ministerio de Transportes y Comunicaciones, en adelante MTC, para comprobar mi acceso y salida del sistema.                            </span><br>
+                            <span style="text-align: center; display: block;">
+                                <b>DECLARO BAJO JURAMENTO QUE LOS DATOS EXPRESAN LA VERDAD.</b>
+                            </span>
+                        </div>
+
+                        <div class="alert alert-danger">
+                            <span style="text-align: justify; display: block;">
+                                NOTA: En el presente documento electrónico se ha vinculado e identificado al firmante, así como se ha garantizado la autenticación e integridad del mismo a través de la firma electrónica utilizada atraves del usuario y clave de ingreso al Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones , la cual tiene la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el artículo primero y segundo de la Ley N° 27269 – Ley de Firmas y Certificados Digitales.
+                            </span>
+                        </div>
+                    </div>
+                    </ng-template>
+</div>
+</div>
+
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer anexo">
+
+        <div class="row ">
+            <div class="col-sm-12 d-flex ">
+
+                    <div class="flex-1">
+                        <button type="button" class="btn btn-secondary" [disabled]="idFormularioMovimiento === 0" (click)="descargarPdf()">
+                            <i class="far fa-eye"></i>
+                            Visualizar
+                        </button>
+                    </div>
+
+                <div class="flex-1 text-end ">
+
+                    <button class="btn btn-success w-50" (click)="guardarFormulario()">
+                        <i class="far fa-save"></i>
+                        {{
+                            (idFormularioMovimiento === 0 ? 'Grabar' : 'Modificar')
+                        }}
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+</div> -->

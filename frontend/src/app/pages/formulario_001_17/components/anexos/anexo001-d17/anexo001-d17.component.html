@@ -1,0 +1,284 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+        
+    </button>
+</div>
+
+<div class="modal-body anexo">
+
+    <div>
+        <h6>ANEXO 001-D/17 TRANSPORTE INTERNACIONAL TERRESTRE COMUNIDAD ANDINA (MERCANCÍAS)</h6>
+    </div>
+
+    <form novalidate [formGroup]="anexoFormulario">
+
+        <div ngbAccordion #acc="ngbAccordion">
+            <div ngbAccordionItem="anexo001-d17-seccion-1" [disabled]="!habilitarSeccion1" [collapsed]="!habilitarSeccion1"><!--[disabled]="desactivarPanel('seccion1')"-->
+                <h2 ngbAccordionHeader >
+                    
+                        <button ngbAccordionButton>I. CERTIFICADO DE IDONEIDAD, PERMISO DE PRESTACIÓN DE SERVICIOS, PERMISO Y RENOVACIÓN DE PERMISO ESPECIAL DE ORIGEN PARA TRANSPORTE INTERNACIONAL POR CARRETERA POR CUENTA PROPIA, RENOVACIÓN / DUPLICADO DEL CERTIFICADO DE HABILITACIÓN VEHICULAR/CERTIFICADO
+                    DE REGISTRO, MODIFICACIÓN DEL ÁMBITO DE OPERACIÓN</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12 d-flex flex-column">
+
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 campo-obligatorio">Ámbito de operación:</div>
+                                <input type="text" class="form-control flex-3 text-uppercase" formControlName="s1_ambitoOperacion" [class.control-invalid]="formInvalid('s1_ambitoOperacion')" />
+                            </div>
+
+                            <hr class="w-100">
+
+                            <div class="d-flex mt-3" id="anexo001-d17-paises-operar">
+                                <div class="campo-obligatorio">
+                                    Países con los que se pretende operar (incluido origen):
+                                </div>
+                                <div class="anexo001-d17-contenedor-check-paises justify-content-between" [class.control-invalid]="formInvalid('s1_paisesOperar')">
+                                    <label formArrayName="s1_paisesOperar" class="check" *ngFor="let item of this.anexoFormulario.get('s1_paisesOperar')['controls']; let i = index">
+                                        <input type="checkbox" [formControl]="item.get('checked')" /> {{ item.get('text').value }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-template>
+</div>
+</div>
+
+            </div>
+
+            <div ngbAccordionItem="anexo001-d17-seccion-2" [disabled]="!habilitarSeccion2" [collapsed]="!habilitarSeccion2"><!--[disabled]="desactivarPanel('seccion2')"-->
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>II. FLOTA VEHICULAR</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+
+                    <div class="row">
+                        <div class="col-sm-12 mb-3 text-justify">
+                            Relación de vehículos de mi propiedad, de terceros vinculados o bajo contrato de arrendamiento financiero (C.A.F.) elevado a escritura pública a favor del suscrito, marcar con un aspa (X) según corresponda:
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-3">
+
+                        <div class="col-sm-5 flex-2 d-flex flex-column" id="anexo001-d17-placarodaje-soat">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 campo-obligatorio">Placa de rodaje:</div>
+                                <div class="flex-1">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control text-uppercase" (input)="changePlacaRodaje()" maxlength="6" formControlName="placaRodajeForm" />
+                                            <button class="btn btn-outline-secondary" [disabled]="this.anexoFormulario.controls['placaRodajeForm'].value.trim().length !== 6" type="button" (click)="buscarPlacaRodaje()">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-3 align-items-center">
+                                <div class="flex-1 campo-obligatorio">SOAT:</div>
+                                <div class="flex-2">
+                                    <input type="text" class="form-control text-uppercase"  formControlName="soatForm" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5  flex-2 d-flex flex-column" id="anexo001-d17-citv-caf">
+                            <div class="d-flex align-items-center ">
+                                <div class="flex-1 campo-obligatorio">CITV:</div>
+                                <div class="flex-2">
+                                    <input type="text" class="form-control text-uppercase"  formControlName="citvForm" />
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-3 align-items-center flex-1">
+
+                                <div class="d-flex flex-1 flex-column">
+                                    <div class="flex-1">C.A.F</div>
+                                    <div class="flex-1 mt-2">Vinculado</div>
+                                </div>
+
+
+                                <div class="d-flex flex-2 align-items-center justify-content-between">
+                                    <div class="d-flex flex-column">
+                                        <ui-switch (change)="onChangeCaf($event)" formControlName="cafForm"></ui-switch>
+                                        <ui-switch (change)="onChangeVinciulado($event)" formControlName="vinculadoForm"></ui-switch>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm ms-2 text-center" *ngIf="visibleButtonCarf" (click)="inputFileCaf.click()">
+                                        <i class="fas fa-upload"></i> 
+                                        Adjuntar {{ caf_vinculado }}
+                                    </button>
+                                    <div>
+                                        <input type="file" class="d-none" #inputFileCaf accept="application/pdf" (change)="onChangeInputCaf($event)" />
+                                        <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa" *ngIf="filePdfCafSeleccionado || filePdfCafPathName" (click)="vistaPreviaCaf()"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 flex-1 d-flex flex-column align-self-end" id="anexo001-d17-boton-agregar-modificar">
+                            <button class="btn btn-danger btn-sm flex-1" (click)="agregarFlotaVehicular()">
+                            <div *ngIf="indexEditTabla === -1; else elseBlock">
+                                <i class="fas fa-plus"></i>
+                                Agregar
+                            </div>
+                            <ng-template #elseBlock>
+                                <i class="fas fa-pencil-alt"></i>
+                                Modificar
+                            </ng-template>
+                        </button>
+
+                            <button *ngIf="indexEditTabla !== -1" class="btn btn-warning btn-sm mt-2 flex-1 anexo001-d17-btn-cancelar" (click)="cancelarFlotaVehicular()">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered table-sm">
+                                    <thead class="tabla-header-mtc">
+                                        <tr>
+                                            <th>N°</th>
+                                            <th>Placa de rodaje</th>
+                                            <th>SOAT</th>
+                                            <th>CITV</th>
+                                            <th>C.A.F</th>
+                                            <th>Vinculado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="listaFlotaVehicular.length > 0; else sinRegistros">
+                                        <tr class="text-uppercase" [class.registro-edit]="indexEditTabla === i" *ngFor="let item of listaFlotaVehicular; let i = index">
+                                            <td class="text-center">{{ i + 1 }}</td>
+                                            <td>{{ item.placaRodaje }}</td>
+                                            <td>{{ item.soat }}</td>
+                                            <td>{{ item.citv }}</td>
+                                            <td *ngIf="item.caf === false; else pdfcaf"></td>
+                                            <ng-template #pdfcaf>
+                                                <td class="text-center">
+                                                    <i class="far fa-file-pdf" (click)="verPdfCafGrilla(item)"></i>
+                                                </td>
+                                            </ng-template>
+                                            <td *ngIf="item.vinculado === false; else pdfvinculado"></td>
+                                            <ng-template #pdfvinculado>
+                                                <td class="text-center">
+                                                    <i class="far fa-file-pdf" (click)="verPdfCafGrilla(item)"></i>
+                                                </td>
+                                            </ng-template>
+                                            <td class="text-center">
+                                                <i class="far fa-edit pe-2 text-primary cursor-pointer" [class.opacity-icon]="indexEditTabla !== -1" title="Editar" (click)="modificarFlotaVehicular(item, i)"></i>
+                                                <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" [class.opacity-icon]="indexEditTabla !== -1" title="Eliminar" (click)="eliminarFlotaVehicular(item, i)"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <ng-template #sinRegistros>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="7" class="text-center">No se encontraron registros</td>
+                                            </tr>
+                                        </tbody>
+                                    </ng-template>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            </div>
+
+            </div>
+
+            <div ngbAccordionItem="anexo001-d17-seccion-3" [disabled]="!habilitarSeccion3" [collapsed]="!habilitarSeccion3"><!--[disabled]="desactivarPanel('seccion3')" -->
+
+                <h2 ngbAccordionHeader>
+                    
+                        <button ngbAccordionButton>III. CARTA DE COMPROMISO DE CONTRATACIÓN DE PÓLIZA ANDINA</button>
+                    </h2>
+
+                <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                    <div class="row mt-3">
+                        <div class="col-sm-12 text-justify">
+                            Yo,
+                            <span *ngIf="habilitarSeccion3" class="campo-resolucion-jurada">{{ (this.habilitarSeccion3?this.anexoFormulario.controls['s3_nombreUsuario'].value:'') }}</span>, identificado con Documento Nacional de Identidad / Carnet de Extranjería N°
+                            <span *ngIf="habilitarSeccion3" class="campo-resolucion-jurada">{{ (this.habilitarSeccion3?this.anexoFormulario.controls['s3_numeroDocumento'].value:'') }}</span>, representante de la empresa
+                            <span *ngIf="habilitarSeccion3" class="campo-resolucion-jurada">{{ (this.habilitarSeccion3?this.anexoFormulario.controls['s3_empresa'].value:'') }}</span>, con el N° de Partida o Registro
+                            <span *ngIf="habilitarSeccion3" class="campo-resolucion-jurada">{{ (this.habilitarSeccion3?this.anexoFormulario.controls['s3_poderInscrito'].value:'') }}</span>, donde está inscrito su poder de representació, con domicilio legal
+                            <span *ngIf="habilitarSeccion3" class="campo-resolucion-jurada">{{ (this.habilitarSeccion3?this.anexoFormulario.controls['s3_domicilio'].value:'') }}</span>, me comprometo en nombre de mi representada, a contratar la Póliza Andina de Seguro de Responsabilidad Civil para el Transporte
+                            Internacional por Carretera y Anexo de Accidentes Corporales para Tripulantes.
+                        </div>
+                        <div class="col-sm-12 mt-3">
+                            En caso de incumplimiento del compromiso formulado en la presenta carta, me someto a la aplicación de las sanciones establecidas en las normas aplicables.
+                        </div>
+                        <div class="col-sm-12 mt-4">
+                            Lima, <span *ngIf="habilitarSeccion3" class="campo-resolucion-jurada">{{ (this.habilitarSeccion3?this.anexoFormulario.controls['s3_dia'].value:'') }}</span> de <span *ngIf="habilitarSeccion3" class="campo-resolucion-jurada">{{ (this.habilitarSeccion3?this.anexoFormulario.controls['s3_mes'].value:'') }}</span> de 20<span *ngIf="habilitarSeccion3" class="campo-resolucion-jurada">{{ (this.habilitarSeccion3?this.anexoFormulario.controls['s3_anio'].value:'') }}</span>
+                        </div>
+
+                        <div class="col-sm-12 mt-5 d-flex justify-content-center" *ngIf="false">
+
+                            <div class="d-flex border border-dark">
+                                <div class="d-flex p-5 border-end border-dark">
+                                    <i class="far fa-file-pdf fa-3x"></i>
+                                </div>
+                                <div class="d-flex p-3 flex-column justify-content-center border">
+
+                                    <div class="text-center">
+                                        Agregar PDF firmado localmente
+                                    </div>
+
+                                    <button class="btn btn-primary w-100 mt-3">
+                                Subir PDF
+                            </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+</div>
+</div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer anexo">
+
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                        <i class="far fa-eye"></i> Visualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success" *ngIf="errorAlCargarData === false" (click)="guardarAnexo()" [disabled]="deshabilitarButtonGuardarModificar()">
+                    <i class=" far fa-save "></i>
+                    {{
+                        (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

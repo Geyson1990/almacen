@@ -1,0 +1,23 @@
+.flex-4 {
+  flex: 4;
+}
+
+.flex-5 {
+  flex: 5;
+}
+
+.texto-bajo-juramento{
+  color:red;
+  font-weight: bold;
+}
+
+.check-declaracion {
+  width: 30px;
+  height: 30px;
+}
+
+.alert-custom {
+  color: #717171;
+  background-color: #e6e6e6;
+  border-color: #9c9c9c;
+}

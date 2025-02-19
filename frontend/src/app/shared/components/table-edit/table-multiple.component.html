@@ -1,0 +1,74 @@
+<div class="table-component">
+    <table class="table">
+        <thead>
+            <tr>
+                <ng-container *ngFor="let column of columns">
+                    <th [attr.colspan]="column.colspan ? column.colspan : 1"
+                        [attr.rowspan]="column.rowspan ? column.rowspan : 1"
+                        *ngIf="!column.isChildCol && !column.hidden">
+                        {{ column.header }}
+                        <span *ngIf="column.required" class="icon-rojo">(*)</span>
+                    </th>
+                </ng-container>
+            </tr>
+            <tr>
+                <ng-container *ngFor="let column of columns">
+                    <th *ngIf="column.isChildCol && !column.hidden">
+                        {{ column.header }}
+                        <span *ngIf="column.required" class="icon-rojo">(*)</span>
+                    </th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of data">
+                <ng-container *ngFor="let column of columns">
+                    <td *ngIf="!column.isParentCol && !column.hidden">
+                        <i class="material-icons" *ngIf="row[column.field].icon" aria-hidden="true">
+                            {{ row[column.field].icon }}
+                        </i>
+
+                        <button *ngIf="row[column.field].buttonIcon"
+                            [ngClass]="{'button-icon-delete': row[column.field].buttonIcon === 'delete', 'button-icon-table': row[column.field].buttonIcon !== 'delete'}"
+                            type="button" (click)="row[column.field].onClick?.(row, column)">
+                            <i class="material-icons">{{row[column.field].buttonIcon}}</i>
+                        </button>
+
+                        <ng-container *ngFor="let component of row[column.field].components">
+                            <input *ngIf="component.type === 'input'"
+                                class="form-control"
+                                [placeholder]="component.placeholder || ''"
+                                [(ngModel)]="component.value">
+                            
+                            <select *ngIf="component.type === 'select'"
+                                class="form-select"
+                                [(ngModel)]="component.value"
+                                (ngModelChange)="component.onChange ? component.onChange($event, row, column) : null">
+                                <option *ngFor="let option of component.options || []"
+                                    [ngValue]="option.value">{{ option.label }}</option>
+                            </select>
+                        </ng-container>
+
+                        <span *ngIf="row[column.field].text" (click)="row[column.field].onClick?.(row, column)"
+                            [ngClass]="row[column.field].hasCursorPointer ? 'cursor-pointer' : ''" type="button">
+                            {{ row[column.field].text }}
+                        </span>
+
+                        <span *ngIf="row[column.field].htmlText" (click)="row[column.field].onClick?.(row, column)"
+                            [ngClass]="row[column.field].hasCursorPointer ? 'cursor-pointer' : ''"
+                            [innerHTML]="row[column.field].htmlText" type="button">
+                        </span>
+                    </td>
+                    <td *ngIf="column.hidden" style="display: none;">
+                        {{ row[column.field]?.text || row[column.field]?.value }}
+                    </td>
+                </ng-container>
+            </tr>
+            <tr *ngIf="data.length === 0">
+                <td [attr.colspan]="columns.length">
+                    <center>Sin información registrada.</center>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

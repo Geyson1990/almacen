@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h2>{{title}}</h2>
+</div>
+<div class="modal-body">
+    <form (submit)="save(form)" [formGroup]="form">
+        <div class="sub-grupo">
+            <div class="col-sm-12 col-md-12 mt-2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 mt-2">
+                        <h3>RESULTADO DE PARÁMETROS</h3>
+                        <div style="height: 200px; overflow-y: auto;">
+                            <tupa-table [columns]="headersParameters" [data]="dataTablaParametros"></tupa-table>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 mt-2">
+                        <h3>PARÁMETROS SELECCIONADOS</h3>
+                        <div style="height: 200px; overflow-y: auto;">
+                            <tupa-table [columns]="headersParametersSeleccionados"
+                            [data]="dataTablaParametrosSeleccionados"></tupa-table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+                Cancel</button>
+            <button [disabled]="!viewControl || dataTablaParametrosSeleccionados.length === 0" class="mat-small"><i class="material-icons">save</i> Grabar</button>
+        </div>
+    </form>
+</div>

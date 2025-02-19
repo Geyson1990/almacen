@@ -1,0 +1,939 @@
+<div class="modal-header anexo bg-danger text-white">
+  <h4 class="modal-title"> {{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)"></button>
+</div>
+<div class="modal-body">
+  <div class="container mt-2 mb-3">
+    <form [formGroup]="formularioFG">
+      <div class="center">
+        <h6>{{txtTitulo}}</h6>
+      </div>
+      <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1, seccion-2, seccion-3, seccion-4, seccion-5, seccion-6">
+        <div ngbAccordionItem="seccion-1" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>
+              I. DATOS GENERALES / GENERAL DATA
+            </button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div class="row" formGroupName="f_Seccion1FG">
+                  <div class="col-lg-12" *ngIf="f_s1_TipoSolicitudFG.enabled" formGroupName="f_s1_TipoSolicitudFG">
+                    <div class="mt-4">
+                      <strong>Elija una opción / Choose an option</strong>
+                    </div>
+                    <div class="row gx-2">
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-12">
+                          <input id="nuevaSolicitud" name="OpcionesDeTipoDeSolicitud" type="radio" value="1"
+                            [parentForm]="f_s1_TipoSolicitudFG" inputFormControlName="f_s1_ts_OpcionesRadioButtonFC"
+                            (change)="tipoDeSolicitud($event)" [checked]="f_s1_ts_OpcionesRadioButtonFC.value === '1'">
+                          <label for="nuevaSolicitud" class="ml-1">Nueva Solicitud / New request</label>
+                        </div>
+                        <div class="col-lg-12">
+                          <input id="actualizarPVI" name="OpcionesDeTipoDeSolicitud" type="radio" value="2"
+                            [parentForm]="f_s1_TipoSolicitudFG" inputFormControlName="f_s1_ts_OpcionesRadioButtonFC"
+                            (change)="tipoDeSolicitud($event)">
+                          <label for="actualizarPVI" class="ml-1">Actualizar Permiso de Vuelo Vigente / Update Valid Flight Permit</label>
+                        </div>
+                        <p></p>    
+                        <div class="col-lg-12" *ngIf="esVisibleCampoPermisoVuelo === true">
+                          <div class="col-lg-12">
+                            <app-basic-input [parentForm]="f_s1_TipoSolicitudFG"
+                              inputFormControlName="f_s1_ts_PermisoVueloFC"
+                              label= "{{ this.textoBusquedaPermiso }}"
+                              placeHolder="Ingrese el permiso de vuelo. Ej: PVO-0001-2023" maxLength="13">
+                            </app-basic-input>
+                          </div>
+                          <div class="col-lg-12 text-center">
+                            <button class="btn btn-danger mt-2 col-lg-4" [disabled]="f_s1_TipoSolicitudFG.invalid"
+                              (click)="searchPermisoVuelo()">
+                              <i class="fas fa-search"></i>
+                              Buscar / Search
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12" *ngIf="f_s1_DatosOperadorFG.enabled" formGroupName="f_s1_DatosOperadorFG">
+                    <div class="mt-4">
+                      <strong>Datos del Operador / Aircraft Operator Data</strong>
+                    </div>
+                    <br>
+                    <div class="row gx-2">
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-8">
+                          <app-basic-input [parentForm]="f_s1_DatosOperadorFG" inputFormControlName="f_s1_do_NombreFC"
+                            label="Nombres y Apellidos o Razón Social / Full Name or Company Name"
+                            placeHolder="Ingrese su nombre completo" [maxLength]="100">
+                          </app-basic-input>
+                          <div *ngIf="f_s1_do_NombreFC.invalid && (f_s1_do_NombreFC.dirty || f_s1_do_NombreFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="f_s1_do_NombreFC.errors?.pattern">
+                              Debe ingresar sus nombres y sus apellidos
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <label class="control-label campo-obligatorio">País / Country</label>
+                          <select id="prueba" [parentForm]="f_s1_DatosOperadorFG" class="form-control"
+                            formControlName="f_s1_do_PaisFC" [class.control-invalid]="formInvalid(f_s1_do_PaisFC)">
+                            <option value=''>Seleccione un país</option>
+                            <option *ngFor="let opcion of listaPais" [value]="opcion.idPais">{{ opcion.descripcion }}</option>
+                            <!--<option *ngFor="let opcion of listaPaises" [value]="opcion.ID_PAIS">{{ opcion.DESCRIPCION }}</option>-->
+                            <!--<option *ngFor="let opcion of listaPaises" [value]="opcion.id">{{ opcion.pais }}</option>-->
+                          </select>
+                          <div *ngIf="f_s1_do_PaisFC.invalid && (f_s1_do_PaisFC.dirty || f_s1_do_PaisFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="f_s1_do_PaisFC.errors?.required">
+                              El campo es obligatorio
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-12">
+                          <app-basic-input [parentForm]="f_s1_DatosOperadorFG"
+                            inputFormControlName="f_s1_do_DomicilioLegalFC" label="Domicilio Legal / Address"
+                            placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                          </app-basic-input>
+                        </div>
+                      </div>
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-4">
+                          <label for="do_telefono">
+                            Telefono / Telephone <span class="text-danger">(*)</span>
+                          </label>
+                          <span class="text-success ms-2" triggers="mouseenter:mouseclick"
+                            popoverTitle="Información / Information" placement="right"
+                            ngbPopover="Sí su numero no es de Perú, favor anteponer + seguido del código de país y número telefónico, ej: +50588984824.
+                            If your number is not from Peru, please put + followed by the country code and telephone number, eg: +50588984824.">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <app-basic-input [parentForm]="f_s1_DatosOperadorFG" inputFormControlName="f_s1_do_TelefonoFC"
+                            id="do_telefono" placeHolder="Ingrese el número de teléfono" [maxLength]="15"
+                            (input)="soloNumeros($event)">
+                          </app-basic-input>
+                          <div
+                            *ngIf="f_s1_do_TelefonoFC.invalid && (f_s1_do_TelefonoFC.dirty || f_s1_do_TelefonoFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="f_s1_do_TelefonoFC.errors?.pattern">
+                              Solo se permite el carácter "+" y números. Ej: +50588984824, 982482369
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <app-basic-input [parentForm]="f_s1_DatosOperadorFG" inputFormControlName="f_s1_do_EmailFC"
+                            label="Correo Electrónico / E-mail" placeHolder="Ingrese el correo electrónico"
+                            [maxLength]="50">
+                          </app-basic-input>
+                        </div>
+                        <div class="col-lg-4">
+                          <app-basic-input [parentForm]="f_s1_DatosOperadorFG" inputFormControlName="f_s1_do_UsuarioSiidgacFC"
+                            label="Usuario SII-DGAC / SII-DGAC USER" placeHolder="Ingrese su usuario SII-DGAC"
+                            [maxLength]="50">
+                          </app-basic-input>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12" *ngIf="f_s1_DatosSolicitanteFG.enabled" formGroupName="f_s1_DatosSolicitanteFG">
+                    <div class="mt-4">
+                      <strong>Datos del Solicitante (FBO, Representate, Otro) / Applicant Data (FBO, Representative,
+                        Other)</strong>
+                    </div>
+                    <br>
+                    <div class="row gx-2">
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-12">
+                          <app-basic-input [parentForm]="f_s1_DatosSolicitanteFG" inputFormControlName="f_s1_ds_NombreFC"
+                            label="Nombres y Apellidos o Razón Social / Full Name or Company Name"
+                            placeHolder="Ingrese su nombre completo" [maxLength]="100">
+                          </app-basic-input>
+                          <div *ngIf="f_s1_ds_NombreFC.invalid && (f_s1_ds_NombreFC.dirty || f_s1_ds_NombreFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="f_s1_ds_NombreFC.errors?.pattern">
+                              Debe ingresar sus nombres y sus apellidos
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-12">
+                          <app-basic-input [parentForm]="f_s1_DatosSolicitanteFG" inputFormControlName="f_s1_ds_FboFC"
+                            label="FBO (Si Aplica) / FBO (If Applicable)" placeHolder="Ingrese el FBO" [maxLength]="100">
+                          </app-basic-input>
+                        </div>
+                      </div>
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-4">
+                          <app-basic-input [parentForm]="f_s1_DatosSolicitanteFG" inputFormControlName="f_s1_ds_CargoFC"
+                            label="Cargo / Position" placeHolder="Ingrese el cargo" [maxLength]="100">
+                          </app-basic-input>
+                        </div>
+                        <div class="col-lg-4">
+                          <label for="ds_telefono">
+                            Telefono / Telephone <span class="text-danger">(*)</span>
+                          </label>
+                          <span class="text-success ms-2" triggers="mouseenter:mouseclick"
+                            popoverTitle="Información / Information" placement="right"
+                            ngbPopover="Sí su numero no es de Perú, favor anteponer + seguido del código de país y número telefónico, ej: +50588984824.
+                            If your number is not from Peru, please put + followed by the country code and telephone number, eg: +50588984824.">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <app-basic-input [parentForm]="f_s1_DatosSolicitanteFG" inputFormControlName="f_s1_ds_TelefonoFC"
+                            id="ds_telefono" placeHolder="Ingrese el número de teléfono" [maxLength]="15"
+                            (input)="soloNumeros($event)">
+                          </app-basic-input>
+                          <div
+                            *ngIf="f_s1_ds_TelefonoFC.invalid && (f_s1_ds_TelefonoFC.dirty || f_s1_ds_TelefonoFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="f_s1_ds_TelefonoFC.errors?.pattern">
+                              Solo se permite el carácter "+" y números. Ej: +50588984824, 982482369
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <app-basic-input [parentForm]="f_s1_DatosSolicitanteFG" inputFormControlName="f_s1_ds_EmailFC"
+                            label="Correo Electrónico / E-mail" placeHolder="Ingrese el correo electrónico"
+                            [maxLength]="50">
+                          </app-basic-input>
+                        </div>
+                      </div>
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-12">
+                          <div class="alert alert-custom">
+                            <div class="row gx-2" style="align-items: center;">
+                              <div class="col">
+                                <div> Solicito ser notificado de la aprobación del permiso de vuelo al correo indicado en la
+                                  sección datos del solicitante.
+                                  <br>I request to be notified of the approval of the flight permit to the email indicated
+                                  in the applicant information section.
+                                </div>
+                              </div>
+                              <div class="col-auto">
+                                <div class="d-flex flex-row p-2 ms-4">
+                                  <ui-switch formControlName="f_s1_ds_NotificarFC"
+                                    class="ng-valid ng-touched ng-dirty"></ui-switch> &nbsp;&nbsp;NO / SI
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12" *ngIf="f_s1_FacturarAFG.enabled" formGroupName="f_s1_FacturarAFG">
+                    <div class="mt-4">
+                      <strong>Facturar A (CORPAC) / Invoice the Service To (CORPAC)</strong>
+                      <br><br>
+                      <div>
+                        <label>Elija una opción / Choose an option </label>
+                        <div>
+                          <input id="rbOp1" name="OpcionesDeCopiado" type="radio" value="1" [parentForm]="f_s1_FacturarAFG"
+                            inputFormControlName="f_s1_fa_OpcionesRadioButtonFC" (change)="copyData($event)">
+                          <label for="rbOp1" class="ms-1"> Facturar al operador / Bill operator</label>
+                        </div>
+                        <div>
+                          <input id="rbOp2" name="OpcionesDeCopiado" type="radio" value="2" [parentForm]="f_s1_FacturarAFG"
+                            inputFormControlName="f_s1_fa_OpcionesRadioButtonFC" (change)="copyData($event)">
+                          <label for="rbOp2" class="ms-1"> Facturar al solicitante / Bill the applicant</label>
+                        </div>
+                        <div>
+                          <input id="rbOp3" name="OpcionesDeCopiado" type="radio" value="3" [parentForm]="f_s1_FacturarAFG"
+                            inputFormControlName="f_s1_fa_OpcionesRadioButtonFC" (change)="copyData($event)"
+                            [checked]="f_s1_fa_OpcionesRadioButtonFC.value === '3'">
+                          <label for="rbOp3" class="ms-1"> Facturar a otro / Bill another</label>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row gx-2">
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-12">
+                          <app-basic-input [parentForm]="f_s1_FacturarAFG" inputFormControlName="f_s1_fa_NombreORazonFC"
+                            label="Nombres y Apellidos o Razón Social / Full Name or Company Name"
+                            placeHolder="Ingrese el nombre completo o la razón social" [maxLength]="100">
+                          </app-basic-input>
+                        </div>
+                      </div>
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-12">
+                          <app-basic-input [parentForm]="f_s1_FacturarAFG" inputFormControlName="f_s1_fa_DomicilioLegalFC"
+                            label="Domicilio Legal / Address" placeHolder="Ingrese el domicilio legal" [maxLength]="100">
+                          </app-basic-input>
+                        </div>
+                      </div>
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-4">
+                          <label for="fa_telefono">
+                            Telefono / Telephone <span class="text-danger">(*)</span>
+                          </label>
+                          <span class="text-success ms-2" triggers="mouseenter:mouseclick"
+                            popoverTitle="Información / Information" placement="right"
+                            ngbPopover="Sí su numero no es de Perú, favor anteponer + seguido del código de país y número telefónico, ej: +50588984824.
+                            If your number is not from Peru, please put + followed by the country code and telephone number, eg: +50588984824.">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <app-basic-input [parentForm]="f_s1_FacturarAFG" inputFormControlName="f_s1_fa_TelefonoFC"
+                            id="fa_telefono" placeHolder="Ingrese el número de teléfono" [maxLength]="15"
+                            (input)="soloNumeros($event)">
+                          </app-basic-input>
+                          <div
+                            *ngIf="f_s1_fa_TelefonoFC.invalid && (f_s1_fa_TelefonoFC.dirty || f_s1_fa_TelefonoFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="f_s1_fa_TelefonoFC.errors?.pattern">
+                              Solo se permite el carácter "+" y números. Ej: +50588984824, 982482369
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <app-basic-input [parentForm]="f_s1_FacturarAFG" inputFormControlName="f_s1_fa_EmailFC"
+                            label="Correo Electrónico / E-mail" placeHolder="Ingrese el correo electrónico"
+                            [maxLength]="50">
+                          </app-basic-input>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12" *ngIf="f_s1_DatosSolicitudFG.enabled" formGroupName="f_s1_DatosSolicitudFG">
+                    <div class="mt-4">
+                      <strong>Datos de la Solicitud / Application Data</strong>
+                    </div>
+                    <br>
+                    <div class="row gx-2">
+                      <div class="row gx-2 col-lg-12">
+                        <div class="col-lg-4">
+                          <label class="control-label campo-obligatorio">Ambito del Permiso / Application</label>
+                          <select id="prueba" [parentForm]="f_s1_DatosSolicitudFG" class="form-control"
+                            formControlName="f_s1_sol_AmbitoFC" [class.control-invalid]="formInvalid(f_s1_sol_AmbitoFC)">
+                            <option value=''>Seleccione una opción</option>
+                            <!--<option *ngFor="let opcion of listaPais" [value]="opcion.idPais">{{ opcion.descripcion }}</option>-->
+                            <!--<option *ngFor="let opcion of listaAmbito" [value]="opcion.ID_PAIS">{{ opcion.DESCRIPCION }}</option>-->
+                            <option *ngFor="let opcion of listaAmbito" [value]="opcion.id">{{ opcion.descripcion }}</option>
+                          </select>
+                        </div>
+                        <div class="col-lg-4">
+                          <app-basic-input [parentForm]="f_s1_DatosSolicitudFG"
+                            inputFormControlName="f_s1_sol_TipoPermisoFC" label="Tipo de Permiso / Permission type"
+                            [readonly]="true">
+                          </app-basic-input>
+                        </div>
+                        <div class="col-lg-4">
+                          <label class="control-label campo-obligatorio">Tipo de vuelo / Type of flight</label>
+                          <select [parentForm]="f_s1_DatosSolicitudFG" class="form-control"
+                            formControlName="f_s1_sol_TipoVueloFC"
+                            [class.control-invalid]="formInvalid(f_s1_sol_TipoVueloFC)">
+                            <option value=''>Seleccione una opción</option>
+                            <option *ngFor="let opcion of listaTipoVueloAUtilizar" [value]="opcion.idMotivoVuelo">{{
+                              opcion.descripcion }}</option>
+                            <!-- <option *ngFor="let opcion of listaTipoVuelo" [value]="opcion.idMotivoVuelo">{{
+                              opcion.descripcionEspMotivo + ' \\ ' + opcion.descripcionEngMotivo }}</option> -->
+                          </select>
+                          <div
+                            *ngIf="f_s1_sol_TipoVueloFC.invalid && (f_s1_sol_TipoVueloFC.dirty || f_s1_sol_TipoVueloFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="f_s1_sol_TipoVueloFC.errors?.required">
+                              El campo es obligatorio
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row gx-2 col-lg-12">                        
+                        <div class="col-lg-4">
+                          <label for="numeroPasajeros">
+                            Número de Pasajeros / Number of passengers
+                          </label>
+                          <span class="text-success ms-2" triggers="mouseenter:mouseclick"
+                            popoverTitle="Información / Information" placement="left" ngbPopover="Si desconoce la cantidad de pasajeros deje el campo vacio.
+                            If you do not know the number of passengers, leave the field empty.">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <app-basic-input [parentForm]="f_s1_DatosSolicitudFG"
+                            inputFormControlName="f_s1_sol_NumeroPasajerosFC" id="numeroPasajeros"
+                            placeHolder="Ingrese el número de pasajeros" [maxLength]="4" [onlyNumbers]="true">
+                          </app-basic-input>
+                        </div>
+                        <div class="col-lg-4">
+                          <label class="control-label">Adelanto - Demora / Ahead of Schedule -
+                            Delay</label>
+                          <select [parentForm]="f_s1_DatosSolicitudFG" class="form-control"
+                            formControlName="f_s1_sol_AdelantoDemoraFC"
+                            [class.control-invalid]="formInvalid(f_s1_sol_AdelantoDemoraFC)">
+                            <option value=''>Seleccione una opción</option>
+                            <option *ngFor="let opcion of listaOpcionesHoras" [value]="opcion.id">{{ opcion.descripcion }}
+                            </option>
+                          </select>
+                          <div
+                            *ngIf="f_s1_sol_AdelantoDemoraFC.invalid && (f_s1_sol_AdelantoDemoraFC.dirty || f_s1_sol_AdelantoDemoraFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="f_s1_sol_AdelantoDemoraFC.errors?.required">
+                              El campo es obligatorio
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>          
+        </div>
+        <div ngbAccordionItem="seccion-2" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>
+              II. DATOS DE LA(S) AERONAVE(S) / AIRCRAFT DATA
+            </button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div class="row" *ngIf="f_Seccion2FG.enabled" formGroupName="f_Seccion2FG">
+                  <div class="col-lg-12">
+                    <div class="row gx-2" [formGroup]="aeronaveFG">
+                      <div class="col-lg-4 mb-2">
+                        Flota Autorizada? / Authorized fleet?
+                        <div class="col-lg-12" [formGroup]="f_Seccion2FG">
+                          <ui-switch formControlName="f_s2_FlotaAutorizada"></ui-switch> &nbsp;&nbsp;NO / SI
+                        </div>
+                      </div>
+                      <div class="col-lg-8 mb-2">
+                        <app-basic-input [parentForm]="aeronaveFG" inputFormControlName="a_MatriculaFC"
+                                label="Matrícula / Registration Number" maxLength="30" placeHolder="Ingrese la matrícula">
+                        </app-basic-input>
+                        <!-- <app-basic-input [parentForm]="aeronaveFG" inputFormControlName="a_TipoAeronaveFC"
+                          label="Tipo de aeronave / Aircraft type" placeHolder="Ingrese el fabricante" maxLength="30">
+                        </app-basic-input> -->
+                      </div>
+                    </div>
+                    <div formArrayName="f_s2_AeronaveFA" *ngIf="!f_s2_FlotaAutorizada.value">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gx-2" [formGroup]="aeronaveFG">
+                            <div class="col-lg-6 col-xl mb-2">
+                              <!-- <app-basic-input [parentForm]="aeronaveFG" inputFormControlName="a_MatriculaFC"
+                                label="Matrícula / Registration Number" maxLength="30" placeHolder="Ingrese la matrícula">
+                              </app-basic-input>
+                            </div>
+                            <div class="col-lg-6 col-xl mb-2">
+                              <app-basic-input [parentForm]="aeronaveFG" inputFormControlName="a_CallSignFC"
+                                label="Indicativo de llamada / CallSign" placeHolder="Ingrese el callSign" maxLength="30">
+                              </app-basic-input>
+                            </div>
+                            <div class="col-lg-6 col-xl mb-2">
+                              <app-basic-input [parentForm]="aeronaveFG" inputFormControlName="a_NumeroVueloFC"
+                                label="N° de vuelo / Flight number" placeHolder="Ingrese el Número de vuelo" maxLength="10">
+                              </app-basic-input> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div formArrayName="f_s2_AeronaveFA">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gx-2 d-flex justify-content-center" [formGroup]="aeronaveFG">
+                            <div class="col-lg-auto col-xl-auto mb-3" style="text-align: center;">
+                              <button class="btn btn-danger" [disabled]="aeronaveFG.invalid" (click)="saveAeronave()">
+                                <div *ngIf="indexEditAeronave === -1; else elseBlock">
+                                  <i class="fas fa-plus-circle"></i>
+                                  Agregar / Add
+                                </div>
+                                <ng-template #elseBlock>
+                                  <i class="fas fa-pencil-alt"></i>
+                                  Modificar / Modify
+                                </ng-template>
+                              </button>
+                              <button *ngIf="indexEditAeronave !== -1" class="btn btn-warning ms-2"
+                                (click)="nosaveAeronave()">
+                                <i class="fas fa-ban"></i>
+                                Cancelar / Cancel
+                              </button>
+                            </div>
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover table-striped">
+                              <thead class="tabla-header-mtc">
+                                <tr class="thead-light">
+                                  <th>N°</th>
+                                  <th class="text-center">Tipo de aeronave / <br>Aircraft type</th>
+                                  <th class="text-center">Matrícula / <br>Registration Number</th>
+                                  <th class="text-center">Indicativo / <br>CallSign</th>
+                                  <th class="text-center">N° de vuelo / <br>Flight number</th>
+                                  <th class="text-center">Acciones / <br>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="text-center" *ngFor="let _ of f_s2_AeronaveFA.controls; let i=index"
+                                  [formGroupName]="i">
+                                  <td>{{ i + 1}}</td>
+                                  <td>{{ f_s2_a_TipoAeronaveFC(i).value }}</td>
+                                  <td>{{ f_s2_a_MatriculaFC(i)?.value }}</td>
+                                  <td>{{ f_s2_a_CallSignFC(i)?.value }}</td>
+                                  <td>{{ f_s2_a_NumeroVueloFC(i)?.value }}</td>
+                                  <td>
+                                    <i class="far fa-edit pr-2 text-primary cursor-pointer" title="Editar / Edit"
+                                      (click)="editAeronave(i)"></i>
+                                    <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" title="Eliminar / Delete"
+                                      (click)="removeAeronave(i)"></i>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>        
+        </div>
+        <div ngbAccordionItem="seccion-3" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>
+              III. PERSONAL AERONAUTICO / CREW
+            </button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div class="row" *ngIf="f_Seccion3FG.enabled" formGroupName="f_Seccion3FG">
+                  <div class="col-lg-12">
+                    <div class="row gx-2">
+                      <div class="col-lg-10 mt-4">
+                        <p><strong>La tripulación se encuentra calificada</strong></p>
+                      </div>
+                      <div class="col-lg-2 d-flex align-items-center">
+                        <ui-switch formControlName="f_s3_TripulacionCalificada"></ui-switch> &nbsp;&nbsp;NO / SI
+                      </div>
+                    </div>
+                    <div formArrayName="f_s3_TripulacionFA" *ngIf="!f_s3_TripulacionCalificada.value">
+                      <hr>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gx-2" [formGroup]="tripulacionFG">
+                            <div class="col-lg-6 col-xl mb-2">
+                              <label class="control-label campo-obligatorio">Tipo de Licencia / Type of license</label>
+                              <select [parentForm]="tripulacionFG" class="form-control" formControlName="t_CargoFC"
+                                [class.control-invalid]="formInvalid(t_CargoFC)">
+                                <option value=''>Seleccione un cargo</option>
+                                <option *ngFor="let opcion of listaTipoTripulante" [value]="opcion.idTipoFuncion">{{ opcion.descripcion }}</option>
+                              </select>
+                              <div *ngIf="t_CargoFC.invalid && (t_CargoFC.dirty || t_CargoFC.touched)" class="text-danger">
+                                <div *ngIf="t_CargoFC.errors?.required">
+                                  El campo es obligatorio
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6 col-xl mb-2">
+                              <app-basic-input [parentForm]="tripulacionFG" inputFormControlName="t_NombreFC"
+                                label="Numero de Licencia / License Numbert" placeHolder="Ingrese el nombre completo"
+                                [maxLength]="100">
+                              </app-basic-input>
+                              <div *ngIf="t_NombreFC.invalid && (t_NombreFC.dirty || t_NombreFC.touched)"
+                                class="text-danger">
+                                <div *ngIf="t_NombreFC.errors?.pattern">
+                                  Ingrese el Numero de Licencia
+                                </div>
+                              </div>
+                            </div>
+
+
+
+
+
+
+                            <!-- <div class="col-lg-6 col-xl mb-2">
+                              <app-basic-input [parentForm]="tripulacionFG" inputFormControlName="t_NombreFC"
+                                label="Nombre completo / Full name" placeHolder="Ingrese el nombre completo"
+                                [maxLength]="100">
+                              </app-basic-input>
+                              <div *ngIf="t_NombreFC.invalid && (t_NombreFC.dirty || t_NombreFC.touched)"
+                                class="text-danger">
+                                <div *ngIf="t_NombreFC.errors?.pattern">
+                                  Debe ingresar sus nombres y sus apellidos
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6 col-xl mb-2">
+                              <label class="control-label campo-obligatorio">Cargo / Position</label>
+                              <select [parentForm]="tripulacionFG" class="form-control" formControlName="t_CargoFC"
+                                [class.control-invalid]="formInvalid(t_CargoFC)">
+                                <option value=''>Seleccione un cargo</option>
+                                <option *ngFor="let opcion of listaTipoTripulante" [value]="opcion.idTipoFuncion">{{ opcion.descripcion }}</option>
+                              </select>
+                              <div *ngIf="t_CargoFC.invalid && (t_CargoFC.dirty || t_CargoFC.touched)" class="text-danger">
+                                <div *ngIf="t_CargoFC.errors?.required">
+                                  El campo es obligatorio
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6 col-xl mb-2">
+                              <label class="control-label campo-obligatorio">Naciondalidad / Nationality</label>
+                              <select [parentForm]="tripulacionFG" class="form-control" formControlName="t_NacionalidadFC"
+                                [class.control-invalid]="formInvalid(t_NacionalidadFC)">
+                                <option value=''>Seleccione la nacionalidad</option>
+                                <option *ngFor="let opcion of listaNacionalidad" [value]="opcion.idNacionalidad">{{ opcion.descripcion }}</option>
+                              </select>
+                              <div *ngIf="t_NacionalidadFC.invalid && (t_NacionalidadFC.dirty || t_NacionalidadFC.touched)"
+                                class="text-danger">
+                                <div *ngIf="t_NacionalidadFC.errors?.required">
+                                  El campo es obligatorio
+                                </div>
+                              </div>
+                            </div> -->
+                          </div>
+                          <div class="row gx-2 d-flex justify-content-center" [formGroup]="tripulacionFG">
+                            <div class="col-lg-auto col-xl-auto mb-3" style="text-align: center;">
+                              <button class="btn btn-danger" [disabled]="tripulacionFG.invalid" (click)="saveTripulacion()">
+                                <div *ngIf="indexEditTripulante === -1; else elseBlock">
+                                  <i class="fas fa-plus-circle"></i>
+                                  Agregar / Add
+                                </div>
+                                <ng-template #elseBlock>
+                                  <i class="fas fa-pencil-alt"></i>
+                                  Modificar / Modify
+                                </ng-template>
+                              </button>
+                              <button *ngIf="indexEditTripulante !== -1" class="btn btn-warning ms-2"
+                                (click)="nosaveTripulacion()">
+                                <i class="fas fa-ban"></i>
+                                Cancelar / Cancel
+                              </button>
+                            </div>
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover table-striped">
+                              <thead class="tabla-header-mtc">
+                                <tr class="thead-light">
+                                  <th>N°</th>
+                                  <th class="text-center">Nombre completo / Full name</th>
+                                  <th class="text-center">Cargo / Position</th>
+                                  <th class="text-center">Naciondalidad / Nationality</th>
+                                  <th class="text-center">Acciones / Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="text-center" *ngFor="let _ of f_s3_TripulacionFA.controls; let i=index"
+                                  [formGroupName]="i">
+                                  <td>{{ i + 1}}</td>
+                                  <td>{{ f_s3_t_NombreFC(i)?.value }}</td>
+                                  <td>{{ f_s3_t_CargoFCString(i) }}</td>
+                                  <td>{{ f_s3_t_NacionalidadFCString(i) }}</td>
+                                  <td>
+                                    <i class="far fa-edit pr-2 text-primary cursor-pointer" title="Editar / Edit"
+                                      (click)="editTripulacion(i)"></i>
+                                    <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" title="Eliminar / Delete"
+                                      (click)="removeTripulacion(i)"></i>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>  
+        </div>
+        <div ngbAccordionItem="seccion-4" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>
+              IV. INFORMACION DEL VUELO / FLIGHT INFORMATION
+            </button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div class="row" *ngIf="f_Seccion4FG.enabled" formGroupName="f_Seccion4FG">
+                  <div class="col-lg-12">
+                    <div formArrayName="f_s4_InfoVueloFA">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gx-2" [formGroup]="infoVueloFG">
+                            <div class="col-lg-auto col-xl mb-2">
+                              <div>
+                                <app-basic-input [parentForm]="infoVueloFG" inputFormControlName="iv_EntradaOrigenFC"
+                                  label="Origen (Designador OACI) / Origin (ICAO designator)"
+                                  placeHolder="Ingrese el designador OACI de origen" [maxLength]="4">
+                                </app-basic-input>
+                              </div>
+                              <div class="mb-2 text-center">
+                                <button class="btn btn-danger me-2"
+                                  [disabled]="iv_EntradaOrigenFC.invalid || iv_EntradaOrigenFC.value === '' || iv_EntradaOrigenFC.value === null"
+                                  (click)="agregarOrigen()">
+                                  <i class="fas fa-plus-circle"></i>Agregar / Add
+                                </button>
+                                <button class="btn btn-warning" *ngIf="contadorOrigen !== 0"
+                                  [disabled]="iv_EntradaOrigenFC.value ==''" (click)="eliminarOrigen()">
+                                  <i class="fas fa-trash-alt"></i>
+                                  Eliminar / Delete
+                                </button>
+                              </div>
+                              <div>
+                                <textarea class="form-control" rows="3" formControlName="iv_OrigenFC"></textarea>
+                              </div>
+                            </div>
+                            <div class="col-lg-auto col-xl mb-2">
+                              <div>
+                                <app-basic-input [parentForm]="infoVueloFG" inputFormControlName="iv_EntradaDestinoFC"
+                                  label="Destino (Designador OACI) / Destination (ICAO designator)"
+                                  placeHolder="Ingrese el designador OACI de destino" [maxLength]="4">
+                                </app-basic-input>
+                              </div>
+                              <div class="mb-2 text-center">
+                                <button class="btn btn-danger me-2"
+                                  [disabled]="iv_EntradaDestinoFC.invalid || iv_EntradaDestinoFC.value === '' || iv_EntradaDestinoFC.value === null"
+                                  (click)="agregarDestino()">
+                                  <i class="fas fa-plus-circle"></i>Agregar / Add
+                                </button>
+                                <button class="btn btn-warning" *ngIf="contadorDestino !== 0"
+                                  [disabled]="iv_EntradaDestinoFC.value ==''" (click)="eliminarDestino()">
+                                  <i class="fas fa-trash-alt"></i>
+                                  Eliminar / Delete
+                                </button>
+                              </div>
+                              <div>
+                                <textarea class="form-control" rows="3" formControlName="iv_DestinoFC"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row gx-2" [formGroup]="infoVueloFG">
+                            <div class="col-lg-6 col-xl mb-2">
+                              <label for="fechaEntrada">
+                                Fecha de vigencia desde / Effective date from <span class="text-danger">(*)</span>
+                              </label>
+                              <span class="text-success ms-2" triggers="mouseenter:mouseclick"
+                                popoverTitle="Información / Information" placement="right" ngbPopover=" Al momento de ingresar la fecha considere la hora UTC.
+                              When entering the date consider UTC time.">
+                                <i class="fas fa-info-circle"></i>
+                              </span>
+                              <div class="flex-1" [class.control-invalid]="formInvalidFecha('iv_FechaEntradaFC')">
+                                <app-calendar-date-picker [minDate]="fechaActual" [parentForm]="infoVueloFG"
+                                  formControlName="iv_FechaEntradaFC" [c]="infoVueloFG.controls['iv_FechaEntradaFC']"
+                                  id="fechaEntrada"></app-calendar-date-picker>
+                              </div>
+                              <div *ngIf="formInvalidFecha('iv_FechaEntradaFC')" class="text-danger">
+                                El campo es obligatorio
+                              </div>
+                            </div>
+                            <div class="col-lg-6 col-xl mb-2">
+                              <label for="fechaSalida">
+                                Fecha de vigencia hasta / Effective date until <span class="text-danger">(*)</span>
+                              </label>
+                              <span class="text-success ms-2" triggers="mouseenter:mouseclick"
+                                popoverTitle="Información / Information" placement="right" ngbPopover=" Al momento de ingresar la fecha considere la hora UTC.
+                              When entering the date consider UTC time.">
+                                <i class="fas fa-info-circle"></i>
+                              </span>
+                              <div class="flex-1" [class.control-invalid]="formInvalidFecha('iv_FechaSalidaFC')">
+                                <app-calendar-date-picker [minDate]="fechaActual" [parentForm]="infoVueloFG"
+                                  formControlName="iv_FechaSalidaFC" [c]="infoVueloFG.controls['iv_FechaSalidaFC']"
+                                  id="fechaSalida"></app-calendar-date-picker>
+                              </div>
+                              <div *ngIf="formInvalidFecha('iv_FechaSalidaFC')" class="text-danger">
+                                El campo es obligatorio
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row gx-2 d-flex justify-content-center" [formGroup]="infoVueloFG">
+                            <div class="col-lg-auto col-xl-auto mb-3" style="text-align: center;">
+                              <button class="btn btn-danger"
+                                [disabled]="infoVueloFG.invalid || listaOrigen.length === 0 || listaDestino.length === 0"
+                                (click)="saveInfoVuelo()">
+                                <div *ngIf="indexEditInfoVuelo === -1; else elseBlock">
+                                  <i class="fas fa-plus-circle"></i>
+                                  Agregar / Add
+                                </div>
+                                <ng-template #elseBlock>
+                                  <i class="fas fa-pencil-alt"></i>
+                                  Modificar / Modify
+                                </ng-template>
+                              </button>
+                              <button *ngIf="indexEditInfoVuelo !== -1" class="btn btn-warning ms-2"
+                                (click)="nosaveInfoVuelo()">
+                                <i class="fas fa-ban"></i>
+                                Cancelar / Cancel
+                              </button>
+                            </div>
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover table-striped">
+                              <thead class="tabla-header-mtc">
+                                <tr class="thead-light">
+                                  <th rowspan="2">N°</th>
+                                  <th rowspan="2" class="text-center align-items-center">Origen / Origin</th>
+                                  <th rowspan="2" class="text-center align-items-center">Destino / Destination</th>
+                                  <th colspan="2" class="text-center align-items-center">Fecha de vigencia / Effective date
+                                  </th>
+                                  <th rowspan="2" class="text-center align-items-center">Acciones / Actions</th>
+                                </tr>
+                                <tr class="thead-light">
+                                  <th class="text-center align-items-center">Desde / From</th>
+                                  <th class="text-center align-items-center">Hasta / Until</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="text-center" *ngFor="let _ of f_s4_InfoVueloFA.controls; let i=index"
+                                  [formGroupName]="i">
+                                  <td>{{ i + 1}}</td>
+                                  <td>{{ f_s4_iv_OrigenFC(i).value }}</td>
+                                  <td>{{ f_s4_iv_DestinoFC(i)?.value }}</td>
+                                  <td>{{ f_s4_iv_FechaEntradaFC(i)?.value }}</td>
+                                  <td>{{ f_s4_iv_FechaSalidaFC(i)?.value }}</td>
+                                  <td>
+                                    <i class="far fa-edit pr-2 text-primary cursor-pointer" title="Editar / Edit"
+                                      (click)="editInfoVuelo(i)"></i>
+                                    <i class="far fa-trash-alt ps-2 text-danger cursor-pointer" title="Eliminar / Delete"
+                                      (click)="removeInfoVuelo(i)"></i>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>         
+        </div>
+        <div ngbAccordionItem="seccion-5" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>
+              V. COMENTARIOS / COMMENTS
+            </button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div class="row" *ngIf="f_Seccion5FG.enabled" formGroupName="f_Seccion5FG">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="comentarios">
+                        Comentarios / Comments
+                      </label>
+                      <textarea class="form-control" id="comentarios" rows="3" formControlName="f_s5_ComentariosFC"
+                        (input)="onInputEvent($event, f_s5_ComentariosFC)" [maxLength]="2000">
+                      </textarea>
+                      <div *ngIf="f_s5_ComentariosFC.invalid && (f_s5_ComentariosFC.dirty || f_s5_ComentariosFC.touched)"
+                        class="text-danger">
+                        <div *ngIf="f_s5_ComentariosFC.errors?.maxlength">
+                          El tamaño máximo permitido es {{ f_s5_ComentariosFC.errors.maxlength.requiredLength }} caracteres
+                        </div>
+                        <div *ngIf="f_s5_ComentariosFC.errors?.whitespace">
+                          El campo no debe contener espacios en blanco al inicio ni al final
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>     
+        </div>
+        <div ngbAccordionItem="seccion-6" [collapsed]="false">
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>
+              VI. DECLARACIONES JURADAS / SWORN DECLARATIONS
+            </button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div *ngIf="f_Seccion6FG.enabled" formGroupName="f_Seccion6FG">
+                  <div class="mt-2 mb-4 ng-star-inserted" *ngIf="f_s6_Declaracion1FC.enabled">
+                    <div class="alert alert-custom">
+                      <div class="row gx-2" style="align-items: center;">
+                        <div class="col">
+                          <div> 6.1 Toda la información proporcionada es veraz, en caso contrario, me someto al
+                            procedimiento y a las sanciones previstas en la Ley N° 27444, Ley del Procedimiento
+                            Administrativo General y/o normas complementarias.
+                            <br><br>6.1 All the information provided is true, otherwise, I submit to the procedure and
+                            sanctions provided for in Law No. 27444, Law
+                            of General Administrative Procedure and / or complementary regulations.
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <div class="d-flex flex-row p-2 ms-4">
+                            <ui-switch formControlName="f_s6_Declaracion1FC"
+                              class="ng-valid ng-touched ng-dirty"></ui-switch> &nbsp;&nbsp;NO / SI
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 mb-4 ng-star-inserted" *ngIf="f_s6_Declaracion2FC.enabled">
+                    <div class="alert alert-custom">
+                      <div class="row gx-2" style="align-items: center;">
+                        <div class="col">
+                          <div>Adjunto todos los requisitos señalados en el TUPA vigente del MTC.
+                            <br><br>I attach all the requirements indicated in the current TUPA of the MTC.
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <div class="d-flex flex-row p-2 ms-4">
+                            <ui-switch formControlName="f_s6_Declaracion2FC"
+                              class="ng-valid ng-touched ng-dirty"></ui-switch> &nbsp;&nbsp;NO / SI
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="alert alert-active">
+                    <span style="text-align: justify; display: block;">
+                      NOTA: En el presente documento electrónico se ha vinculado e identificado al firmante, así como se ha
+                      garantizado la autenticación e integridad del mismo a través de la firma electrónica utilizada atraves
+                      del usuario y clave de ingreso al Sistema Tupa Digital del Ministerio de Transportes y Comunicaciones,
+                      la cual tiene la misma validez y eficacia jurídica que la firma manuscrita, de conformidad con el
+                      artículo primero y segundo de la Ley N° 27269 - Ley de Firmas y Certificados Digitales y lo
+                      establecido en el inciso c) del numeral 47.1 del Art 47 del Reglamento de la Ley de Gobierno Digital,
+                      aprobado mediante Decreto Supremo 029-2021-PCM.
+                      <br><br>NOTE: In this electronic document the signatory has been linked and identified, as well as the
+                      authentication of the device has been guaranteed through the electronic signature used through the
+                      user and password to enter the Tupa Digital System of the Ministry of Transport and Communications,
+                      which has the same validity and legal effectiveness as the handwritten signature, in accordance with
+                      the first and second article of Law No. 27269 - Law of Digital Signatures and Certificates and the
+                      provisions of subsection c) of numeral 47.1 of Art 47 of the Regulation of the Digital Government Law,
+                      approved by Supreme Decree 029-2021-PCM.
+                    </span>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer anexo">
+  <div class="row">
+    <div class="col-lg-12 d-flex">
+      <div class="flex-1">
+        <button type="button" class="btn btn-secondary" (click)="descargarPdf()">
+          <i class="far fa-eye"></i>
+          Visualizar / Visualize
+        </button>
+      </div>
+      <div class="flex-1 text-end">
+        <button class="btn btn-success ms-3" (click)="guardarFormulario()" [disabled]="formularioFG.invalid">
+          <i class="far fa-save"></i>
+          {{
+          (id === 0 ? 'Grabar / Save' : 'Modificar / Modify')
+          }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

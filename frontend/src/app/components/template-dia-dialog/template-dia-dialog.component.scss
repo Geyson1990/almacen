@@ -1,0 +1,10 @@
+.pdf-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ngx-extended-pdf-viewer {
+  width: 100%;
+  border: 1px solid #ddd;
+}

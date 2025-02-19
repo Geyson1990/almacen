@@ -1,0 +1,180 @@
+<div class="table-component sombra-new">
+    <table class="table">
+        <thead>
+            <tr>
+                <ng-container *ngFor="let column of columns">
+                    <th [attr.colspan]="column.colspan ? column.colspan : 1"
+                        [attr.rowspan]="column.rowspan ? column.rowspan : 1"
+                        [style.width]="column.width ? column.width : 'auto'"
+                        [style.min-width]="column.minWidth ? column.minWidth : 'unset'"
+                        *ngIf="!column.isChildCol && !column.hidden">
+                        {{ column.header }}
+                        <span *ngIf="column.required" class="icon-rojo">(*)</span>
+                    </th>
+                </ng-container>
+            </tr>
+            <tr>
+                <ng-container *ngFor="let column of columns">
+                    <th *ngIf="column.isChildCol && !column.hidden">
+                        {{ column.header }}
+                        <span *ngIf="column.required" class="icon-rojo">(*)</span>
+                    </th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of data">
+                <ng-container *ngFor="let column of columns">
+                    <td *ngIf="!column.isParentCol && !column.hidden"
+                        [ngClass]="{'text-center' : column.alignCenter, 'gray-background': row.index?.isTitle, 'flex-container': column.flexDirection !== undefined}"
+                        [style.width]="column.width ? column.width : 'auto'"
+                        [style.min-width]="column.minWidth ? column.minWidth : 'unset'"
+                        [style.text-align]="row[column.field].textAlign ? row[column.field].textAlign : 'center'">
+                        <i class="material-icons" *ngIf="row[column.field].icon !== 'chat' && row[column.field].icon !== 'edit' && row[column.field].icon !== 'warning' && row[column.field].icon !== 'done' && row[column.field].icon !== 'close'" aria-hidden="true"
+                        [ngClass]="{'text-center' : column.alignCenter}">
+                            {{ row[column.field].icon }}
+                        </i>
+ 
+                        <span class="icon no-data material-icons"  *ngIf="row[column.field].icon === 'edit'">edit</span>
+                        <span class="icon incomplete material-icons"  *ngIf="row[column.field].icon === 'warning'">warning</span>
+                        <span class="icon complete material-icons"  *ngIf="row[column.field].icon === 'done'">done</span>
+                        <span class="icon error material-icons"  *ngIf="row[column.field].icon === 'close'">close</span>
+                        
+                        <i class="material-icons" *ngIf="row[column.field].icon === 'chat'"
+                            (click)="row[column.field].onClick?.(row, column)" style="cursor: pointer;"
+                            aria-hidden="true">
+                            {{ row[column.field].icon }}
+                        </i>
+
+                        <button *ngIf="row[column.field].buttonIcon"
+                            [ngClass]="{'text-center' : column.alignCenter, 'button-icon-delete': row[column.field].buttonIcon === 'delete', 'button-icon-table': row[column.field].buttonIcon !== 'delete'}"
+                            type="button" (click)="row[column.field].onClick?.(row, column)">
+                            <i class="material-icons">{{row[column.field].buttonIcon}}</i>
+                        </button>
+
+                        <!--  <button type="button" *ngIf="row[column.field].buttonIcon" class="button-icon-table"
+                            (click)="row[column.field].onClick?.(row, column)">
+                            <i class="material-icons">{{ row[column.field].buttonIcon }}</i>
+                        </button> -->
+
+                        <input class="form-control" *ngIf="row[column.field].hasInput"
+                            style="width: auto; min-width: 100%; max-width: 100%;"
+                            [placeholder]="row[column.field].inputPlaceholder || ''"
+                            [(ngModel)]="row[column.field].value"
+                            (input)="row[column.field].onInput?.($event, row, column)"
+                            [maxlength]="row[column.field].inputMaxlength || ''">
+
+                        <select class="form-select" *ngIf="row[column.field].hasSelect"
+                            [disabled]="row[column.field].select?.disabled"
+                            style="width: auto; min-width: 100%; max-width: 100%;"
+                            [(ngModel)]="row[column.field].selectedValue"
+                            (ngModelChange)="row[column.field].onChange ? row[column.field].onChange($event, row, column) : null">
+                            <option *ngFor="let option of row[column.field].select?.options || []"
+                                [ngValue]="option.value">{{ option.label }}</option>
+                        </select>
+
+                        <div style="text-align: start;">
+                            <span *ngIf="row[column.field].text" (click)="row[column.field].onClick?.(row, column)"
+                                [ngClass]="row[column.field].hasCursorPointer ? 'cursor-pointer' : ''" type="button">
+                                {{ row[column.field].text }}
+                            </span>
+                        </div>
+
+                        <span *ngIf="row[column.field].htmlText" (click)="row[column.field].onClick?.(row, column)"
+                            [ngClass]=" row[column.field].hasCursorPointer ? 'cursor-pointer' : ''"
+                            [style.text-align]="row[column.field].textAlign ? row[column.field].textAlign : 'center'"
+                            [innerHTML]="row[column.field].htmlText" type="button">
+                        </span>
+                        <!-- <span *ngIf="row[column.field].htmlText" (click)="row[column.field].onClick?.(row, column)"
+                            [ngClass]="{ 'text-left': row[column.field].textAlign === 'left',
+                                         'text-normal': !row[column.field].textAlign || row[column.field].textAlign !== 'left'
+                                        }" [innerHTML]="row[column.field].htmlText" type="button">
+                        </span> -->
+                    </td>
+                    <!-- Columnas ocultas -->
+                    <td *ngIf="column.hidden" style="display: none;">
+                        {{ row[column.field]?.text || row[column.field]?.value }}
+                    </td>
+                </ng-container>
+            </tr>
+            <!-- <tr *ngFor="let row of data">
+                <ng-container *ngFor="let column of columns">
+                    <td *ngIf="!column.isParentCol && !column.hidden" [ngClass]="{'gray-background': row.index?.isTitle }">                        
+                        <i class="material-icons" *ngIf="row[column.field].icon" aria-hidden="true">
+                            {{ row[column.field].icon }}
+                        </i>
+
+                        <button *ngIf="row[column.field].buttonIcon"
+                            [ngClass]="{'button-icon-delete': row[column.field].buttonIcon === 'delete', 'button-icon-table': row[column.field].buttonIcon !== 'delete'}"
+                            type="button" (click)="row[column.field].onClick?.(row, column)">
+                            <i class="material-icons">{{row[column.field].buttonIcon}}</i>
+                        </button>
+
+                        <input class="form-control" *ngIf="row[column.field].hasInput"
+                            style="width: auto; min-width: 100%; max-width: 100%;"
+                            [placeholder]="row[column.field].inputPlaceholder || ''"
+                            [(ngModel)]="row[column.field].value"
+                            [type]="row[column.field].inputType || 'text'"    
+                            (input)="row[column.field].onInput?.($event, row, column)" 
+                            [maxlength]="row[column.field].inputMaxlength || ''"
+                            >
+
+                        <select class="form-select" *ngIf="row[column.field].hasSelect"
+                            [disabled]="row[column.field].select?.disabled"
+                            style="width: auto; min-width: 100%; max-width: 100%;"
+                            [(ngModel)]="row[column.field].selectedValue"
+                            (ngModelChange)="row[column.field].onChange ? row[column.field].onChange($event, row, column) : null">
+                            <option *ngFor="let option of row[column.field].select?.options || []"
+                                [ngValue]="option.value">{{ option.label }}</option>
+                        </select>
+
+                        <span *ngIf="row[column.field].text" (click)="row[column.field].onClick?.(row, column)"
+                            [ngClass]="row[column.field].hasCursorPointer ? 'cursor-pointer' : ''" type="button">
+                            {{ row[column.field].text }}
+                        </span>
+
+                        <span *ngIf="row[column.field].htmlText" (click)="row[column.field].onClick?.(row, column)"
+                            [ngClass]="row[column.field].hasCursorPointer ? 'cursor-pointer' : ''"
+                            [innerHTML]="row[column.field].htmlText" type="button">
+                        </span>
+                    </td>
+                    <td *ngIf="column.hidden" style="display: none;">
+                        {{ row[column.field]?.text || row[column.field]?.value }}
+                    </td>
+                </ng-container>
+            </tr> -->
+            <tr *ngIf="data.length === 0">
+                <td [attr.colspan]="columns.length">
+                    <center>{{message}}</center>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="legend-container" *ngIf="legend === 1">
+        <br>
+        <br>
+        <span class="legend-title">Leyenda:</span>
+
+        <div class="legend-item">
+            <span class="icon no-data material-icons">edit</span> <!-- Lápiz -->
+            <span class="text">Sin Datos</span>
+        </div>
+
+        <div class="legend-item">
+
+            <span class="icon incomplete material-icons">warning</span> <!-- Triángulo de advertencia -->
+            <span class="text">Incompleto</span>
+        </div>
+
+        <div class="legend-item">
+            <span class="icon complete material-icons">done</span> <!-- Palomita -->
+            <span class="text">Completo</span>
+        </div>
+
+        <div class="legend-item">
+            <span class="icon error material-icons">close</span> <!-- Equis -->
+            <span class="text">Con Errores</span>
+        </div>
+    </div>
+</div>

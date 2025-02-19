@@ -1,0 +1,334 @@
+<div class="modal-header">
+  <h2 mat-dialog-title>{{ title }}
+    <span class="mat-tooltip-informacion" placement="bottom"
+      ngbTooltip="Se describirán las etapa de construcción/habilitación y operación, indicando las acciones y requerimientos de materiales; maquinarias; equipos; insumos; infraestructura como campamentos, talleres, almacenes, etc. indicando sus características (perímetro, punto central, extensión, etc.) y personal que sean necesarios, así como las vías de acceso al emplazamiento.">Contenido
+      Mínimo</span>
+  </h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="content-contorno">
+        <h3>ADJUNTAR ARCHIVOS </h3>
+        <div class="m-0-5px">
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-rojo"> info </i>
+            </div>
+            <div class="col-sm-11 col-md-11 w-90">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES (OCR).</p>
+            </div>
+          </div>
+          <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarDocumento($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+          <br>
+          <app-document-grid [viewOnly]="viewOnly" [documentos]="documentos" [showTipoDocumento]="showTipoDocumento" (documentosActualizados)="actualizarDocumentos($event)"></app-document-grid>
+          <br>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3>2.7.1. MINERAL A EXPLOTAR <span class="icon-rojo">(*)</span></h3>
+        <div class="m-0-5px">
+          <button *ngIf="viewControl" (click)="openModalMineralAExplotar('MINERAL A EXPLOTAR')" type="button" class="mat-small"
+          style="width: 180px;">
+          <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns271" [data]="tableData271"></tupa-table>
+          <br>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>2.7.2. COMPONENTES PRINCIPALES <span class="icon-rojo">(*)</span></h3>
+        <div class="m-0-5px">
+          <tupa-table [columns]="tableColumns272a" [data]="tableData272a"></tupa-table>
+          <button *ngIf="viewControl" (click)="openModalComponentesPrincipales('COMPONENTES PRINCIPALES')" type="button" class="mat-small"
+            style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns272b" [data]="tableData272b"></tupa-table>
+          <br>
+          <div>Bajar plantilla de archivo csv <b><a class="navbar-brand" type="button"
+                (click)="fnDescargarPlantilla()">aquí</a></b></div>
+          <button *ngIf="viewControl" type="button" (click)="fnEliminarPlataformas()"
+            class="btn button-eliminar d-flex align-items-center justify-content-center p-0" fxFlex="33">
+            <i class="material-icons icon-rojo">add</i>
+            Eliminar todas las plataformas
+          </button>
+          <div>
+            Importar coordenadas desde un archivo CSV
+            <button *ngIf="viewControl" type="button" (click)="fileInputImport.click()" class="mat-small" fxFlex="33">
+              <i class="material-icons">attach_file</i>
+              Importar coordenadas
+            </button>
+            <input type="file" #fileInputImport style="display: none;" (change)="onFileSelected($event)">
+          </div>
+          <br>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3>2.7.3. COMPONENTES AUXILIARES<span class="icon-rojo">(*)</span></h3>
+
+        <div class="sub-grupo">
+          <h3>2.7.3.1 COMPONENTES DEL PROYECTO <span class="icon-rojo">(*)</span></h3>
+          <button *ngIf="viewControl" (click)="openModalComponentesProyecto('COMPONENTES DEL PROYECTO')" type="button" class="mat-small"
+            style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2731" [data]="tableData2731"></tupa-table>
+          <br>
+          <h3>2.7.3.2. ÁREA A DISTURBAR / MATERIAL A REMOVER</h3>
+          <tupa-table [columns]="tableColumns2732" [data]="tableData2732"></tupa-table>
+          <br>
+
+          <h3>2.7.3.3. MANEJO DE TOPSOIL</h3>
+
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-ambar"> warning </i>
+            </div>
+            <div class="col-sm-11 col-md-11 w-90">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES (OCR).</p>
+            </div>
+          </div>
+          <!-- <tupa-attach-button></tupa-attach-button> -->
+          <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarDocumentoTopSoil($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+          <br>
+          <app-document-grid [viewOnly]="viewOnly" [documentos]="topSoil" [showTipoDocumento]="showTipoDocumento" (documentosActualizados)="actualizarTopSoil($event)"></app-document-grid>
+          <br>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>2.7.4. RESIDUOS A GENERAR<span class="icon-rojo">(*)</span></h3>
+        <div class="m-0-5px">
+          <button *ngIf="viewControl" (click)="openModalResiduos('RESIDUOS A GENERAR')" type="button" class="mat-small" style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns274" [data]="tableData274"></tupa-table>
+          <br>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3>2.7.5. DEMANDA AGUA<span class="icon-rojo">(*)</span></h3>
+        <div class="sub-grupo">
+          <h3>2.7.5.1. REQUERIMIENTO DE AGUA <span class="icon-rojo">(*)</span></h3>
+          <button *ngIf="viewControl" (click)="openModalRequerimiento('REQUERIMIENTO DE AGUA')" type="button" class="mat-small"
+            style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2751" [data]="tableData2751"></tupa-table>
+          <br>
+
+          <h3>2.7.5.3. BALANCE DE AGUA</h3>
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-ambar"> warning </i>
+            </div>
+            <div class="col-sm-11 col-md-11 w-90">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES (OCR).
+                Adjuntar Archivo</p>
+            </div>
+          </div>
+          <!-- <tupa-attach-button></tupa-attach-button> -->
+          <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarBalanceAgua($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+          <br>
+          <app-document-grid [viewOnly]="viewOnly" [documentos]="balanceAgua" [showTipoDocumento]="showTipoDocumento" (documentosActualizados)="actualizarBalanceAgua($event)"></app-document-grid>
+          <br>
+
+          <h3>2.7.5.2. ADJUNTAR ARCHIVOS</h3>
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-ambar"> warning </i>
+            </div>
+            <div class="col-sm-11 col-md-11 w-90">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES (OCR).
+                Adjuntar Archivo</p>
+            </div>
+          </div>
+          <!-- <tupa-attach-button></tupa-attach-button> -->
+          <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarArchivos($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+          <br>
+          <app-document-grid [viewOnly]="viewOnly" [documentos]="archivos" [showTipoDocumento]="showTipoDocumento" (documentosActualizados)="actualizarArchivos($event)"></app-document-grid>
+          <br>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>2.7.6. INSTALACIONES Y ACTIVIDADES DE MANEJO DE EFLUENTES Y EMISIONES</h3>
+        <div class="m-0-5px">
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-ambar"> warning </i>
+            </div>
+            <div class="col-sm-11 col-md-11 w-90">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES (OCR).
+                Adjuntar Archivo</p>
+            </div>
+          </div>
+          <!-- <tupa-attach-button></tupa-attach-button> -->
+          <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarInstalaciones($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+          <br>
+          <app-document-grid [viewOnly]="viewOnly" [documentos]="instalaciones" [showTipoDocumento]="showTipoDocumento" (documentosActualizados)="actualizarInstalaciones($event)"></app-document-grid>
+          <br>
+        </div>
+      </div>
+      
+      <div class="content-contorno">
+        <h3>2.7.7. INSUMOS, MAQUINARIAS Y EQUIPO</h3>
+        <div class="sub-grupo">
+          <h3>2.7.7.1. INSUMOS<span class="icon-rojo">(*)</span></h3>
+          <button *ngIf="viewControl"(click)="openModalInsumos('INSUMOS')" type="button" class="mat-small" style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2771" [data]="tableData2771"></tupa-table>
+          <br>
+
+          <h3>2.7.7.2. MAQUINARIAS<span class="icon-rojo">(*)</span></h3>
+          <button *ngIf="viewControl"(click)="openModalMaquinarias('MAQUINARIAS')" type="button" class="mat-small" style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2772" [data]="tableData2772"></tupa-table>
+          <br>
+
+          <h3>2.7.7.3. EQUIPOS<span class="icon-rojo">(*)</span></h3>
+          <button *ngIf="viewControl"(click)="openModalEquipos('EQUIPOS')" type="button" class="mat-small" style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2773" [data]="tableData2773"></tupa-table>
+          <br>
+
+          <h3>2.7.7.4. ADJUNTAR ARCHIVOS MDS</h3>
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-ambar"> warning </i>
+            </div>
+            <div class="col-sm-11 col-md-11 w-90">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES (OCR).
+                Adjuntar Archivo</p>
+            </div>
+          </div>
+          <!-- <tupa-attach-button></tupa-attach-button> -->
+          <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarArchivosMDS($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+          <br>
+          <app-document-grid [viewOnly]="viewOnly" [documentos]="archivosMDS" [showTipoDocumento]="showTipoDocumento" (documentosActualizados)="actualizarArchivosMDS($event)"></app-document-grid>
+          <br>
+
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>2.7.8. ACTIVIDADES DE TRANSPORTE</h3>
+
+        <div class="sub-grupo">
+          <h3>2.7.8.1. VÍAS DE ACCESO EXISTENTES<span class="icon-rojo">(*)</span></h3>
+          <button *ngIf="viewControl" (click)="openModalViasAccesoExistentes('VÍAS DE ACCESO EXISTENTES')" type="button" class="mat-small"
+            style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2781" [data]="tableData2781"></tupa-table>
+          <br>
+
+          <h3>2.7.8.2. VÍAS DE ACCESO NUEVAS<span class="icon-rojo">(*)</span></h3>
+          <button *ngIf="viewControl" (click)="openModalViasAccesoNuevas('VÍAS DE ACCESO NUEVAS')" type="button" class="mat-small"
+            style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2782" [data]="tableData2782"></tupa-table>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>2.7.9. MANO DE OBRA</h3>
+        <div class="sub-grupo">
+          <tupa-table [columns]="tableColumns279" [data]="tableData279"></tupa-table>
+          <br>
+          <h3>2.7.9.1. TIPO DE MANO DE OBRA</h3>
+          <button *ngIf="viewControl" (click)="openModalTipoManoObra('TIPO DE MANO DE OBRA')" type="button" class="mat-small"
+            style="width: 180px;">
+            <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2791" [data]="tableData2791"></tupa-table>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>2.7.10. FUENTE DE ABASTECIMIENTO DE ENERGÍA</h3>
+        <div class="m-0-5px">
+          <button *ngIf="viewControl" (click)="openModalFuenteAbastecimiento('FUENTE DE ABASTECIMIENTO DE ENERGÍA')" type="button"
+          class="mat-small" style="width: 180px;">
+          <i class="material-icons">add</i> Agregar
+          </button>
+          <tupa-table [columns]="tableColumns2710" [data]="tableData2710"></tupa-table>
+          <br>
+        </div>
+      </div>
+
+      <div class="content-contorno">
+        <h3>2.7.11. CIERRE Y POSTCIERRE</h3>
+        <div class="form-group mt-2 mb-4">
+          <textarea class="form-control" formControlName="CierrePostCierre"
+            placeholder="El Resumen Ejecutivo será redactado en un lenguaje claro, sencillo y conciso, deberá sintetizar los principales elementos del proyecto, que permitan a la Autoridad Ambiental y al público en general tener una visión amplia, integral y clara del proyecto; debe incluir el resumen de la ubicación y área efectiva, áreas de influencia, las actividades de exploración y tiempo de ejecución una vez iniciadas las actividades (cronograma), las condiciones ambientales y particularidades del medio donde se pretende desarrollar el proyecto, los mecanismos de participación ciudadana realizados, los impactos ambientales negativos no significativos, el plan de manejo ambiental y las medidas de mitigación, monitoreo y seguimiento, que incluirán las medidas de cierre, post cierre y rehabilitación. Asimismo, se debe indicar la inversión total del proyecto."
+            rows="3"></textarea>
+        </div>
+        <br>
+      </div>
+
+      <div class="content-contorno">
+        <h3>2.7.12. MAPA DE COMPONENTES</h3>
+        <div class="m-0-5px">
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 d-flex justify-content-center align-items-center p-0">
+              <i class="material-icons icon-ambar"> warning </i>
+            </div>
+            <div class="col-sm-11 col-md-11 w-90">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                Adjuntar la descripción de los estudios geológicos, geotecnicos, hidrogeologicos y otros necesario para
+                conocer
+                las caracterírsticas de los basamentos par la ubicación de infraestructuras hidráulicas. Se debe incluir
+                la
+                descripción de las actividades , equipos y obras a utilizar en el área efectiva indicando su objetivo, la
+                cantidad. Incluir su ubicación en un plano georeferenciado.</p>
+            </div>
+          </div>
+          <!-- <tupa-attach-button></tupa-attach-button> -->
+          <tupa-attach-button *ngIf="viewControl" (documentoSeleccionado)="agregarMapaComponentes($event)" [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" [tamano]="50" [cantidadRegistros]="documentos.length"  [limiteRegistros]="60" [showTipoDocumento]="showTipoDocumento" [valorSeleccionado]="0" [optsTipoDocumento]="optsTipoDocumento"></tupa-attach-button>
+          <br>
+          <app-document-grid 
+            [viewOnly]="viewOnly" 
+            [documentos]="mapaComponentes" 
+            [showTipoDocumento]="showTipoDocumento" 
+            (documentosActualizados)="actualizarMapaComponentes($event)"
+          ></app-document-grid>
+          <br>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+        Cancel</button>
+      <button class="mat-small"  *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>
+</form>

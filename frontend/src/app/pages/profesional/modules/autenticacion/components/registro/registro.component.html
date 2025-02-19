@@ -1,0 +1,645 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light"
+    style="background-color: var(--color-mtc) !important;">
+    <div class="navbar-brand" style="display: flex;">
+        <img src="assets/img/GOB-PE.png" style="max-width: 110px;" />
+        <div class="flex-grow-1 ms-3 ps-3 fw-bold align-self-center"
+            style="border-start: 1px solid white; color: white; font-size: 16px;">Tupa Digital</div>
+    </div>
+</nav>
+
+<div class="main">
+    <div class="container p-4">
+        <div class="card mb-5 shadow">
+            <div class="card-body p-4">
+                <div class="title">Registro de Profesionales</div>
+                <hr>
+                <form [formGroup]="validacionFG">
+                    <div class="row align-items-center justify-content-lg-center section">
+                        <div class="col-lg-auto">
+                            <app-basic-select [parentForm]="validacionFG" selectFormControlName="v_TipoUsuarioFC"
+                                [itemList]="listaTipoPersona" label="Tipo de Persona"
+                                defaultItemText="Seleccione el tipo de persona" [horizontal]="true">
+                            </app-basic-select>
+                        </div>
+                        <div class="col-lg-auto">
+                            <button type="button" class="btn btn-secondary"
+                                style="padding-top: 20px; padding-bottom: 20px; padding-left: 50px; padding-right: 50px;">Aqui
+                                va el Captcha</button>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="v_TipoUsuarioFC.valid">
+                        <div class="col-lg-12">
+                            <div class="subtitle">Validación de Datos</div>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div formGroupName="v_PerNatFG" *ngIf="v_PerNatFG.enabled">
+                        <div class="row gx-2 section">
+                            <div class="col-lg">
+                                <app-basic-select [parentForm]="v_PerNatFG" selectFormControlName="v_pn_TipoDocFC"
+                                    [itemList]="listaTipoDoc" label="Tipo Documento"
+                                    defaultItemText="Seleccione el tipo de documento" [readOnly]="isDatosValidos">
+                                </app-basic-select>
+                            </div>
+                            <div class="col-lg">
+                                <app-basic-input [parentForm]="v_PerNatFG" inputFormControlName="v_pn_NumDocFC"
+                                    label="Documento" placeHolder="Ingrese su número de documento" [maxLength]="20"
+                                    [onlyNumbers]="true" [readOnly]="isDatosValidos">
+                                </app-basic-input>
+                            </div>
+                            <div formArrayName="v_pn_ValidaFA">
+                                <div *ngFor="let _ of v_pn_ValidaFA.controls; let i=index">
+                                    <div class="col-lg" [formGroupName]="i">
+                                        <app-basic-input [parentForm]="i" inputFormControlName="vpn_NameId"
+                                            [label]="listaValidadorPN[i].label"
+                                            [placeHolder]="listaValidadorPN[i].placeHolder" [maxLength]="50"
+                                            [customAppend]="listaValidadorPN[i].ayudaImg" [readOnly]="isDatosValidos">
+                                            <ng-container slot="customAppend">
+                                                <button class="btn btn-info" data-toggle="tooltip"
+                                                    title="¿Dónde ubico este dato?"
+                                                    (click)="openModalAyuda(listaValidadorPN[i].ayudaImg)" type="button"
+                                                    [disabled]="vpn_NameId(i).disabled || isDatosValidos">
+                                                    <i class="far fa-question-circle" aria-hidden="true"></i>
+                                                </button>
+                                            </ng-container>
+                                        </app-basic-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-auto btn-input-center">
+                                <button #btnValidaPN (click)="validaPN(btnValidaPN)" class="btn btn-success"
+                                    [disabled]="validacionFG.invalid || isDatosValidos">
+                                    <span class="far fa-check-circle"></span> Validar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div formGroupName="v_PerJurFG" *ngIf="v_PerJurFG.enabled">
+                        <div class="row gx-2 section">
+                            <div class="col-lg">
+                                <app-basic-input [parentForm]="v_PerJurFG" inputFormControlName="v_pj_RazonSocialFC"
+                                    label="Razón Social" placeHolder="Ingrese la razón social de la empresa"
+                                    [maxLength]="50" [readOnly]="true">
+                                </app-basic-input>
+                            </div>
+                            <div class="col-lg-auto btn-input-center ">
+                                <button #btnValidaPJ (click)="validaPJ(btnValidaPJ)" class="btn btn-success"
+                                    [disabled]="v_pj_RazonSocialFC.valid || isDatosValidos">
+                                    <span class="far fa-check-circle"></span> Validar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row gx-2 pt-2" *ngIf="isDatosValidos">
+                            <div class="col-lg-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="idCbDecJur" type="checkbox"
+                                        formControlName="v_pj_DecJurFC">
+                                    <label class="form-check-label" for="idCbDecJur">
+                                        <a [routerLink]="[]" (click)="openModal(modalDecJur)">Declaro que la siguiente
+                                            información corresponde al representante legal de la empresa</a>
+                                    </label>
+                                </div>
+                                <div *ngIf="v_pj_DecJurFC.invalid && (v_pj_DecJurFC.dirty || v_pj_DecJurFC.touched)"
+                                    class="text-danger">
+                                    <div *ngIf="v_pj_DecJurFC.errors?.required">
+                                        Debe de aceptar los términos para continuar
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- <form [formGroup]="registroFG" *ngIf="validacionFG.valid && isDatosValidos"> -->
+                <form [formGroup]="registroFG">
+                    <div formGroupName="r_DatosEmpresaFG" *ngIf="r_DatosEmpresaFG.enabled">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="subtitle">Datos de la Empresa</div>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="row gx-2">
+                                <div class="col-lg-6">
+                                    <app-basic-input [parentForm]="r_DatosEmpresaFG" inputFormControlName="r_de_RucFC"
+                                        label="RUC" placeHolder="Ingrese el número de RUC de la empresa"
+                                        [maxLength]="50" [readOnly]="true">
+                                    </app-basic-input>
+                                </div>
+                                <div class="col-lg-6">
+                                    <app-basic-input [parentForm]="r_DatosEmpresaFG"
+                                        inputFormControlName="r_de_DireccionFC" label="Dirección"
+                                        placeHolder="Ingrese la dirección de la empresa" [maxLength]="50"
+                                        [readOnly]="true">
+                                    </app-basic-input>
+                                </div>
+                            </div>
+                            <app-ubigeo #ubigeoEmpresaCmp [parentForm]="r_DatosEmpresaFG"
+                                depaFormControlName="r_de_DepartamentoFC" provFormControlName="r_de_ProvinciaFC"
+                                distFormControlName="r_de_DistritoFC" depaFormLabel="Departamento"
+                                provFormLabel="Provincia" distFormLabel="Distrito" [horizontal]="true"
+                                [readOnly]="true">
+                            </app-ubigeo>
+                        </div>
+                    </div>
+
+                    <div formGroupName="r_DatosProfesionalFG" *ngIf="r_DatosProfesionalFG.enabled">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="subtitle">Datos del Profesional {{ r_DatosEmpresaFG.enabled ? '-
+                                    Representante Legal' : ''}}</div>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row section">
+                            <div class="col-lg">
+                                <div class="card" formGroupName="r_dp_ValidaRepLegFG" *ngIf="r_dp_TipoDocFC.valid">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Validar datos</h5>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <app-basic-select [parentForm]="r_dp_ValidaRepLegFG"
+                                                    selectFormControlName="r_dp_vrl_TipoDocFC" [itemList]="listaTipoDoc"
+                                                    label="Tipo Documento"
+                                                    defaultItemText="Seleccione el tipo de documento"
+                                                    [readOnly]="isDatosRepLegValidos">
+                                                </app-basic-select>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <app-basic-input [parentForm]="r_dp_ValidaRepLegFG"
+                                                    inputFormControlName="r_dp_vrl_NumDocFC" label="Documento"
+                                                    placeHolder="Ingrese su número de documento" [maxLength]="20"
+                                                    [onlyNumbers]="true" [readOnly]="isDatosRepLegValidos">
+                                                </app-basic-input>
+                                            </div>
+                                            <div formArrayName="r_dp_vrl_ValidaFA">
+                                                <div *ngFor="let _ of r_dp_vrl_ValidaFA.controls; let i=index">
+                                                    <div class="col-lg-6" [formGroupName]="i">
+                                                        <app-basic-input [parentForm]="i"
+                                                            inputFormControlName="vrl_NameId"
+                                                            [label]="listaValidadorRepLeg[i].label"
+                                                            [placeHolder]="listaValidadorRepLeg[i].placeHolder"
+                                                            [maxLength]="50"
+                                                            [customAppend]="listaValidadorRepLeg[i].ayudaImg"
+                                                            [readOnly]="isDatosRepLegValidos">
+                                                            <ng-container slot="customAppend">
+                                                                <button class="btn btn-info" data-toggle="tooltip"
+                                                                    title="¿Dónde ubico este dato?"
+                                                                    (click)="openModalAyuda(listaValidadorRepLeg[i].ayudaImg)"
+                                                                    type="button"
+                                                                    [disabled]="vrl_NameId(i).disabled || isDatosRepLegValidos">
+                                                                    <i class="far fa-question-circle"
+                                                                        aria-hidden="true"></i>
+                                                                </button>
+                                                            </ng-container>
+                                                        </app-basic-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-auto justify-content-lg-center">
+                                                <button #btnValidaProf (click)="validaProf(btnValidaProf)"
+                                                    class="btn btn-success"
+                                                    [disabled]="r_dp_ValidaRepLegFG.invalid || isDatosRepLegValidos">
+                                                    <span class="far fa-check-circle"></span> Validar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <app-basic-input [parentForm]="r_DatosProfesionalFG"
+                                    inputFormControlName="r_dp_NombresFC" label="Nombres"
+                                    placeHolder="Ingrese los nombres del profesional" [maxLength]="50"
+                                    [readOnly]="true">
+                                </app-basic-input>
+                                <app-basic-input [parentForm]="r_DatosProfesionalFG"
+                                    inputFormControlName="r_dp_ApPaternoFC" label="Apellido Paterno"
+                                    placeHolder="Ingrese el apellido paterno del profesional" [maxLength]="50"
+                                    [readOnly]="true">
+                                </app-basic-input>
+                                <app-basic-input [parentForm]="r_DatosProfesionalFG"
+                                    inputFormControlName="r_dp_ApMaternoFC" label="Apellido Materno"
+                                    placeHolder="Ingrese el apellido materno del profesional" [maxLength]="50"
+                                    [readOnly]="true">
+                                </app-basic-input>
+                                <app-ubigeo #ubigeoProfesionalCmp [parentForm]="r_DatosProfesionalFG"
+                                    depaFormControlName="r_dp_DepartamentoFC" provFormControlName="r_dp_ProvinciaFC"
+                                    distFormControlName="r_dp_DistritoFC" depaFormLabel="Departamento"
+                                    provFormLabel="Provincia" distFormLabel="Distrito" [readOnly]="true">
+                                </app-ubigeo>
+                                <app-basic-input [parentForm]="r_DatosProfesionalFG"
+                                    inputFormControlName="r_dp_DomLegalFC" label="Domicilio Legal"
+                                    placeHolder="Ingrese el domicilio legal del profesional" [maxLength]="50">
+                                </app-basic-input>
+                                <app-basic-checkbox [parentForm]="r_DatosProfesionalFG"
+                                    checkboxFormControlName="r_dp_ConDomLegalFC" label="Confirmar domicilio legal">
+                                </app-basic-checkbox>
+                                <app-basic-select [parentForm]="r_DatosProfesionalFG"
+                                    selectFormControlName="r_dp_GeneroFC" [itemList]="listaGenero" label="Género"
+                                    defaultItemText="Seleccione el género del profesional">
+                                </app-basic-select>
+                                <div class="mb-3" *ngIf="usFoto" style="text-align: center;">
+                                    <img [src]="'data:image/BMP;base64,' + usFoto" alt="Foto de perfil"
+                                        class="img-thumbnail">
+                                </div>
+                            </div>
+                            <div class="col-lg-auto">
+                                <hr class="vertical">
+                            </div>
+                            <div class="col-lg">
+                                <app-basic-input [parentForm]="r_DatosProfesionalFG"
+                                    inputFormControlName="r_dp_DigVerificaFC" label="Dígito Verificador del DNI"
+                                    placeHolder="Ingrese el dígito verificador del DNI del Profesional" [maxLength]="50"
+                                    [customAppend]="true">
+                                    <ng-container slot="customAppend">
+                                        <button class="btn btn-info" data-toggle="tooltip"
+                                            title="¿Dónde ubico este dato?" (click)="openModalAyuda('digitoVerifica')"
+                                            type="button" [disabled]="r_dp_DigVerificaFC.disabled">
+                                            <i class="far fa-question-circle" aria-hidden="true"></i>
+                                        </button>
+                                    </ng-container>
+                                </app-basic-input>
+                                <div class="subtitle">Perfil Profesional</div>
+                                <hr>
+                                <ngb-alert type="info" [dismissible]="false">Sólo se muestran las profesiones que se
+                                    requieren para firmar
+                                    digitalmente algunos documentos, según el Texto Unico de Procedimientos
+                                    Administrativos
+                                    (TUPA) del Ministerio de Transportes y Comunicaciones del Perú.</ngb-alert>
+                                <app-basic-select [parentForm]="r_DatosProfesionalFG"
+                                    selectFormControlName="r_dp_ProfesionFC" [itemList]="listaProfesion"
+                                    label="Profesión" defaultItemText="Seleccione el perfil profesional">
+                                </app-basic-select>
+                                <div class="subtitle">Información de Contacto</div>
+                                <hr>
+                                <app-basic-input [parentForm]="r_DatosProfesionalFG"
+                                    inputFormControlName="r_dp_CelularFC" label="Número de Celular"
+                                    placeHolder="Ingrese el número de celular del profesional" [maxLength]="50">
+                                </app-basic-input>
+                                <app-basic-input [parentForm]="r_DatosProfesionalFG"
+                                    inputFormControlName="r_dp_TelefonoFC" label="Número de Teléfono"
+                                    placeHolder="Ingrese el número de teléfono del profesional" [maxLength]="50">
+                                </app-basic-input>
+                                <app-basic-input [parentForm]="r_DatosProfesionalFG" inputFormControlName="r_dp_EmailFC"
+                                    label="Correo Electrónico"
+                                    placeHolder="Ingrese el correo electrónico del profesional" [maxLength]="50">
+                                </app-basic-input>
+                                <ngb-alert type="warning" [dismissible]="false">Al completar el registro, se enviará
+                                    un
+                                    mensaje de confirmacion a
+                                    su
+                                    correo electrónico.</ngb-alert>
+                                <div class="subtitle">Credenciales</div>
+                                <hr>
+                                <app-password [parentForm]="r_DatosProfesionalFG" passFormControlName="r_dp_PasswordFC"
+                                    repassFormControlName="r_dp_ConPasswordFC" passFormLabel="Contraseña"
+                                    rePassFormLabel="Confirmar contraseña" passFormPlaceHolder="Ingrese la contraseña"
+                                    rePassFormPlaceHolder="Repita la contraseña">
+                                </app-password>
+                                <div formGroupName="r_dp_RepLegalFG" *ngIf="r_dp_RepLegalFG.enabled">
+                                    <div class="subtitle">Información del Representante Legal</div>
+                                    <hr>
+                                    <app-basic-select [parentForm]="r_dp_RepLegalFG"
+                                        selectFormControlName="r_dp_rl_OficinaFC" [itemList]="listaOficinaRegistral"
+                                        label="Oficina"
+                                        defaultItemText="Seleccione la oficina registral del representante legal">
+                                    </app-basic-select>
+                                    <app-basic-input [parentForm]="r_dp_RepLegalFG"
+                                        inputFormControlName="r_dp_rl_PartidaFC" label="Partida"
+                                        placeHolder="Ingrese la partida registral del representante legal"
+                                        [maxLength]="50">
+                                    </app-basic-input>
+                                    <app-basic-input [parentForm]="r_dp_RepLegalFG"
+                                        inputFormControlName="r_dp_rl_AsientoFC" label="Asiento"
+                                        placeHolder="Ingrese el número de asiento del representante legal"
+                                        [maxLength]="50">
+                                    </app-basic-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-lg-center py-2">
+                        <div class="form-check">
+                            <input class="form-check-input" id="idCbTerCod" type="checkbox"
+                                formControlName="r_TerminosFC">
+                            <label class="form-check-label" for="idCbTerCod">
+                                Acepto los
+                                <a [routerLink]="[]" (click)="openModal(modalTerminosCondiciones)"><b>términos y
+                                        condiciones</b></a>
+                            </label>
+                        </div>
+                        <div *ngIf="r_TerminosFC.invalid && (r_TerminosFC.dirty || r_TerminosFC.touched)"
+                            class="text-danger">
+                            <div *ngIf="r_TerminosFC.errors?.required">
+                                Debe de aceptar los términos y condiciones para continuar
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-lg-center">
+                        <div class="text-danger" role="alert">
+                            <strong>{{ messageError }}</strong>
+                        </div>
+                    </div>
+                    <div class="row justify-content-lg-center py-4">
+                        <div style="text-align: center">
+                            <a class="btn btn-lg btn-danger mx-2 mb-2"
+                                routerLink="/autenticacion/iniciar-sesion"><span class="fas fa-chevron-left"></span> Regresar</a>
+                            <button #btnSubmitRegistro [disabled]="registroFG.invalid" type="submit"
+                                class="btn btn-lg btn-success mx-2 mb-2"><span class="far fa-save"></span>
+                                Registrar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #modalTerminosCondiciones let-modal>
+    <div class="modal-header bg-danger text-white">
+        <h4 class="modal-title" id="modal-basic-title">TÉRMINOS Y CONDICIONES DE USO DEL SISTEMA TUPA DIGITAL MTC</h4>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row pb-4">
+            <div class="col-md-12">
+                <p data-v-6e8a0dfe="" align="justify">
+                    Cuando usted accede al TUPA Digital MTC y se inscribe para obtener su casilla electrónica,
+                    reconoce no sólo que ha leído, sino también que ha entendido y aceptado los Términos y
+                    Condiciones de uso del sistema que a continuación se desarrollan. Además, es responsable por los
+                    efectos legales de su solo acceso, reconoce como auténtico y válido cualquier medio de prueba o
+                    proceso tecnológico que utilice el Ministerio de Transportes y Comunicaciones, en adelante MTC.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    Los presentes términos y condiciones regulan el acceso y uso del sistema TUPA Digital MTC, a
+                    través de la dirección web <a href="http://tupadigital.mtc.gob.pe"
+                        target="_blank">http://tupadigital.mtc.gob.pe</a>, sin perjuicio de otras comunicaciones,
+                    condiciones e instrucciones que sean informadas oportunamente por el MTC
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">PRIMERA.– TUPA DIGITAL MTC</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    Es la denominación del sistema informático que permite establecer un canal virtual como una
+                    alternativa para los administrados. La plataforma ofrece una variedad de herramientas, servicios
+                    y documentos de ayuda que facilita la presentación de solicitudes y gestión de los
+                    procedimientos contenidos en el TUPA MTC; simplificando trámites a través de la digitalización,
+                    ahorrando tiempo y esfuerzo a los administrados y al MTC.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">SEGUNDA.– ADMINISTRADO</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    Persona natural o jurídica que solicite la atención de un procedimiento administrativo, mediante
+                    el TUPA Digital MTC.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">TERCERA.– OBLIGACIONES Y PROHIBICIONES DEL ADMINISTRADO</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe=""><u>3.1 Obligaciones</u></strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    a) El usuario y contraseña obtenidos para el acceso a su casilla electrónica, deben ser
+                    mantenidos bajo absoluta reserva y confidencialidad, sin revelarlas o compartirlas, en ningún
+                    caso, con terceros, asumiendo las responsabilidades por su incumplimiento.
+                    <br /><br />
+                    b) Es responsable de todas las acciones realizadas mediante el uso de su contraseña, de este
+                    modo, toda acción realizada a través de su cuenta, se presume realizada por el ADMINISTRADO,
+                    como titular de dicha cuenta.
+                    <br /><br />
+                    c) Asimismo, es responsable de la legibilidad, autenticidad y veracidad de los documentos
+                    presentados a través del TUPA Digital MTC.
+                    <br /><br />
+                    d) En el caso identifique que un tercero conociera y usa su contraseña y su cuenta personal o si
+                    se recibe alguna queja o denuncia respecto al nombre de un usuario que viole derechos de
+                    terceros, debe notificarlo de manera inmediata a la Oficina de Atención al Ciudadano y Gestión
+                    Documental para su atención y trámite correspondiente, a través del correo electrónico <a
+                        href="mailto:tupadigital@mtc.gob.pe">tupadigital&#64;mtc.gob.pe</a>.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe=""><u>3.2. Prohibiciones</u></strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    a) No utilizar el TUPA Digital MTC con fines ilícitos o contrarios al contenido de los presentes
+                    términos y condiciones, intereses o derechos de terceros, o que de cualquier forma puedan dañar,
+                    inutilizar, deteriorar la plataforma o impedir un normal uso del sistema.
+                    <br /><br />
+                    b) No debe alterar, inutilizar o dañar la información que se encuentre en el TUPA Digital MTC.
+                    <br /><br />
+                    c) No debe intentar penetrar o probar la vulnerabilidad del sistema o red propia del TUPA
+                    Digital MTC, así como a quebrantar las medidas de seguridad o de autenticación del mismo.
+                    <br /><br />
+                    d) No debe utilizar el sistema para enviar información con contenido amenazante, abusivo,
+                    hostil, ultrajante, difamatorio, vulgar, obsceno o injurioso. Asimismo, se obliga a no valerse
+                    de un lenguaje ilícito, abusivo, amenazante, obsceno, vulgar, racista, ni cualquiera que se
+                    considere inapropiado.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">CUARTA.– CONDICIONES DE ACCESIBILIDAD Y USO</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    4.1. Los servicios que se ofrecen a través del TUPA Digital se encuentran disponibles sólo para
+                    aquellas personas que puedan celebrar contratos legalmente vinculantes de acuerdo a lo
+                    establecido por la ley aplicable. Al acceder éste, el Usuario declara ser mayor de 18 años de
+                    edad y encontrarse facultado a asumir obligaciones vinculantes con respecto a cualquier tipo de
+                    responsabilidad que se produzca por el uso del TUPA Digital. Los actos que los menores de edad
+                    realicen en el TUPA Digital serán de responsabilidad de sus padres o tutores.
+                    <br /><br />
+                    4.2. El uso del TUPA Digital MTC se realiza sin perjuicio de los actos de instrucción necesarios
+                    para la determinación, conocimiento y comprobación de los datos en virtud de los cuales deba
+                    pronunciarse el MTC, conforme al procedimiento solicitado, de acuerdo con lo establecido en el
+                    artículo 168 del Texto Único Ordenado de la Ley N° 27444, Ley del Procedimiento Administrativo
+                    General.
+                    <br /><br />
+                    4.3. Para el uso del TUPA Digital MTC, el ADMINISTRADO debe inscribirse y proporcionar los datos
+                    personales solicitados. Asimismo, su acceso y navegación implica la aceptación sin reservas de
+                    todas las disposiciones incluidas en los presentes términos y condiciones.
+                    <br /><br />
+                    4.4. La solicitud de procedimientos administrativos por parte del ADMINISTRADO, a través del
+                    TUPA Digital MTC, se rige además por las condiciones particulares previstas en el Texto Único de
+                    Procedimientos Administrativos del MTC vigente.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">QUINTA.– DEL PAGO POR DERECHO DE TRÁMITE</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    5.1. El ADMINISTRADO, podrá efectuar en el TUPA Digital MTC el pago de forma electrónica por
+                    concepto de derecho de trámite o registrar los datos del recibo de pago efectuado, según
+                    corresponda.
+                    <br /><br />
+                    5.2. El monto consignado en el sistema es el aprobado en el Texto Único de Procedimientos
+                    Administrativos del MTC vigente.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">SEXTA.– PRIVACIDAD DE LA INFORMACIÓN</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    6.1. De conformidad con la Ley N° 29733, Ley de Protección de Datos Personales y Reglamento,
+                    aprobado mediante D.S. N° 003-2013-JUS, desde el momento que el ADMINISTRADO haya declarado la
+                    aceptación expresa del tratamiento de sus datos personales mediante su registro en el TUPA
+                    Digital MTC, autoriza al MTC a recolectar y tratar todos los datos personales facilitados o que
+                    se faciliten a través de su ingreso al sistema.
+                    <br /><br />
+                    6.2. El ADMINISTRADO autoriza que el MTC pueda conservar sus datos una vez finalizado su acceso
+                    al TUPA Digital MTC, dentro de los límites establecidos legalmente y declara estar informado que
+                    puede revocar el consentimiento para tratar sus datos personales, así como de la posibilidad de
+                    ejercer sus derechos de acceso, actualización, inclusión, rectificación, supresión y oposición
+                    respecto de sus datos personales en los términos previstos en la Ley de Protección de Datos
+                    Personales y su Reglamento. Para ejercer estos derechos o cualquier otro que la ley establezca,
+                    el ADMINISTRADO deberá presentar una solicitud escrita en la sede central del MTC, o a través
+                    del correo electrónico: <a href="mailto:tupadigital@mtc.gob.pe">tupadigital&#64;mtc.gob.pe</a>.
+                    <br /><br />
+                    6.3. El ADMINISTRADO que tenga acceso al TUPA Digital MTC acepta recibir archivos de datos que
+                    le transmitan el MTC, los cuales serán almacenados en el disco duro de la computadora del
+                    ADMINISTRADO cuando este accede al sistema. La información obtenida mediante estos archivos de
+                    datos está relacionada únicamente al tipo de navegador que los usuarios utilizan, sus sistemas
+                    operativos, el tipo de computadora empleada, los proveedores del servicio de internet, las
+                    secciones del sitio web que se visitan, la dirección del servidor que utilizan, el nombre de
+                    dominio, la fecha y hora de la visita al sitio, los documentos descargados y demás información
+                    similar.
+                    <br /><br />
+                    6.4. En ningún caso los archivos de datos mencionados en el párrafo precedente pueden leer
+                    información del disco rígido o archivos creados por otros sitios. Todos los datos personales del
+                    ADMINISTRADO, son administrados por el MTC y guardados en archivos automatizados y procesados
+                    bajo estrictas normas de seguridad y confidencialidad.
+                    <br /><br />
+                    6.5. El MTC se reserva la facultad de modificar los presentes Términos y Condiciones de Uso y
+                    adaptarlos a la normativa aplicable, dentro del marco de la Ley de Protección de Datos
+                    Personales y su Reglamento.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">SÉPTIMA.– COMUNICACIONES ENTRE EL MTC Y EL ADMINISTRADO</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:15px">
+                    7.1. El ADMINISTRADO acepta expresamente que la dirección de correo electrónico registrada en el
+                    TUPA Digital MTC así como la casilla electrónica asignada en el TUPA Digital MTC son los medios
+                    de contacto oficial entre el MTC y el ADMINISTRADO, siendo de absoluta responsabilidad de este
+                    último verificar que dicho correo se encuentre activo y operativo, y consultar su casilla
+                    electrónica de manera regular para poder recibir todas las comunicaciones por parte del MTC.
+                    <br /><br />
+                    7.2. Las comunicaciones del TUPA Digital MTC a los ADMINISTRADOS sólo pueden provenir de la
+                    dirección web <a href="http://www.mtc.gob.pe/tupadigital"
+                        target="_blank">http://www.mtc.gob.pe/tupadigital</a>. En caso se detectara que algún
+                    usuario envía comunicaciones o realiza publicaciones en nombre del TUPA Digital MTC, el MTC
+                    iniciará las acciones legales pertinentes.
+                    <br /><br />
+                    7.3. Los horarios para el ingreso, registro virtual y recepción de las solicitudes de
+                    procedimientos administrativos mediante el TUPA Digital MTC, son los siguientes:
+                    <br />
+                <p data-v-6e8a0dfe="" align="justify" style="margin-left:30px">
+                    a) Para el ingreso y registro virtual de la solicitud: las veinticuatro horas del día, los siete
+                    días de la semana.
+                    <br /><br />
+                    b) Para el registro y recepción de las solicitudes: se realiza en el horario de atención del
+                    MTC. Aquellas solicitudes que sean presentadas después del horario de atención, serán
+                    recepcionadas al siguiente día hábil en el orden de registro virtual.
+                </p>
+                <p style="margin-left:15px">
+                    7.4. Toda comunicación que el ADMINISTRADO desee dirigir respecto a los procedimientos
+                    administrativos contenidos en el TUPA Digital MTC, podrá efectuarla a través del siguiente
+                    correo electrónico: <a href="mailto:tupadigital@mtc.gob.pe">tupadigital&#64;mtc.gob.pe</a>, incluida
+                    aquella que informe problemas de índole técnico respecto del sistema.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">OCTAVA.– EXENCIÓN DE RESPONSABILIDAD DEL MTC</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    Al amparo de lo previsto en el artículo 104° de la Ley N° 29571, Código de Protección y Defensa
+                    del Consumidor, el MTC no asume responsabilidad administrativa por caso fortuito o fuerza mayor,
+                    de hecho determinante de un tercero o de la imprudencia del ADMINISTRADO.
+                    <br /><br />
+                    El MTC no se hace responsable sobre los daños o perjuicios que pudiera derivarse del acceso o
+                    uso del TUPA Digital MTC, ni de los errores de seguridad que se produzcan en la casilla
+                    electrónica del ADMINISTRADO, o a los bancos de datos o documentos almacenados en la misma, como
+                    consecuencia de la presencia de un software malicioso en el computador del ADMINISTRADO.
+                    Asimismo, no se hace responsable del mal uso que el ADMINISTRADO efectúe respecto de la
+                    información que obtenga por medio del TUPA Digital MTC.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">NOVENA – MODIFICACIÓN DE LOS TÉRMINOS Y CONDICIONES</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    El MTC se reserva expresamente el derecho a modificar, actualizar o ampliar en cualquier momento
+                    los presentes Términos y Condiciones de Uso. Cualquier modificación, actualización o ampliación
+                    producida es comunicada a través del TUPA Digital MTC, siendo responsabilidad del ADMINISTRADO
+                    revisar los Términos y Condiciones de Uso vigentes al momento de la navegación.
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    <strong data-v-6e8a0dfe="">DÉCIMA – SUPERVISIÓN DEL MTC SOBRE EL USO DEL SISTEMA</strong>
+                </p>
+                <p data-v-6e8a0dfe="" align="justify">
+                    El ADMINISTRADO brinda las facilidades al MTC para hacer efectiva la supervisión del
+                    cumplimiento de las estipulaciones sobre el uso, así como de las restricciones y prohibiciones
+                    que forman parte de los presentes términos y condiciones, de lo contrario, el MTC podrá cancelar
+                    la casilla electrónica del ADMINISTRADO, y en caso detecte el uso irregular del sistema,
+                    adoptará las acciones legales para la determinación de responsabilidades que correspondan.
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="acceptTerCon()">Aceptar</button>
+            <button type="button" class="btn btn-default" (click)="modal.dismiss('Cross click')">Cerrar</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #modalDecJur let-modal>
+    <div class="modal-header bg-danger text-white">
+        <h4 class="modal-title" id="modal-basic-title">Declaración jurada</h4>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row pb-4">
+            <div class="col-md-12">
+                <strong>INTRODUCCIÓN </strong>
+                <p>Todas las visitas, todos los actos y todas las operaciones que se ejecuten o
+                    celebren en el TUPA DIGITAL, así como sus efectos jurídicos, quedarán regidos por estas reglas, así
+                    como por la normativa aplicable en la República del Perú.</p>
+                <p>
+                    <strong>Si Usted no se encuentra de acuerdo con las cláusulas que a continuación
+                        se detallan, se le solicita que no se registre como usuario, &nbsp;haga uso, ni acceda, a la
+                        información ni a los servicios ofrecidos.</strong>
+                </p>
+                <p>
+                    Cuando Usted accede al <strong>TUPA DIGITAL y se registra como usuario</strong>,
+                    reconoce no sólo que ha leído, sino también que ha entendido y aceptado los Términos y Condiciones
+                    Generales que se desarrollan a continuación, además de ser responsable por los efectos legales de su
+                    sola entrada, aceptando el contenido de los demás avisos mencionados y reconoce como auténtico y
+                    válido cualquier medio de prueba o proceso tecnológico que utilice <strong>MTC</strong> para
+                    comprobar su entrada o salida del sitio web.
+                </p>
+                <p>
+                    Es obligación exclusiva de visitantes y usuarios leer (antes de acceder a los servicios y
+                    periódicamente) los Términos y Condiciones Generales de Uso del <strong>TUPA
+                        DIGITAL</strong>, así como las Políticas de Privacidad y Términos y Condiciones de los servicios
+                    ofrecidos por cada uno de los aliados del <strong>TUPA DIGITAL</strong>, a fin de
+                    estar al tanto de cualquier modificación que pudiera realizarse a los mismos, ya que el acceso
+                    repetido a cualquiera de las secciones o servicios que figuran en el <strong>TUPA
+                        DIGITAL,</strong> será considerado como una aceptación tácita de las nuevas condiciones o
+                    modificaciones.
+                </p>
+                <p>
+                    Usted acuerda que <strong>MTC</strong> de forma inmediata y sin notificación
+                    previa podrá cerrar, suspender o restringir el acceso a la Plataforma TUPA DIGITAL o a los servicios
+                    propios brindados a través de su Plataforma TUPA DIGITAL.
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="acceptDecJur()">Aceptar</button>
+            <button type="button" class="btn btn-default" (click)="modal.dismiss('Cross click')">Cerrar</button>
+        </div>
+    </div>
+</ng-template>

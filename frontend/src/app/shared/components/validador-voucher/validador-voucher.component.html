@@ -1,0 +1,79 @@
+<div>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">Validador de voucher</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close"
+      (click)="_activeModal.dismiss('Cross click')">
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row pb-4">
+      <div class="offset-md-2 col-md-6">
+        <div class="validadorVoucher" style="width: 320px; height: 175px">
+          <table align="center">
+            <tbody>
+              <tr>
+                <td style="height: 110px" colspan="7"></td>
+              </tr>
+              <tr>
+                <td style="width: 5px; height: 41px" align="left"></td>
+                <td style="width: 140px; height: 41px" valign="bottom" align="left">
+                  <input [(ngModel)]="inpVPCodigoA" style="
+                        padding: 2px 5px !important;
+                        background-color: #e0effd;
+                      " type="text" maxlength="15" class="form-control" appDigitOnly />
+                </td>
+                <td style="width: 35px; height: 41px" valign="bottom" align="left">
+                  <input style="
+                        width: 35px;
+                        padding: 2px 5px !important;
+                        background-color: #e0effd;
+                      " [(ngModel)]="inpVPCodigoDia" type="text" maxlength="2" class="form-control" appDigitOnly />
+                </td>
+                <td style="width: 70px; height: 41px" valign="bottom" align="left">
+                  <select style="
+                        width: 70px;
+                        padding: 2px 5px !important;
+                        background-color: #e0effd;
+                      " class="form-select" [(ngModel)]="inpVPCodigoMes">
+                    <option value="01">ENE</option>
+                    <option value="02">FEB</option>
+                    <option value="03">MAR</option>
+                    <option value="04">ABR</option>
+                    <option value="05">MAY</option>
+                    <option value="06">JUN</option>
+                    <option value="07">JUL</option>
+                    <option value="08">AGO</option>
+                    <option value="09">SET</option>
+                    <option value="10">OCT</option>
+                    <option value="11">NOV</option>
+                    <option value="12">DIC</option>
+                  </select>
+                </td>
+                <td style="width: 55px; height: 41px" valign="bottom">
+                  <input [(ngModel)]="inpVPCodigoAnio" type="text" maxlength="4" class="form-control" style="
+                        width: 55px;
+                        padding: 2px 5px !important;
+                        background-color: #e0effd;
+                      " appDigitOnly />
+                </td>
+                <td style="width: 55px; height: 41px" valign="bottom" align="left">
+                  <input [(ngModel)]="inpVPCodigoB" type="text" maxlength="10" class="form-control" style="
+                        width: 55px;
+                        padding: 2px 5px !important;
+                        background-color: #e0effd;
+                      " appDigitOnly />
+                </td>
+                <td style="height: 41px" valign="bottom" align="left"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-2" style="margin-top: auto; margin-bottom: auto">
+        <button type="button" class="btn btn-danger" (click)="validarVoucher()">
+          Validar Voucher
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

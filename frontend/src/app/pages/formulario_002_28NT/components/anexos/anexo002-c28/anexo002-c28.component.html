@@ -1,0 +1,419 @@
+<div class="modal-header anexo bg-danger text-white">
+    <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+      
+  </button>
+</div>
+
+<div class="modal-body anexo">
+    <!-- <form novalidate [formGroup]="formAnexo" (ngSubmit)="save()"> -->
+    <div class="container-fluid">
+        <form novalidate [formGroup]="formAnexo">
+            <div class="center">
+                <h5>ANEXO 002-C/28 PERFIL DE PROYECTO TECNICO - SERVICIO DE RADIODIFUSIÓN</h5>
+            </div>
+            <div ngbAccordion #acc="ngbAccordion" activeIds="seccion1, seccion2, seccion3, seccion4, seccion5">
+
+                <div ngbAccordionItem="seccion1" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton>I. SOLICITA AUTORIZACION PARA ESTACION DE RADIODIFUSION</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row gx-2" style="padding: 15px;">
+                            <div class="col-sm-4">
+                                <div class=" form-check custom-control-inline">
+                                    <input type="radio" class="form-check-input" id="fm" value="fm" formControlName="modalidad" mdbInput>
+                                    <label class="form-check-label" for="fm">Frecuencia modulada (FM)</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class=" form-check custom-control-inline">
+                                    <input type="radio" class="form-check-input" id="oct" value="oct" formControlName="modalidad" mdbInput>
+                                    <label class="form-check-label" for="oct">Onda Corta Tropical</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class=" form-check custom-control-inline">
+                                    <input type="radio" class="form-check-input" id="uhf" value="uhf" formControlName="modalidad" mdbInput>
+                                    <label class="form-check-label" for="uhf">Televisión en UHF</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row gx-2" style="padding: 15px;">
+                            <div class="col-sm-4">
+                                <div class=" form-check custom-control-inline">
+                                    <input type="radio" class="form-check-input" id="om" value="om" formControlName="modalidad" mdbInput>
+                                    <label class="form-check-label" for="om">Onda Media (OM)</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class=" form-check custom-control-inline">
+                                    <input type="radio" class="form-check-input" id="oci" value="oci" formControlName="modalidad" mdbInput>
+                                    <label class="form-check-label" for="oci">Onda Corta Internacional (OCI)</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class=" form-check custom-control-inline">
+                                    <input type="radio" class="form-check-input" id="vhf" value="vhf" formControlName="modalidad" mdbInput>
+                                    <label class="form-check-label" for="vhf">Televisión en VHF</label>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion2" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton>II. UBICACION DE LA ESTACION</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="col-lg-12" formGroupName="Estudio">
+                            <app-ubigeo #ubigeoCmpEstudio [parentForm]="f_s2_Estudio"
+                                    depaFormControlName="est_departamento"
+                                    provFormControlName="est_provincia" 
+                                    distFormControlName="est_distrito"
+                                    depaFormLabel="Departamento" provFormLabel="Provincia" distFormLabel="Distrito"
+                                    [horizontal]="true"></app-ubigeo>
+                            <div class="row gx-2">
+                                <div class="mb-3 col-lg-12">
+                                    <app-basic-input [parentForm]="f_s2_Estudio" 
+                                        inputFormControlName="est_direccion" label="Ubicacion/Dirección"
+                                        placeHolder="Ingrese la ubicación o dirección" [readonly]="false"
+                                        [maxLength]="100">
+                                    </app-basic-input>
+                                </div>
+                            </div>
+                            
+                            <div class="row gx-2">
+                                <div class="col-sm-12 d-flex">
+                                    <div class="col-sm-4 d-flex">
+                                        Coordenadas Geográficas en WGS84
+                                    </div>
+                                    <div class="col-sm-8 d-flex">
+                                        <div class="col-sm-6 d-flex">
+                                            <!--<app-basic-input [parentForm]="f_s2_Estudio" 
+                                                inputFormControlName="est_LO_grados" label="L.O"
+                                                placeHolder="" [readonly]="false"
+                                                [onlyNumbers]="true" [horizontal]="true">
+                                            </app-basic-input>
+                                            <app-basic-input [parentForm]="f_s2_Estudio" 
+                                                inputFormControlName="est_LO_minutos" label=""
+                                                placeHolder="" [readonly]="false"
+                                                [onlyNumbers]="true" [horizontal]="true">
+                                            </app-basic-input>
+                                            <app-basic-input [parentForm]="f_s2_Estudio" 
+                                                inputFormControlName="est_LO_segundos" label=""
+                                                placeHolder="" [readonly]="false"
+                                                [onlyNumbers]="true" [horizontal]="true">
+                                            </app-basic-input>-->
+                                            <label class="col-form-label mr-sm-3">L.O.:</label>
+                                            <input type="number" name="coordWGS84LO_grados" formControlName="est_LO_grados"  max="89.99" class="form-control text-compact mb-2" [class.control-invalid]="formInvalid('est_LO_grados')">
+                                            <span class="d-inline mr-sm-2 txtCoordenada"> °</span>
+                                            <input type="number" name="coordWGS84LO_minutos" formControlName="est_LO_minutos"  max="59.99" class="form-control text-compact mb-2" [class.control-invalid]="formInvalid('est_LO_minutos')">
+                                            <span class="d-inline mr-sm-2 txtCoordenada"> '</span>
+                                            <input type="number" name="coordWGS84LO_segundos" formControlName="est_LO_segundos"  max="59.99" class="form-control text-compact mb-2" [class.control-invalid]="formInvalid('est_LO_segundos')">
+                                            <span class="d-inline mr-sm-2 txtCoordenada"> "</span>
+                                        </div>
+                                        <div class="col-sm-6 d-flex">
+                                            <label class="col-form-label mr-sm-3">L.S.:</label>
+                                            <input type="number" name="coordWGS84LS_grados" formControlName="est_LS_grados"  max="89.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada">°</span>
+                                            <input type="number" name="coordWGS84LS_minutos" formControlName="est_LS_minutos"  max="59.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada">'</span>
+                                            <input type="number" name="coordWGS84LS_segundos" formControlName="est_LS_segundos"  max="59.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada">"</span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <!--<div class="col-sm-6 p-1">
+                                    <fieldset class="fieldset pr-0">
+                                        <legend class="legend mb-0">ENLACE ESTUDIO – PLANTA TRANSMISORA:</legend>
+        
+                                        <div class="row text-justify ps-4 mt-2 mb-3">
+                                            <div class="col-sm-4  form-check">
+                                                <input type="radio" class="form-check-input radio-xl" id="chkPlanta_lineaFisica" formControlName="s3_plantaTransmisora" [class.control-invalid]="formInvalid('s3_plantaTransmisora')" value="lineaFisica">
+                                                <label class="form-check-label" for="chkPlanta_lineaFisica">Línea Física</label>
+                                            </div>
+                                            <div class="col-sm-4  form-check">
+                                                <input type="radio" class="form-check-input radio-xl" id="chkPlanta_radioElectrico" formControlName="s3_plantaTransmisora" [class.control-invalid]="formInvalid('s3_plantaTransmisora')" value="radioElectrico">
+                                                <label class="form-check-label" for="chkPlanta_radioElectrico">Radioeléctrico</label>
+                                            </div>
+                                            <div class="col-sm-4  form-check">
+                                                <input type="radio" class="form-check-input radio-xl" id="chkPlanta_satelital" formControlName="s3_plantaTransmisora" [class.control-invalid]="formInvalid('s3_plantaTransmisora')" value="satelital">
+                                                <label class="form-check-label" for="chkPlanta_satelital">Satelital</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>-->
+                            </div>
+                            
+                            
+                            <!--
+                            <div class="col-sm-12 mt-3">
+                                <li>
+                                    Diagrama de Radiación Horizontal Polar del Arreglo de Antenas
+                                    <input type="file" class="d-none" #inputFileDiagrama accept="application/pdf" (change)="onChangeInputDiagrama($event)">
+                                    <div class="mb-3 mt-3 d-inline">
+                                        <button class="btn btn-danger" type="button" (click)="inputFileDiagrama.click($event)">
+                                            <i class="fas fa-upload"></i> Adjuntar
+                                        </button>
+                                        <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa" *ngIf="filePdfDiagramaSeleccionado !== null || filePdfDiagramaPathName !== null" (click)="vistaPreviaDiagrama()"></i>
+                                    </div>
+                                </li>
+                            </div>-->
+                        </div>
+                        <hr />
+
+                        <div class="col-lg-12" formGroupName="Planta">
+                            <app-ubigeo #ubigeoCmpPlanta [parentForm]="f_s2_Planta"
+                                    depaFormControlName="planta_departamento"
+                                    provFormControlName="planta_provincia" 
+                                    distFormControlName="planta_distrito"
+                                    depaFormLabel="Departamento" provFormLabel="Provincia" distFormLabel="Distrito"
+                                    [horizontal]="true"></app-ubigeo>
+                            <div class="row gx-2">
+                                <div class="mb-3 col-lg-12">
+                                    <app-basic-input [parentForm]="f_s2_Planta" 
+                                        inputFormControlName="planta_direccion" label="Ubicacion/Dirección"
+                                        placeHolder="Ingrese la ubicación o dirección" [readonly]="false"
+                                        [maxLength]="100">
+                                    </app-basic-input>
+                                </div>
+                            </div>
+                            
+                            <div class="row gx-2">
+                                <div class="col-sm-12 d-flex">
+                                    <div class="col-sm-4 d-flex">
+                                        Coordenadas Geográficas en WGS84
+                                    </div>
+                                    <div class="col-sm-8 d-flex">
+                                        <div class="col-sm-6 d-flex">
+                                            <label class="col-form-label mr-sm-3">L.O.:</label>
+                                            <input type="number" name="coordWGS84LO_grados" formControlName="planta_LO_grados"  max="89.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada"> °</span>
+                                            <input type="number" name="coordWGS84LO_minutos" formControlName="planta_LO_minutos"  max="59.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada"> '</span>
+                                            <input type="number" name="coordWGS84LO_segundos" formControlName="planta_LO_segundos"  max="59.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada"> "</span>
+                                        </div>
+                                        <div class="col-sm-6 d-flex">
+                                            <label class="col-form-label mr-sm-3">L.S.:</label>
+                                            <input type="number" name="coordWGS84LS_grados" formControlName="planta_LS_grados"  max="89.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada">°</span>
+                                            <input type="number" name="coordWGS84LS_minutos" formControlName="planta_LS_minutos"  max="59.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada">'</span>
+                                            <input type="number" name="coordWGS84LS_segundos" formControlName="planta_LS_segundos"  max="59.99" class="form-control text-compact mb-2" >
+                                            <span class="d-inline mr-sm-2 txtCoordenada">"</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row gx-2">
+                            <div class="col-sm-12 d-flex">
+                                
+                                    <div class="col-sm-4 d-flex">
+                                       <b> ENLACE ESTUDIO – PLANTA TRANSMISORA:</b>
+                                    </div>
+                                    <div class="col-sm-8 d-flex">
+                                        <div class="col-sm-3  form-check">
+                                            <input type="radio" class="form-check-input radio-xl" id="chkPlanta_lineaFisica" formControlName="enlace_est_planta"  value="lineaFisica">
+                                            <label class="form-check-label" for="chkPlanta_lineaFisica">Línea Física</label>
+                                        </div>
+                                        <div class="col-sm-3  form-check">
+                                            <input type="radio" class="form-check-input radio-xl" id="chkPlanta_radioElectrico" formControlName="enlace_est_planta"  value="radioElectrico">
+                                            <label class="form-check-label" for="chkPlanta_radioElectrico">Radioeléctrico</label>
+                                        </div>
+                                        <div class="col-sm-3  form-check">
+                                            <input type="radio" class="form-check-input radio-xl" id="chkPlanta_satelital" formControlName="enlace_est_planta"  value="satelital">
+                                            <label class="form-check-label" for="chkPlanta_satelital">Satelital</label>
+                                        </div>
+                                        <div class="col-sm-3  form-check">
+                                            <input type="radio" class="form-check-input radio-xl" id="chkInternet" formControlName="enlace_est_planta"  value="internet">
+                                            <label class="form-check-label" for="chkInternet">Internet</label>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </ng-template>
+</div>
+</div>
+                </div>
+
+                <div ngbAccordionItem="seccion3" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton>III. CARACTERISTICAS</button>
+                        </h2>
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="row gx-2">
+                            <div class="mb-3 col-sm-6">
+                                <label for="potencia" class="control-label">Potencia del Transmisor (KW):</label>
+                                <span class="text-danger">(*)</span>
+                                <input type="number" name="potencia" formControlName="potencia" class="form-control" >
+                            </div>
+                            <div class="mb-3 col-sm-6">
+                                <label for="perdida" class="control-label">Pérdidas (dB):</label>
+                                <span class="text-danger">(*)</span>
+                                <input type="number" name="perdida" formControlName="perdida" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row gx-2">
+                            <div class="mb-3 col-sm-6">
+                                <label for="sIrrad_Tipo" class="control-label">Tipo:</label>
+                                <span class="text-danger">(*)</span>
+                                <input type="text" name="tipo" formControlName="sIrrad_Tipo" class="form-control" >
+                            </div>
+                            <div class="mb-3 col-sm-6">
+                                <label for="sIrrad_GananciaMaxRad" class="control-label">Ganancia en la dirección de máxima radiación (dB):</label>
+                                <span class="text-danger">(*)</span>
+                                <input type="number" name="sIrrad_GananciaMaxRad" formControlName="sIrrad_GananciaMaxRad" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="row gx-2">
+                            <div class="mb-3 col-sm-4">
+                                <label for="sIrrad_AcimutMaxRad" class="control-label">Acimut de máxima radiación (grados):</label>
+                                <span class="text-danger">(*)</span>
+                                <input type="number" name="sIrrad_AcimutMaxRad" formControlName="sIrrad_AcimutMaxRad" class="form-control" >
+                            </div>
+                            <div class="mb-3 col-sm-4">
+                                <label for="sIrrad_AlturaCentroRad" class="control-label">Altura del centro de radiación sobre el nivel del piso (m):</label>
+                                <span class="text-danger">(*)</span>
+                                <input type="number" name="tipo" formControlName="sIrrad_AlturaCentroRad" class="form-control" >
+                            </div>
+                            <div class="mb-3 col-sm-4">
+                                <label for="sIrrad_AlturaTorre" class="control-label">Altura de la torre (m):</label>
+                                <span class="text-danger">(*)</span>
+                                <input type="number" name="sIrrad_AlturaTorre" formControlName="sIrrad_AlturaTorre" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-sm-12 d-flex">
+                            <div class="col-sm-4 d-flex">
+                                <b> Diagrama de Radiación Horizontal Polar del Arreglo de Antenas:</b>
+                            </div>
+                            <div class="col-sm-6 d-flex">  
+                                <input type="file" class="d-none" #inputFileDiagrama accept="application/pdf" (change)="onChangeInputDiagrama($event)">
+                                <div class="mb-3 mt-3 d-inline">
+                                    <button class="btn btn-danger" type="button" (click)="inputFileDiagrama.click($event)">
+                                        <i class="fas fa-upload"></i> Adjuntar
+                                    </button>
+                                    <i class="far fa-file-pdf text-danger fa-2x ms-3" title="Vista previa" *ngIf="filePdfDiagramaSeleccionado !== null || pathPdfDiagramaSeleccionado !== null" (click)="vistaPreviaDiagrama()"></i>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row gx-2">
+                            <p class="text-blue">No se deberá superar la máxima e.r.p. (potencia efectiva radiada) establecida en el plan de canalización y asignación de frecuencias de cada localidad. Dicha información se encuentra disponible en el
+Registro Nacional de Frecuencias: <a class="text-blue" href="https://rnf.mtc.gob.pe/" target="_blank">https://rnf.mtc.gob.pe/</a></p>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+                <div ngbAccordionItem="seccion4" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton>IV. DECLARACION JURADA</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="alert alert-custom" formGroupName="Seccion4">
+                            <div class="row gx-2">
+                                <div class="col-md-10">
+                                    <div>
+                                        Toda la información proporcionada es veraz, así como los documentos presentados son auténticos, 
+                                        en caso contrario, me someto al procedimiento y a las sanciones previstas en la Ley N° 27444, 
+                                        sLey del Procedimiento Administrativo General y/o normas complementarias.(2)
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row p-2 ms-4">
+                                        <ui-switch  formControlName="declaracion">
+                                            
+                                        </ui-switch>
+                                        <label class="col-form-label"> NO/SI </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+                <div ngbAccordionItem="seccion5" [collapsed]="false">
+                    <h2 ngbAccordionHeader>
+                        
+                            <button ngbAccordionButton>V. PROYECTO DEL PERFIL TECNICO ELABORADO POR</button>
+                        </h2>
+
+                    <div ngbAccordionCollapse>
+<div ngbAccordionBody>
+<ng-template>
+                        <div class="alert alert-custom" formGroupName="Seccion5">
+                            <div class="row gx-2">
+                                <div class="mb-3 col-sm-4">
+                                    <label class="control-label">Nombres y apellidos del Ingeniero habilitado:</label><span class="text-danger">(*)</span>
+                                    <input type="text" class="form-control" formControlName="nombresIngeniero" >
+                                </div>
+                                <div class="mb-3 col-sm-4">
+                                    <label class="control-label">Teléfono:</label><span class="text-danger">(*)</span>
+                                    <input type="text" class="form-control" formControlName="telefonoIngeniero" >
+                                </div>
+                                <div class="mb-3 col-sm-4">
+                                    <label class="control-label">Email:</label><span class="text-danger">(*)</span>
+                                    <input type="text" class="form-control" formControlName="emailIngeniero" >
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+</div>
+</div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="modal-footer anexo">
+
+    <div class="row mt-3">
+        <div class="col-sm-12 d-flex">
+
+            <div class="flex-1">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                  <i class="far fa-eye"></i>
+                  Visualizar
+              </button>
+                </div>
+            </div>
+
+            <div class="flex-1 text-end">
+                <button class="btn btn-success w-50" (click)="save()" [disabled]="this.formAnexo.invalid"  ><!--[disabled]="this.formAnexo.invalid"-->
+                    <i class="far fa-save"></i>
+                    {{
+                        (idAnexo === 0 ? 'Grabar' : 'Modificar')
+                    }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

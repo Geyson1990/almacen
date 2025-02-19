@@ -1,0 +1,115 @@
+.contenedor-check-paises {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 2px;
+}
+
+.contenedor-check-paises label.check {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-bottom: initial;
+}
+
+.contenedor-check-paises input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+
+/* 
+.check-altas-bajas {
+    display: flex;
+    width: 30%;
+    margin-left: 40px;
+}
+
+.check-altas-bajas .check {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.check-altas-bajas .check input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+} */
+
+.check-caf {
+    width: 30px;
+    height: 30px;
+}
+
+@media screen and (max-width:991px) {
+    #anexo001-a17-permiso-solicitar {
+        flex-direction: column;
+    }
+    /*---------------------------------*/
+    #anexo001-a17-paises-operar {
+        flex-direction: column;
+    }
+    .contenedor-check-paises label.check {
+        justify-content: center;
+    }
+    /*====*/
+    #anexo001-a17-origen-destino-ciudadesoperar,
+    #anexo001-a17-nrofrecuencia-horarios-tiempopromedio {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #anexo001-a17-nrofrecuencia-horarios-tiempopromedio {
+        margin-top: 20px;
+    }
+    /*====*/
+    #anexo001-a17-row-transito-croquis {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+    #anexo001-a17-col-paises-transito {
+        max-width: initial;
+    }
+    #anexo001-a17-col-paises-transito .contenedor-check-paises {
+        padding: 0px 0px 11px 0;
+    }
+    #anexo001-a17-col-paises-transito>div {
+        flex-direction: column;
+    }
+    #anexo001-a17-col-croquis {
+        max-width: initial;
+    }
+    /*====*/
+    #anexo001-a17-origen-destino-intermedios,
+    #anexo001-a17-pasos-frontera {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #anexo001-a17-pasos-frontera {
+        margin-top: 20px;
+    }
+    .anexo001-a17-fechas {
+        flex: 1 !important;
+    }
+    /*---------------------------------*/
+    #anexo001-a17-col-placarodaje-soat,
+    #anexo001-a17-col-citv-caf,
+    #anexo001-a17-boton-agregar-modificar {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #anexo001-a17-col-citv-caf,
+    #anexo001-a17-boton-agregar-modificar {
+        margin-top: 20px;
+    }
+    #anexo001-a17-boton-agregar-modificar {
+        flex-direction: row !important;
+        padding: 0 70px;
+    }
+    button.anexo001-a17-btn-cancelar {
+        margin-left: 10px;
+        margin-top: 0 !important;
+    }
+}

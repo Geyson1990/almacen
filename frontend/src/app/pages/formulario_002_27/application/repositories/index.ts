@@ -1,0 +1,6 @@
+export * from './anexo002_A27.repository'
+export * from './anexo002_B27.repository'
+export * from './anexo002_C27.repository'
+export * from './anexo002_D27.repository'
+export * from './anexo002_E27.repository'
+export * from './formulario002_27.repository'

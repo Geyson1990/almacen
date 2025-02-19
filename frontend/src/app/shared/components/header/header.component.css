@@ -1,0 +1,298 @@
+.validadorVoucher {
+  background-image: url(/assets/img/fonvoucher.png?Edolores_2017);
+  background-size: contain;
+  height: 178px;
+  background-repeat: no-repeat;
+  border: solid 1px #117bb9;
+  border-radius: 5px;
+  width: 325px;
+}
+
+.validadorVoucher:hover {
+  background-image: url(/assets/img/fonvoucher.png?Edolores_2017);
+  background-size: contain;
+  height: 178px;
+  background-repeat: no-repeat;
+  border: solid 2px #117bb9;
+  border-radius: 5px;
+  width: 325px;
+  box-shadow: 0px 0px 6px #117bb9;
+}
+
+.card-header {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* REGION SIDEBAR */
+.sidebar {
+  width: 210px;
+  -moz-transition: width 0.5s ease-out;
+  -o-transition: width 0.5s ease-out;
+  -webkit-transition: width 0.5s ease-out;
+  transition: width 0.5s ease-out;
+  display: inline-block;
+  z-index: 0;
+  background-color: #4d4d4d !important;
+  opacity: 0.9;
+}
+.nav-sidebar {
+  background: none;
+  margin-top: 5px;
+  flex-direction: column;
+}
+.sidebar ul li a span.fa {
+  font-size: 18px;
+}
+.menuText {
+  left: 50px;
+  opacity: 1;
+  font-size: 14px;
+  -moz-transition: opacity 0.6s 0.2s ease-out;
+  -o-transition: opacity 0.6s 0.2s ease-out;
+  -webkit-transition: opacity 0.6s 0.2s ease-out;
+  transition: opacity 0.6s 0.2s ease-out;
+  position: absolute;
+}
+.collapseToggle {
+  padding-left: 4px;
+  display: block;
+  cursor: pointer;
+  padding-right: 5px;
+}
+#toggleIcon {
+  -moz-transition: transform 0.4s ease-out;
+  -o-transition: transform 0.4s ease-out;
+  -webkit-transition: transform 0.4s ease-out;
+  transition: transform 0.4s ease-out;
+}
+.rotate {
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+  -moz-transition: transform 0.4s ease-out;
+  -o-transition: transform 0.4s ease-out;
+  -webkit-transition: transform 0.4s ease-out;
+  transition: transform 0.4s ease-out;
+}
+
+.icon-hover {
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  transform: rotate(-180deg) scale(0.5);
+}
+.icon-default {
+  opacity: 1;
+  position: absolute;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.rotate.icon-hover {
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+}
+.rotate.icon-default {
+  transform: rotate(180deg) scale(0.5);
+  opacity: 0;
+}
+
+.sidebar--Collapse {
+  width: 55px;
+  -moz-transition: width 0.6s ease-out;
+  -o-transition: width 0.6s ease-out;
+  -webkit-transition: width 0.6s ease-out;
+  transition: width 0.6s ease-out;
+}
+.sidebar--Collapse .menuText {
+  opacity: 0;
+  -moz-transition: opacity 0.3s ease-out;
+  -o-transition: opacity 0.3s ease-out;
+  -webkit-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
+  position: absolute;
+}
+.main {
+  margin-left: 210px;
+  -moz-transition: margin-left 0.55s ease-out;
+  -o-transition: margin-left 0.55s ease-out;
+  -webkit-transition: margin-left 0.55s ease-out;
+  transition: margin-left 0.55s ease-out;
+}
+.main--slide {
+  -moz-transition: margin-left 0.6s ease-out;
+  -o-transition: margin-left 0.6s ease-out;
+  -webkit-transition: margin-left 0.6s ease-out;
+  transition: margin-left 0.6s ease-out;
+  margin-left: 55px;
+}
+
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+/* .sidebar {
+  display: none;
+}
+@media (min-width: 768px) { */
+.sidebar {
+  position: fixed;
+  top: 58px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  padding: 10px 20px;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+}
+/* } */
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding: 10px 15px;
+  display: block;
+  color: white;
+  transition: transform 250ms;
+}
+
+.nav-sidebar > li > a:hover {
+  transform: translateX(10px);
+  color: white;
+  background-color: #00000030;
+}
+
+.nav-sidebar-img {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+  background: none;
+  margin-top: 5px;
+  flex-direction: column;
+}
+.nav-sidebar-img > li > a {
+  padding: 10px 15px;
+  display: block;
+  color: white;
+}
+
+.nav-sidebar-img > li > a .img-circle {
+  width: 100%;
+    border-radius: 50%;
+    height: fit-content;
+}
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+  margin-top: 58px;
+  width: 100%;
+}
+/* @media (min-width: 768px) { */
+.main {
+  padding-right: 40px;
+  padding-left: 40px;
+  height: calc(100vh - 58px);
+}
+/* } */
+.main .page-header {
+  margin-top: 0;
+}
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+/* REGION SIDEBAR */
+
+.ayuda {
+  position: absolute;
+  visibility: hidden;
+  top: 57px;
+  right: 250px;
+  z-index: 999;
+}
+
+@media (max-width: 991px) {
+  .ayuda {
+    position: absolute;
+    visibility: hidden;
+    top: 139px;
+    left: 55px;
+    z-index: 999;
+  }
+}
+
+.ayuda-content {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background: #df241d;
+  padding: 10px;
+  width: 250px;
+  /* height: 270px; */
+  color: #ffffff;
+  position: fixed;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.requisito-desc ::ng-deep .ql-editor {
+  padding: 0px;
+  font-size: 13px;
+}

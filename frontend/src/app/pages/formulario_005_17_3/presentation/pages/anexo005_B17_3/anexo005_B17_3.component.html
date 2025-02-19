@@ -1,0 +1,846 @@
+<div class="modal-header anexo bg-danger text-white">
+   <h4 class="modal-title">{{ this.codigoProcedimientoTupa}} {{ this.descProcedimientoTupa}}</h4>
+   <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="activeModal.close(graboUsuario)">
+
+   </button>
+</div>
+<div class="modal-body anexo">
+   <div class="container mt-2 mb-3">
+      <form [formGroup]='anexoFG'>
+         <div class="center">
+            <h6>{{txtTitulo}}</h6>
+         </div>
+         <div ngbAccordion #acc="ngbAccordion" activeIds="seccion-1,seccion-2,seccion-3,seccion-4,seccion-5">
+            <div ngbAccordionItem="seccion-1" [collapsed]="false">
+               <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>I.
+                     Autorización como Taller de Conversión a GLP o GNV
+                  </button>
+               </h2>
+               <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                     <ng-template>
+                        <div class="col-lg-12" formGroupName="a_Seccion1">
+                           <div class="row gx-2">
+                              <div class="col-lg-8">
+                                 <app-basic-input [parentForm]="a_Seccion1"
+                                    inputFormControlName="a_s1_resolucionGases" 
+                                    label="Resolución de homologación vigente del analizador de gases"
+                                    placeHolder="Ingrese el número de partida registral" [onlyNumbers]="false"
+                                    [maxLength]="100">
+                                 </app-basic-input>
+
+                              </div>
+                              <div class="col-lg-4">
+                                 <div class="input-group">
+                                    <label>Fecha de resolución</label>
+                                    <div class="input-group">
+
+                                       <input class="form-control" formControlName="a_s1_fechaResolucionGases"
+                                          (dateSelect)="onSelectFechaGases($event)" readonly ngbDatepicker
+                                          #fechaResolucionGases="ngbDatepicker" />
+                                       <button class="btn btn-outline-secondary calendar" type="button"
+                                          (click)="fechaResolucionGases.toggle()">
+                                          <i class="far fa-calendar-alt"></i>
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="row gx-2" *ngIf="this.activarGLP"><!--*ngIf="this.activarGLP"-->
+                              <div class="col-lg-8">
+                                 <app-basic-input [parentForm]="a_Seccion1"
+                                    inputFormControlName="a_s1_certificado"
+                                    label="Certificado de calibración vigente" 
+                                    placeHolder="Ingrese el número del certificado" [onlyNumbers]="false"
+                                    [maxLength]="100">
+                                 </app-basic-input>
+
+                              </div>
+                              <div class="col-lg-4">
+                                 <div class="input-group">
+                                    <label>Fecha de certificado</label>
+                                    <div class="input-group">
+
+                                       <input class="form-control" formControlName="a_s1_fechaCertificado"
+                                          (dateSelect)="onSelectFechaCertificado($event)" readonly ngbDatepicker
+                                          #fechaCert="ngbDatepicker" />
+                                       <button class="btn btn-outline-secondary calendar" type="button"
+                                          (click)="fechaCert.toggle()">
+                                          <i class="far fa-calendar-alt"></i>
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        
+
+                        <div formGroupName="a_Seccion1">
+                           <div>
+                              De conformidad con la normativa vigente declaro bajo juramento que la relación de equipos, 
+                              maquinarias y herramientas que se detallan a continuación, son de propiedad de mi
+                              representada (*):
+                           </div>
+                           
+                           <div class="col-sm-12">
+                              <div class="table-responsive">
+
+                                 <table class="table table-bordered">
+                                    <thead class="bg-secondary text-white text-center">
+                                       <tr>
+                                          <th>N°</th>
+                                          <th colspan="2">Apellidos y nombres</th>
+                                          <th>
+                                             <div *ngIf="this.activarGLP">GLP</div>
+                                             <div *ngIf="this.activarGNV">GNV</div>
+                                             <!--GLP <span
+                                             class="text-warning" triggers="mouseenter:mouseclick" popoverTitle="Nota"
+                                             placement="left"
+                                             ngbPopover='Numeral 6.2.5 y 6.1.3 de la Directiva Nº 005-2007-MTC/15 “Régimen de Autorización y Funcionamiento de las Entidades Certificadoras de Conversiones y Talleres de Conversión a GLP"'>
+                                             <i class="fas fa-info-circle"></i>
+                                          </span>/GNV <span
+                                          class="text-warning" triggers="mouseenter:mouseclick" popoverTitle="Nota"
+                                          placement="left"
+                                          ngbPopover='Numeral 6.2.5 y 6.1.3  de la Directiva N° 001-2005- MTC/15 “Régimen de Autorización y Funcionamiento de las Entidades Certificadoras de Conversiones y Talleres de Conversión a GNV”'>
+                                          <i class="fas fa-info-circle"></i>
+                                       </span>--></th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr class="text-center">
+                                          <td>1</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Un (01) analizador de gases homologado en el país de acuerdo a la
+                                                reglamentación vigente, de tipo infrarrojo no dispersivo para vehículos
+                                                con motor de ciclo Otto que usan gasolina, gas licuado de petróleo, gas
+                                                natural u otros combustibles alternos. Debe ser capaz de medir los
+                                                siguientes gases: <br />
+                                                <div style="padding-left:1em">
+                                                   CO: Monóxido de Carbono (% volumen)<br />
+                                                   HC: Hidrocarburos (ppm) <br />
+                                                   CO2: Dióxido de Carbono (% de volumen) <br />
+                                                   O2: Oxigeno (% de Volumen) <br />
+                                                   Debe contar además con tacómetro y sonda para medir temperatura del
+                                                   aceite, así como con una impresora para el registro de los valores.
+                                                   (**)
+                                                </div>
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_1">
+
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center" *ngIf="this.activarGLP">
+                                          <td>2</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Certificado de calibración vigente del analizador de gases emitido por
+                                                el fabricante del mismo o por su representante autorizado en el país,
+                                                debiendo ser renovado como máximo cada seis (06) meses.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_2">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center" *ngIf="this.activarGNV">
+                                          <td>3</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Equipo de ensayo neumático de un mínimo de 20 MPa (200 bar), para lo
+                                                cual se podrá utilizar aire comprimido o gases inertes, para garantizar
+                                                la total estanqueidad de las juntas y uniones durante la carga inicial
+                                                de GNV.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_3">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center" *ngIf="this.activarGNV">
+                                          <td>4</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Manómetros calibrados con rango equivalente al equipo de ensayo
+                                                neumático de alta presión.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_4">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center"  *ngIf="this.activarGNV">
+                                          <td>5</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Manómetros calibrados con rango equivalente al equipo de ensayo
+                                                neumático de presión regulada (baja presión).
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_5">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center"  *ngIf="this.activarGNV">
+                                          <td>6</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Manómetros patrones o equipos patrones para controlar los manómetros de
+                                                los numerales 6 y 7 antecedentes
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_6">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td>7</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Extintores tipo ABC de acuerdo a la Norma Técnica NFPA 10, a razón de
+                                                100 grs. por m2 de área de taller, o su equivalente en extintores de
+                                                tecnología diferente. (**)
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_7">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td>8</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Herramientas mínimas para las tareas a ejecutar:
+                                             </div>
+                                          </td>
+                                          <td>
+
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>a)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Dos (2) torquímetros con un rango mínimo 0 a 25 kgm., uno en uso y el
+                                                otro para control.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_81">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>b)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) Juego completo de llaves combinadas milimétricas y en pulgadas.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_82">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>c)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) Juego completo de llaves tipo “dado” milimétricas y en pulgada
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_83">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>d)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) juego completo de llaves tipo “Allen” milimétricas y en
+                                                pulgadas.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_84">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>e)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Pinzas, alicates, destornilladores y martillos.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_85">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>f)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) juego completo de llaves para conexiones de tuberías.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_86">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>g)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Calibres de roscas (peine de roscas).
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_87">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>h)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) taladro de hasta 13 mm de diámetro con juegos de brocas y sierra
+                                                de copa.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_88">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>i)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Una (01) amoladora de banco y una (01) portátil.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_89">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>j)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Una (01) lámpara estroboscópica de puesta a punto.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_810">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>k)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) tacómetro portátil.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_811">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>l)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) vacuómetro portátil.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_812">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>m)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) compresímetro con juego de adaptadores.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_813">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>n)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Herramientas de uso específico en mecánica automotriz, tales como llaves
+                                                para bujías, llaves de anillo abierto para tuercas de tubos, sondas de
+                                                láminas y de alambre, etc.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_814">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center"  *ngIf="this.activarGNV">
+                                          <td></td>
+                                          <td>o)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (1) soporte de sujeción de cilindros para colocación de válvulas de
+                                                cilindro con adaptadores para ajuste de las mismas.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_815">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>p)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Equipos para efectuar mediciones de calibración y medidas generales de
+                                                los vehículos (wincha de 5 metros y calibradores en unidades
+                                                milimétricas).
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_816">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>q)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Una (01) gata o equipo hidráulico con capacidad suficiente para elevar
+                                                un vehículo.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_817">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>r)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Equipos de diagnóstico electrónico de uso automotriz, mínimo un (01)
+                                                Multímetro digital y un (01) Osciloscopio. (**)
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_818">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>s)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) cautil de soldadura de estaño
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_819">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td>9</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Un (01) detector portátil de fugas de gas combustible con alarma audible
+                                                y visible, capaz de detectar metano, etano, propano, butano, gasolina,
+                                                etc. (**)
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_9">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td>10</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Un (01) comprobador de fugas de compresión (equipo para prueba de
+                                                estanqueidad de cilindros del motor).(**)
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_10">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td>11</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Para el caso de talleres de conversión que realicen el cambio completo
+                                                del motor gasolinero o Diésel por otro dedicado a GLP o GNV, se
+                                                requerirá adicionalmente lo siguiente:
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_111">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>a)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Una (01) grúa o pluma hidráulica de al menos 0.5 tn. de capacidad.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_112">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>b)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) equipo de soldadura eléctrica.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_113">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>c)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Una (01) compresora neumática de potencia no menor de 2 hp
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_114">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td></td>
+                                          <td>d)</td>
+                                          <td class="text-start">
+                                             <div>
+                                                Un (01) equipo de pintura automotriz (pistola de aplicación de pintura
+                                                con regulador de presión).
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_115">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center">
+                                          <td>12</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                Resolución de homologación vigente del analizador de gases N°
+                                                <b>{{this.a_s1_resolucionGases.value}}</b>, de fecha <b>{{this.fechaGases}}</b>,
+                                                expedido por la Dirección General de Asuntos Socio Ambientales del
+                                                Ministerio de Transportes y Comunicaciones conforme a lo establecido en
+                                                las normas vigentes.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_12">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                       <tr class="text-center"  *ngIf="this.activarGLP">
+                                          <td>13</td>
+                                          <td colspan="2" class="text-start">
+                                             <div>
+                                                <b>Solo para GLP:</b>
+                                                Certificado de calibración vigente N° <b>{{this.a_s1_certificado.value}}</b>, de fecha
+                                                <b>{{this.fechaCertificado}}</b>, emitido por el fabricante del analizador de gases o por
+                                                su representante autorizado en el país.
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="d-flex flex-row p-2 ms-4">
+                                                <ui-switch formControlName="a_s1_declaracion_13">
+                                                </ui-switch>
+                                                <label class="col-form-label ms-2"> NO/SI </label>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                    </tbody>
+
+                                 </table>
+                              </div>
+                           </div>
+                        
+                           <div class="row mt-1">
+                              <div class="col-lg-8">
+                                 <div>
+                                    (*) Acreditar con copia simple la propiedad de los equipos señalados 
+                                 </div>
+                                 <div>
+                                    (**) Solo para GLP acreditar con copia simple la posesión legitima de los equipos señalados.
+                                 </div>
+                              </div>
+                              <div class="col-lg-4">
+                                 <div class="d-flex mt-2">
+                                    <div class="flex-1 text-left">
+                                       <button class="btn btn-danger btn-sm align-self-center mb-3"
+                                          *ngIf="visibleButtonDocumentos || this.pathPdfDocumentosSeleccionado !== null"
+                                          (click)="inputFileDocumentos.click($event)">
+                                          <i class="fas fa-upload"></i>
+                                          Adjuntar documentos (Pdf máx. 10Mb)
+                                       </button>
+                                       <input type="file" class="d-none" #inputFileDocumentos
+                                          accept="application/pdf" (change)="onChangeInputDocumentos($event)" />
+                                       <i class="far fa-file-pdf text-danger fa-2x ms-2 mt-2" title="Vista previa"
+                                          *ngIf="filePdfDocumentosSeleccionado !== null || this.pathPdfDocumentosSeleccionado !==null "
+                                          (click)="vistaPreviaDocumentos()"></i>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+
+
+                           <div class="col-sm-12 mt-2 justify-content-center">
+                              <div class="alert alert-custom" role="alert">
+                                 Lo declarado se sujeta a lo señalado en el numeral 34.3 del artículo 34 del Texto Único
+                                 Ordenado de la Ley Nº 27444, Ley del Procedimiento Administrativo General <span
+                                    class="text-success" triggers="mouseenter:mouseclick" popoverTitle="Nota"
+                                    placement="right"
+                                    ngbPopover="Numeral 34.3 del artículo 34°  del Texto Único Ordenado de la Ley N° 27444 – Ley del Procedimiento Administrativo General, aprobado por Decreto Supremo N° 004-2019-JUS.">
+                                    <i class="fas fa-info-circle"></i>
+                                 </span> y demás normas pertinentes.
+                              </div>
+                           </div>
+
+                           <div class="col-sm-12 d-flex justify-content-center mt-1">
+                              <div class="alert alert-warning" role="alert">
+                                 En caso de comprobar fraude o falsedad en la declaración, información o en la
+                                 documentación presentada por el administrado, la entidad considerará no satisfecha la
+                                 exigencia respectiva para todos sus efectos, procediendo a declarar la nulidad del acto
+                                 administrativo sustentado en dicha declaración, información o documento; e imponer a quien
+                                 haya empleado esa declaración, información o documento una multa en favor de la entidad de
+                                 entre cinco (5) y diez (10) Unidades Impositivas Tributarias vigentes a la fecha de pago;
+                                 y, además, si la conducta se adecua a los supuestos previstos en el Título XIX Delitos
+                                 contra la Fe Pública del Código Penal, ésta deberá ser comunicada al Ministerio Público
+                                 para que interponga la acción penal correspondiente.
+                              </div>
+                           </div>
+
+                        </div>
+                     </ng-template>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+<div class="modal-footer anexo">
+   <div class="row">
+      <div class="col-lg-12 d-flex">
+         <div class="flex-1">
+            <div class="btn-group" role="group" aria-label="Basic example">
+               <button type="button" class="btn btn-secondary" [disabled]="idAnexo === 0" (click)="descargarPdf()">
+                  <i class="far fa-eye"></i>
+                  Visualizar
+               </button>
+            </div>
+         </div>
+         <div class="flex-1 text-end">
+            <button class="btn btn-success" (click)="guardarAnexo()"><!-- [disabled]="anexoFG.invalid"-->
+               <i class="far fa-save"></i>
+               {{
+               (idAnexo === 0 ? 'Grabar' : 'Modificar')
+               }}
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

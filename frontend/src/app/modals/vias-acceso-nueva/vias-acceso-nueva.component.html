@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h2>{{title}}</h2>
+    <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+    </button>
+</div>
+<form (submit)="save(form)" [formGroup]="form">
+    <div class="modal-body mat-typography">
+        <div class="content-modal-flexible-none">
+            <h3>VÍAS DE ACCESO NUEVA</h3>
+            <div class="col-md-12 m-b-10px">
+                <h3>TIPO DE VÍA <span class="text-danger">(*)</span></h3>
+                <select id="selectTipo" class="form-select" formControlName="TipoVia">
+                    <option selected value="">--SELECCIONE--</option>
+                    <option *ngFor="let item of listaTipoVia" [value]="item.codigo">
+                        {{ item.descripcion}}
+                    </option>
+                </select>
+                <div *ngIf="tipoVia.invalid && (tipoVia.dirty || tipoVia.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="tipoVia.errors?.invalidSelection">El tipo de vía es obligatorio.</small>
+                </div>
+            </div>
+            <div class="col-md-12 m-b-10px">
+                <h3>LARGO (m) <span class="text-danger">(*)</span></h3>
+                <input type="text" class="form-control" placeholder="" formControlName="Largo" maxlength="7" (input)="soloDecimales($event,'Largo')">
+                <div *ngIf="largo.invalid && (largo.dirty || largo.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="largo.errors?.required">El largo es obligatorio.</small>
+                    <small *ngIf="largo.errors?.pattern">El formato de largo no es válido.</small>
+                </div>
+            </div>
+            <div class="col-md-12 m-b-10px">
+                <h3>ANCHO (m) <span class="text-danger">(*)</span></h3>
+                <input type="text" class="form-control" placeholder="" formControlName="Ancho" maxlength="7" (input)="soloDecimales($event,'Ancho')">
+                <div *ngIf="ancho.invalid && (ancho.dirty || ancho.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="ancho.errors?.required">El ancho es obligatorio.</small>
+                    <small *ngIf="ancho.errors?.pattern">El formato de ancho no es válido.</small>
+                </div>
+            </div>
+            <div class="col-md-12 m-b-10px">
+                <h3>MATERIAL (m) <span class="text-danger">(*)</span></h3>
+                <textarea class="form-control" placeholder="" rows="3" formControlName="Material" maxlength="2500"></textarea>
+                <div *ngIf="material.invalid && (material.dirty || material.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="material.errors?.required">El material es obligatorio.</small>
+                </div>
+            </div>
+            <div class="col-md-12 m-b-10px">
+                <h3>EQUIPOS A UTILIZAR <span class="text-danger">(*)</span></h3>
+                <textarea class="form-control" placeholder="" rows="3" formControlName="Equipos" maxlength="2500"></textarea>
+                <div *ngIf="equipos.invalid && (equipos.dirty || equipos.touched)" style="color: red;font-size: 12px;">
+                    <small *ngIf="equipos.errors?.required">Equipos a utilizar es obligatorio.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+            Cancel</button>
+        <button *ngIf="viewControl" type="submit" class="mat-small"><i class="material-icons">save</i> Grabar</button>
+    </div>
+</form>

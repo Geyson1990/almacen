@@ -1,0 +1,92 @@
+<div class="modal-header">
+  <h2>{{ title }}</h2>
+  <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+  </button>
+</div>
+<form  (submit)="save(form)" [formGroup]="form">
+  <div class="modal-body">
+    <div class="antecedentes-dialog" style="font-size: 12px">
+      <div class="content-contorno">
+        <h3 class="sub-titulo">2.4 DELIMITACIÓN DEL PERÍMETRO DEL ÁREA EFECTIVA DEL PROYECTO
+          <span class="mat-tooltip-informacion color-black" placement="bottom"
+            ngbTooltip="Se definirá el área efectiva que ocupará el proyecto, en función del diseño y distribución de los componentes principales y auxiliares.Presentar el mapa que contenga base topográfica que comprenderá el Área de Actividad Minera y el Área de Uso Minero.">Contenido
+            Mínimo</span>
+        </h3>
+        <div class="m-0-5px">
+          <h3>2.4.1. DELIMITACIÓN DEL PERÍMETRO DEL ÁREA DEL PROYECTO</h3>
+
+          <div class="sub-container">
+            <h4>ÁREAS SUPERFICIALES EN ACTIVIDAD MINERA <span class="color-red">(*)</span></h4>
+            <button *ngIf="viewControl"
+              type="button" (click)="openModal('ÁREAS SUPERFICIALES EN ACTIVIDAD MINERA', null, 1, false)"
+              class="btn button-agregar  d-flex align-items-center justify-content-center p-0">
+              <i class="material-icons color-gree">add</i>
+              Agregar Área Superficial en Actividad Minera
+            </button>
+            <div>
+              <tupa-table [columns]="headerActividadMinera" [data]="dataActividadMinera"></tupa-table>
+            </div>
+          </div>
+
+          <div class="sub-container">
+            <h4>ÁREAS SUPERFICIALES EN USO MINERO</h4>
+            <button *ngIf="viewControl"
+              type="button" (click)="openModal('ÁREAS SUPERFICIALES EN USO MINERO', null, 2, false)"
+              class="btn button-agregar  d-flex align-items-center justify-content-center p-0 ">
+              <i class="material-icons color-gree">add</i>
+              Agregar Área Superficial en Uso Minero
+            </button>
+            <div>
+              <tupa-table [columns]="headerUsoMinero" [data]="dataUsoMinero"></tupa-table>
+            </div>
+          </div>
+
+          <h3>2.4.2. COORDENADAS DEL PUNTO CENTRAL (REFERENCIAL) DEL PROYECTO</h3>
+          <tupa-table [columns]="tableColumns242" [data]="tableData242"></tupa-table>
+          
+          <br>
+
+          <h3>2.4.3. ADJUNTAR MAPA DE AREA EFECTIVA</h3>
+          <div class="mensaje-dialog d-flex flex-row m-0">
+            <div class="col-sm-1 col-md-1 w-5 d-flex justify-content-center p-0">
+              <i class="material-icons icon-rojo"> info </i>
+            </div>
+            <div class="col-sm-11 col-md-11 ml-3">
+              <p class="m-0">IMPORTANTE : EL TAMAÑO DE CADA ARCHIVO NO DEBE PASAR DE 50 MB.
+                SE DEBE ESCANEAR COMO MÁXIMO A 300 DPI DE RESOLUCIÓN Y USAR LA TECNOLOGÍA DE RECONOCIMIENTO ÓPTICO DE
+                CARÁCTERES
+                (OCR).</p>
+            </div>
+          </div>
+          <tupa-attach-button 
+            *ngIf="viewControl"
+            (documentoSeleccionado)="agregarDocumento($event)" 
+            [formatos]="['pdf','doc','docx','xls','xlsx','zip', '7z','rar','kml','kmz','cad', 'png', 'jpg', 'jpeg']" 
+            [tamano]="50" 
+            [cantidadRegistros]="documentos.length"  
+            [limiteRegistros]="60" 
+            [showTipoDocumento]="false" 
+            [valorSeleccionado]="0" 
+            [optsTipoDocumento]="optsTipoDocumento"
+          ></tupa-attach-button>
+          <app-document-grid 
+            [viewOnly]="viewOnly" 
+            [documentos]="documentos" 
+            [showTipoDocumento]="showTipoDocumento" 
+            (documentosActualizados)="actualizarDocumentos($event)"
+          ></app-document-grid>    
+          <br>
+        </div>  
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Anterior"><i class="material-icons">navigate_before</i></button>
+    <div class="btn-footer-center">
+      <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+        Cancel</button>
+      <button class="mat-small" [ngClass]="{'btn-disabled': form.invalid}" [disabled]="form.invalid" *ngIf="viewControl"><i class="material-icons">save</i> Grabar</button>
+    </div>
+    <button type="button" class="btn-previous_next" data-bs-toggle="tooltip" title="Siguiente"><i class="material-icons">navigate_next</i></button>
+  </div>
+</form>
