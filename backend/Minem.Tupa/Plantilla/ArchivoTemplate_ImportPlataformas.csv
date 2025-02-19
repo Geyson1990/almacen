@@ -1,0 +1,4 @@
+Plataforma,Este,Norte,Largo,Ancho,ProfPromedio,Cota,Distancia,Fuente,NroSondaje,Sondaje,Inclinacion,Azimut,Profundidad,Metodo,NroPozas,Topsoil,Aspectos
+CHAJE A1,778363,9229429,12,4,56,3600,80,1,1,Sonda CH01,33,20,100,Ninguna,23,34,Ninguna
+CHAJE A1,776057,9228761,12,5,58,3600,80,1,1,Sonda CH02,44,30,200,Ninguna,25,45,Ninguna
+CHAJE A2,777260,9228677,12,5,60,3600,70,3,1,Sonda CH03,55,40,300,Ninguna,57,67,Ninguna
