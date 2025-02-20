@@ -1,6 +1,0 @@
-@Minem.Tupa_HostAddress = http://localhost:5208
-
-GET {{Minem.Tupa_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

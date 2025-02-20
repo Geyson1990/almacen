@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Muni.Almacen.Dto\Muni.Almacen.Dto.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.Utils\Muni.Almacen.Utils.csproj" />
+  </ItemGroup>
+
+</Project>

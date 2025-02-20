@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Muni.Almacen.Application\Muni.Almacen.Application.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.Data\Muni.Almacen.Data.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.IApplication\Muni.Almacen.IApplication.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.Repository\Muni.Almacen.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

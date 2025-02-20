@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Plantilla\ArchivoTemplate_ImportPlataformas.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="15.0.3" />
+    <PackageReference Include="HotChocolate.AspNetCore.Subscriptions" Version="10.5.5" />
+    <PackageReference Include="HotChocolate.Data" Version="15.0.3" />
+    <PackageReference Include="itext7" Version="7.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="8.21.140" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Muni.Almacen.Automapper\Muni.Almacen.Automapper.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.Data\Muni.Almacen.Data.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.Dto\Muni.Almacen.Dto.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.Infraestructure\Muni.Almacen.Infraestructure.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.Register.IoC\Muni.Almacen.Register.IoC.csproj" />
+    <ProjectReference Include="..\Muni.Almacen.Utils\Muni.Almacen.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Plantilla\ArchivoTemplate_ImportPlataformas.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
