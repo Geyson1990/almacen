@@ -53,8 +53,8 @@ export class LoginComponent implements OnInit {
 	async ngOnInit(): Promise<void> {
 		this.funcionesMtcService.mostrarCargando();
 		this.loginFormGroup = this.formBuilder.group({
-			dniCeFormControl: [{ value: '', disabled: true }, [Validators.required, exactLengthValidator([8])]],
-			passwordFormControl: [{ value: '', disabled: true }, [Validators.required, noWhitespaceValidator()]]
+			dniCeFormControl: [{ value: '', disabled: false }, [Validators.required, exactLengthValidator([8])]],
+			passwordFormControl: [{ value: '', disabled: false }, [Validators.required, noWhitespaceValidator()]]
 		});
 
 		this.funcionesMtcService.ocultarCargando();
@@ -64,20 +64,20 @@ export class LoginComponent implements OnInit {
 	get dniCeFormControl(): AbstractControl { return this.loginFormGroup.get('dniCeFormControl'); }
 	get passwordFormControl(): AbstractControl { return this.loginFormGroup.get('passwordFormControl'); }
 
-	get urlRegistroCasilla(): string { return this.casillaService.getUrlRegistro(); }
-	get urlRecuperarPassCasilla(): string { return this.casillaService.getUrlRecuperarPass(); }
+	// get urlRegistroCasilla(): string { return this.casillaService.getUrlRegistro(); }
+	// get urlRecuperarPassCasilla(): string { return this.casillaService.getUrlRecuperarPass(); }
 
-	async poblarTipoPersona(): Promise<void> {
-		try {
-			//debugger;
-			await this.seguridadService.getTipoPersonas().subscribe(res => {
+	// async poblarTipoPersona(): Promise<void> {
+	// 	try {
+	// 		//debugger;
+	// 		await this.seguridadService.getTipoPersonas().subscribe(res => {
 				
-				if (res.success) this.listaTipoPersona = res.data;
-			});
-		} catch (e) {
-			this.messageError = 'Error en el servicio de obtener los tipos de persona';
-		}
-	}
+	// 			if (res.success) this.listaTipoPersona = res.data;
+	// 		});
+	// 	} catch (e) {
+	// 		this.messageError = 'Error en el servicio de obtener los tipos de persona';
+	// 	}
+	// }
 
 
 	resolved(captchaResponse: string) {
@@ -104,6 +104,7 @@ export class LoginComponent implements OnInit {
 
 			if (response.success) {
 				sessionStorage.setItem('usuario', JSON.stringify(response.data));
+				sessionStorage.setItem('accessToken', response.data.accessToken);
 				this.router.navigate(['/index']);
 			}
 			else {

@@ -54,51 +54,52 @@ export class IndexComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
+   debugger;
     this.funcionesMtcService.mostrarCargando();
     //await this.poblarUnidadesOrganicas();
-    await this.poblarSectores();
+    //await this.poblarSectores();
     //await this.poblarProcedimientos();
     this.funcionesMtcService.ocultarCargando();
   }
 
-  async poblarUnidadesOrganicas(): Promise<void> {
-    try {
-      const tipoPersona = this.seguridadService.getNameId();
-      this.listadoUnidadesOrganicas = await this.tramiteService.getUnidadesOrganicas(tipoPersona).toPromise();
-    } catch (e) {
-      this.funcionesMtcService.mensajeError('Error en el servicio de obtener las unidades orgánicas');
-    }
-  }
+  // async poblarUnidadesOrganicas(): Promise<void> {
+  //   try {
+  //     const tipoPersona = this.seguridadService.getNameId();
+  //     this.listadoUnidadesOrganicas = await this.tramiteService.getUnidadesOrganicas(tipoPersona).toPromise();
+  //   } catch (e) {
+  //     this.funcionesMtcService.mensajeError('Error en el servicio de obtener las unidades orgánicas');
+  //   }
+  // }
 
-  async poblarSectores(): Promise<void> {
-    try {
-      await this.tramiteService.getSectores().subscribe(res => {
-				if (res.success) this.listadoSectores = res.data;
-			});
+  // async poblarSectores(): Promise<void> {
+  //   try {
+  //     await this.tramiteService.getSectores().subscribe(res => {
+	// 			if (res.success) this.listadoSectores = res.data;
+	// 		});
 
-    } catch (e) {
-      this.funcionesMtcService.mensajeError('Error en el servicio de obtener las unidades orgánicas');
-    }
-  }
+  //   } catch (e) {
+  //     this.funcionesMtcService.mensajeError('Error en el servicio de obtener las unidades orgánicas');
+  //   }
+  // }
 
-  async poblarProcedimientos(): Promise<void> {
-    const tipoPersona = this.seguridadService.getNameId();
-    this.tramiteService.getProcedimientos('', tipoPersona).subscribe((response) => {
-      this.listadoProcedimientos = response.map((x) => {
-        if (x.codigo === 'DGAT-025') {
-          x.nombre = x.nombre.replace(/EN CASO DE COMPARTICIÓN DE INFRAESTRUCTURA/gi, '<b>EN CASO DE COMPARTICIÓN DE INFRAESTRUCTURA</b>');
-        }
-        if (x.codigo === 'DGAT-026') {
-          x.nombre = x.nombre.replace(/MODIFICACIÓN DE FRECUENCIA O CANAL/gi, '<b>MODIFICACIÓN DE FRECUENCIA O CANAL</b>');
-        }
-        return x;
-      });
-      this.listSize = this.listadoProcedimientos.length;
-    }, error => {
-      this.funcionesMtcService.mensajeError('Error en el servicio de obtener los procedimientos');
-    });
+  // async poblarProcedimientos(): Promise<void> {
+  //   const tipoPersona = this.seguridadService.getNameId();
+  //   this.tramiteService.getProcedimientos('', tipoPersona).subscribe((response) => {
+  //     this.listadoProcedimientos = response.map((x) => {
+  //       if (x.codigo === 'DGAT-025') {
+  //         x.nombre = x.nombre.replace(/EN CASO DE COMPARTICIÓN DE INFRAESTRUCTURA/gi, '<b>EN CASO DE COMPARTICIÓN DE INFRAESTRUCTURA</b>');
+  //       }
+  //       if (x.codigo === 'DGAT-026') {
+  //         x.nombre = x.nombre.replace(/MODIFICACIÓN DE FRECUENCIA O CANAL/gi, '<b>MODIFICACIÓN DE FRECUENCIA O CANAL</b>');
+  //       }
+  //       return x;
+  //     });
+  //     this.listSize = this.listadoProcedimientos.length;
+  //   }, error => {
+  //     this.funcionesMtcService.mensajeError('Error en el servicio de obtener los procedimientos');
+  //   });
 
-  }
+  // }
 
   onChangeBuscarTupa(value: string): void {
     if (value) {

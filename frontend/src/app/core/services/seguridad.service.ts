@@ -34,8 +34,8 @@ export class SeguridadService {
   urlLoginSunat: string;
 
   constructor(private httpClient: HttpClient) {
-    this.urlApi = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.autenticacion}`;
-    this.urlLogin = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.login}`;
+    this.urlApi = `${environment.baseUrlAPI}${environment.endPoint.autenticacion.autenticacion}`;
+    this.urlLogin = `${environment.baseUrlAPI}${environment.endPoint.autenticacion.login}`;
     this.urlTipoPersona = `${environment.baseUrlPersonaAPI}${environment.endPoint.tupas.tipopersona}`;
     this.urlTipoDocumentoPersonaExtranjera = `${environment.baseUrlPersonaAPI}${environment.endPoint.maestros.tipoDocumentoPersonaExtranjera}`;
     this.urlLogout = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.logout}`;
@@ -49,7 +49,7 @@ export class SeguridadService {
   postLogin(data: LoginRequestModel): Observable<ApiResponse<LoginResponseModel>> {
     return this.httpClient.post<ApiResponse<LoginResponseModel>>(this.urlLogin, data);
   }
-  
+
   postLogout(): void {
     try {
       this.httpClient.post(this.urlLogout, null);
@@ -108,6 +108,7 @@ export class SeguridadService {
 
   // LOCAL
   isAuthenticated(): boolean {
+    debugger;
     const token = sessionStorage.getItem('accessToken');
     if (!token) {
       return false;

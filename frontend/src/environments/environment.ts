@@ -36,7 +36,7 @@ export const environment = {
     },
     autenticacion: {
       autenticacion: '/Autenticacion/jwt',
-      login: '/auth/login',
+      login: '/Autenticacion/login',
       registrar: '/Autenticacion/registrar',
       logout: '/Autenticacion/logout',
       recuperarpass: '/Autenticacion/recuperarpass',

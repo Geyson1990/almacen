@@ -12,5 +12,6 @@ namespace Muni.Almacen.Dto.Autenticacion
         public string apellidoMaterno { get; set; }
         public string nombres { get; set; }
         public string numeroDocumento { get; set; }
+        public string accessToken { get; set; }
     }
 }

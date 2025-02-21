@@ -27,6 +27,7 @@ export class SeguridadComponent implements OnInit {
   }
   
   ngOnInit() {
+    debugger;
     this.seguridadService.get(this.token)
     .subscribe(
       resp => {

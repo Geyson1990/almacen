@@ -4,12 +4,12 @@
 >
   <div class="container-fluid">
     <div class="navbar-brand" style="display: flex">
-      <img src="http://172.25.3.108/administrado/assets/img/GOB-PE.png" style="max-width: 110px" />
+      <img src="assets/img/GOB-PE.png" style="max-width: 110px" />
       <div
         class="flex-grow-1 ms-3 ps-3 fw-bold align-self-center"
         style="border-left: 1px solid white; color: white; font-size: 16px"
       >
-        Tupa Digital
+        Municipalidad Distrital de Sayán
       </div>
     </div>
 
@@ -110,68 +110,55 @@
           <span class="menuText ps-2">Inicio</span>
         </a>
       </li>
+
+
       <li
-        [ngbTooltip]="isMenuCollapsed ? 'Mis tramites' : ''"
+        [ngbTooltip]="isMenuCollapsed ? 'Inventario' : ''"
         placement="right"
         container="body"
       >
-        <a routerLink="/mis-tramites" routerLinkActive="is-active">
-          <span class="fa fa-inbox"></span>
-          <span class="menuText ps-2">Mis tramites</span>
+        <a routerLink="/mis-inventarios" routerLinkActive="is-active">
+          <span class="fa fa-archive"></span>
+          <span class="menuText ps-2">Inventario</span>
         </a>
-        <ul class="nav nav-sidebar">
-          <li><a>
-            <span class="fa fa-inbox"></span>
-            <span class="menuText ps-2">Pendientes</span>
-          </a></li>
-          <li><a>
-            <span class="fa fa-inbox"></span>
-            <span class="menuText ps-2">En Proceso</span>
-          </a></li>
-          <li><a>
-            <span class="fa fa-inbox"></span>
-            <span class="menuText ps-2">Finalizado</span>
-          </a></li>
-        </ul>
       </li>
-      <!-- <li [ngbTooltip]="isMenuCollapsed ? 'Mi cuenta' : ''" placement="right" container="body">
-                <a routerLink="/mi-cuenta" routerLinkActive="is-active">
-                    <span class="fa fa-address-card"></span>
-                    <span class="menuText ps-2">Mi cuenta</span>
-                </a>
-            </li> -->
+
+
       <li
-        [ngbTooltip]="isMenuCollapsed ? 'Cambiar contraseña' : ''"
+        [ngbTooltip]="isMenuCollapsed ? 'Registro de entradas' : ''"
         placement="right"
         container="body"
       >
-        <a [href]="urlRecuperarPassCasilla" routerLinkActive="is-active">
-          <span class="fa fa-user-circle"></span>
-          <span class="menuText ps-2">Cambiar contraseña</span>
+        <a routerLink="/registro-entrada" routerLinkActive="is-active">
+          <span class="fa fa-upload"></span>
+          <span class="menuText ps-2">Registro de entradas</span>
         </a>
       </li>
-      <!-- <li [ngbTooltip]="isMenuCollapsed ? 'Agregar rep. leg.' : ''" placement="right" container="body">
-                <a routerLink="/mis-tramites" routerLinkActive="is-active">
-                    <span class="fa fa-users"></span>
-                    <span class="menuText ps-2">Agregar rep. leg.</span>
-                </a>
-            </li> -->
+
+
       <li
-        [ngbTooltip]="isMenuCollapsed ? 'Casilla elec.' : ''"
+        [ngbTooltip]="isMenuCollapsed ? 'Registro de Salidas' : ''"
         placement="right"
         container="body"
       >
-        <a href="#" (click)="gotoCasilla($event)" routerLinkActive="is-active">
-          <span class="fa fa-envelope-square"></span>
-          <span class="menuText ps-2">Casilla elec.</span>
+        <a routerLink="/registro-salida" routerLinkActive="is-active">
+          <span class="fa fa-download"></span>
+          <span class="menuText ps-2">Registro de Salidas</span>
         </a>
       </li>
-      <!-- <li [ngbTooltip]="isMenuCollapsed ? 'Historial' : ''" placement="right" container="body">
-                <a routerLink="/mis-tramites" routerLinkActive="is-active">
-                    <span class="fa fa-inbox"></span>
-                    <span class="menuText ps-2">Historial</span>
-                </a>
-            </li> -->
+
+
+      <li
+        [ngbTooltip]="isMenuCollapsed ? 'Estadísticas' : ''"
+        placement="right"
+        container="body"
+      >
+        <a routerLink="/mis-estadisticas" routerLinkActive="is-active">
+          <span class="fa fa-bars"></span>
+          <span class="menuText ps-2">Estadísticas</span>
+        </a>
+      </li>
+
     </ul>
   </div>
   <div class="main col" [ngClass]="{ 'main--slide': isMenuCollapsed }">

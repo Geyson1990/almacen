@@ -1,0 +1,109 @@
+
+<div class="card mb-5 shadow">
+    <div class="card-header py-3">
+        Mis Inventarios
+    </div>
+    <div class="card-body p-4 small">
+        
+
+        <!-- <div class="row">
+            <div class="col-md-3 fw-bold">{{ tipoNombres }}:</div>
+            <div class="col-md-9">{{ Nombres }}</div>
+
+            <div *ngIf="datosUsuarioLogin.tipoPersona=='00002' && datosUsuarioLogin.razonSocial!=''" class="col-md-3 fw-bold">Razón Social:</div>
+            <div *ngIf="datosUsuarioLogin.tipoPersona=='00002' && datosUsuarioLogin.razonSocial!=''" class="col-md-9">{{ datosUsuarioLogin.razonSocial }}</div>
+        </div> -->
+
+        <hr>
+
+        <!-- <div>
+          <div class="col-md-12 alert alert-info" role="alert">
+            <h5 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Recuerde</h5>
+            <ul class="mb-0" style="padding-inline-start: 22px;">
+              <li>Si ha registrado un voucher en una solicitud que aún esta <b>pendiente de envío</b>: deberá anular la solicitud para utilizarlo en un nuevo trámite.
+            </ul>
+          </div>
+        </div> -->
+
+        <!-- <div class="mb-2">
+            <div class="mb-3 align-items-center row gx-2">
+                <div class="col-sm-auto">
+                    <b>Filtrar por: </b>
+                </div>
+
+                <div class="col-sm-auto">
+                 
+                </div>
+                
+                <div class="col-sm">
+                  <div class="input-group input-group-sm">
+                    
+                      <button class="btn btn-outline-secondary" (click)="onChangeFilterByState()">
+                        <i class="fas fa-search"></i>
+                      </button>
+                  </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-striped">
+                <thead class="bg-secondary text-white text-center">
+                    <tr class="align-self-center">
+                        <th class="align-middle text-center">Nro.</th>
+                        <th class="align-middle text-nowrap">Producto</th>
+                        <th class="align-middle">Material</th>
+                        <th class="align-middle">Color</th>
+                        <th class="align-middle">Talla</th>
+                        <th class="align-middle">Tipo</th>
+                        <th class="align-middle">Medidas</th>
+                        <th class="align-middle">Marca</th>
+                        <th class="align-middle">Unidad de Medida</th>
+                        <th class="align-middle">Cantidad</th>
+                        <th class="align-middle">Estado de<br>Stock</th>
+                        <th class="align-middle">F. Vencimiento</th>
+                        <th class="align-middle">Estado de <br>Vencimiento</th>
+                        <th class="align-middle">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listadoBandejaFiltro  | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+                        <td class="align-middle text-center text-bold">{{ item.idRow }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.producto }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.material }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.color }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.talla }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.tipo }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.medidas }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.marca }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.unidadMedida }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.estadoStock }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.fechaVencimiento }}</td>
+                        <td class="align-middle text-center text-bold">{{ item.estadoVencimiento }}</td>
+                        <td class="align-middle text-center">
+                            <button class="btn btn-sm btn-primary" (click)="onEdit(item)">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" (click)="onDelete(item)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                    </tr>
+                    <tr *ngIf="listadoBandejaFiltro.length === 0">
+                        <td [attr.colspan]="14">
+                          <center>Sin información registrada.</center>
+                        </td>
+                      </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between p-2">
+            <!-- (changePagination)="refreshCountries($event)" -->
+            <!-- <app-pagination-table [(page)]="page" [pageSize]="pageSize" [collectionSize]="BandejaSize" ></app-pagination-table> -->
+           
+
+          
+        </div>
+
+    </div>
+</div>

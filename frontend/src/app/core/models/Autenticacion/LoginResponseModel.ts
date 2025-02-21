@@ -3,4 +3,5 @@ export class LoginResponseModel {
     apellidoMaterno: string;
     nombres: string;
     numeroDocumento: string;
+    accessToken: string;
 }

@@ -1,6 +1,12 @@
 <div>
   <h1 style="text-align: center">
-    <small class="hsmall">¿Qué trámite desea realizar?</small>
+    <span class="fa fa-bank"> </span>
+    <span> Municipalidad Distrital de Sayán</span>
+  </h1>
+  <hr>
+  <h1 style="text-align: center">
+    <small class="hsmall">¡Bienvenido a la pagina oficial del almacén central de la Municipalidad Distrital de Sayán!
+    </small>
   </h1>
   <br />
 
@@ -19,13 +25,18 @@
 
   <div class="dropdown-divider"></div>
 
-  <!-- <div class="row pb-4">
-        <div class="col-md-12 alert alert-danger text-center" role="alert">
-            <label class="labelclass text-center">*** Solo se muestran los Procedimientos Administrativos
-                correspondientes a su tipo
-                de usuario ***</label>
+  <div class="row pb-4">
+        <div class="col-md-12 alert alert-info text-center" role="info">
+            <label style="font-size: large;">Aquí podrás realiza diferentes trabajos enfocados a la cadena de 
+              suministros del almacén central de la Municipalidad Distrital de Sayán.
+              </label>
+              <br>
+              <label style="font-size: large;">La herramienta SWGI, brindará un mejor flujo de registros, mayor 
+                funcionalidad y sobre todo permitirá una mejor interacción para el 
+                usuario; y así pueda realizar una gestión de inventario mas sencilla, 
+                efectiva y 100% amigable.</label>
         </div>
-    </div> -->
+    </div> 
 
   <div class="row justify-content-center">
     <div *ngIf="mostrarUO" class="row" style="max-width: 900px">
@@ -70,195 +81,7 @@
     </div>
   </div> -->
 
-  <div *ngIf="!mostrarUO">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="table-responsive">
-            <table class="table table-hover table-striped small">
-              <thead class="bg-secondary text-white text-center">
-                <tr class="align-self-center">
-                  <th class="align-middle">Código TUPA</th>
-                  <th class="align-middle">Grupo</th>
-                  <th class="align-middle">Denominación</th>
-                  <th class="align-middle">Clasificación</th>
-                  <th class="align-middle">Plazo de atención</th>
-                  <th class="align-middle">Requisitos</th>
-                  <th class="align-middle">Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="
-                    let item of listadoProcedimientosFilter
-                      | slice
-                        : (page - 1) * pageSize
-                        : (page - 1) * pageSize + pageSize
-                  "
-                >
-                  <td class="align-middle text-nowrap">{{ item.codigo }}</td>
-                  <td class="align-middle text-nowrap">{{ item.acronimo }}</td>
-                  <td class="align-middle" [innerHTML]="item.nombre"></td>
-                  <td class="align-middle">{{ item.tipoEvaluacion }}</td>
-                  <td class="align-middle text-center">
-                    {{ item.plazoDias }} DÍAS HÁBILES
-                  </td>
-                  <td class="text-center align-middle">
-                    <!-- <img (click)="openModal(requisitos,item)" height="20%" style="height: 25px;" src="/assets/icon/list.svg"> -->
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-light"
-                      (click)="openModal(requisitos, item)"
-                    >
-                      <i class="fas fa-list"></i>
-                    </button>
-                  </td>
-                  <td class="align-middle text-center py-0">
-                    <!-- <a class="btn btn-link" (click)="iniciarTramite(item)">Iniciar Trámite</a> -->
-                    <a
-                      class="btn btn-sm btn-link text-bold"
-                      (click)="iniciarTramite(item)"
-                      >Iniciar Trámite</a
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
 
-            <table
-              datatable=""
-              dt-options="dtOptions"
-              dt-columns="dtColumns"
-              dt-column-defs="dtColumnDefs"
-              class="table table-striped table-condensed table-hover"
-            ></table>
-          </div>
-        </div>
-      </div>
-
-      <app-pagination-table
-        [page]="page"
-        [pageSize]="pageSize"
-        [totalRegistros]="listSize"
-        (changePagination)="refreshPagination($event)"
-      ></app-pagination-table>
-    </div>
-  </div>
-
-  <!-- <div class="dropdown-divider"></div>
-
-  <div class="row" align="center">
-    <hr />
-    <div class="col-md-12 pb-4">
-      <h1><small class="hsmall">Servicios en línea</small></h1>
-    </div>
-    <br />
-    <div class="col-sm-6 col-md-4">
-      <button
-        type="button"
-        class="btn btn-link thumbnail"
-        (click)="redirecToServices(3)"
-      >
-        <img src="/assets/img/index/boton_licencia.png" alt="imagen" />
-      </button>
-    </div>
-    <div class="col-sm-6 col-md-4">
-      <button
-        type="button"
-        class="btn btn-link thumbnail"
-        (click)="redirecToServices(4)"
-      >
-        <img
-          src="/assets/img/index/obtener_licencia_tripulante.png"
-          alt="imagen"
-        />
-      </button>
-    </div>
-    <div class="col-sm-6 col-md-4">
-      <button
-        type="button"
-        class="btn btn-link thumbnail"
-        (click)="redirecToServices(5)"
-      >
-        <img src="/assets/img/index/vuce.png" alt="imagen" />
-      </button>
-    </div>
-  </div>
-</div> -->
-
-<!-- <ng-template #requisitos let-modal>
-        <div class="modal-header bg-danger text-white">
-            <h4 class="modal-title" id="modal-basic-title">LISTADO DE REQUISITOS</h4>
-            <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="card">
-                <div class="card-body small">
-                    <h5 class="card-title">DATOS DEL PROCEDIMIENTO</h5>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-2 fw-bold">Código TUPA:</div>
-                        <div class="col-md-10">{{ procedimientoSeleccionado?.codigo || 'INDETERMINADO' }}</div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-2 fw-bold">Descripción:</div>
-                        <div class="col-md-10">{{ procedimientoSeleccionado?.nombre || 'INDETERMINADO' }}</div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-2 fw-bold">Tipo Evaluación:</div>
-                        <div class="col-md-10">{{ tipoSolicitudSeleccionado?.tipoEvaluacion || 'INDETERMINADO' }}</div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-2 fw-bold">Plazo Atención:</div>
-                        <div class="col-md-10">{{ tipoSolicitudSeleccionado?.plazoAtencion > 0 ?
-                            tipoSolicitudSeleccionado.plazoAtencion + ' DÍAS HÁBILES' : 'INDETERMINADO' }}
-                        </div>
-                    </div>
-
-                    <br>
-                    <h5 class="card-title">Requisitos</h5>
-                    <hr>
-                    <div class="row mt-3">
-                        <div class="col-md-2 col-form-label fw-bold">Tipo de Solicitud:</div>
-                        <div class="col-md-10">
-                            <select class="form-select" [(ngModel)]="tipoSolicitudModel"
-                                (ngModelChange)="onTipoSolicitudChange($event)">
-                                <option *ngFor="let item of listadoTipoSolicitud" [value]="item.codigostr">{{
-                                    item.descripcion }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr class="align-self-center">
-                                        <th>Nro</th>
-                                        <th>Denominación del requisito</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of listadoDetalleTupaFilter">
-                                        <td class="align-middle">{{ item.ordenTxt }}</td>
-                                        <ng-container *ngIf="item.tieneCosto; else elseTemplate">
-                                            <td class="align-middle">{{ item.descripcion }} <br>
-                                              <strong>Monto a Pagar: S/ {{ item.costoFormatted }}</strong>
-                                            </td>
-                                        </ng-container>
-                                        <ng-template #elseTemplate>
-                                            <td class="align-middle">{{ item.descripcion }}</td>
-                                        </ng-template>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ng-template> -->
 <ng-template #requisitos let-modal>
   <div class="modal-header bg-danger text-white">
     <h5 class="modal-title" id="modal-basic-title">
