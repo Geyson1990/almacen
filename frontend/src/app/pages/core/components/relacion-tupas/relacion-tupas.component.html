@@ -91,7 +91,6 @@
             <input
               class="form-control"
               type="text"
-              [ngModel]="filterText"
               style="text-transform: uppercase"
               placeholder="Buscar"
               (ngModelChange)="onChangeFilter($event)"
@@ -156,13 +155,13 @@
       </table>
     </div>
 
-    <app-pagination-table
+    <!-- <app-pagination-table
       [page]="page"
       [pageSize]="pageSize"
       [totalRegistros]="listadoTupasSize"
       (changePagination)="refreshPagination($event)"
     >
-    </app-pagination-table>
+    </app-pagination-table> -->
 
     <ng-template #requisitos let-modal>
       <div class="modal-header bg-danger text-white">

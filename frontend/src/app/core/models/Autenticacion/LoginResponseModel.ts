@@ -1,11 +1,6 @@
 export class LoginResponseModel {
-    username: string;
-    role: string;
-    accessToken: string;
-    refreshToken: string;
-    foto: string;
-    listaMenu: [];
-
-    success: boolean;
-    errorMessage: string;
+    apellidoPaterno: string;
+    apellidoMaterno: string;
+    nombres: string;
+    numeroDocumento: string;
 }

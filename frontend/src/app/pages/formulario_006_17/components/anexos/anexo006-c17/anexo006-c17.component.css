@@ -1,7 +1,0 @@
-.campo-declaracion-jurada::after {
-    content: "XXXXXXXXXXXXXXXXX";
-    border-bottom: 1px solid #828282;
-    margin: 0 5px;
-    display: inline-block;
-  }
-  

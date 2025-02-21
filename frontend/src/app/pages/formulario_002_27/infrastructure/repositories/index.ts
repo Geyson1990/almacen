@@ -1,6 +1,0 @@
-export * from './anexo002_A27-http.repository'
-export * from './anexo002_B27-http.repository'
-export * from './anexo002_C27-http.repository'
-export * from './anexo002_D27-http.repository'
-export * from './anexo002_E27-http.repository'
-export * from './formulario002_27-http.repository'

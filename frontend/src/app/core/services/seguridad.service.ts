@@ -13,6 +13,7 @@ import { LoginSunatRequestModel } from '../models/Autenticacion/LoginSunatReques
 import { TipoDocumentoPersonaExtranjeraModel } from '../models/Autenticacion/TipoDocumentoPersonaExtranjeraModel';
 import { DatosUsuarioLogin } from '../models/Autenticacion/DatosUsuarioLogin';
 import { map } from 'rxjs/operators';
+import { ApiResponse } from '../models/api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -45,14 +46,10 @@ export class SeguridadService {
     this.urlLoginSunat = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.loginsunat}`;
   }
 
-  postLogin(data: LoginRequestModel): Observable<LoginResponseModel> {
-    return this.httpClient.post<LoginResponseModel>(this.urlLogin, data);
+  postLogin(data: LoginRequestModel): Observable<ApiResponse<LoginResponseModel>> {
+    return this.httpClient.post<ApiResponse<LoginResponseModel>>(this.urlLogin, data);
   }
-
-  postLoginSunat(data: LoginSunatRequestModel): Observable<LoginResponseModel> {
-    return this.httpClient.post<LoginResponseModel>(this.urlLoginSunat, data);
-  }
-
+  
   postLogout(): void {
     try {
       this.httpClient.post(this.urlLogout, null);

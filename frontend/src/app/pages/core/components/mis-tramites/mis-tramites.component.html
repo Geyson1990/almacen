@@ -39,20 +39,12 @@
                 </div>
 
                 <div class="col-sm-auto">
-                  <select class="form-select form-select-sm" [(ngModel)]="filtrarEstado" (change)="onChangeFilterByState()">
-                    <!-- (change)="onChangeFilter($event.target.value) -->
-                    <option value="ALL">TODOS</option>
-                    <option value="PENDIENTE">PENDIENTE</option>
-                    <option value="EN PROCESO">EN PROCESO</option>
-                    <option value="FINALIZADO">FINALIZADO</option>
-                    <option value="OBSERVADO">OBSERVADO</option>
-                    <option value="NO PRESENTADO">NO PRESENTADO</option>
-                  </select>
+                 
                 </div>
                 
                 <div class="col-sm">
                   <div class="input-group input-group-sm">
-                    <input class="form-control " type="text" name="searchTerm" [(ngModel)]="filtrarTexto" (input)="onChangeFilterByState()" />
+                    <!-- <input class="form-control " type="text" name="searchTerm" [(ngModel)]="filtrarTexto" (input)="onChangeFilterByState()" /> -->
                       <button class="btn btn-outline-secondary" (click)="onChangeFilterByState()">
                         <i class="fas fa-search"></i>
                       </button>
@@ -157,20 +149,9 @@
         <div class="d-flex justify-content-between p-2">
             <!-- (changePagination)="refreshCountries($event)" -->
             <!-- <app-pagination-table [(page)]="page" [pageSize]="pageSize" [collectionSize]="BandejaSize" ></app-pagination-table> -->
-            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="BandejaSize"  [maxSize]="5" [rotate]="true" [boundaryLinks]="true" >
-                <ng-template ngbPaginationFirst>Inicio</ng-template>
-                <ng-template ngbPaginationLast>Final</ng-template>
-                <ng-template ngbPaginationPrevious>Anterior</ng-template>
-                <ng-template ngbPaginationNext>Siguiente</ng-template>
-                <ng-template ngbPaginationEllipsis>...</ng-template>
-                <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
-            </ngb-pagination>
+           
 
-            <select class="form-select" style="width: auto" [(ngModel)]="pageSize">
-                <option [ngValue]="25">25 registros</option>
-                <option [ngValue]="50">50 registros</option>
-                <option [ngValue]="100">100 registros</option>
-            </select>
+          
         </div>
 
     </div>
