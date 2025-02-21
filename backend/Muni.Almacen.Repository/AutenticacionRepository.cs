@@ -3,6 +3,8 @@ using Muni.Almacen.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Muni.Almacen.Entity.Autenticacion;
 using Microsoft.Data.SqlClient;
+using System.Data;
+using System.Reflection.Metadata;
 
 namespace Muni.Almacen.Repository
 {
@@ -13,17 +15,16 @@ namespace Muni.Almacen.Repository
 
         public async Task<USP_SELECT_OBTENER_USUARIO_Response> AutenticarUsuario(USP_SELECT_OBTENER_USUARIO_Request request)
         {
-            //var _db = new GenericRepository(_connection);
-            var aliasParam = new SqlParameter("@Alias", request.alias);
-            var contraseniaParam = new SqlParameter("@Contrasenia", request.contrasenia);
+            var _db = new GenericRepository(_connection);
+            List<SqlParameter> param = 
+                [
+                    new SqlParameter("@Alias", SqlDbType.VarChar, 50) { Value = request.alias },
+                    new SqlParameter("@Contrasenia", SqlDbType.VarChar, 50) { Value = request.contrasenia }
+                ];
+
+            return await _db.ExecuteProcedureToEntity<USP_SELECT_OBTENER_USUARIO_Response>("USP_SELECT_OBTENER_USUARIO", param);
 
 
-            return await _connection..ExecuteProcedureToEntity<USP_SELECT_OBTENER_USUARIO_Response>("USP_SELECT_OBTENER_USUARIO", param);
-            //var result = await _minemDbContext.Set<USP_SELECT_OBTENER_USUARIO_Response>()
-            //    .FromSqlRaw("EXEC USP_SELECT_OBTENER_USUARIO @Alias, @Contrasenia", aliasParam, contraseniaParam)
-            //    .ToListAsync();
-
-            //return result.FirstOrDefault();
         }
 
 

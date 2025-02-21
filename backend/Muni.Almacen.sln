@@ -37,8 +37,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muni.Almacen.Dto", "Muni.Al
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Muni.Almacen.Api", "Muni.Almacen\Muni.Almacen.Api.csproj", "{6EC6AF09-9CB6-44FE-BE7E-2984DEFCE3BC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06.Libreria", "06.Libreria", "{185BE327-FBEB-44D1-ADC2-D053CB8A0693}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

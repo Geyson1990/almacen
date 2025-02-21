@@ -22,9 +22,8 @@ namespace Muni.Almacen.Application
                 var usuario = _mapper.Map<LoginResponseDto>(await _autenticacionRepository.AutenticarUsuario(_mapper.Map<USP_SELECT_OBTENER_USUARIO_Request>(request)));
               
                 if (usuario == null) throw new Exception("Usuario o contraseña no válido.");
-
             
-                return Message.Successful(new LoginResponseDto());                
+                return Message.Successful(usuario);                
             }
             catch(Exception ex)
             {

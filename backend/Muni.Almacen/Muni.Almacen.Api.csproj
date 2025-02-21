@@ -11,12 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HotChocolate.AspNetCore" Version="15.0.3" />
-    <PackageReference Include="HotChocolate.AspNetCore.Subscriptions" Version="10.5.5" />
-    <PackageReference Include="HotChocolate.Data" Version="15.0.3" />
     <PackageReference Include="itext7" Version="7.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
-    <PackageReference Include="Oracle.EntityFrameworkCore" Version="8.21.140" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
