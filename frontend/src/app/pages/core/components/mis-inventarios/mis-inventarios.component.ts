@@ -25,7 +25,7 @@ export class MisInventariosComponent implements OnInit {
   tipoNombres: string;
   datosUsuarioLogin: DatosUsuarioLogin;
   listadoBandejaBase = [];
-  listadoBandejaFiltro = [];
+  listadoBandeja = [];
   BandejaSize=1;
   page = 1;
   pageSize = 50;
@@ -41,34 +41,27 @@ export class MisInventariosComponent implements OnInit {
     private route: Router,
     private globalService: GlobalService
   ) {
-    //this.datosUsuarioLogin = this.seguridadService.getDatosUsuarioLogin();
-    //console.log(this.datosUsuarioLogin)
     this.datosUsuarioLogin = new DatosUsuarioLogin();
     this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
     this.datosUsuarioLogin.nroDocumento = this.seguridadService.getNumDoc();
     this.datosUsuarioLogin.razonSocial = this.seguridadService.getUserName();
-    // this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
-    // this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
-    // this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
   }
 
   ngOnInit(): void {
-    //this.traerDatos();
-    this.cargarBandeja(this.tipoPersona,this.seguridadService.getNameId(), this.NDocumento);
+    this.cargarBandeja();
   }
 
 
   
 
-  cargarBandeja(tipopersona: string, tipodoc: string, numdoc: string) {
-    console.log(tipopersona, tipodoc, numdoc);
+  cargarBandeja() {
+
     this.funcionesMtcService.mostrarCargando();
     this.TramiteService.getTramiteBandejaAdministrado().subscribe(
       (resp: any) => {
-        console.log(resp);
         this.funcionesMtcService.ocultarCargando();
         this.listadoBandejaBase = resp.data;
-        this.listadoBandejaFiltro = resp.data;
+        this.listadoBandeja = resp.data;
         this.BandejaSize = resp.data.length;
       },
       error => {
@@ -78,33 +71,7 @@ export class MisInventariosComponent implements OnInit {
     );
   }
 
-  onChangeFilter(value: string){
-    if(value === "ALL"){
-      this.listadoBandejaFiltro = this.listadoBandejaBase;
-      this.BandejaSize = this.listadoBandejaBase.length;
-    }else{
-      this.listadoBandejaFiltro = this.listadoBandejaBase.filter(x => x.estado === value);
-      this.BandejaSize = this.listadoBandejaFiltro.length;
-    }
-
-  }
-
-  onChangeFilterByState(){
-    if(this.filtrarEstado === "ALL"){
-      this.listadoBandejaFiltro = this.listadoBandejaBase;
-      this.BandejaSize = this.listadoBandejaBase.length;
-    }else{
-      this.listadoBandejaFiltro = this.listadoBandejaBase.filter(x => x.denominacionEstado === this.filtrarEstado);
-      this.BandejaSize = this.listadoBandejaFiltro.length;
-    }
-
-    if (this.filtrarTexto !== ""){
-      this.listadoBandejaFiltro = this.listadoBandejaFiltro.filter(x => x.denominacion?.toLowerCase()?.includes(this.filtrarTexto.toLowerCase()) ||  x.numSTD?.toLowerCase()?.includes(this.filtrarTexto.toLowerCase()));
-      this.BandejaSize =this.listadoBandejaFiltro.length;
-    }
-
-  }
-
+  
   irTramiteIniciado(item) {
     console.log(item);
     localStorage.setItem("tramite-id",item.codMaeSolicitud);
@@ -193,7 +160,7 @@ export class MisInventariosComponent implements OnInit {
                 this.funcionesMtcService.mensajeError("No se anuló el expediente");
               }
               this.modalService.dismissAll();
-              this.cargarBandeja(this.tipoPersona,this.seguridadService.getNameId(), this.NDocumento);
+              this.cargarBandeja();
             },
             error => {
               this.funcionesMtcService.mensajeError("Ocurrio un problema al grabar URL");

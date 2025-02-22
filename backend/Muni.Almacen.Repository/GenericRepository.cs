@@ -26,7 +26,10 @@ namespace Muni.Almacen.Repository
                     using (SqlCommand command = new SqlCommand(procedureName, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddRange(parameters.ToArray());
+                        if (parameters != null && parameters.Count > 0)
+                        {
+                            command.Parameters.AddRange(parameters.ToArray());
+                        }
 
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
@@ -56,7 +59,10 @@ namespace Muni.Almacen.Repository
                     using (SqlCommand command = new SqlCommand(procedureName, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddRange(parameters.ToArray());
+                        if (parameters != null && parameters.Count > 0)
+                        {
+                            command.Parameters.AddRange([.. parameters]);
+                        }
 
                         using (SqlDataReader reader = await command.ExecuteReaderAsync(CommandBehavior.CloseConnection))
                         {
@@ -84,7 +90,10 @@ namespace Muni.Almacen.Repository
                     using (SqlCommand command = new SqlCommand(procedureName, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddRange(parameters.ToArray());
+                        if (parameters != null && parameters.Count > 0)
+                        {
+                            command.Parameters.AddRange(parameters.ToArray());
+                        }
 
                         SqlParameter outputParam = new SqlParameter(outputParameterName, SqlDbType.BigInt)
                         {
@@ -115,7 +124,10 @@ namespace Muni.Almacen.Repository
                     using (SqlCommand command = new SqlCommand(procedureName, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddRange(parameters.ToArray());
+                        if (parameters != null && parameters.Count > 0)
+                        {
+                            command.Parameters.AddRange(parameters.ToArray());
+                        }
 
                         rowsAffected = await command.ExecuteNonQueryAsync();
                     }

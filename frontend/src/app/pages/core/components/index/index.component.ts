@@ -54,7 +54,7 @@ export class IndexComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-   debugger;
+   //debugger;
     this.funcionesMtcService.mostrarCargando();
     //await this.poblarUnidadesOrganicas();
     //await this.poblarSectores();

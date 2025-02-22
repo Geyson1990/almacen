@@ -27,44 +27,23 @@ namespace Muni.Almacen.Register.IoC
 
             AddRegisterApplications(services);
             AddRegisterRepositories(services);
-            //AddRegisterProxy(services);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddSingleton(new ArchivoApplication(filePath));
             return services;
         }
 
         public static IServiceCollection AddRegisterApplications(IServiceCollection services)
         {
             services.AddScoped<IAutenticacionApplication, AutenticacionApplication>();
-            services.AddScoped<IFormularioApplication, FormularioApplication>();
+            services.AddScoped<IInventarioApplication, InventarioApplication>();
             return services;
         }
 
         public static IServiceCollection AddRegisterRepositories(IServiceCollection services)
         {
             services.AddScoped<IAutenticacionRepository, AutenticacionRepository>();
-            services.AddScoped<IFormularioRepository, FormularioRepository>();
+            services.AddScoped<IInventarioRepository, InventarioRepository>();
             return services;
         }
 
-        //public static IServiceCollection AddRegisterProxy(IServiceCollection services)
-        //{
-        //    services.AddScoped<IExternoService, ExternoService>();
-        //    return services;
-        //}
-
-        //public static IServiceCollection AddHttpClientConfig(this IServiceCollection services, IConfiguration configuration)
-        //{
-        //    services.AddHttpClient<IExternoService, ExternoService>(httpClient =>
-        //    {
-        //        var settings = configuration.GetSection($"{Constante.KeyAppConfig.MsSettings}:{Constante.KeyAppConfig.ExternoSvcSettings}").Get<ExternoSvcSettings>();
-        //        httpClient.BaseAddress = new Uri(settings.BaseUrl);
-        //        httpClient.Timeout = TimeSpan.FromSeconds(settings.TimeoutSeconds);
-        //    }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-        //    {
-        //        ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-        //    });
-        //    return services;
-        //}
     }
 }

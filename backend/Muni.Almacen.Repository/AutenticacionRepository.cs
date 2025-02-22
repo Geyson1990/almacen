@@ -23,8 +23,6 @@ namespace Muni.Almacen.Repository
                 ];
 
             return await _db.ExecuteProcedureToEntity<USP_SELECT_OBTENER_USUARIO_Response>("USP_SELECT_OBTENER_USUARIO", param);
-
-
         }
 
 

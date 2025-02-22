@@ -4,48 +4,7 @@
         Mis Inventarios
     </div>
     <div class="card-body p-4 small">
-        
-
-        <!-- <div class="row">
-            <div class="col-md-3 fw-bold">{{ tipoNombres }}:</div>
-            <div class="col-md-9">{{ Nombres }}</div>
-
-            <div *ngIf="datosUsuarioLogin.tipoPersona=='00002' && datosUsuarioLogin.razonSocial!=''" class="col-md-3 fw-bold">Razón Social:</div>
-            <div *ngIf="datosUsuarioLogin.tipoPersona=='00002' && datosUsuarioLogin.razonSocial!=''" class="col-md-9">{{ datosUsuarioLogin.razonSocial }}</div>
-        </div> -->
-
         <hr>
-
-        <!-- <div>
-          <div class="col-md-12 alert alert-info" role="alert">
-            <h5 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Recuerde</h5>
-            <ul class="mb-0" style="padding-inline-start: 22px;">
-              <li>Si ha registrado un voucher en una solicitud que aún esta <b>pendiente de envío</b>: deberá anular la solicitud para utilizarlo en un nuevo trámite.
-            </ul>
-          </div>
-        </div> -->
-
-        <!-- <div class="mb-2">
-            <div class="mb-3 align-items-center row gx-2">
-                <div class="col-sm-auto">
-                    <b>Filtrar por: </b>
-                </div>
-
-                <div class="col-sm-auto">
-                 
-                </div>
-                
-                <div class="col-sm">
-                  <div class="input-group input-group-sm">
-                    
-                      <button class="btn btn-outline-secondary" (click)="onChangeFilterByState()">
-                        <i class="fas fa-search"></i>
-                      </button>
-                  </div>
-                </div>
-            </div>
-        </div> -->
-
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped">
                 <thead class="bg-secondary text-white text-center">
@@ -67,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of listadoBandejaFiltro  | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize ">
+                    <tr *ngFor="let item of listadoBandeja  | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize ">
                         <td class="align-middle text-center text-bold">{{ item.idRow }}</td>
                         <td class="align-middle text-center text-bold">{{ item.producto }}</td>
                         <td class="align-middle text-center text-bold">{{ item.material }}</td>
@@ -88,7 +47,7 @@
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                     </tr>
-                    <tr *ngIf="listadoBandejaFiltro.length === 0">
+                    <tr *ngIf="listadoBandeja.length === 0">
                         <td [attr.colspan]="14">
                           <center>Sin información registrada.</center>
                         </td>
@@ -98,11 +57,6 @@
         </div>
 
         <div class="d-flex justify-content-between p-2">
-            <!-- (changePagination)="refreshCountries($event)" -->
-            <!-- <app-pagination-table [(page)]="page" [pageSize]="pageSize" [collectionSize]="BandejaSize" ></app-pagination-table> -->
-           
-
-          
         </div>
 
     </div>
