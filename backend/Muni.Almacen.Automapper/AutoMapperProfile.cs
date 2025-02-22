@@ -3,7 +3,7 @@ using Muni.Almacen.Dto.Autenticacion;
 using Muni.Almacen.Dto.Inventario;
 using Muni.Almacen.Entity.Autenticacion;
 using Muni.Almacen.Entity.Inventario;
-using System;
+
 namespace Muni.Almacen.Automapper
 {
     public class AutoMapperProfile : Profile

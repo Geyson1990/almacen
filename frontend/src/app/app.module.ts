@@ -40,6 +40,7 @@ import { ROOT_REDUCERS } from './state/app.state';
 import { QuillModule } from 'ngx-quill';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MisInventariosComponent } from './pages/core/components/mis-inventarios/mis-inventarios.component';
+import { RegistroEntradaComponent } from './pages/core/components/registro-entrada/registro-entrada.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MisInventariosComponent } from './pages/core/components/mis-inventarios
     IndexComponent,
     InicioComponent,
     MisInventariosComponent,
+    RegistroEntradaComponent
   ],
   imports: [
     NgSelectModule,

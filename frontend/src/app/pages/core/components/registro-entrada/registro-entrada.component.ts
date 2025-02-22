@@ -12,11 +12,11 @@ import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
 
 @Component({
-  selector: 'app-mis-inventarios',
-  templateUrl: './mis-inventarios.component.html',
-  styleUrls: ['./mis-inventarios.component.css']
+  selector: 'app-registro-entrada',
+  templateUrl: './registro-entrada.component.html',
+  styleUrls: ['./registro-entrada.component.css']
 })
-export class MisInventariosComponent implements OnInit {
+export class RegistroEntradaComponent implements OnInit {
 
   tipoPersona: string;
   tipoDocumento: string;

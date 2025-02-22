@@ -14,6 +14,10 @@ export const environment = {
   //baseUrlPloneExtranet:'http://172.25.0.33:8091',
 
   endPoint: {
+    listarInventario: '/Inventario/listar-inventario',
+
+
+
     anexo: '/Anexo',
     anexoTramite: '/Anexo/tramite',
     formularioTramite: '/Formulario/tramite',

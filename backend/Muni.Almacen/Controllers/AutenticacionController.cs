@@ -10,8 +10,6 @@ using System.Security.Claims;
 
 namespace Muni.Almacen.Controllers
 {
-    //[Authorize(Roles = "TRAMITE_GESTOR_CIUDADANO")]
-    //[EnableCors("_corsPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class AutenticacionController(IAutenticacionApplication service) : ControllerBase

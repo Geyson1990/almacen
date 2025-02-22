@@ -5,6 +5,7 @@ import { IndexComponent } from './components/index/index.component';
 import { SeguridadComponent } from './components/seguridad/seguridad.component';
 import { TramiteIniciadoComponent } from './components/tramite-iniciado/tramite-iniciado.component';
 import { MisInventariosComponent } from './components/mis-inventarios/mis-inventarios.component';
+import { RegistroEntradaComponent } from './components/registro-entrada/registro-entrada.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'registro-entrada',
-    component: TramiteIniciadoComponent,
+    component: RegistroEntradaComponent,
     canLoad: [AuthGuard],
     canActivate: [AuthGuard],
   },
