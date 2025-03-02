@@ -15,7 +15,6 @@ import { RecaptchaModule } from 'ng-recaptcha';
 @NgModule({
   declarations: [
     LoginComponent,
-    RegistroComponent,
     RecuperarPassComponent,
     AyudaModalComponent,
   ],

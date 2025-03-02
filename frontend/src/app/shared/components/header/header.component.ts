@@ -11,11 +11,8 @@ import { ValidaVoucherResponseModel } from 'src/app/core/models/Tramite/ValidaVo
 import { VoucherRequestModel } from 'src/app/core/models/Tramite/VoucherRequestModel';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
 import { SeguridadService } from 'src/app/core/services/seguridad.service';
-import { RelacionTupasService } from 'src/app/core/services/servicios/relacion-tupas.service';
-import { TramiteService } from 'src/app/core/services/tramite/tramite.service';
 import { fileSizeValidator, requiredFileType, ValidateFileSize_Formulario } from 'src/app/helpers/file';
 import { noWhitespaceValidator, exactLengthValidator } from 'src/app/helpers/validator';
-import { CasillaService } from '../../../core/services/servicios/casilla.service';
 
 @Component({
   selector: 'app-header',
@@ -62,11 +59,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private funcionesMtcService: FuncionesMtcService,
-    private tramiteService: TramiteService,
     private seguridadService: SeguridadService,
-    private casillaService: CasillaService,
     private formBuilder: UntypedFormBuilder,
-    private relacionTupasService: RelacionTupasService
   ) { }
 
   ngOnInit(): void {
@@ -85,7 +79,7 @@ export class HeaderComponent implements OnInit {
   get rinDescripcionFC(): AbstractControl { return this.registroIncidenciaFG.get('rinDescripcionFC'); }
   get rinFileAdjuntoFC(): AbstractControl { return this.registroIncidenciaFG.get('rinFileAdjuntoFC'); }
 
-  get urlRecuperarPassCasilla(): string { return this.casillaService.getUrlRecuperarPass(); }
+  //get urlRecuperarPassCasilla(): string { return this.casillaService.getUrlRecuperarPass(); }
 
   async submitIncidencia(btnSubmit: HTMLButtonElement): Promise<void> {
     if (this.registroIncidenciaFG.invalid) {
@@ -113,15 +107,15 @@ export class HeaderComponent implements OnInit {
     );
     try {
       this.funcionesMtcService.mostrarCargando();
-      const response = await this.tramiteService
-        .postRegistrarIncidencia(incidenciaFormData)
-        .toPromise();
+      // const response = await this.tramiteService
+      //   .postRegistrarIncidencia(incidenciaFormData)
+      //   .toPromise();
       this.funcionesMtcService.ocultarCargando();
-      if (response.success) {
-        await this.funcionesMtcService.mensajeOk(response.message);
-      } else {
-        await this.funcionesMtcService.mensajeError(response.message);
-      }
+      // if (response.success) {
+      //   await this.funcionesMtcService.mensajeOk(response.message);
+      // } else {
+      //   await this.funcionesMtcService.mensajeError(response.message);
+      // }
     } catch (e) {
       console.log(e);
       this.funcionesMtcService.ocultarCargando();
@@ -168,16 +162,16 @@ export class HeaderComponent implements OnInit {
     this.funcionesMtcService.mostrarCargando();
 
     try {
-      const response = await this.tramiteService
-        .putVerificarVoucher<ResponseComunModel<string>>(objVoucherRequestModel)
-        .toPromise();
-      console.log(response);
+      // const response = await this.tramiteService
+      //   .putVerificarVoucher<ResponseComunModel<string>>(objVoucherRequestModel)
+      //   .toPromise();
+      //console.log(response);
       this.funcionesMtcService.ocultarCargando();
-      if (response.success) {
-        await this.funcionesMtcService.mensajeOk(response.message);
-      } else {
-        await this.funcionesMtcService.mensajeError(response.message);
-      }
+      // if (response.success) {
+      //   await this.funcionesMtcService.mensajeOk(response.message);
+      // } else {
+      //   await this.funcionesMtcService.mensajeError(response.message);
+      // }
     } catch (e) {
       console.log(e);
       this.funcionesMtcService.ocultarCargando();
@@ -238,12 +232,9 @@ export class HeaderComponent implements OnInit {
     this.funcionesMtcService.mostrarCargando();
     try {
       this.procedimientoSeleccionado = item;
-      const tiposSolicitud = await this.relacionTupasService.getTiposSolicitud<Array<TipoSolicitudModel>>(item.id).toPromise();
-      const requisitos = await this.relacionTupasService.getDetalleTupa<Array<RequisitoModel>>(item.id).toPromise();
-      console.log('tiposSolicitud: ', tiposSolicitud);
-      console.log('requisitos: ', requisitos);
+      
 
-      this.listadoTipoSolicitud = tiposSolicitud ?? [];
+   
 
       for (const tipoSol of this.listadoTipoSolicitud) {
         tipoSol.codigostr = tipoSol.codigo?.toString() ?? '';
@@ -266,7 +257,7 @@ export class HeaderComponent implements OnInit {
 
       this.tipoSolicitudSeleccionado = this.listadoTipoSolicitud[0];
       this.tipoSolicitudModel = this.tipoSolicitudSeleccionado.codigostr;
-      this.listadoDetalleTupa = requisitos;
+
       this.listadoDetalleTupaFilter = this.listadoDetalleTupa.filter(r => r.tipoSolicitud === this.tipoSolicitudModel || !r.tipoSolicitud);
       this.calcularOrden();
 
@@ -308,7 +299,7 @@ export class HeaderComponent implements OnInit {
 
   async poblarProcedimientos(): Promise<void> {
     try {
-      this.listadoProcedimientos = await this.tramiteService.getProcedimientos('', '').toPromise();
+      //this.listadoProcedimientos = await this.tramiteService.getProcedimientos('', '').toPromise();
       this.onChangeBuscarTupa();
     } catch (e) {
       this.funcionesMtcService.mensajeError('Error en el servicio de obtener los procedimientos');
@@ -385,9 +376,9 @@ export class HeaderComponent implements OnInit {
   gotoCasilla(event: any): void {
     event.preventDefault();
     //const urlIntegracionCasilla = this.casillaService.getUrlIntegracion();
-    const urlIntegracionCasilla = this.casillaService.getUrlLogin();
-    console.log('urlIntegracionCasilla: ', urlIntegracionCasilla);
-    window.location.href = urlIntegracionCasilla+"/#/auth/login?param="+sessionStorage.getItem("accessToken");
+    //const urlIntegracionCasilla = this.casillaService.getUrlLogin();
+    //console.log('urlIntegracionCasilla: ', urlIntegracionCasilla);
+    //window.location.href = urlIntegracionCasilla+"/#/auth/login?param="+sessionStorage.getItem("accessToken");
   }
 
   

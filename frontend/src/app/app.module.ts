@@ -12,7 +12,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 //COMPONENTES
 import { AppComponent } from './app.component';
-import { RelacionTupasComponent } from './pages/core/components/relacion-tupas/relacion-tupas.component';
 
 //SERVICIOS
 import { AddTokenInterceptor } from './helpers/add-token.interceptor';
@@ -21,14 +20,9 @@ import { FuncionesMtcService } from './core/services/funciones-mtc.service';
 // Import library module
 import { NgxSpinnerModule } from 'ngx-spinner';
 
-import { ReniecService } from './core/services/servicios/reniec.service';
-import { VehiculoService } from './core/services/servicios/vehiculo.service';
-import { ExtranjeriaService } from './core/services/servicios/extranjeria.service';
-import { MisTramitesComponent } from './pages/core/components/mis-tramites/mis-tramites.component';
 import { SharedModule } from './shared/shared.module';
 import { IndexComponent } from './pages/core/components/index/index.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
-import { RenatService } from './core/services/servicios/renat.service';
 
 import { CoreModule } from './core/core.module';
 import { EncuestasModule } from './modules/encuestas/encuestas.module';
@@ -45,12 +39,9 @@ import { RegistroEntradaComponent } from './pages/core/components/registro-entra
 @NgModule({
   declarations: [
     AppComponent,
-    RelacionTupasComponent,
-    MisTramitesComponent,
     IndexComponent,
-    InicioComponent,
     MisInventariosComponent,
-    RegistroEntradaComponent
+    RegistroEntradaComponent,
   ],
   imports: [
     NgSelectModule,
@@ -65,7 +56,6 @@ import { RegistroEntradaComponent } from './pages/core/components/registro-entra
     NgbModule,
     CoreModule,
     SharedModule,
-    EncuestasModule,
     RecaptchaModule,
     
     StoreModule.forRoot(ROOT_REDUCERS),
@@ -77,11 +67,7 @@ import { RegistroEntradaComponent } from './pages/core/components/registro-entra
       useClass: AddTokenInterceptor,
       multi: true,
     },
-    FuncionesMtcService,
-    ReniecService,
-    RenatService,
-    VehiculoService,
-    ExtranjeriaService,
+    FuncionesMtcService
   ],
   bootstrap: [AppComponent],
 })

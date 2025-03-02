@@ -2,15 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegistroUsuarioModel } from 'src/app/core/models/Autenticacion/RegistroUsuarioModel';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
-import { UbigeoService } from 'src/app/core/services/maestros/ubigeo.service';
 import { SeguridadService } from 'src/app/core/services/seguridad.service';
-import { ExtranjeriaService } from 'src/app/core/services/servicios/extranjeria.service';
-import { ReniecService } from 'src/app/core/services/servicios/reniec.service';
-import { SunatService } from 'src/app/core/services/servicios/sunat.service';
+
 import { CONSTANTES } from 'src/app/enums/constants';
-import { UbigeoComponent } from 'src/app/shared/components/forms/ubigeo/ubigeo.component';
 
 @Component({
   selector: 'app-mi-cuenta',
@@ -19,7 +14,7 @@ import { UbigeoComponent } from 'src/app/shared/components/forms/ubigeo/ubigeo.c
 })
 export class MiCuentaComponent implements OnInit {
 
-  @ViewChild('ubigeoCmp') ubigeoComponent: UbigeoComponent;
+  //@ViewChild('ubigeoCmp') ubigeoComponent: UbigeoComponent;
 
   registroFormGroup: UntypedFormGroup;
 
@@ -34,10 +29,6 @@ export class MiCuentaComponent implements OnInit {
     private seguridadService: SeguridadService,
     private router: Router,
     private funcionesMtcService: FuncionesMtcService,
-    private extranjeriaService: ExtranjeriaService,
-    private sunatService: SunatService,
-    private reniecService: ReniecService,
-    private ubigeoService: UbigeoService,
     private modalService: NgbModal,
   ) { }
 
@@ -116,11 +107,11 @@ export class MiCuentaComponent implements OnInit {
 
     submitBtn.disabled = true;
 
-    let model = this.mapModelPersona();
+    // let model = this.mapModelPersona();
 
-    model.persona.tipoPersona = this.tipoUsuario;
+    // model.persona.tipoPersona = this.tipoUsuario;
 
-    this.messageError = JSON.stringify(model);
+    // this.messageError = JSON.stringify(model);
 
     // try {
     //   const response = await this.seguridadService.postActualizar(model).toPromise();
@@ -135,46 +126,46 @@ export class MiCuentaComponent implements OnInit {
     // }
   }
 
-  mapModelPersona(): RegistroUsuarioModel {
-    const formValue = this.registroFormGroup.value;
-    let telefono: string;
-    if (formValue.datosUsuario.telFijoFormControl?.trim().length > 0) {
-      telefono = (formValue.datosUsuario.codTelFijoFormControl?.trim() ?? '') + formValue.datosUsuario.telFijoFormControl.trim();
-    }
-    let celular: string;
-    if (formValue.datosUsuario.celularFormControl?.trim().length > 0) {
-      celular = formValue.datosUsuario.celularFormControl.trim();
-    }
-    return {
-      usuario: {
-        email: formValue.datosUsuario.emailFormControl,
-      },
-      persona: {
-        direccion: formValue.datosUsuario.domicilioFormControl,
-        departamento: formValue.datosUsuario.depaFormControl,
-        provincia: formValue.datosUsuario.provFormControl,
-        distrito: formValue.datosUsuario.distFormControl,
-        celular,
-        telefono,
-        correoElectronico: formValue.datosUsuario.emailFormControl,
-        foto: this.usFoto,
-      },
-      empresa: {
-        direccion: formValue.datosEmpresa.direccionFormControl,
-        departamento: formValue.datosUsuario.depaFormControl,
-        provincia: formValue.datosUsuario.provFormControl,
-        distrito: formValue.datosUsuario.distFormControl,
-        celular,
-        telefono,
-        correoElectronico: formValue.datosEmpresa.emailFormControl,
-      },
-      repLegal: [{
-        direccion: formValue.datosUsuario.domicilioFormControl,
-        departamento: formValue.datosUsuario.depaFormControl,
-        provincia: formValue.datosUsuario.provFormControl,
-        distrito: formValue.datosUsuario.distFormControl,
-      }]
-    } as RegistroUsuarioModel;
-  }
+  // mapModelPersona(): RegistroUsuarioModel {
+  //   const formValue = this.registroFormGroup.value;
+  //   let telefono: string;
+  //   if (formValue.datosUsuario.telFijoFormControl?.trim().length > 0) {
+  //     telefono = (formValue.datosUsuario.codTelFijoFormControl?.trim() ?? '') + formValue.datosUsuario.telFijoFormControl.trim();
+  //   }
+  //   let celular: string;
+  //   if (formValue.datosUsuario.celularFormControl?.trim().length > 0) {
+  //     celular = formValue.datosUsuario.celularFormControl.trim();
+  //   }
+  //   return {
+  //     usuario: {
+  //       email: formValue.datosUsuario.emailFormControl,
+  //     },
+  //     persona: {
+  //       direccion: formValue.datosUsuario.domicilioFormControl,
+  //       departamento: formValue.datosUsuario.depaFormControl,
+  //       provincia: formValue.datosUsuario.provFormControl,
+  //       distrito: formValue.datosUsuario.distFormControl,
+  //       celular,
+  //       telefono,
+  //       correoElectronico: formValue.datosUsuario.emailFormControl,
+  //       foto: this.usFoto,
+  //     },
+  //     empresa: {
+  //       direccion: formValue.datosEmpresa.direccionFormControl,
+  //       departamento: formValue.datosUsuario.depaFormControl,
+  //       provincia: formValue.datosUsuario.provFormControl,
+  //       distrito: formValue.datosUsuario.distFormControl,
+  //       celular,
+  //       telefono,
+  //       correoElectronico: formValue.datosEmpresa.emailFormControl,
+  //     },
+  //     repLegal: [{
+  //       direccion: formValue.datosUsuario.domicilioFormControl,
+  //       departamento: formValue.datosUsuario.depaFormControl,
+  //       provincia: formValue.datosUsuario.provFormControl,
+  //       distrito: formValue.datosUsuario.distFormControl,
+  //     }]
+  //   } as RegistroUsuarioModel;
+  // }
 
 }

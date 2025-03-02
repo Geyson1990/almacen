@@ -2,10 +2,8 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, catchError, map, of } from 'rxjs';
-import { ComboGenerico } from 'src/app/core/models/Maestros/ComboGenerico';
 import { FormularioSolicitudDIA, ViasAccesoNueva } from 'src/app/core/models/Tramite/FormularioSolicitudDIA';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
-import { ExternoService } from 'src/app/core/services/servicios/externo.service';
 import { TableRow } from 'src/app/shared/components/table/interfaces/table.interface';
 
 @Component({
@@ -21,11 +19,10 @@ export class ViasAccesoNuevaComponent implements OnInit {
   @Input() edicion: ViasAccesoNueva;
   @Input() modoVisualizacion: boolean;
 
-  listaTipoVia: ComboGenerico[] = [];
+  //listaTipoVia: ComboGenerico[] = [];
   descripcionTipoVia: string = '';
 
   constructor(private builder: FormBuilder,
-    private externoService: ExternoService,
     private funcionesMtcService: FuncionesMtcService
   ) { }
 
@@ -99,8 +96,8 @@ export class ViasAccesoNuevaComponent implements OnInit {
   }
 
   updateDescripcion(value: string) {
-    const selectedTipo = this.listaTipoVia.find(item => item.codigo === parseInt(value));
-    this.descripcionTipoVia = selectedTipo ? selectedTipo.descripcion : '';
+    //const selectedTipo = this.listaTipoVia.find(item => item.codigo === parseInt(value));
+   // this.descripcionTipoVia = selectedTipo ? selectedTipo.descripcion : '';
   }
 
   private getData(): void {
@@ -138,22 +135,7 @@ export class ViasAccesoNuevaComponent implements OnInit {
   }
   
   private loadListas() {
-    this.comboTipoVia().subscribe(response => this.listaTipoVia = response);
-  }
-
-  private comboTipoVia(): Observable<ComboGenerico[]> {
-    this.funcionesMtcService.mostrarCargando();
-    return this.externoService.getComboTipoViaNueva().pipe(
-      map(response => {
-        this.funcionesMtcService.ocultarCargando();
-        return response.success ? response.data : [];
-      }),
-      catchError(error => {
-        this.funcionesMtcService.ocultarCargando();
-        console.error('Error en la solicitud:', error);
-        return of([]);
-      })
-    );
+    //this.comboTipoVia().subscribe(response => this.listaTipoVia = response);
   }
 
   soloNumeros(vent: KeyboardEvent, campo: string) {

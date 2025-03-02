@@ -6,24 +6,13 @@
 import { AfterViewInit, Component, Inject, LOCALE_ID, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray, FormControl } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {  TipoPersonaResponseModel } from 'src/app/core/models/Autenticacion/TipoPersonaResponseModel';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
 import { SeguridadService } from 'src/app/core/services/seguridad.service';
-import { ExtranjeriaService } from 'src/app/core/services/servicios/extranjeria.service';
-import { ReniecService } from 'src/app/core/services/servicios/reniec.service';
-import { SunatService } from 'src/app/core/services/servicios/sunat.service';
 import { CONSTANTES } from 'src/app/enums/constants';
 import { MustMatch } from 'src/app/helpers/functions';
 import { PasswordStrengthValidator } from 'src/app/helpers/validator';
-import { RegistroUsuarioModel } from '../../../../core/models/Autenticacion/RegistroUsuarioModel';
 import { AyudaModalComponent } from '../ayuda-modal/ayuda-modal.component';
-import { UbigeoComponent } from 'src/app/shared/components/forms/ubigeo/ubigeo.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { formatNumber, Location } from '@angular/common';
-import { OficinaRegistralService } from 'src/app/core/services/servicios/oficinaregistral.service';
-import { OficinaRegistralModel } from 'src/app/core/models/OficinaRegistralModel';
-import { PaisService } from 'src/app/core/services/maestros/pais.service';
-import { RepresentanteLegalModel } from 'src/app/core/models/Autenticacion/RepresentanteLegalModel';
 
 @Component({
   selector: 'app-registro',
@@ -32,13 +21,12 @@ import { RepresentanteLegalModel } from 'src/app/core/models/Autenticacion/Repre
 })
 export class RegistroComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('ubigeoCmp') ubigeoComponent: UbigeoComponent;
-  @ViewChildren('ubigeoRepLegalCmp') ubigeoRepLegalComponent: QueryList<UbigeoComponent>;
+
 
   validacionFG: UntypedFormGroup;
   registroFG: UntypedFormGroup;
 
-  listaTipoPersona: Array<TipoPersonaResponseModel>;
+
   listaOficinaRegistral: Array<any>;
   listaPaises: Array<any>;
   messageError: string;
@@ -56,11 +44,7 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     private formBuilder: UntypedFormBuilder,
     private seguridadService: SeguridadService,
     private funcionesMtcService: FuncionesMtcService,
-    private extranjeriaService: ExtranjeriaService,
-    private sunatService: SunatService,
-    private reniecService: ReniecService,
-    private oficinaRegistralService: OficinaRegistralService,
-    private paisService: PaisService,
+    
     private modalService: NgbModal,
     private router: Router,
     private route: ActivatedRoute,
@@ -244,32 +228,6 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     return (this.valTipoUsuarioFC?.value === CONSTANTES.CodTabTipoPersona.PERSONA_NATURAL_CON_RUC);
   }
 
-  async poblarTipoPersona(): Promise<void> {
-    try {
-      //this.listaTipoPersona = await this.seguridadService.getTipoPersonas().toPromise();
-      await this.seguridadService.getTipoPersonas().subscribe(res=>{
-				if(res.success) this.listaTipoPersona = res.data;
-			});
-    } catch (e) {
-      this.funcionesMtcService.mensajeError('Error en el servicio de obtener los tipos de persona');
-    }
-  }
-
-  async poblarOficinaRegistral(): Promise<void> {
-    try {
-      this.listaOficinaRegistral = await this.oficinaRegistralService.oficinaRegistral().toPromise();
-    } catch (e) {
-      this.funcionesMtcService.mensajeError('Error en el servicio de obtener las oficinas registrales');
-    }
-  }
-
-  async poblarPaises(): Promise<void> {
-    try {
-      this.listaPaises = await this.paisService.getAll<any>().toPromise();
-    } catch (e) {
-      this.funcionesMtcService.mensajeError('Error en el servicio de obtener los paises');
-    }
-  }
 
   onChangeTipoUsuario(): void {
     this.valTipoUsuarioFC.valueChanges.subscribe((tipoUsuario: string) => {
@@ -412,36 +370,7 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onChangeDNIUsuario(): void {
-    this.rduDniFC.valueChanges.subscribe(async (dni: string) => {
-      if (dni?.trim().length === 8) {
-        this.funcionesMtcService.mostrarCargando();
 
-        this.resetDatosUsuarioFormGroup();
-
-        try {
-          const response = await this.reniecService.getDni(dni).toPromise();
-          if (response.reniecConsultDniResponse.listaConsulta.coResultado !== '0000') {
-            return this.funcionesMtcService.mensajeError('Número de documento no registrado en Reniec');
-          }
-          const datosPersona = response.reniecConsultDniResponse.listaConsulta.datosPersona;
-
-          this.rduNombresFC.setValue(datosPersona.prenombres);
-          this.rduApPaternoFC.setValue(datosPersona.apPrimer);
-          this.rduApMaternoFC.setValue(datosPersona.apSegundo);
-          this.rduDomicilioFC.setValue(datosPersona.direccion);
-          this.usFoto = datosPersona.foto;
-
-          const vUbigeo = datosPersona.ubigeo.split('/', 3);
-          await this.ubigeoComponent.setUbigeoByText(vUbigeo[0], vUbigeo[1], vUbigeo[2]);
-        } catch (e) {
-          this.funcionesMtcService.mensajeError('Error en el servicio de obtener datos por DNI');
-        }
-
-        this.funcionesMtcService.ocultarCargando();
-      }
-    });
-  }
 
   onChangeCEUsuario(): void {
     this.rduCeFC.valueChanges.subscribe(async (ce: string) => {

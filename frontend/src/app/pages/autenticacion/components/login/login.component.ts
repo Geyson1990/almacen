@@ -5,12 +5,9 @@ import { UntypedFormGroup } from '@angular/forms';
 import { LoginRequestModel } from 'src/app/core/models/Autenticacion/LoginRequestModel';
 import { SeguridadService } from '../../../../core/services/seguridad.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TipoPersonaResponseModel } from '../../../../core/models/Autenticacion/TipoPersonaResponseModel';
 import { FuncionesMtcService } from '../../../../core/services/funciones-mtc.service';
 import { Location } from '@angular/common';
 import { exactLengthValidator, noWhitespaceValidator } from '../../../../helpers/validator';
-import { CasillaService } from '../../../../core/services/servicios/casilla.service';
-import { TipoDocumentoPersonaExtranjeraModel } from 'src/app/core/models/Autenticacion/TipoDocumentoPersonaExtranjeraModel';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -24,8 +21,6 @@ export class LoginComponent implements OnInit {
 
 	minLenghtApodo = 6;
 	dniCePlaceHolder = 'DNI/CE';
-	listaTipoPersona: Array<TipoPersonaResponseModel>;
-	listaTipoDocumentoPE: Array<TipoDocumentoPersonaExtranjeraModel>;
 	onlyNumber:boolean=true;
 
 	messageError: string;

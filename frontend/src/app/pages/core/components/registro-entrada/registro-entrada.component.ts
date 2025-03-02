@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginationModel } from 'src/app/core/models/Pagination';
 import { SeguridadService } from 'src/app/core/services/seguridad.service';
-import { TramiteService } from 'src/app/core/services/tramite/tramite.service';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { VisorPdfArchivosService } from 'src/app/core/services/tramite/visor-pdf-archivos.service';
-import { VistaPdfComponent } from 'src/app/shared/components/vista-pdf/vista-pdf.component';
 import { DatosUsuarioLogin } from 'src/app/core/models/Autenticacion/DatosUsuarioLogin';
-import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
 
 @Component({
@@ -39,7 +35,6 @@ export class RegistroEntradaComponent implements OnInit {
     private modalService: NgbModal,
     private funcionesMtcService: FuncionesMtcService,
     private route: Router,
-    private globalService: GlobalService
   ) {
     this.datosUsuarioLogin = new DatosUsuarioLogin();
     this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
@@ -91,7 +86,7 @@ export class RegistroEntradaComponent implements OnInit {
         denominacionEstado: item.denominacionEstado
       };
       localStorage.setItem("tramite-selected",JSON.stringify({codigo:item.codMaeTupa}));
-      this.globalService.setLastPage('mis-tramites'); 
+      //this.globalService.setLastPage('mis-tramites'); 
       this.route.navigate(['tramite-iniciado'], { queryParams: params });
     
   }

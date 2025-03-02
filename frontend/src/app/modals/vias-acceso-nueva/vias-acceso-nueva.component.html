@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
     </button>
 </div>
-<form (submit)="save(form)" [formGroup]="form">
+
     <div class="modal-body mat-typography">
         <div class="content-modal-flexible-none">
             <h3>VÍAS DE ACCESO NUEVA</h3>
@@ -56,4 +56,3 @@
             Cancel</button>
         <button *ngIf="viewControl" type="submit" class="mat-small"><i class="material-icons">save</i> Grabar</button>
     </div>
-</form>
