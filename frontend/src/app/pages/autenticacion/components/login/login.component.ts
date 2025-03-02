@@ -3,14 +3,11 @@ import { AbstractControl, MaxLengthValidator, Validators } from '@angular/forms'
 import { UntypedFormBuilder } from '@angular/forms';
 import { UntypedFormGroup } from '@angular/forms';
 import { LoginRequestModel } from 'src/app/core/models/Autenticacion/LoginRequestModel';
-import { CONSTANTES } from 'src/app/enums/constants';
 import { SeguridadService } from '../../../../core/services/seguridad.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TipoPersonaResponseModel } from '../../../../core/models/Autenticacion/TipoPersonaResponseModel';
 import { FuncionesMtcService } from '../../../../core/services/funciones-mtc.service';
 import { Location } from '@angular/common';
-import { SunatService } from '../../../../core/services/servicios/sunat.service';
-import { LoginSunatRequestModel } from 'src/app/core/models/Autenticacion/LoginSunatRequestModel';
 import { exactLengthValidator, noWhitespaceValidator } from '../../../../helpers/validator';
 import { CasillaService } from '../../../../core/services/servicios/casilla.service';
 import { TipoDocumentoPersonaExtranjeraModel } from 'src/app/core/models/Autenticacion/TipoDocumentoPersonaExtranjeraModel';
@@ -42,7 +39,6 @@ export class LoginComponent implements OnInit {
 		private formBuilder: UntypedFormBuilder,
 		private seguridadService: SeguridadService,
 		private funcionesMtcService: FuncionesMtcService,
-		private casillaService: CasillaService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private location: Location
@@ -61,29 +57,9 @@ export class LoginComponent implements OnInit {
 
 	}
 
+	//Obtener los valores de las cajas de texto.
 	get dniCeFormControl(): AbstractControl { return this.loginFormGroup.get('dniCeFormControl'); }
 	get passwordFormControl(): AbstractControl { return this.loginFormGroup.get('passwordFormControl'); }
-
-	// get urlRegistroCasilla(): string { return this.casillaService.getUrlRegistro(); }
-	// get urlRecuperarPassCasilla(): string { return this.casillaService.getUrlRecuperarPass(); }
-
-	// async poblarTipoPersona(): Promise<void> {
-	// 	try {
-	// 		//debugger;
-	// 		await this.seguridadService.getTipoPersonas().subscribe(res => {
-				
-	// 			if (res.success) this.listaTipoPersona = res.data;
-	// 		});
-	// 	} catch (e) {
-	// 		this.messageError = 'Error en el servicio de obtener los tipos de persona';
-	// 	}
-	// }
-
-
-	resolved(captchaResponse: string) {
-		console.log(`Resolved captcha with response: ${captchaResponse}`);
-		this.captchaResponse = captchaResponse;
-	}
 
 	async submitLogin(formValue: any, submitBtn: HTMLButtonElement): Promise<void> {
 		if (!this.loginFormGroup.valid) {
@@ -100,8 +76,9 @@ export class LoginComponent implements OnInit {
 		} as LoginRequestModel;
 
 		try {
+			debugger;
 			const response = await this.seguridadService.postLogin(model).toPromise();
-
+debugger;
 			if (response.success) {
 				sessionStorage.setItem('usuario', JSON.stringify(response.data));
 				sessionStorage.setItem('accessToken', response.data.accessToken);

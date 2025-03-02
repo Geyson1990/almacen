@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrlAPI: 'http://172.25.3.108:8081/ms-administrado',
+  baseUrlAPI: 'http://localhost:8092/api',
   
   baseUrlTramiteAPI: 'http://172.25.3.108:8081/ms-administrado', 
   baseUrlSeguridadAPI: 'http://172.25.3.108:8081/ms-seguridad',
@@ -11,6 +11,7 @@ export const environment = {
   baseUrServicioExternoAPI: 'http://172.25.3.108:8081/ms-externo',
 
   endPoint: {
+    listarInventario: '/Inventario/listar-inventario',
     anexo: '/Anexo',
     anexoTramite: '/Anexo/tramite',
     formularioTramite: '/Formulario/tramite',
@@ -32,7 +33,7 @@ export const environment = {
     },
     autenticacion: {
       autenticacion: '/Autenticacion/jwt',
-      login: '/auth/login',
+      login: '/Autenticacion/login',
       registrar: '/Autenticacion/registrar',
       logout: '/Autenticacion/logout',
       recuperarpass: '/Autenticacion/recuperarpass',

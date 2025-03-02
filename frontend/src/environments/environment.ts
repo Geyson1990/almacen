@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  baseUrlAPI: 'https://localhost:7241/api', //'http://192.168.251.156:7777/api',
-  baseUrlLocal: 'https://localhost:7241/api',
+  baseUrlAPI: 'https://localhost:7105/api', //'http://192.168.251.156:7777/api',
+  baseUrlLocal: 'https://localhost:7105/api',
   
   baseUrlTramiteAPI: 'https://localhost:7241/api',
   baseUrlSeguridadAPI: 'http://172.25.3.108:8081/ms-seguridad',

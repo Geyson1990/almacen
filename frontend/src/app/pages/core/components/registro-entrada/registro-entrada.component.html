@@ -41,6 +41,7 @@
                 <thead class="bg-secondary text-white text-center">
                     <tr class="align-self-center">
                         <th class="align-middle text-center">Nro.</th>
+                        <th class="align-middle">Fecha</th>
                         <th class="align-middle text-nowrap">Producto</th>
                         <th class="align-middle">Material</th>
                         <th class="align-middle">Color</th>
@@ -50,27 +51,24 @@
                         <th class="align-middle">Marca</th>
                         <th class="align-middle">Unidad de Medida</th>
                         <th class="align-middle">Cantidad</th>
-                        <th class="align-middle">Estado de<br>Stock</th>
                         <th class="align-middle">F. Vencimiento</th>
-                        <th class="align-middle">Estado de <br>Vencimiento</th>
                         <th class="align-middle">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of listadoBandeja  | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize ">
                         <td class="align-middle text-center text-bold">{{ item.registro }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.nombre }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.material }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.color }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.talla }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.tipo }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.medidas }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.marca }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.nombreUnidadMedida }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.cantidad }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.estadoStock }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.fechaVencimiento | date:'dd/MM/yyyy' }}</td>
-                        <td class="align-middle text-center text-bold">{{ item.estado }}</td>
+                        <td class="align-middle text-center">{{ item.nombre }}</td>
+                        <td class="align-middle text-center">{{ item.nombre }}</td>
+                        <td class="align-middle text-center">{{ item.material }}</td>
+                        <td class="align-middle text-center">{{ item.color }}</td>
+                        <td class="align-middle text-center">{{ item.talla }}</td>
+                        <td class="align-middle text-center">{{ item.tipo }}</td>
+                        <td class="align-middle text-center">{{ item.medidas }}</td>
+                        <td class="align-middle text-center">{{ item.marca }}</td>
+                        <td class="align-middle text-center">{{ item.nombreUnidadMedida }}</td>
+                        <td class="align-middle text-center">{{ item.cantidad }}</td>
+                        <td class="align-middle text-center">{{ item.fechaVencimiento | date:'dd/MM/yyyy' }}</td>
                         <td class="align-middle text-center">
                             <button class="btn btn-sm btn-primary" (click)="onEdit(item)">
                                 <i class="fas fa-edit"></i> 

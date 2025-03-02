@@ -293,7 +293,7 @@ export class HeaderComponent implements OnInit {
   }
 
   calcularOrden(): void {
-    let nuevoOrden = 0;
+    let nuevoOrden: number = 0;
     for (const requisito of this.listadoDetalleTupaFilter) {
       const { auxOrden: orden } = requisito;
       if (nuevoOrden !== orden) {
