@@ -129,13 +129,10 @@ export class RegistroComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    await this.poblarTipoPersona();
-    await this.poblarOficinaRegistral();
-    await this.poblarPaises();
+
 
     this.onChangeTipoUsuario();
     this.onChangeTipoDoc();
-    this.onChangeDNIUsuario();
     this.onChangeCEUsuario();
     this.onChangeParams();
 
@@ -373,27 +370,7 @@ export class RegistroComponent implements OnInit, AfterViewInit {
 
 
   onChangeCEUsuario(): void {
-    this.rduCeFC.valueChanges.subscribe(async (ce: string) => {
-      if (ce?.trim().length === 9) {
-        this.funcionesMtcService.mostrarCargando();
-
-        this.resetDatosUsuarioFormGroup();
-
-        try {
-          const response = await this.extranjeriaService.getCE(ce).toPromise();
-          if (response.CarnetExtranjeria.numRespuesta !== '0000') {
-            return this.funcionesMtcService.mensajeError('Número de documento no registrado en Migraciones');
-          }
-          const datosPersona = response.CarnetExtranjeria;
-          this.rduNombresFC.setValue(datosPersona.nombres);
-          this.rduApPaternoFC.setValue(datosPersona.primerApellido);
-          this.rduApMaternoFC.setValue(datosPersona.segundoApellido);
-        } catch (e) {
-          this.funcionesMtcService.mensajeError('Error en el servicio de obtener datos CE');
-        }
-        this.funcionesMtcService.ocultarCargando();
-      }
-    });
+   
   }
 
   onChangeParams(): void {
@@ -406,114 +383,15 @@ export class RegistroComponent implements OnInit, AfterViewInit {
   }
 
   async buscarPCE(btnSubmit: HTMLButtonElement): Promise<void> {
-    btnSubmit.disabled = true;
-    this.funcionesMtcService.mostrarCargando();
-
-    try {
-      const response = await this.extranjeriaService.getCE(this.vpjCeFC.value).toPromise();
-
-      if (response.CarnetExtranjeria.numRespuesta !== '0000') {
-        return this.funcionesMtcService.mensajeError('Número de documento no registrado en Migraciones');
-      }
-
-      this.rduCeFC.setValue(this.vpjCeFC.value, { emitEvent: false });
-
-      const datosPersona = response.CarnetExtranjeria;
-      this.rduNombresFC.setValue(datosPersona.nombres);
-      this.rduApPaternoFC.setValue(datosPersona.primerApellido);
-      this.rduApMaternoFC.setValue(datosPersona.segundoApellido);
-
-      this.valPerExtFG.disable({ emitEvent: false });
-
-      this.mostrarSegundoForm = true;
-    } catch (e) {
-      this.funcionesMtcService.mensajeError('Error en el servicio de obtener datos CE');
-    } finally {
-      btnSubmit.disabled = false;
-      this.funcionesMtcService.ocultarCargando();
-    }
+    
   }
 
   loginOauthSunat(btnSubmit: HTMLButtonElement): void {
-    btnSubmit.disabled = true;
-    this.funcionesMtcService.mostrarCargando();
-
-    const idTipoPersona = CONSTANTES.CodTabTipoPersona.PERSONA_JURIDICA;
-
-    const urlTree = this.router.createUrlTree(['/autenticacion/registro']);
-    const path = this.location.prepareExternalUrl(urlTree.toString());
-    const urlRedirect = `${window.location.origin}/${path}`;
-
-    const encodedUrlRedirect = encodeURIComponent(urlRedirect);
-
-    const url = this.sunatService.getUrlOauth(idTipoPersona, encodedUrlRedirect);
-    window.location.href = url;
+   
   }
 
   async loadDataPerJur(): Promise<void> {
-    if (this.paramState && this.paramCode) {
-      const isTokenValid = this.seguridadService.isTokenValid(this.paramCode);
-
-      // TODO: Descomentar en produccion
-
-      // if (!isTokenValid) {
-      //   this.router.navigate(['/autenticacion/registro']);
-      //   return;
-      // }
-
-      const decodeToken = this.seguridadService.getDecodedToken(this.paramCode);
-      if (!decodeToken) {
-        this.funcionesMtcService.mensajeError('El token de respuesta no es válido, inicie sesión nuevamente');
-        this.router.navigate(['/autenticacion/registro']);
-        return;
-      }
-      const numRuc: string = decodeToken.userdata?.numRUC ?? null;
-      if (!numRuc) {
-        this.funcionesMtcService.mensajeError('No se pudo obtener el numero de RUC');
-        this.router.navigate(['/autenticacion/registro']);
-        return;
-      }
-
-      this.funcionesMtcService.mostrarCargando();
-
-      try {
-        const response = await this.sunatService.getDatosPrincipales(numRuc).toPromise();
-        if (response) {
-          const codIniRuc = numRuc.substr(0, 2);
-          if (codIniRuc === '10') {
-            this.valTipoUsuarioFC.setValue(CONSTANTES.CodTabTipoPersona.PERSONA_NATURAL_CON_RUC);
-
-            this.vpjRazonSocialFC.setValue(response.razonSocial);
-            this.mostrarSegundoForm = true;
-
-            this.rduRucFC.setValue(numRuc);
-
-            const numDNI = numRuc.substr(2, 8);
-            this.rduDniFC.setValue(numDNI);
-          }
-          else {
-            this.valTipoUsuarioFC.setValue(CONSTANTES.CodTabTipoPersona.PERSONA_JURIDICA);
-
-            this.vpjRazonSocialFC.setValue(response.razonSocial);
-            this.mostrarSegundoForm = true;
-
-            this.rdeDireccionFC.setValue(response.domicilioLegal);
-            this.rdeEmailFC.setValue(response.correo);
-            this.rdeCelularFC.setValue(isNaN(Number(response.celular)) ? '' : response.celular);
-            this.rdeTelefonoFC.setValue(isNaN(Number(response.telefono)) ? '' : response.telefono);
-          }
-
-          this.vpjRazonSocialFC.disable({ emitEvent: false });
-        }
-        else {
-          this.funcionesMtcService.mensajeError('No se pudo obtener el numero de RUC');
-        }
-      } catch (e) {
-        this.funcionesMtcService.mensajeError('Error en el servicio de obtener datos de la SUNAT');
-      } finally {
-        this.funcionesMtcService.ocultarCargando();
-      }
-    }
+    
   }
 
   async validaPN(btnSubmit: HTMLButtonElement, dni: string, nombres: string, estadoCivil: string, ubigeo: string): Promise<number> {
