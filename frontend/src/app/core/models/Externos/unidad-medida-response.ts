@@ -1,4 +1,4 @@
-export interface UnidadMedidaResponse {
-    idUnidadMedida: number;
-    descripcion: string;
-}
+// export interface UnidadMedidaResponse {
+//     idUnidadMedida: number;
+//     descripcion: string;
+// }

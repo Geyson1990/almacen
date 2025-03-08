@@ -7,5 +7,8 @@ namespace almacen.Repositories.Inventario
     public interface IInventarioRepository
     {
         Task<StatusResponse<IEnumerable<ListarInventarioResponse>>> GetAll();
+        Task<StatusResponse<IEnumerable<ListarUnidadesMedidaResponse>>> ListarUnidadesMedida();
+        Task<StatusResponse<long>> GrabarProductos(GrabarProductoRequest request);
+        Task<StatusResponse<long>> InsertarStockInicial(GrabarStockInicialRequest request);
     }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, Valid
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, catchError, map, of } from 'rxjs';
 import { InsumoResponse } from 'src/app/core/models/Externos/insumo-response';
-import { UnidadMedidaResponse } from 'src/app/core/models/Externos/unidad-medida-response';
+import { UnidadMedidaResponse } from 'src/app/core/models/Inventario/Producto';
 import { FormularioSolicitudDIA, Insumos, Mineral } from 'src/app/core/models/Tramite/FormularioSolicitudDIA';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
 import { ExternoService } from 'src/app/core/services/servicios/externo.service';
@@ -108,7 +108,7 @@ export class InsumosComponent implements OnInit {
 
   updateUnidadMedidaDescripcion(value: string) {
     const selectedRecurso = this.listaUnidadMedida.find(item => item.idUnidadMedida === parseInt(value));
-    this.descripcionUnidadMedida = selectedRecurso ? selectedRecurso.descripcion : '';
+    this.descripcionUnidadMedida = selectedRecurso ? selectedRecurso.nombre : '';
   }
 
   save(form: FormGroup) { 

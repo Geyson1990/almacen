@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PaginationModel } from 'src/app/core/models/Pagination';
 import { SeguridadService } from 'src/app/core/services/seguridad.service';
 import { TramiteService } from 'src/app/core/services/tramite/tramite.service';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { VisorPdfArchivosService } from 'src/app/core/services/tramite/visor-pdf-archivos.service';
 import { VistaPdfComponent } from 'src/app/shared/components/vista-pdf/vista-pdf.component';
 import { DatosUsuarioLogin } from 'src/app/core/models/Autenticacion/DatosUsuarioLogin';
 import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
+import { NuevoProductoComponent } from 'src/app/modals/nuevo-producto/nuevo-producto.component';
 
 @Component({
   selector: 'app-mis-inventarios',
@@ -17,6 +18,7 @@ import { InventarioService } from '../../../../core/services/inventario/inventar
   styleUrls: ['./mis-inventarios.component.css']
 })
 export class MisInventariosComponent implements OnInit {
+private modalService = inject(NgbModal);
 
   tipoPersona: string;
   tipoDocumento: string;
@@ -27,16 +29,16 @@ export class MisInventariosComponent implements OnInit {
   datosUsuarioLogin: DatosUsuarioLogin;
   listadoBandejaBase = [];
   listadoBandeja = [];
-  BandejaSize=1;
+  BandejaSize = 1;
   page = 1;
   pageSize = 50;
-  filtrarTexto: string="";
-  filtrarEstado: string="ALL";
+  filtrarTexto: string = "";
+  filtrarEstado: string = "ALL";
 
   constructor(
     private seguridadService: SeguridadService,
     private inventarioService: InventarioService,
-    private modalService: NgbModal,
+    //private modalService: NgbModal,
     private funcionesMtcService: FuncionesMtcService,
     private route: Router,
     private globalService: GlobalService
@@ -52,7 +54,7 @@ export class MisInventariosComponent implements OnInit {
   }
 
 
-  
+
 
   cargarBandeja() {
 
@@ -71,11 +73,11 @@ export class MisInventariosComponent implements OnInit {
     );
   }
 
-  
+
   irTramiteIniciado(item) {
     console.log(item);
-    localStorage.setItem("tramite-id",item.codMaeSolicitud);
-    localStorage.setItem("tupa-id",item.codIdMaeTupa);
+    localStorage.setItem("tramite-id", item.codMaeSolicitud);
+    localStorage.setItem("tupa-id", item.codIdMaeTupa);
     localStorage.setItem("tramite-solicitud", item.numSTD);
 
     // this.TramiteService.getTupa(item.tupaId).subscribe(
@@ -85,23 +87,45 @@ export class MisInventariosComponent implements OnInit {
     //   }
     // );
 
-   
-      const params = {
-        codigoTupa: item.codMaeTupa,
-        denominacionEstado: item.denominacionEstado
-      };
-      localStorage.setItem("tramite-selected",JSON.stringify({codigo:item.codMaeTupa}));
-      this.globalService.setLastPage('mis-tramites'); 
-      this.route.navigate(['tramite-iniciado'], { queryParams: params });
-    
+
+    const params = {
+      codigoTupa: item.codMaeTupa,
+      denominacionEstado: item.denominacionEstado
+    };
+    localStorage.setItem("tramite-selected", JSON.stringify({ codigo: item.codMaeTupa }));
+    this.globalService.setLastPage('mis-tramites');
+    this.route.navigate(['tramite-iniciado'], { queryParams: params });
+
   }
 
   refreshCountries(pagination: PaginationModel) {
   }
 
-  onChangeFilterByState(){}
-  onChangeFilter(event: any){}
-  onNuevo(){}
+  onChangeFilterByState() { }
+  onChangeFilter(event: any) { }
+  onNuevo() {
+    const modalOptions: NgbModalOptions = {
+      size: 'lg',
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title',
+      // beforeDismiss: () => {
+      //   return this.beforeCloseModal();
+      // }
+    };
+
+    const modalRef = this.modalService.open(NuevoProductoComponent, modalOptions);
+    modalRef.componentInstance.title = "Nuevo producto";
+    modalRef.componentInstance.id = 0;
+
+    modalRef.result.then(
+      (result) => {// Maneja el resultado aquí
+        this.cargarBandeja();
+      },
+      (reason) => {// Maneja la cancelación aquí
+        console.log('Modal fue cerrado sin resultado:', reason);
+      });
+  }
+}
 
   // verExpedientePDF(item){
   //   //this.funcionesMtcService.mostrarCargando();
@@ -123,7 +147,7 @@ export class MisInventariosComponent implements OnInit {
   //     );
   // }
 
-  
+
 
   // anulaTramite(item){
   //   debugger;
@@ -157,5 +181,5 @@ export class MisInventariosComponent implements OnInit {
   // irEncuesta(idEncuesta: number, codigoIdentificador: string){
   //   this.route.navigate(['encuesta/form', idEncuesta, codigoIdentificador]);
   // }
-}
+
 

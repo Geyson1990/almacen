@@ -21,13 +21,13 @@ import { FuenteAguaResponse } from '../../models/Externos/fuente-agua-response';
 import { ZonaResponse } from '../../models/Externos/zona-response';
 import { DatumResponse } from '../../models/Externos/datum-response';
 import { InsumoResponse } from '../../models/Externos/insumo-response';
-import { UnidadMedidaResponse } from '../../models/Externos/unidad-medida-response';
 import { GenerarEstudio } from '../../models/Externos/Estudio';
 import { SubTipoPasivoResponse, TipoPasivoResponse } from '../../models/Externos/tipo-pasivo';
 import { UnidadMinera } from '../../models/Externos/UnidadMinera';
 import { AreasNaturalesProtegidas } from '../../models/Externos/areas-protegidas';
 import { DatosGeneralesEmpresa, DerechosMineros, RepresentanteAcreditado } from '../../models/Tramite/FormularioSolicitudDIA';
 import { UbicacionGeograficaResponse } from '../../models/Externos/ubicacion-geografica';
+import { UnidadMedidaResponse } from '../../models/Inventario/Producto';
 @Injectable({
     providedIn: 'root'
 })

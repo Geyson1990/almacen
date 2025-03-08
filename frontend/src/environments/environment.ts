@@ -15,7 +15,8 @@ export const environment = {
 
   endPoint: {
     listarInventario: '/Inventario/listar-inventario',
-
+    listarUnidadesMedida: '/Inventario/listar-unidades-medida',
+    grabarProductos: '/Inventario/grabar-productos',
 
 
     anexo: '/Anexo',
