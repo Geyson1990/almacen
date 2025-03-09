@@ -10,6 +10,7 @@ import { VistaPdfComponent } from 'src/app/shared/components/vista-pdf/vista-pdf
 import { DatosUsuarioLogin } from 'src/app/core/models/Autenticacion/DatosUsuarioLogin';
 import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
+import { IngresoService } from 'src/app/core/services/inventario/ingreso.service';
 
 @Component({
   selector: 'app-registro-entrada',
@@ -39,7 +40,8 @@ export class RegistroEntradaComponent implements OnInit {
     private modalService: NgbModal,
     private funcionesMtcService: FuncionesMtcService,
     private route: Router,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private ingresoService: IngresoService
   ) {
     this.datosUsuarioLogin = new DatosUsuarioLogin();
     this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
@@ -57,7 +59,7 @@ export class RegistroEntradaComponent implements OnInit {
   cargarBandeja() {
 
     this.funcionesMtcService.mostrarCargando();
-    this.inventarioService.getAll().subscribe(
+    this.ingresoService.getAll().subscribe(
       (resp: any) => {
         this.funcionesMtcService.ocultarCargando();
         this.listadoBandejaBase = resp.data;
@@ -102,60 +104,5 @@ export class RegistroEntradaComponent implements OnInit {
   onChangeFilterByState(){}
   onChangeFilter(event: any){}
   onNuevo(){}
-
-  // verExpedientePDF(item){
-  //   //this.funcionesMtcService.mostrarCargando();
-  //   console.log(item.docExpediente);
-  //   this.visorPdfArchivosService.get(item.docExpediente)
-  //     .subscribe(
-  //       (file: Blob) => {
-  //         this.funcionesMtcService.ocultarCargando();
-  //         const modalRef = this.modalService.open(VistaPdfComponent, { size: 'xl', scrollable: true });
-  //         const urlPdf = URL.createObjectURL(file);
-  //         modalRef.componentInstance.pdfUrl = urlPdf;
-  //         modalRef.componentInstance.titleModal = "Vista Previa Expediente [ " + item.numSTD + " ]";
-  //       },
-  //       error => {
-  //         this.funcionesMtcService
-  //           .ocultarCargando()
-  //           .mensajeError('Problemas para descargar Pdf');
-  //       }
-  //     );
-  // }
-
-  
-
-  // anulaTramite(item){
-  //   debugger;
-  //   this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de Anular su expediente? \n`)
-  //       .then(() => {
-  //         console.log("Anular expediente: "+item.id);
-
-  //         this.funcionesMtcService.mostrarCargando();
-  //         this.TramiteService.putAnular({codMaeSolicitud: item.codMaeSolicitud})
-  //         .subscribe(
-  //           resp => {
-  //             debugger;
-  //             if(resp.data > 0){
-  //               this.funcionesMtcService.mensajeOk("Se anuló el expediente "+item.numSTD);
-  //             }else{
-  //               this.funcionesMtcService.mensajeError("No se anuló el expediente");
-  //             }
-  //             this.modalService.dismissAll();
-  //             this.cargarBandeja();
-  //           },
-  //           error => {
-  //             this.funcionesMtcService.mensajeError("Ocurrio un problema al grabar URL");
-  //           },
-  //           () => this.funcionesMtcService.ocultarCargando()
-  //         );
-
-  //        });
-  // }
-
-
-  // irEncuesta(idEncuesta: number, codigoIdentificador: string){
-  //   this.route.navigate(['encuesta/form', idEncuesta, codigoIdentificador]);
-  // }
 }
 

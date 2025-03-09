@@ -20,6 +20,13 @@ export const environment = {
     obtenerProducto: '/Inventario/obtener-producto',
     eliminarProducto: '/Inventario/eliminar-producto',
 
+
+    listarIngreso: '/Ingreso/listar-ingreso',
+
+
+
+
+
     anexo: '/Anexo',
     anexoTramite: '/Anexo/tramite',
     formularioTramite: '/Formulario/tramite',

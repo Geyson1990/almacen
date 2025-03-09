@@ -58,7 +58,7 @@
                 <tbody>
                     <tr *ngFor="let item of listadoBandeja  | slice : (page-1) * pageSize : (page-1) * pageSize + pageSize ">
                         <td class="align-middle text-center text-bold">{{ item.registro }}</td>
-                        <td class="align-middle text-center">{{ item.nombre }}</td>
+                        <td class="align-middle text-center">{{ item.fecha | date:'dd/MM/yyyy'}}</td>
                         <td class="align-middle text-center">{{ item.nombre }}</td>
                         <td class="align-middle text-center">{{ item.material }}</td>
                         <td class="align-middle text-center">{{ item.color }}</td>
