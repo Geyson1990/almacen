@@ -4,6 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
 import { ProductosRequest, UnidadMedidaResponse } from 'src/app/core/models/Inventario/Producto';
 import { InventarioService } from 'src/app/core/services/inventario/inventario.service';
+import { IngresoService } from 'src/app/core/services/inventario/ingreso.service';
+import { IngresoRequest } from 'src/app/core/models/Inventario/Ingreso';
 
 @Component({
   selector: 'app-nuevo-ingreso',
@@ -23,20 +25,19 @@ export class NuevoIngresoComponent implements OnInit {
   constructor(private builder: FormBuilder,
     private inventarioService: InventarioService,
     private funcionesMtcService: FuncionesMtcService,
+    private ingresoService: IngresoService
   ) { }
 
   ngOnInit(): void {
     this.buildForm();
     this.loadAllProducts();
     this.loadListas();
-    this.getData();
+    //this.getData();
     
-    //this.habilitarControles();
   }
 
   private loadAllProducts(): void {
     this.inventarioService.getAll().subscribe(response => {
-      debugger;
       this.allProducts = response.data as any[];
     });
   }
@@ -44,22 +45,12 @@ export class NuevoIngresoComponent implements OnInit {
   private buildForm(): void {
     this.form = this.builder.group({
       nombre: ["", Validators.required],
-      //fecha: ["", Validators.required],
+      idProducto: [""],
       cantidad: ["", Validators.required]
     });
   }
 
   //#region Validaciones
-
-  // get fecha() {
-  //   return this.form.get('fecha') as FormControl;
-  // }
-
-  // get fechaErrors() {
-  //   return (this.fecha.touched || this.fecha.dirty) && this.fecha.hasError('required')
-  //     ? 'Obligatorio'
-  //     : '';
-  // }
 
   get nombre() {
     return this.form.get('nombre') as FormControl;
@@ -85,21 +76,21 @@ export class NuevoIngresoComponent implements OnInit {
 
   private getData(): void {
 
-    this.inventarioService.obtenerProducto(this.id).subscribe(
-      (resp: any) => {
-        this.funcionesMtcService.ocultarCargando();
-        this.data = resp.data;
-        this.form.patchValue(this.data);
+    // this.inventarioService.obtenerProducto(this.id).subscribe(
+    //   (resp: any) => {
+    //     this.funcionesMtcService.ocultarCargando();
+    //     this.data = resp.data;
+    //     this.form.patchValue(this.data);
 
-        setTimeout(() => {
-          this.form.patchValue({ idUnidadMedida: this.data.idUnidadMedida });
-        }, 1000);
-      },
-      error => {
-        this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
-        this.funcionesMtcService.ocultarCargando();
-      }
-    );
+    //     setTimeout(() => {
+    //       this.form.patchValue({ idUnidadMedida: this.data.idUnidadMedida });
+    //     }, 1000);
+    //   },
+    //   error => {
+    //     this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
+    //     this.funcionesMtcService.ocultarCargando();
+    //   }
+    // );
   }
 
   save(form: FormGroup) {
@@ -107,32 +98,24 @@ export class NuevoIngresoComponent implements OnInit {
       this.funcionesMtcService.mensajeWarn('Complete los campos requeridos');
       return;
     }
-debugger;
-    const datos: ProductosRequest = {
-      idProducto: this.id,
-      nombre: this.form.get('nombre').value,
-      material: this.form.get('material').value,
-      color: this.form.get('color').value,
-      talla: this.form.get('talla').value,
-      tipo: this.form.get('tipo').value,
-      medida: this.form.get('medida').value,
-      marca: this.form.get('marca').value,
-      idUnidadMedida: this.form.get('idUnidadMedida').value,
-      fechaVencimiento: this.form.get('fechaVencimiento').value,
-      stockInicial: this.form.get('stockInicial').value,
-      stockMinimo: this.form.get('stockMinimo').value,
+    
+    const datos: IngresoRequest = {
+      idEntrada: this.id,
+      idProducto: this.form.get('idProducto').value,
+      cantidad: this.form.get('cantidad').value,
+      fecha: null
     }
 
-    this.inventarioService.postGrabarProducto(datos).subscribe(
+    this.ingresoService.postGrabarIngreso(datos).subscribe(
       (resp: any) => {
         this.funcionesMtcService.ocultarCargando();
       if (resp.success)
-        this.funcionesMtcService.ocultarCargando().mensajeOk('Se grabó el producto').then(() => this.closeDialog());
+        this.funcionesMtcService.ocultarCargando().mensajeOk('Se grabó el registro').then(() => this.closeDialog());
       else
-        this.funcionesMtcService.ocultarCargando().mensajeError('No se grabó el producto');
+        this.funcionesMtcService.ocultarCargando().mensajeError('No se grabó el registro');
       },
       error => {
-        this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
+        this.funcionesMtcService.mensajeError('No se pudo cargar el registro');
         this.funcionesMtcService.ocultarCargando();
       }
     );
@@ -150,7 +133,6 @@ debugger;
   private loadListas() {
     this.inventarioService.getUnidadesMedida().subscribe(response => {
       this.listaUnidadMedida = response.data;
-      debugger;
     });
   }
 
@@ -168,6 +150,7 @@ debugger;
 
   onOptionSelected(option: any): void {
     this.form.get('nombre').setValue(option.nombre);
+    this.form.get('idProducto').setValue(option.id);
     this.filteredOptions = [];
   }
 

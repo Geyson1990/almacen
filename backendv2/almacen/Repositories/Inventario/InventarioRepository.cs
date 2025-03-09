@@ -157,12 +157,14 @@ namespace almacen.Repositories.Inventario
                 string sql = @"INSERT INTO [dbo].[registro_entrada]
                                    ([FECHA]
                                    ,[ID_PRODUCTO]
-                                   ,[CANTIDAD])
+                                   ,[CANTIDAD]
+                                   ,ESTADO_REGISTRO)
                             OUTPUT INSERTED.ID_ENTRADA
                              VALUES
                                    (GETDATE()
                                    ,@ID_PRODUCTO
-                                   ,@CANTIDAD)";
+                                   ,@CANTIDAD
+                                    , 1)";
 
                 var param = new DynamicParameters();
                 param.Add("@ID_PRODUCTO", request.idProducto);

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../../models/api-response';
 import { EliminarProductoRequest, ProductosRequest, UnidadMedidaResponse } from '../../models/Inventario/Producto';
+import { IngresoRequest } from '../../models/Inventario/Ingreso';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class IngresoService {
 
   constructor(private httpClient: HttpClient) {
     this.urlListarIngreso = `${environment.baseUrlAPI}${environment.endPoint.listarIngreso}`;
-    // this.urlGrabarIngreso = `${environment.baseUrlAPI}${environment.endPoint.grabarProductos}`;
+    this.urlGrabarIngreso = `${environment.baseUrlAPI}${environment.endPoint.grabarIngreso}`;
     // this.urlObtenerIngreso = `${environment.baseUrlAPI}${environment.endPoint.obtenerProducto}`;
     // this.urlEliminarIngreso = `${environment.baseUrlAPI}${environment.endPoint.eliminarProducto}`;
   }
@@ -32,9 +33,9 @@ export class IngresoService {
   //   return this.httpClient.get<ApiResponse<UnidadMedidaResponse[]>>(`${this.urlListarUnidadesMedida}`);
   // }
 
-  // postGrabarProducto<T>(data: ProductosRequest): Observable<ApiResponse<T>> {
-  //   return this.httpClient.post<ApiResponse<T>>(`${this.urlGrabarProductos}`, data);
-  // }
+  postGrabarIngreso<T>(data: IngresoRequest): Observable<ApiResponse<T>> {
+    return this.httpClient.post<ApiResponse<T>>(`${this.urlGrabarIngreso}`, data);
+  }
 
   // obtenerProducto<T>(id: number): Observable<ApiResponse<T>> {
   //   return this.httpClient.get<ApiResponse<T>>(`${this.urlObtenerProducto}`,{

@@ -22,8 +22,7 @@ export const environment = {
 
 
     listarIngreso: '/Ingreso/listar-ingreso',
-
-
+    grabarIngreso: '/Ingreso/grabar-ingreso',
 
 
 

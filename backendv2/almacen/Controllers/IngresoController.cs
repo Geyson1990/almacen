@@ -1,3 +1,4 @@
+using almacen.Models.Ingreso;
 using almacen.Models.Inventario;
 using almacen.Repositories.Ingreso;
 using almacen.Repositories.Inventario;
@@ -29,15 +30,10 @@ namespace almacen.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("grabar-productos")]
-        public async Task<ActionResult> GrabarProductos([FromBody]GrabarProductoRequest request)
+        [HttpPost("grabar-ingreso")]
+        public async Task<ActionResult> GrabarIngreso([FromBody]GrabarIngresoRequest request)
         {
-            var respuesta = await _service.GrabarProductos(request);
-            var insertarIngreso = await _service.InsertarStockInicial(new GrabarStockInicialRequest
-            {
-             idProducto = respuesta.Data,
-             cantidad = request.stockInicial
-            });
+            var respuesta = await _service.GrabarIngreso(request);
             return Ok(respuesta);
         }
 

@@ -53,68 +53,37 @@ namespace almacen.Repositories.Ingreso
 
         }
 
-        public async Task<StatusResponse<long>> GrabarProductos(GrabarProductoRequest request)
+        public async Task<StatusResponse<long>> GrabarIngreso(GrabarIngresoRequest request)
         {
             try
             {
                 string sql = string.Empty;
                 var param = new DynamicParameters();
-                if (request.idProducto == 0)
+                if (request.idEntrada == 0)
                 {
-                    sql += @"INSERT INTO [dbo].[producto]
-                                   ([NOMBRE]
-                                   ,[MATERIAL]
-                                   ,[COLOR]
-                                   ,[TALLA]
-                                   ,[TIPO]
-                                   ,[MEDIDAS]
-                                   ,[MARCA]
-                                   ,[ID_UNIDAD_MEDIDA]
+                    sql += @"INSERT INTO [dbo].[registro_entrada]
+                                   ([FECHA]
+                                   ,[ID_PRODUCTO]
                                    ,[CANTIDAD]
-                                   ,[ESTADO_STOCK]
                                    ,[FECHA_VENCIMIENTO]
-                                   ,[ESTADO]
-                                   ,[USUARIO_CREACION]
-                                   ,[FECHA_CREACION]
-                                   ,[STOCK_MINIMO]
-                                   ,[ESTADO_REGISTRO]
-                                   )
-                             OUTPUT INSERTED.ID_PRODUCTO
+                                   ,[ESTADO_REGISTRO])
+                             OUTPUT INSERTED.ID_ENTRADA
                              VALUES
-                                (@Nombre, @Material, @Color, @Talla, @Tipo, @Medida, 
-                                 @Marca, @IdUnidadMedida, @StockInicial ,1, @FechaVencimiento, 1, 'admin', GETDATE(),
-                                 @StockMinimo, 1)";
+                                   (GETDATE()
+                                   ,@IdProducto
+                                   ,@Cantidad
+                                   ,1)";
                 }
                 else
                 {
-                    sql += @"UPDATE [dbo].[producto]
-                               SET [NOMBRE] = @Nombre
-                                  ,[MATERIAL] = @Material
-                                  ,[COLOR] = @Color
-                                  ,[TALLA] = @Talla
-                                  ,[TIPO] = @Tipo
-                                  ,[MEDIDAS] = @Medida
-                                  ,[MARCA] = @Marca
-                                  ,[ID_UNIDAD_MEDIDA] = @IdUnidadMedida
-                                  ,[FECHA_VENCIMIENTO] = @FechaVencimiento
-                                  ,[USUARIO_MODIFICACION] = 'ADMIN'
-                                  ,[FECHA_MODIFICACION] = GETDATE()
-                                  ,[STOCK_MINIMO] = @StockMinimo
-                             WHERE [ID_PRODUCTO] = @IdProducto";                    
+                    sql += @"UPDATE [dbo].[registro_entrada]
+                               SET [CANTIDAD] = @CANTIDAD
+                             WHERE [ID_ENTRADA] = @IdEntrada";                    
                 }
 
+                param.Add("@IdEntrada", request.idEntrada);
                 param.Add("@IdProducto", request.idProducto);
-                param.Add("@Nombre", request.nombre);
-                param.Add("@Material", request.material);
-                param.Add("@Color", request.color);
-                param.Add("@Talla", request.talla);
-                param.Add("@Tipo", request.tipo);
-                param.Add("@Medida", request.medida);
-                param.Add("@Marca", request.marca);
-                param.Add("@IdUnidadMedida", request.idUnidadMedida);
-                param.Add("@FechaVencimiento", request.fechaVencimiento);
-                param.Add("@StockMinimo", request.stockMinimo);
-                param.Add("@StockInicial", request.stockInicial);
+                param.Add("@Cantidad", request.cantidad);
 
                 long response = await _conn.Connection.ExecuteScalarAsync<long>(sql, param);
                 return Message.Successful(response);

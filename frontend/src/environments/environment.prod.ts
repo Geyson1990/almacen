@@ -12,6 +12,17 @@ export const environment = {
 
   endPoint: {
     listarInventario: '/Inventario/listar-inventario',
+    listarUnidadesMedida: '/Inventario/listar-unidades-medida',
+    grabarProductos: '/Inventario/grabar-productos',
+    obtenerProducto: '/Inventario/obtener-producto',
+    eliminarProducto: '/Inventario/eliminar-producto',
+
+
+    listarIngreso: '/Ingreso/listar-ingreso',
+    grabarIngreso: '/Ingreso/grabar-ingreso',
+
+
+    
     anexo: '/Anexo',
     anexoTramite: '/Anexo/tramite',
     formularioTramite: '/Formulario/tramite',

@@ -104,7 +104,7 @@ export class RegistroEntradaComponent implements OnInit {
 
   onChangeFilterByState(){}
   onChangeFilter(event: any){}
-  onNuevo(){
+  onNuevo(item?:any){
     const modalOptions: NgbModalOptions = {
           size: 'lg',
           centered: true,
@@ -113,7 +113,7 @@ export class RegistroEntradaComponent implements OnInit {
     
         const modalRef = this.modalService.open(NuevoIngresoComponent, modalOptions);
         modalRef.componentInstance.title = "Nuevo producto";
-        //modalRef.componentInstance.id = item?.idProducto || 0;
+        modalRef.componentInstance.id = item?.idEntrada || 0;
     
         modalRef.result.then(
           (result) => {
