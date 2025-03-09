@@ -3,7 +3,7 @@ import { PaginationModel } from 'src/app/core/models/Pagination';
 import { SeguridadService } from 'src/app/core/services/seguridad.service';
 import { TramiteService } from 'src/app/core/services/tramite/tramite.service';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { VisorPdfArchivosService } from 'src/app/core/services/tramite/visor-pdf-archivos.service';
 import { VistaPdfComponent } from 'src/app/shared/components/vista-pdf/vista-pdf.component';
@@ -11,6 +11,7 @@ import { DatosUsuarioLogin } from 'src/app/core/models/Autenticacion/DatosUsuari
 import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
 import { IngresoService } from 'src/app/core/services/inventario/ingreso.service';
+import { NuevoIngresoComponent } from 'src/app/modals/nuevo-ingreso/nuevo-ingreso.component';
 
 @Component({
   selector: 'app-registro-entrada',
@@ -103,6 +104,24 @@ export class RegistroEntradaComponent implements OnInit {
 
   onChangeFilterByState(){}
   onChangeFilter(event: any){}
-  onNuevo(){}
+  onNuevo(){
+    const modalOptions: NgbModalOptions = {
+          size: 'lg',
+          centered: true,
+          ariaLabelledBy: 'modal-basic-title'
+        };   
+    
+        const modalRef = this.modalService.open(NuevoIngresoComponent, modalOptions);
+        modalRef.componentInstance.title = "Nuevo producto";
+        //modalRef.componentInstance.id = item?.idProducto || 0;
+    
+        modalRef.result.then(
+          (result) => {
+            window.location.reload();
+          },
+          (reason) => {// Maneja la cancelación aquí
+            console.log('Modal fue cerrado sin resultado:', reason);
+          });
+  }
 }
 

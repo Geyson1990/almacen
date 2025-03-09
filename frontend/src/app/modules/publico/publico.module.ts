@@ -82,6 +82,7 @@ import { MapOptionsComponent } from 'src/app/pages/core/components/mapas/map-opt
 import { LegendComponent } from 'src/app/pages/core/components/mapas/legend/legend.component';
 import { MapComponent } from 'src/app/pages/core/components/mapas/map/map.component';
 import { NuevoProductoComponent } from 'src/app/modals/nuevo-producto/nuevo-producto.component';
+import { NuevoIngresoComponent } from 'src/app/modals/nuevo-ingreso/nuevo-ingreso.component';
 
 const COMPONENTS = [
   ObjetivoJustificacionProyectDialogComponent,
@@ -144,7 +145,8 @@ const MODALS = [
   PasivoLaboresInfraestructuraComponent,
   CommentModalTableComponent,
 
-  NuevoProductoComponent
+  NuevoProductoComponent,
+  NuevoIngresoComponent
 ];
 
 @NgModule({
