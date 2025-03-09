@@ -11,6 +11,7 @@ import { DatosUsuarioLogin } from 'src/app/core/models/Autenticacion/DatosUsuari
 import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
 import { NuevoProductoComponent } from 'src/app/modals/nuevo-producto/nuevo-producto.component';
+import { EliminarProductoRequest, ProductosRequest } from 'src/app/core/models/Inventario/Producto';
 
 @Component({
   selector: 'app-mis-inventarios',
@@ -34,6 +35,20 @@ private modalService = inject(NgbModal);
   pageSize = 50;
   filtrarTexto: string = "";
   filtrarEstado: string = "ALL";
+  request: ProductosRequest={
+    idProducto: 0,
+    nombre: '',
+    material: '',
+    color: '',
+    talla: '',
+    tipo: '',
+    medida: '',
+    marca: '',
+    idUnidadMedida: 0,
+    fechaVencimiento: undefined,
+    stockInicial: 0,
+    stockMinimo: 0
+  };
 
   constructor(
     private seguridadService: SeguridadService,
@@ -57,7 +72,6 @@ private modalService = inject(NgbModal);
 
 
   cargarBandeja() {
-
     this.funcionesMtcService.mostrarCargando();
     this.inventarioService.getAll().subscribe(
       (resp: any) => {
@@ -103,26 +117,43 @@ private modalService = inject(NgbModal);
 
   onChangeFilterByState() { }
   onChangeFilter(event: any) { }
-  onNuevo() {
+
+  onAddEditProduct(item: any) {
     const modalOptions: NgbModalOptions = {
       size: 'lg',
       centered: true,
-      ariaLabelledBy: 'modal-basic-title',
-      // beforeDismiss: () => {
-      //   return this.beforeCloseModal();
-      // }
-    };
+      ariaLabelledBy: 'modal-basic-title'
+    };   
 
     const modalRef = this.modalService.open(NuevoProductoComponent, modalOptions);
     modalRef.componentInstance.title = "Nuevo producto";
-    modalRef.componentInstance.id = 0;
+    modalRef.componentInstance.id = item?.idProducto || 0;
 
     modalRef.result.then(
-      (result) => {// Maneja el resultado aquí
-        this.cargarBandeja();
+      (result) => {
+        window.location.reload();
       },
       (reason) => {// Maneja la cancelación aquí
         console.log('Modal fue cerrado sin resultado:', reason);
+      });
+  }
+
+  onDeleteProduct(item: any) {
+    debugger;
+    this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de eliminar el producto? \n`)
+      .then(() => {
+        let request: EliminarProductoRequest = {
+          id: item.idProducto
+        }
+        this.inventarioService.eliminarProducto(request).subscribe(
+          (resp: any) => {
+            this.funcionesMtcService.mensajeOk("Se eliminó el producto");
+            this.cargarBandeja();
+          },
+          error => {
+            this.funcionesMtcService.mensajeError('No se pudo eliminar el producto');
+          }
+        );
       });
   }
 }

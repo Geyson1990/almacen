@@ -15,4 +15,6 @@
         public int stockInicial { get; set; }
         public int stockMinimo { get; set; }
     }
+
+    public class GrabarProductoResponse: GrabarProductoRequest { }
 }

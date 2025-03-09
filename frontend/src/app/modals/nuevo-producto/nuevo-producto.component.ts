@@ -14,10 +14,10 @@ export class NuevoProductoComponent implements OnInit {
   form: FormGroup;
   activeModal = inject(NgbActiveModal);
   @Input() title!: string;
-  @Input() edicion: ProductosRequest | undefined;
+  @Input() id: number;
 
   listaUnidadMedida: UnidadMedidaResponse[] = [];
-
+  data: ProductosRequest;
 
   constructor(private builder: FormBuilder,
     private inventarioService: InventarioService,
@@ -161,13 +161,22 @@ export class NuevoProductoComponent implements OnInit {
   //#endregion
 
   private getData(): void {
-    if (this.edicion) {
-      this.form.patchValue(this.edicion);
 
-       setTimeout(() => {
-         this.form.patchValue({idUnidadMedida: this.edicion.idUnidadMedida});
-       }, 1000);
-    }
+    this.inventarioService.obtenerProducto(this.id).subscribe(
+      (resp: any) => {
+        this.funcionesMtcService.ocultarCargando();
+        this.data = resp.data;
+        this.form.patchValue(this.data);
+
+        setTimeout(() => {
+          this.form.patchValue({ idUnidadMedida: this.data.idUnidadMedida });
+        }, 1000);
+      },
+      error => {
+        this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
+        this.funcionesMtcService.ocultarCargando();
+      }
+    );
   }
 
   save(form: FormGroup) {
@@ -175,9 +184,9 @@ export class NuevoProductoComponent implements OnInit {
       this.funcionesMtcService.mensajeWarn('Complete los campos requeridos');
       return;
     }
-
-    const datos: ProductosRequest={
-      id: this.edicion ? this.edicion.id : 0,
+debugger;
+    const datos: ProductosRequest = {
+      idProducto: this.id,
       nombre: this.form.get('nombre').value,
       material: this.form.get('material').value,
       color: this.form.get('color').value,
@@ -191,36 +200,28 @@ export class NuevoProductoComponent implements OnInit {
       stockMinimo: this.form.get('stockMinimo').value,
     }
 
-    // const datos: Mineral = {
-    //   ...form.value,
-    //   Id: this.id,
-    //   DescripcionTipo: this.tipoDescripcion,
-    //   DescripcionRecurso: this.recursoDescripcion
-    // };
+    this.inventarioService.postGrabarProducto(datos).subscribe(
+      (resp: any) => {
+        this.funcionesMtcService.ocultarCargando();
+      if (resp.success)
+        this.funcionesMtcService.ocultarCargando().mensajeOk('Se grabó el producto').then(() => this.closeDialog());
+      else
+        this.funcionesMtcService.ocultarCargando().mensajeError('No se grabó el producto');
+      },
+      error => {
+        this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
+        this.funcionesMtcService.ocultarCargando();
+      }
+    );
 
-    // if(this.edicion === undefined){
-    //   let tipo = this.lista.find(x => x.Tipo === datos.Tipo);
-    //   let recurso = this.lista.find(x => x.Recurso === datos.Recurso);
-
-    //   if(recurso !== undefined && tipo !== undefined){
-    //     this.funcionesMtcService.ocultarCargando().mensajeError('El tipo de mineral ya se encuentra registrado');
-    //     return;
-    //   }
-    // }
-
-    // let porcentajeValido = this.fnValidarPorcentajeTotal(datos.Porcentaje);
-    // if (!porcentajeValido) {
-    //   this.funcionesMtcService.ocultarCargando().mensajeError('La suma total del porcentaje no debe ser más de 100');
-    // } else {
-    //   this.activeModal.close(datos);
-    // }   
   }
 
 
 
 
   closeDialog() {
-    this.activeModal.dismiss();
+    //this.activeModal.dismiss();
+    window.location.reload();
   }
 
   private loadListas() {

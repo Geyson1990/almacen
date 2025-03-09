@@ -5,7 +5,7 @@ export interface UnidadMedidaResponse {
 
 
 export interface ProductosRequest{
-    id:number;
+    idProducto:number;
     nombre: string;
     material: string;
     color: string;
@@ -17,4 +17,8 @@ export interface ProductosRequest{
     fechaVencimiento: Date;
     stockInicial: number;
     stockMinimo: number;
+}
+
+export interface EliminarProductoRequest{
+    id:number;
 }

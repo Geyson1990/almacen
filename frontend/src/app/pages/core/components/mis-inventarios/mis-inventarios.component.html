@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="col-sm-auto ms-auto">
-                    <button class="btn btn-primary" (click)="onNuevo()">
+                    <button class="btn btn-primary" (click)="onAddEditProduct(null)">
                         <i class="fas fa-plus"></i> Nuevo
                     </button>
                 </div>
@@ -72,10 +72,10 @@
                         <td class="align-middle text-center text-bold">{{ item.fechaVencimiento | date:'dd/MM/yyyy' }}</td>
                         <td class="align-middle text-center text-bold">{{ item.estado }}</td>
                         <td class="align-middle text-center">
-                            <button class="btn btn-sm btn-primary" (click)="onEdit(item)">
+                            <button class="btn btn-sm btn-primary" (click)="onAddEditProduct(item)">
                                 <i class="fas fa-edit"></i> 
                             </button> 
-                            <button class="btn btn-sm btn-danger" (click)="onDelete(item)">
+                            <button class="btn btn-sm btn-danger" (click)="onDeleteProduct(item)">
                                 <i class="fas fa-trash-alt"></i> 
                             </button>
                     </tr>

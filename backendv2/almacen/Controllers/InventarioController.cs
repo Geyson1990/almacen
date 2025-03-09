@@ -30,8 +30,16 @@ namespace almacen.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("obtener-producto")]
+        public async Task<ActionResult> ObtenerProducto([FromQuery]int id)
+        {
+            var respuesta = await _service.ObtenerProducto(id);
+            return Ok(respuesta);
+        }
+
+        [AllowAnonymous]
         [HttpPost("grabar-productos")]
-        public async Task<ActionResult> GrabarProductos(GrabarProductoRequest request)
+        public async Task<ActionResult> GrabarProductos([FromBody]GrabarProductoRequest request)
         {
             var respuesta = await _service.GrabarProductos(request);
             var insertarIngreso = await _service.InsertarStockInicial(new GrabarStockInicialRequest
@@ -39,6 +47,14 @@ namespace almacen.Controllers
              idProducto = respuesta.Data,
              cantidad = request.stockInicial
             });
+            return Ok(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("eliminar-producto")]
+        public async Task<ActionResult> EliminarProductos([FromBody] EliminarProductoRequest request)
+        {
+            var respuesta = await _service.EliminarProducto(request.id);
             return Ok(respuesta);
         }
 
