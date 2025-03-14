@@ -14,11 +14,11 @@ import { IngresoService } from 'src/app/core/services/inventario/ingreso.service
 import { NuevoIngresoComponent } from 'src/app/modals/nuevo-ingreso/nuevo-ingreso.component';
 
 @Component({
-  selector: 'app-registro-entrada',
-  templateUrl: './registro-entrada.component.html',
-  styleUrls: ['./registro-entrada.component.css']
+  selector: 'app-registro-salida',
+  templateUrl: './registro-salida.component.html',
+  styleUrls: ['./registro-salida.component.css']
 })
-export class RegistroEntradaComponent implements OnInit {
+export class RegistroSalidaComponent implements OnInit {
 
   tipoPersona: string;
   tipoDocumento: string;

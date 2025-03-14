@@ -23,8 +23,8 @@ export const environment = {
 
     listarIngreso: '/Ingreso/listar-ingreso',
     grabarIngreso: '/Ingreso/grabar-ingreso',
-
-
+    obtenerIngreso: '/Ingreso/obtener-ingreso',
+    eliminarIngreso: '/Ingreso/eliminar-ingreso',
 
     anexo: '/Anexo',
     anexoTramite: '/Anexo/tramite',

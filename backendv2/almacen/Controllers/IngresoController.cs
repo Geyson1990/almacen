@@ -22,10 +22,10 @@ namespace almacen.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("obtener-producto")]
-        public async Task<ActionResult> ObtenerProducto([FromQuery]int id)
+        [HttpGet("obtener-ingreso")]
+        public async Task<ActionResult> ObtenerIngreso([FromQuery]int id)
         {
-            var respuesta = await _service.ObtenerProducto(id);
+            var respuesta = await _service.ObtenerIngreso(id);
             return Ok(respuesta);
         }
 

@@ -11,7 +11,7 @@ namespace almacen.Repositories.Ingreso
         //Task<StatusResponse<IEnumerable<ListarUnidadesMedidaResponse>>> ListarUnidadesMedida();
         Task<StatusResponse<long>> GrabarIngreso(GrabarIngresoRequest request);
         Task<StatusResponse<long>> InsertarStockInicial(GrabarStockInicialRequest request);
-        Task<StatusResponse<GrabarProductoResponse>> ObtenerProducto(long idProducto);
+        Task<StatusResponse<ObtenerIngresoResponse>> ObtenerIngreso(long idEntrada);
         Task<StatusResponse<long>> EliminarProducto(long id);
     }
 }

@@ -32,7 +32,7 @@ export class NuevoIngresoComponent implements OnInit {
     this.buildForm();
     this.loadAllProducts();
     this.loadListas();
-    //this.getData();
+    if(this.id > 0) this.getData();
     
   }
 
@@ -76,21 +76,24 @@ export class NuevoIngresoComponent implements OnInit {
 
   private getData(): void {
 
-    // this.inventarioService.obtenerProducto(this.id).subscribe(
-    //   (resp: any) => {
-    //     this.funcionesMtcService.ocultarCargando();
-    //     this.data = resp.data;
-    //     this.form.patchValue(this.data);
+    this.ingresoService.obtenerIngreso(this.id).subscribe(
+      (resp: any) => {
+        this.funcionesMtcService.ocultarCargando();
+        this.data = resp.data;
+        this.form.patchValue(this.data);
 
-    //     setTimeout(() => {
-    //       this.form.patchValue({ idUnidadMedida: this.data.idUnidadMedida });
-    //     }, 1000);
-    //   },
-    //   error => {
-    //     this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
-    //     this.funcionesMtcService.ocultarCargando();
-    //   }
-    // );
+        let option = {
+          idProducto: this.data.idProducto,
+          nombre: this.allProducts.find(x=>x.idProducto === this.data.idProducto)?.nombre
+        }
+        this.onOptionSelected(option);
+
+      },
+      error => {
+        this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
+        this.funcionesMtcService.ocultarCargando();
+      }
+    );
   }
 
   save(form: FormGroup) {
@@ -122,9 +125,6 @@ export class NuevoIngresoComponent implements OnInit {
 
   }
 
-
-
-
   closeDialog() {
     //this.activeModal.dismiss();
     window.location.reload();
@@ -136,13 +136,6 @@ export class NuevoIngresoComponent implements OnInit {
     });
   }
 
-
-  onChange(value: string): void {
-    if (value) {
-      // this.comboRecursoExplorar(value).subscribe(response => this.listaRecursoExplorar = response);
-    }
-  }
-
   onNombreInput(event: any): void {
     const value = event.target.value.toLowerCase();
     this.filteredOptions = this.allProducts.filter(option => option.nombre.toLowerCase().includes(value));
@@ -150,7 +143,7 @@ export class NuevoIngresoComponent implements OnInit {
 
   onOptionSelected(option: any): void {
     this.form.get('nombre').setValue(option.nombre);
-    this.form.get('idProducto').setValue(option.id);
+    this.form.get('idProducto').setValue(option.idProducto);
     this.filteredOptions = [];
   }
 
