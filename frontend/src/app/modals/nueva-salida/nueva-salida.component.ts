@@ -82,7 +82,6 @@ export class NuevaSalidaComponent implements OnInit {
 
     this.salidaService.obtenerSalida(this.id).subscribe(
       (resp: any) => {
-        debugger;
         this.funcionesMtcService.ocultarCargando();
         this.data = resp.data;
         this.form.patchValue(this.data);
@@ -133,8 +132,8 @@ export class NuevaSalidaComponent implements OnInit {
   }
 
   closeDialog() {
-    //this.activeModal.dismiss();
-    window.location.reload();
+    this.activeModal.dismiss();
+    //window.location.reload();
   }
 
   private loadListas() {

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../../models/api-response';
 import { EliminarProductoRequest, ProductosRequest, UnidadMedidaResponse } from '../../models/Inventario/Producto';
-import { IngresoRequest } from '../../models/Inventario/Ingreso';
+import { EliminarIngresoRequest, IngresoRequest } from '../../models/Inventario/Ingreso';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,7 @@ export class IngresoService {
     });
   }
 
-  eliminarProducto<T>(data: EliminarProductoRequest): Observable<ApiResponse<T>> {
+  eliminarIngreso<T>(data: EliminarIngresoRequest): Observable<ApiResponse<T>> {
     debugger;
     return this.httpClient.post<ApiResponse<T>>(`${this.urlEliminarIngreso}`, data);
   }

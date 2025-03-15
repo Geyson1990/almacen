@@ -9,6 +9,7 @@ import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
 import { SalidaService } from 'src/app/core/services/inventario/salida.service';
 import { NuevaSalidaComponent } from 'src/app/modals/nueva-salida/nueva-salida.component';
+import { EliminarSalidaRequest } from 'src/app/core/models/Inventario/Salida';
 
 @Component({
   selector: 'app-registro-salida',
@@ -26,11 +27,11 @@ export class RegistroSalidaComponent implements OnInit {
   datosUsuarioLogin: DatosUsuarioLogin;
   listadoBandejaBase = [];
   listadoBandeja = [];
-  BandejaSize=1;
+  BandejaSize = 1;
   page = 1;
   pageSize = 50;
-  filtrarTexto: string="";
-  filtrarEstado: string="ALL";
+  filtrarTexto: string = "";
+  filtrarEstado: string = "ALL";
 
   constructor(
     private seguridadService: SeguridadService,
@@ -70,27 +71,46 @@ export class RegistroSalidaComponent implements OnInit {
   refreshCountries(pagination: PaginationModel) {
   }
 
-  onChangeFilterByState(){}
-  
-  onChangeFilter(event: any){}
+  onChangeFilterByState() { }
 
-  onAddRegister(item?:any){
+  onChangeFilter(event: any) { }
+
+  onAddRegister(item?: any) {
     const modalOptions: NgbModalOptions = {
-          size: 'lg',
-          centered: true,
-          ariaLabelledBy: 'modal-basic-title'
-        };   
-    
-        const modalRef = this.modalService.open(NuevaSalidaComponent, modalOptions);
-        modalRef.componentInstance.title = item ? "Editar Salida" : "Nueva Salida";
-        modalRef.componentInstance.id = item?.idSalida || 0;
-    
-        modalRef.result.then(
-          (result) => {
-            window.location.reload();
-          },
-          (reason) => {// Maneja la cancelación aquí
-            console.log('Modal fue cerrado sin resultado:', reason);
+      size: 'lg',
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title'
+    };
+
+    const modalRef = this.modalService.open(NuevaSalidaComponent, modalOptions);
+    modalRef.componentInstance.title = item ? "Editar Salida" : "Nueva Salida";
+    modalRef.componentInstance.id = item?.idSalida || 0;
+
+    modalRef.result.then(
+      (result) => {
+        this.cargarBandeja();
+      },
+      (reason) => {// Maneja la cancelación aquí
+        this.cargarBandeja();
+      });
+  }
+
+  onDelete(item?:any){
+    debugger;
+    this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de eliminar el registro seleccionado? \n`)
+          .then(() => {
+            let request: EliminarSalidaRequest = {
+              id: item.idSalida
+            }
+            this.salidaService.eliminarSalida(request).subscribe(
+              (resp: any) => {
+                this.funcionesMtcService.mensajeOk("Se eliminó el registro seleccionado").then(()=>this.cargarBandeja());
+                
+              },
+              error => {
+                this.funcionesMtcService.mensajeError('No se pudo eliminar el registro seleccionado');
+              }
+            );
           });
   }
 }

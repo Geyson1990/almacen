@@ -12,6 +12,7 @@ import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
 import { IngresoService } from 'src/app/core/services/inventario/ingreso.service';
 import { NuevoIngresoComponent } from 'src/app/modals/nuevo-ingreso/nuevo-ingreso.component';
+import { EliminarIngresoRequest } from 'src/app/core/models/Inventario/Ingreso';
 
 @Component({
   selector: 'app-registro-entrada',
@@ -91,10 +92,29 @@ export class RegistroEntradaComponent implements OnInit {
     
         modalRef.result.then(
           (result) => {
-            window.location.reload();
+            this.cargarBandeja();
           },
           (reason) => {// Maneja la cancelación aquí
-            console.log('Modal fue cerrado sin resultado:', reason);
+            this.cargarBandeja();
+          });
+  }
+
+  onDelete(item?:any){
+    this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de eliminar el registro seleccionado? \n`)
+          .then(() => {
+            debugger;
+            let request: EliminarIngresoRequest = {
+              id: item.idEntrada
+            }
+            this.ingresoService.eliminarIngreso(request).subscribe(
+              (resp: any) => {
+                this.funcionesMtcService.mensajeOk("Se eliminó el registro seleccionado").then(()=>this.cargarBandeja());
+                
+              },
+              error => {
+                this.funcionesMtcService.mensajeError('No se pudo eliminar el registro seleccionado');
+              }
+            );
           });
   }
 }

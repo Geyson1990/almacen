@@ -126,8 +126,8 @@ export class NuevoIngresoComponent implements OnInit {
   }
 
   closeDialog() {
-    //this.activeModal.dismiss();
-    window.location.reload();
+    this.activeModal.dismiss();
+    //window.location.reload();
   }
 
   private loadListas() {

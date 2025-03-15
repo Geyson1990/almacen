@@ -41,11 +41,6 @@ namespace almacen.Repositories.Salida
 	                                 dbo.area_solicitante a ON rs.ID_AREA_SOLICITANTE = a.ID
                                 WHERE rs.ESTADO_REGISTRO = 1";
 
-                var parameters = new DynamicParameters();
-                //parameters.Add("@Alias", request.alias);
-                //parameters.Add("@Contrasenia", request.contrasenia);
-
-                // Ejecuta la consulta y obtiene el primer usuario que coincida con los criterios
                 var response = await _conn.Connection.QueryAsync<ListarSalidaResponse>(sql, null) ?? throw new Exception("Usuario no válido");
            
                 return Message.Successful(response);

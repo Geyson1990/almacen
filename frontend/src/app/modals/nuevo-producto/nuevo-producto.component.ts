@@ -184,7 +184,7 @@ export class NuevoProductoComponent implements OnInit {
       this.funcionesMtcService.mensajeWarn('Complete los campos requeridos');
       return;
     }
-debugger;
+
     const datos: ProductosRequest = {
       idProducto: this.id,
       nombre: this.form.get('nombre').value,
@@ -220,14 +220,13 @@ debugger;
 
 
   closeDialog() {
-    //this.activeModal.dismiss();
-    window.location.reload();
+    this.activeModal.close();
+    //window.location.reload();
   }
 
   private loadListas() {
     this.inventarioService.getUnidadesMedida().subscribe(response => {
       this.listaUnidadMedida = response.data;
-      debugger;
     });
   }
 

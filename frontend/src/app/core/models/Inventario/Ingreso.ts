@@ -4,3 +4,7 @@ export interface IngresoRequest{
     cantidad: string;
     fecha: Date;
 }
+
+export interface EliminarIngresoRequest{
+    id:number;
+}

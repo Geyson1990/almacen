@@ -131,15 +131,14 @@ private modalService = inject(NgbModal);
 
     modalRef.result.then(
       (result) => {
-        window.location.reload();
+        this.cargarBandeja();
       },
       (reason) => {// Maneja la cancelación aquí
-        console.log('Modal fue cerrado sin resultado:', reason);
+        this.cargarBandeja();
       });
   }
 
   onDeleteProduct(item: any) {
-    debugger;
     this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de eliminar el producto? \n`)
       .then(() => {
         let request: EliminarProductoRequest = {
