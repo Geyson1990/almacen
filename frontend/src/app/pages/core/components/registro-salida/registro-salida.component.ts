@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginationModel } from 'src/app/core/models/Pagination';
 import { SeguridadService } from 'src/app/core/services/seguridad.service';
-import { TramiteService } from 'src/app/core/services/tramite/tramite.service';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { VisorPdfArchivosService } from 'src/app/core/services/tramite/visor-pdf-archivos.service';
-import { VistaPdfComponent } from 'src/app/shared/components/vista-pdf/vista-pdf.component';
 import { DatosUsuarioLogin } from 'src/app/core/models/Autenticacion/DatosUsuarioLogin';
 import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
-import { IngresoService } from 'src/app/core/services/inventario/ingreso.service';
-import { NuevoIngresoComponent } from 'src/app/modals/nuevo-ingreso/nuevo-ingreso.component';
+import { SalidaService } from 'src/app/core/services/inventario/salida.service';
+import { NuevaSalidaComponent } from 'src/app/modals/nueva-salida/nueva-salida.component';
 
 @Component({
   selector: 'app-registro-salida',
@@ -37,12 +34,11 @@ export class RegistroSalidaComponent implements OnInit {
 
   constructor(
     private seguridadService: SeguridadService,
-    private inventarioService: InventarioService,
     private modalService: NgbModal,
     private funcionesMtcService: FuncionesMtcService,
     private route: Router,
     private globalService: GlobalService,
-    private ingresoService: IngresoService
+    private salidaService: SalidaService
   ) {
     this.datosUsuarioLogin = new DatosUsuarioLogin();
     this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
@@ -57,7 +53,7 @@ export class RegistroSalidaComponent implements OnInit {
   cargarBandeja() {
 
     this.funcionesMtcService.mostrarCargando();
-    this.ingresoService.getAll().subscribe(
+    this.salidaService.getAll().subscribe(
       (resp: any) => {
         this.funcionesMtcService.ocultarCargando();
         this.listadoBandejaBase = resp.data;
@@ -85,9 +81,9 @@ export class RegistroSalidaComponent implements OnInit {
           ariaLabelledBy: 'modal-basic-title'
         };   
     
-        const modalRef = this.modalService.open(NuevoIngresoComponent, modalOptions);
-        modalRef.componentInstance.title = item ? "Editar Producto" : "Nuevo Producto";
-        modalRef.componentInstance.id = item?.idEntrada || 0;
+        const modalRef = this.modalService.open(NuevaSalidaComponent, modalOptions);
+        modalRef.componentInstance.title = item ? "Editar Salida" : "Nueva Salida";
+        modalRef.componentInstance.id = item?.idSalida || 0;
     
         modalRef.result.then(
           (result) => {

@@ -151,16 +151,16 @@ namespace almacen.Repositories.Ingreso
             }
         }
 
-        public async Task<StatusResponse<long>> EliminarProducto(long id)
+        public async Task<StatusResponse<long>> EliminarIngreso(long id)
         {
             try
             {
                 var param = new DynamicParameters();
-                string sql = @"UPDATE [dbo].[producto]
+                string sql = @"UPDATE [dbo].[registro_entrada]
                                SET [ESTADO_REGISTRO] = @EstadoRegistro
-                             WHERE [ID_PRODUCTO] = @IdProducto";
+                             WHERE [ID_ENTRADA] = @Id";
 
-                param.Add("@IdProducto", id);
+                param.Add("@Id", id);
                 param.Add("@EstadoRegistro", false);                
 
                 long response = await _conn.Connection.ExecuteAsync(sql, param);

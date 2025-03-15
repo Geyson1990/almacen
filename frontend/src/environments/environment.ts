@@ -26,6 +26,13 @@ export const environment = {
     obtenerIngreso: '/Ingreso/obtener-ingreso',
     eliminarIngreso: '/Ingreso/eliminar-ingreso',
 
+
+    listarSalida: '/Salida/listar-salida',
+    grabarSalida: '/Salida/grabar-salida',
+    obtenerSalida: '/Salida/obtener-salida',
+    eliminarSalida: '/Salida/eliminar-salida',
+    areasSolicitantes: '/Salida/area-solicitante',
+
     anexo: '/Anexo',
     anexoTramite: '/Anexo/tramite',
     formularioTramite: '/Formulario/tramite',

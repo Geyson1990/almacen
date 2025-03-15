@@ -86,7 +86,7 @@ export class RegistroEntradaComponent implements OnInit {
         };   
     
         const modalRef = this.modalService.open(NuevoIngresoComponent, modalOptions);
-        modalRef.componentInstance.title = item ? "Editar Producto" : "Nuevo Producto";
+        modalRef.componentInstance.title = item ? "Editar Ingreso" : "Nuevo Ingreso";
         modalRef.componentInstance.id = item?.idEntrada || 0;
     
         modalRef.result.then(

@@ -83,6 +83,7 @@ import { LegendComponent } from 'src/app/pages/core/components/mapas/legend/lege
 import { MapComponent } from 'src/app/pages/core/components/mapas/map/map.component';
 import { NuevoProductoComponent } from 'src/app/modals/nuevo-producto/nuevo-producto.component';
 import { NuevoIngresoComponent } from 'src/app/modals/nuevo-ingreso/nuevo-ingreso.component';
+import { NuevaSalidaComponent } from 'src/app/modals/nueva-salida/nueva-salida.component';
 
 const COMPONENTS = [
   ObjetivoJustificacionProyectDialogComponent,
@@ -146,7 +147,8 @@ const MODALS = [
   CommentModalTableComponent,
 
   NuevoProductoComponent,
-  NuevoIngresoComponent
+  NuevoIngresoComponent,
+  NuevaSalidaComponent
 ];
 
 @NgModule({

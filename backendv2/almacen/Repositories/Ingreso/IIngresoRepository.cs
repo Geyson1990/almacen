@@ -12,6 +12,6 @@ namespace almacen.Repositories.Ingreso
         Task<StatusResponse<long>> GrabarIngreso(GrabarIngresoRequest request);
         Task<StatusResponse<long>> InsertarStockInicial(GrabarStockInicialRequest request);
         Task<StatusResponse<ObtenerIngresoResponse>> ObtenerIngreso(long idEntrada);
-        Task<StatusResponse<long>> EliminarProducto(long id);
+        Task<StatusResponse<long>> EliminarIngreso(long id);
     }
 }
