@@ -35,6 +35,14 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod());
 });
 
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+//        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+//        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+//    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -11,7 +11,7 @@
         public string medida { get; set; } = string.Empty;
         public string marca { get; set; } = string.Empty;
         public int idUnidadMedida { get; set; }
-        public DateTime fechaVencimiento { get; set; }
+        public DateTime? fechaVencimiento { get; set; }
         public int stockInicial { get; set; }
         public int stockMinimo { get; set; }
     }

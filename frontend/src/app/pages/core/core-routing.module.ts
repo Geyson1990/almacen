@@ -7,6 +7,7 @@ import { TramiteIniciadoComponent } from './components/tramite-iniciado/tramite-
 import { MisInventariosComponent } from './components/mis-inventarios/mis-inventarios.component';
 import { RegistroEntradaComponent } from './components/registro-entrada/registro-entrada.component';
 import { RegistroSalidaComponent } from './components/registro-salida/registro-salida.component';
+import { ReporteInventarioComponent } from './components/reporte-inventario/reporte-inventario.component';
 
 const routes: Routes = [
   {
@@ -34,8 +35,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'mis-estadisticas',
-    component: TramiteIniciadoComponent,
+    path: 'reporte-inventario',
+    component: ReporteInventarioComponent,
     canLoad: [AuthGuard],
     canActivate: [AuthGuard],
   },

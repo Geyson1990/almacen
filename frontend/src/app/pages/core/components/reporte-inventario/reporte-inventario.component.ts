@@ -12,11 +12,11 @@ import { NuevaSalidaComponent } from 'src/app/modals/nueva-salida/nueva-salida.c
 import { EliminarSalidaRequest } from 'src/app/core/models/Inventario/Salida';
 
 @Component({
-  selector: 'app-registro-salida',
-  templateUrl: './registro-salida.component.html',
-  styleUrls: ['./registro-salida.component.css']
+  selector: 'app-reporte-inventario',
+  templateUrl: './reporte-inventario.component.html',
+  styleUrls: ['./reporte-inventario.component.css']
 })
-export class RegistroSalidaComponent implements OnInit {
+export class ReporteInventarioComponent implements OnInit {
 
   tipoPersona: string;
   tipoDocumento: string;
@@ -96,6 +96,7 @@ export class RegistroSalidaComponent implements OnInit {
   }
 
   onDelete(item?:any){
+    debugger;
     this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de eliminar el registro seleccionado? \n`)
           .then(() => {
             let request: EliminarSalidaRequest = {

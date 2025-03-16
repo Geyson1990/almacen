@@ -42,6 +42,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { MisInventariosComponent } from './pages/core/components/mis-inventarios/mis-inventarios.component';
 import { RegistroEntradaComponent } from './pages/core/components/registro-entrada/registro-entrada.component';
 import { RegistroSalidaComponent } from './pages/core/components/registro-salida/registro-salida.component';
+import { ReporteInventarioComponent } from './pages/core/components/reporte-inventario/reporte-inventario.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { RegistroSalidaComponent } from './pages/core/components/registro-salida
     InicioComponent,
     MisInventariosComponent,
     RegistroEntradaComponent,
-    RegistroSalidaComponent
+    RegistroSalidaComponent,
+    ReporteInventarioComponent
   ],
   imports: [
     NgSelectModule,

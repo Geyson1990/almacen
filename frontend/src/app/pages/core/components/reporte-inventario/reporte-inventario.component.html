@@ -1,13 +1,41 @@
 
 <div class="card mb-5 shadow">
     <div class="card-header py-3">
-        Registro de salidas
+        Reporte de inventario
     </div>
     <div class="card-body p-4 small">
-        <div class="mb-2">
+        <div class="col-sm-12 col-md-12 mt-2">
+            <div class="row">
+                
+
+                <div class="col-sm-4 col-md-4 mt-2">
+                    <h3>Tipo de reporte <span class="text-danger">(*)</span></h3>
+                    <select class="form-select" formControlName="Datum">
+                        <!-- <option [disabled]="true" *ngFor="let item of listaDatum" [value]="item.idDatum">{{ item.descripcion }}
+                        </option> -->
+                        <option>Seleccione...</option>
+                        <option>Detalle de inventario</option>
+                        <option>Detalle de ingresos</option>
+                        <option>Detalle de salidas</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4 col-md-4 mt-2">
+                    <h3>Fecha Inicio <span class="text-danger">(*)</span></h3>
+                    <input type="date" class="form-control" placeholder="" formControlName="Condicion">
+                </div>
+
+                <div class="col-sm-4 col-md-4 mt-2">
+                    <h3>Fecha Fin <span class="text-danger">(*)</span></h3>
+                    <input type="date" class="form-control" placeholder="" formControlName="Condicion">
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="mb-4">
             <div class="mb-3 align-items-center row gx-2">
                 <div class="col-sm-auto">
-                    <b>Filtrar por: </b>
+                    <b>Tipo de reporte: </b>
                 </div>
 
                 <div class="col-sm-auto">
@@ -19,24 +47,40 @@
                     (ngModelChange)="onChangeFilter($event)"
                   />
                 </div>
-                
-                <div class="col-sm">
-                  <div class="input-group input-group-sm">
-                    <button class="btn btn-outline-secondary" (click)="onChangeFilterByState()">
-                        <i class="fas fa-search"></i>
-                      </button>
-                  </div>
+            </div>
+            <div class="mb-3 align-items-center row gx-2">
+                <div class="col-sm-auto">
+                    <b>Fecha Inicio: </b>
                 </div>
 
-                <div class="col-sm-auto ms-auto">
-                    <button class="btn btn-primary" (click)="onAddRegister()">
-                        <i class="fas fa-plus"></i> Nuevo
-                    </button>
+                <div class="col-sm-auto">
+                    <input
+                    class="form-control"
+                    type="text"
+                    style="text-transform: uppercase"
+                    placeholder="Buscar"
+                    (ngModelChange)="onChangeFilter($event)"
+                  />
                 </div>
             </div>
-        </div>
+            <div class="mb-3 align-items-center row gx-2">
+                <div class="col-sm-auto">
+                    <b>Fecha Fin: </b>
+                </div>
+
+                <div class="col-sm-auto">
+                    <input
+                    class="form-control"
+                    type="text"
+                    style="text-transform: uppercase"
+                    placeholder="Buscar"
+                    (ngModelChange)="onChangeFilter($event)"
+                  />
+                </div>
+            </div>
+        </div> -->
         <hr>
-        <div class="table-responsive">
+        <!-- <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped">
                 <thead class="bg-secondary text-white text-center">
                     <tr class="align-self-center">
@@ -45,11 +89,6 @@
                         <th class="align-middle text-nowrap">Producto</th>
                         <th class="align-middle">Área solicitante</th>
                         <th class="align-middle">Persona Solicitante</th>
-                        <!-- <th class="align-middle">Material</th>
-                        <th class="align-middle">Color</th>
-                        <th class="align-middle">Talla</th>
-                        <th class="align-middle">Tipo</th>
-                        <th class="align-middle">Medidas</th> -->
                         <th class="align-middle">Marca</th>
                         <th class="align-middle">Unidad de Medida</th>
                         <th class="align-middle">Cantidad</th>
@@ -64,11 +103,6 @@
                         <td class="align-middle text-center">{{ item.nombre }}</td>
                         <td class="align-middle text-center">{{ item.areaSolicitante }}</td>
                         <td class="align-middle text-center">{{ item.personaSolicitante }}</td>
-                        <!-- <td class="align-middle text-center">{{ item.material }}</td>
-                        <td class="align-middle text-center">{{ item.color }}</td>
-                        <td class="align-middle text-center">{{ item.talla }}</td>
-                        <td class="align-middle text-center">{{ item.tipo }}</td>
-                        <td class="align-middle text-center">{{ item.medidas }}</td> -->
                         <td class="align-middle text-center">{{ item.marca }}</td>
                         <td class="align-middle text-center">{{ item.nombreUnidadMedida }}</td>
                         <td class="align-middle text-center">{{ item.cantidad }}</td>
@@ -88,7 +122,7 @@
                       </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
 
         <div class="d-flex justify-content-between p-2">
         </div>
