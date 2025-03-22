@@ -13,6 +13,7 @@ import { InventarioService } from '../../../../core/services/inventario/inventar
 import { NuevoProductoComponent } from 'src/app/modals/nuevo-producto/nuevo-producto.component';
 import { EliminarProductoRequest, ProductosRequest } from 'src/app/core/models/Inventario/Producto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-mis-inventarios',
@@ -147,6 +148,8 @@ export class MisInventariosComponent implements OnInit {
       item.registro = index + 1;
     });
     this.BandejaSize = this.listadoBandeja.length;
+    this.form.controls.estadoStock.setValue('');
+    this.form.controls.estadoVencimiento.setValue('');
   }
 
   getEstadoDescripcion(estado: number): string {
@@ -162,6 +165,68 @@ export class MisInventariosComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+  downloadExcel() {
+    // const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.listadoBandeja);
+    // const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(wb, ws, 'Inventarios');
+
+    // XLSX.writeFile(wb, 'Inventarios.xlsx');
+    // Crear una nueva hoja de cálculo
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([
+      ["Municipalidad Distrital de Sayan"],
+      ["Fecha del reporte: " + new Date().toLocaleDateString()],
+      []
+    ]);
+
+    // Añadir los datos de la tabla
+    const headers = ["Nro.", "Producto", "Material", "Color", "Talla", "Tipo", "Medidas", "Marca", "Unidad de Medida", "Cantidad", "Estado de Stock", "F. Vencimiento", "Estado de Vencimiento"];
+    XLSX.utils.sheet_add_aoa(ws, [headers], { origin: "A4" });
+
+    this.listadoBandeja.forEach((item, index) => {
+      const row = [
+        item.registro,
+        item.nombre,
+        item.material,
+        item.color,
+        item.talla,
+        item.tipo,
+        item.medidas,
+        item.marca,
+        item.nombreUnidadMedida,
+        item.cantidad,
+        item.estadoStock == 2 ? 'REABASTECER' : 'ABASTECIDO',
+        item.fechaVencimiento ? new Date(item.fechaVencimiento).toLocaleDateString() : '',
+        this.getEstadoDescripcion(item.estado)
+      ];
+      XLSX.utils.sheet_add_aoa(ws, [row], { origin: `A${index + 5}` });
+    });
+
+    // Ajustar el ancho de las columnas
+    const wscols = [
+      { wch: 10 }, // Nro.
+      { wch: 20 }, // Producto
+      { wch: 20 }, // Material
+      { wch: 20 }, // Color
+      { wch: 10 }, // Talla
+      { wch: 20 }, // Tipo
+      { wch: 20 }, // Medidas
+      { wch: 20 }, // Marca
+      { wch: 20 }, // Unidad de Medida
+      { wch: 10 }, // Cantidad
+      { wch: 20 }, // Estado de Stock
+      { wch: 20 }, // F. Vencimiento
+      { wch: 20 }  // Estado de Vencimiento
+    ];
+    ws['!cols'] = wscols;
+
+    // Crear un nuevo libro de trabajo
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Inventarios');
+
+    // Escribir el archivo
+    XLSX.writeFile(wb, 'Inventarios.xlsx');
   }
 }
 

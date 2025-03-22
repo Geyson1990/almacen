@@ -77,9 +77,12 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-sm-auto ms-auto">
+                    <div class="col-sm-auto ms-auto" style="text-align: right;">
                         <button type="button" class="btn btn-primary" (click)="onAddEditProduct(null)">
                             <i class="fas fa-plus"></i> Nuevo
+                        </button>
+                        <button type="button" class="btn btn-success ms-2" (click)="downloadExcel()">
+                            <i class="fas fa-file-excel"></i> Descargar Excel
                         </button>
                     </div>
                 </div>
@@ -135,7 +138,7 @@
                                     </span>
                                 </td>
                                 <td class="align-middle text-center">
-                                    <button class="btn btn-sm btn-primary" (click)="onAddEditProduct(item)">
+                                    <button class="btn btn-sm btn-primary me-2" (click)="onAddEditProduct(item)">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button class="btn btn-sm btn-danger" (click)="onDeleteProduct(item)">
