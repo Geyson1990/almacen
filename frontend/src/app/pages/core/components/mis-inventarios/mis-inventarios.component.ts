@@ -1,18 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { PaginationModel } from 'src/app/core/models/Pagination';
-import { SeguridadService } from 'src/app/core/services/seguridad.service';
-import { TramiteService } from 'src/app/core/services/tramite/tramite.service';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import { VisorPdfArchivosService } from 'src/app/core/services/tramite/visor-pdf-archivos.service';
-import { VistaPdfComponent } from 'src/app/shared/components/vista-pdf/vista-pdf.component';
-import { DatosUsuarioLogin } from 'src/app/core/models/Autenticacion/DatosUsuarioLogin';
-import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
 import { NuevoProductoComponent } from 'src/app/modals/nuevo-producto/nuevo-producto.component';
 import { EliminarProductoRequest, ProductosRequest } from 'src/app/core/models/Inventario/Producto';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -129,7 +121,7 @@ export class MisInventariosComponent implements OnInit {
         (!tipo || item.tipo.toLowerCase().includes(tipo.toLowerCase())) &&
         (!marca || item.marca.toLowerCase().includes(marca.toLowerCase())) &&
         (!estadoStock || item.estadoStock == estadoStock) &&
-      (!estadoVencimiento || item.estado == estadoVencimiento)
+        (!estadoVencimiento || item.estado == estadoVencimiento)
       );
     });
 
