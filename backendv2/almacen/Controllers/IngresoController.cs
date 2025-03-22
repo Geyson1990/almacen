@@ -34,6 +34,8 @@ namespace almacen.Controllers
         public async Task<ActionResult> GrabarIngreso([FromBody]GrabarIngresoRequest request)
         {
             var respuesta = await _service.GrabarIngreso(request);
+            //if(respuesta.Data > 0) 
+            //    await _inventario.ActualizarStockProducto(request.idProducto, request.cantidad);            
             return Ok(respuesta);
         }
 

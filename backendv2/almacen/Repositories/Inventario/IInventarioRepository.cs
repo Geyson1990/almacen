@@ -12,5 +12,6 @@ namespace almacen.Repositories.Inventario
         Task<StatusResponse<long>> InsertarStockInicial(GrabarStockInicialRequest request);
         Task<StatusResponse<GrabarProductoResponse>> ObtenerProducto(long idProducto);
         Task<StatusResponse<long>> EliminarProducto(long id);
+        Task<StatusResponse<long>> ActualizarStockProducto(long id, int cantidad);
     }
 }

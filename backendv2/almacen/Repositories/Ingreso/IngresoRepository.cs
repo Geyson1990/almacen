@@ -3,6 +3,8 @@ using almacen.Models.Ingreso;
 using almacen.Models.Inventario;
 using almacen.Utils;
 using Dapper;
+using System.Data.Common;
+using System.Transactions;
 using static almacen.Utils.Message;
 
 namespace almacen.Repositories.Ingreso
@@ -73,13 +75,25 @@ namespace almacen.Repositories.Ingreso
                                    ,@IdProducto
                                    ,@Cantidad
                                    ,NULL
-                                   ,1)";
+                                   ,1);
+
+
+                            UPDATE producto
+                            SET CANTIDAD = ISNULL(CANTIDAD,0) + @Cantidad
+                            WHERE ID_PRODUCTO = @IdProducto;
+                    ";
                 }
                 else
                 {
                     sql += @"UPDATE [dbo].[registro_entrada]
-                               SET [CANTIDAD] = @CANTIDAD
-                             WHERE [ID_ENTRADA] = @IdEntrada";                    
+                               SET [CANTIDAD] = CANTIDAD + (@CANTIDAD - CANTIDAD)
+                             WHERE [ID_ENTRADA] = @IdEntrada;
+
+                            UPDATE producto
+                            SET CANTIDAD = CANTIDAD + (@CANTIDAD - CANTIDAD)
+                            WHERE ID_PRODUCTO = @IdProducto;
+
+";                    
                 }
 
                 param.Add("@IdEntrada", request.idEntrada);
@@ -155,23 +169,58 @@ namespace almacen.Repositories.Ingreso
         {
             try
             {
-                var param = new DynamicParameters();
-                string sql = @"UPDATE [dbo].[registro_entrada]
-                               SET [ESTADO_REGISTRO] = @EstadoRegistro
-                             WHERE [ID_ENTRADA] = @Id";
+                string selectQuery = @"
+                    SELECT CANTIDAD, ID_PRODUCTO
+                    FROM [dbo].[registro_entrada]
+                    WHERE ID_ENTRADA = @IdEntrada AND ESTADO_REGISTRO = 1;";
 
-                param.Add("@Id", id);
-                param.Add("@EstadoRegistro", false);                
+                var entrada = await _conn.Connection.QueryFirstOrDefaultAsync<(int Cantidad, long IdProducto)>(
+                    selectQuery, new { IdEntrada = id });
 
-                long response = await _conn.Connection.ExecuteAsync(sql, param);
-                if (!(response > 0)) throw new Exception("Eliminación no ha sido procesada.");
-                return Message.Successful(response);
+                if (entrada == default)
+                    throw new Exception("Entrada no encontrada o ya eliminada");
+
+                // Validar que haya suficiente stock para restar
+                string checkStockQuery = @"
+                    SELECT CANTIDAD FROM [dbo].[producto] WHERE ID_PRODUCTO = @IdProducto;";
+
+                int stockActual = await _conn.Connection.ExecuteScalarAsync<int>(
+                    checkStockQuery, new { IdProducto = entrada.IdProducto });
+
+                if (stockActual < entrada.Cantidad)
+                    throw new Exception("No se puede eliminar la entrada, stock insuficiente");
+
+                string updateStockQuery = @"
+                    UPDATE [dbo].[producto]
+                    SET CANTIDAD = CANTIDAD - @Cantidad,
+                        USUARIO_MODIFICACION = @UsuarioModificacion,
+                        FECHA_MODIFICACION = GETDATE()
+                    WHERE ID_PRODUCTO = @IdProducto;";
+
+                await _conn.Connection.ExecuteAsync(updateStockQuery, new
+                {
+                    IdProducto = entrada.IdProducto,
+                    Cantidad = entrada.Cantidad,
+                    UsuarioModificacion = "Sistema"
+                });
+
+                // Marcar la entrada como eliminada
+                string updateEntradaQuery = @"
+                    UPDATE [dbo].[registro_entrada]
+                    SET ESTADO_REGISTRO = 0
+                    WHERE ID_ENTRADA = @IdEntrada;";
+
+                await _conn.Connection.ExecuteAsync(updateEntradaQuery, new { IdEntrada = id });
+                return Successful(1L);
+                
             }
             catch (Exception ex)
             {
                 return Message.Exception<long>(ex);
             }
         }
+
+        
 
     }
 }

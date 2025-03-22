@@ -28,9 +28,20 @@ namespace almacen.Repositories.Inventario
 	                              ,a.[ID_UNIDAD_MEDIDA] idUnidadMedida
                                   ,b.[NOMBRE] nombreUnidadMedida
                                   ,a.[CANTIDAD] cantidad
-                                  ,a.[ESTADO_STOCK] estadoStock
+                                  ,CASE 
+                                      WHEN a.[CANTIDAD] <= a.[STOCK_MINIMO] THEN 2 
+                                      ELSE 1 
+                                  END AS estadoStock
+    
+                                  -- Determinar estado de vencimiento
+                                  ,CASE 
+                                      WHEN a.[FECHA_VENCIMIENTO] IS NULL THEN 0
+                                      WHEN a.[FECHA_VENCIMIENTO] > DATEADD(MONTH, 3, GETDATE()) THEN 1
+                                      WHEN a.[FECHA_VENCIMIENTO] BETWEEN GETDATE() AND DATEADD(MONTH, 3, GETDATE()) THEN 2
+                                      WHEN a.[FECHA_VENCIMIENTO] < GETDATE() THEN 3
+                                  END AS estado
                                   ,a.[FECHA_VENCIMIENTO] fechaVencimiento
-                                  ,a.[ESTADO] estado
+                                  --,a.[ESTADO] estado
                               FROM [dbo].[producto] a
                               INNER JOIN dbo.unidad_medida b ON a.ID_UNIDAD_MEDIDA = b.ID_UNIDAD_MEDIDA
                               WHERE a.ESTADO_REGISTRO = 1";
@@ -158,12 +169,14 @@ namespace almacen.Repositories.Inventario
                                    ([FECHA]
                                    ,[ID_PRODUCTO]
                                    ,[CANTIDAD]
-                                   ,ESTADO_REGISTRO)
+                                   ,ESTADO_REGISTRO
+                                   ,ID_TIPO_ENTRADA)
                             OUTPUT INSERTED.ID_ENTRADA
                              VALUES
                                    (GETDATE()
                                    ,@ID_PRODUCTO
                                    ,@CANTIDAD
+                                    , 1
                                     , 1)";
 
                 var param = new DynamicParameters();
@@ -238,5 +251,26 @@ namespace almacen.Repositories.Inventario
             }
         }
 
+        public async Task<StatusResponse<long>> ActualizarStockProducto(long id, int cantidad)
+        {
+            try
+            {
+                var param = new DynamicParameters();
+                string sql = @"UPDATE [dbo].[producto]
+                               SET [CANTIDAD] = [CANTIDAD] + @Cantidad
+                             WHERE [ID_PRODUCTO] = @Id";
+
+                param.Add("@Id", id);
+                param.Add("@Cantidad", cantidad);
+
+                long response = await _conn.Connection.ExecuteAsync(sql, param);
+                if (!(response > 0)) throw new Exception("Actualización del producto no ha sido procesada.");
+                return Successful(response);
+            }
+            catch (Exception ex)
+            {
+                return Exception<long>(ex);
+            }
+        }
     }
 }

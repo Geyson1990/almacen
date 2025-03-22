@@ -100,7 +100,10 @@ export class NuevoProductoComponent implements OnInit {
         this.funcionesMtcService.ocultarCargando();
         this.data = resp.data;
         this.form.patchValue(this.data);
-
+        if (this.data.fechaVencimiento) {
+          const fecha = new Date(this.data.fechaVencimiento);
+          this.data.fechaVencimiento = new Date(fecha.toISOString().substring(0, 10));
+        }
         setTimeout(() => {
           this.form.patchValue({ idUnidadMedida: this.data.idUnidadMedida });
         }, 1000);

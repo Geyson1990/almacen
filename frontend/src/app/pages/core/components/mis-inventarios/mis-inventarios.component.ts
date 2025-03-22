@@ -12,6 +12,7 @@ import { GlobalService } from 'src/app/core/services/mapas/global.service';
 import { InventarioService } from '../../../../core/services/inventario/inventario.service';
 import { NuevoProductoComponent } from 'src/app/modals/nuevo-producto/nuevo-producto.component';
 import { EliminarProductoRequest, ProductosRequest } from 'src/app/core/models/Inventario/Producto';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-mis-inventarios',
@@ -19,23 +20,16 @@ import { EliminarProductoRequest, ProductosRequest } from 'src/app/core/models/I
   styleUrls: ['./mis-inventarios.component.css']
 })
 export class MisInventariosComponent implements OnInit {
-private modalService = inject(NgbModal);
+  private modalService = inject(NgbModal);
+  form: FormGroup;
 
-  tipoPersona: string;
-  tipoDocumento: string;
-  NDocumento: string;
-  Nombres: string;
-  Ruc: string;
-  tipoNombres: string;
-  datosUsuarioLogin: DatosUsuarioLogin;
+  page = 1;
+  pageSize = 10;
+  BandejaSize = 1;
+
   listadoBandejaBase = [];
   listadoBandeja = [];
-  BandejaSize = 1;
-  page = 1;
-  pageSize = 50;
-  filtrarTexto: string = "";
-  filtrarEstado: string = "ALL";
-  request: ProductosRequest={
+  request: ProductosRequest = {
     idProducto: 0,
     nombre: '',
     material: '',
@@ -51,24 +45,28 @@ private modalService = inject(NgbModal);
   };
 
   constructor(
-    private seguridadService: SeguridadService,
+    private builder: FormBuilder,
     private inventarioService: InventarioService,
-    //private modalService: NgbModal,
     private funcionesMtcService: FuncionesMtcService,
-    private route: Router,
-    private globalService: GlobalService
-  ) {
-    this.datosUsuarioLogin = new DatosUsuarioLogin();
-    this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
-    this.datosUsuarioLogin.nroDocumento = this.seguridadService.getNumDoc();
-    this.datosUsuarioLogin.razonSocial = this.seguridadService.getUserName();
-  }
+  ) { }
 
   ngOnInit(): void {
+    this.buildForm();
     this.cargarBandeja();
   }
 
-
+  private buildForm(): void {
+    this.form = this.builder.group({
+      producto: [""],
+      material: [""],
+      color: [""],
+      talla: [""],
+      tipo: [""],
+      marca: [""],
+      estadoStock: [""],
+      estadoVencimiento: [""],
+    });
+  }
 
 
   cargarBandeja() {
@@ -87,129 +85,83 @@ private modalService = inject(NgbModal);
     );
   }
 
-
-  irTramiteIniciado(item) {
-    console.log(item);
-    localStorage.setItem("tramite-id", item.codMaeSolicitud);
-    localStorage.setItem("tupa-id", item.codIdMaeTupa);
-    localStorage.setItem("tramite-solicitud", item.numSTD);
-
-    // this.TramiteService.getTupa(item.tupaId).subscribe(
-    //   (resp: any) => {
-    //     console.log(resp);
-    //     localStorage.setItem("tramite-selected",JSON.stringify(resp));
-    //   }
-    // );
-
-
-    const params = {
-      codigoTupa: item.codMaeTupa,
-      denominacionEstado: item.denominacionEstado
-    };
-    localStorage.setItem("tramite-selected", JSON.stringify({ codigo: item.codMaeTupa }));
-    this.globalService.setLastPage('mis-tramites');
-    this.route.navigate(['tramite-iniciado'], { queryParams: params });
-
-  }
-
-  refreshCountries(pagination: PaginationModel) {
-  }
-
-  onChangeFilterByState() { }
-  onChangeFilter(event: any) { }
-
   onAddEditProduct(item: any) {
     const modalOptions: NgbModalOptions = {
       size: 'lg',
       centered: true,
       ariaLabelledBy: 'modal-basic-title'
-    };   
+    };
 
     const modalRef = this.modalService.open(NuevoProductoComponent, modalOptions);
-    modalRef.componentInstance.title = "Nuevo producto";
+    modalRef.componentInstance.title = item ? "Editar producto" : "Nuevo producto";
     modalRef.componentInstance.id = item?.idProducto || 0;
 
     modalRef.result.then(
-      (result) => {
-        this.cargarBandeja();
-      },
-      (reason) => {// Maneja la cancelación aquí
-        this.cargarBandeja();
-      });
+      () => this.cargarBandeja(),
+      () => this.cargarBandeja()
+    );
   }
 
   onDeleteProduct(item: any) {
     this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de eliminar el producto? \n`)
       .then(() => {
-        let request: EliminarProductoRequest = {
-          id: item.idProducto
-        }
+        const request: EliminarProductoRequest = { id: item.idProducto };
         this.inventarioService.eliminarProducto(request).subscribe(
-          (resp: any) => {
+          () => {
             this.funcionesMtcService.mensajeOk("Se eliminó el producto");
             this.cargarBandeja();
           },
-          error => {
-            this.funcionesMtcService.mensajeError('No se pudo eliminar el producto');
-          }
+          () => this.funcionesMtcService.mensajeError('No se pudo eliminar el producto')
         );
       });
   }
+
+  onSearch(form: FormGroup) {
+    const { producto, material, color, talla, tipo, marca, estadoStock, estadoVencimiento } = form.value;
+
+    this.listadoBandeja = this.listadoBandejaBase.filter(item => {
+      return (
+        (!producto || item.nombre.toLowerCase().includes(producto.toLowerCase())) &&
+        (!material || item.material.toLowerCase().includes(material.toLowerCase())) &&
+        (!color || item.color.toLowerCase().includes(color.toLowerCase())) &&
+        (!talla || item.talla.toLowerCase().includes(talla.toLowerCase())) &&
+        (!tipo || item.tipo.toLowerCase().includes(tipo.toLowerCase())) &&
+        (!marca || item.marca.toLowerCase().includes(marca.toLowerCase())) &&
+        (!estadoStock || item.estadoStock == estadoStock) &&
+      (!estadoVencimiento || item.estado == estadoVencimiento)
+      );
+    });
+
+    // Resetear el campo registro y asignar nuevos valores
+    this.listadoBandeja.forEach((item, index) => {
+      item.registro = index + 1;
+    });
+
+    this.BandejaSize = this.listadoBandeja.length;
+  }
+
+  onReset() {
+    this.form.reset();
+    this.listadoBandeja = this.listadoBandejaBase;
+    this.listadoBandeja.forEach((item, index) => {
+      item.registro = index + 1;
+    });
+    this.BandejaSize = this.listadoBandeja.length;
+  }
+
+  getEstadoDescripcion(estado: number): string {
+    switch (estado) {
+      case 0:
+        return 'SIN REGISTRO';
+      case 1:
+        return 'ÓPTIMO';
+      case 2:
+        return 'POR VENCER';
+      case 3:
+        return 'VENCIDO';
+      default:
+        return '';
+    }
+  }
 }
-
-  // verExpedientePDF(item){
-  //   //this.funcionesMtcService.mostrarCargando();
-  //   console.log(item.docExpediente);
-  //   this.visorPdfArchivosService.get(item.docExpediente)
-  //     .subscribe(
-  //       (file: Blob) => {
-  //         this.funcionesMtcService.ocultarCargando();
-  //         const modalRef = this.modalService.open(VistaPdfComponent, { size: 'xl', scrollable: true });
-  //         const urlPdf = URL.createObjectURL(file);
-  //         modalRef.componentInstance.pdfUrl = urlPdf;
-  //         modalRef.componentInstance.titleModal = "Vista Previa Expediente [ " + item.numSTD + " ]";
-  //       },
-  //       error => {
-  //         this.funcionesMtcService
-  //           .ocultarCargando()
-  //           .mensajeError('Problemas para descargar Pdf');
-  //       }
-  //     );
-  // }
-
-
-
-  // anulaTramite(item){
-  //   debugger;
-  //   this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de Anular su expediente? \n`)
-  //       .then(() => {
-  //         console.log("Anular expediente: "+item.id);
-
-  //         this.funcionesMtcService.mostrarCargando();
-  //         this.TramiteService.putAnular({codMaeSolicitud: item.codMaeSolicitud})
-  //         .subscribe(
-  //           resp => {
-  //             debugger;
-  //             if(resp.data > 0){
-  //               this.funcionesMtcService.mensajeOk("Se anuló el expediente "+item.numSTD);
-  //             }else{
-  //               this.funcionesMtcService.mensajeError("No se anuló el expediente");
-  //             }
-  //             this.modalService.dismissAll();
-  //             this.cargarBandeja();
-  //           },
-  //           error => {
-  //             this.funcionesMtcService.mensajeError("Ocurrio un problema al grabar URL");
-  //           },
-  //           () => this.funcionesMtcService.ocultarCargando()
-  //         );
-
-  //        });
-  // }
-
-
-  // irEncuesta(idEncuesta: number, codigoIdentificador: string){
-  //   this.route.navigate(['encuesta/form', idEncuesta, codigoIdentificador]);
-  // }
-
 

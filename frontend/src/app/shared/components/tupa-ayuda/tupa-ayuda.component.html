@@ -340,6 +340,7 @@
             class="form-select"
             style="width: auto"
             [(ngModel)]="pageSize"
+            (ngModelChange)="changePaginationEmitSelect()"
           >
             <option [ngValue]="10">10 registros</option>
             <option [ngValue]="25">25 registros</option>

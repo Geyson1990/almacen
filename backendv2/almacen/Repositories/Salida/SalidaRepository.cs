@@ -4,6 +4,7 @@ using almacen.Models.Inventario;
 using almacen.Utils;
 using Dapper;
 using static almacen.Utils.Message;
+using System.Transactions;
 
 namespace almacen.Repositories.Salida
 {
@@ -74,7 +75,12 @@ namespace almacen.Repositories.Salida
                                    ,@Cantidad
                                    ,@IdAreaSolicitante
                                    ,@PersonaSolicitante
-                                   ,1)";
+                                   ,1);
+
+                            UPDATE producto
+                            SET CANTIDAD = ISNULL(CANTIDAD,0) + @Cantidad
+                            WHERE ID_PRODUCTO = @IdProducto;
+                            ";
                 }
                 else
                 {
@@ -82,7 +88,12 @@ namespace almacen.Repositories.Salida
                                SET [CANTIDAD] = @Cantidad
                                   ,[ID_AREA_SOLICITANTE] = @IdAreaSolicitante
                                   ,[PERSONA_SOLICITANTE] = @PersonaSolicitante
-                             WHERE [ID_SALIDA] = @Id";                    
+                             WHERE [ID_SALIDA] = @Id
+
+                             UPDATE producto
+                            SET CANTIDAD = CANTIDAD - (@CANTIDAD - CANTIDAD)
+                            WHERE ID_PRODUCTO = @IdProducto;
+";                    
                 }
 
                 param.Add("@Id", request.idSalida);
@@ -162,17 +173,55 @@ namespace almacen.Repositories.Salida
         {
             try
             {
-                var param = new DynamicParameters();
-                string sql = @"UPDATE [dbo].[registro_salida]
-                               SET [ESTADO_REGISTRO] = @EstadoRegistro
-                             WHERE [ID_SALIDA] = @Id";
+                // Obtener la cantidad de la salida y el producto relacionado
+                string selectQuery = @"
+                    SELECT CANTIDAD, ID_PRODUCTO
+                    FROM [dbo].[registro_salida]
+                    WHERE ID_SALIDA = @IdSalida AND ESTADO_REGISTRO = 1;";
 
-                param.Add("@Id", id);
-                param.Add("@EstadoRegistro", false);                
+                var salida = await _conn.Connection.QueryFirstOrDefaultAsync<(int Cantidad, long IdProducto)>(
+                    selectQuery, new { IdSalida = id });
 
-                long response = await _conn.Connection.ExecuteAsync(sql, param);
-                if (!(response > 0)) throw new Exception("Eliminación no ha sido procesada.");
-                return Message.Successful(response);
+                if (salida == default)
+                    throw new Exception("Salida no encontrada o ya eliminada");
+
+                // Devolver la cantidad al stock
+                string updateStockQuery = @"
+                    UPDATE [dbo].[producto]
+                    SET CANTIDAD = CANTIDAD + @Cantidad,
+                        USUARIO_MODIFICACION = @UsuarioModificacion,
+                        FECHA_MODIFICACION = GETDATE()
+                    WHERE ID_PRODUCTO = @IdProducto;";
+
+                await _conn.Connection.ExecuteAsync(updateStockQuery, new
+                {
+                    IdProducto = salida.IdProducto,
+                    Cantidad = salida.Cantidad,
+                    UsuarioModificacion = "Sistema" // Cambiar por el usuario en sesión
+                });
+
+                // Marcar la salida como eliminada
+                string updateSalidaQuery = @"
+                    UPDATE [dbo].[registro_salida]
+                    SET ESTADO_REGISTRO = 0
+                    WHERE ID_SALIDA = @IdSalida;"
+                ;
+
+                await _conn.Connection.ExecuteAsync(updateSalidaQuery, new { IdSalida = id });
+
+                return Message.Successful(1L);
+
+                //var param = new DynamicParameters();
+                //string sql = @"UPDATE [dbo].[registro_salida]
+                //               SET [ESTADO_REGISTRO] = @EstadoRegistro
+                //             WHERE [ID_SALIDA] = @Id";
+
+                //param.Add("@Id", id);
+                //param.Add("@EstadoRegistro", false);                
+
+                //long response = await _conn.Connection.ExecuteAsync(sql, param);
+                //if (!(response > 0)) throw new Exception("Eliminación no ha sido procesada.");
+                //return Message.Successful(response);
             }
             catch (Exception ex)
             {

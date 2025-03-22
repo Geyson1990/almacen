@@ -29,3 +29,47 @@
   flex-direction: row;
   align-items: center;
 }
+
+.text-secondary {
+  color: gray !important;
+}
+
+.text-success {
+  color: green !important;
+}
+
+.text-warning {
+  color: orange !important;
+}
+
+.text-danger {
+  color: red !important;
+} 
+
+.highlight-secondary {
+  background-color: gray;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.highlight-success {
+  background-color: green;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.highlight-warning {
+  background-color: orange;
+  color: black;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.highlight-danger {
+  background-color: red;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
