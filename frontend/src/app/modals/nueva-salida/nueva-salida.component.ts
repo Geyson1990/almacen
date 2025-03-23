@@ -24,6 +24,7 @@ export class NuevaSalidaComponent implements OnInit {
   data: ProductosRequest;
   allProducts: any[] = [];
   filteredOptions: any[] = [];
+  
   constructor(private builder: FormBuilder,
     private inventarioService: InventarioService,
     private funcionesMtcService: FuncionesMtcService,

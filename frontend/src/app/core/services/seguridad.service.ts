@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { LoginRequestModel } from '../models/Autenticacion/LoginRequestModel';
+import { LoginRequestModel, RegistroRequestModel } from '../models/Autenticacion/LoginRequestModel';
 import { LoginResponseModel } from '../models/Autenticacion/LoginResponseModel';
 import { ApiResponseModel, TipoPersonaResponseModel } from '../models/Autenticacion/TipoPersonaResponseModel';
 import { RegistroUsuarioModel } from '../models/Autenticacion/RegistroUsuarioModel';
@@ -36,11 +36,15 @@ export class SeguridadService {
   constructor(private httpClient: HttpClient) {
     this.urlApi = `${environment.baseUrlAPI}${environment.endPoint.autenticacion.autenticacion}`;
     this.urlLogin = `${environment.baseUrlAPI}${environment.endPoint.autenticacion.login}`;
+    this.urlRegistrar = `${environment.baseUrlAPI}${environment.endPoint.autenticacion.registrar}`;
+    this.urlRecuperarPass = `${environment.baseUrlAPI}${environment.endPoint.autenticacion.recuperarpass}`;
+
+
     this.urlTipoPersona = `${environment.baseUrlPersonaAPI}${environment.endPoint.tupas.tipopersona}`;
     this.urlTipoDocumentoPersonaExtranjera = `${environment.baseUrlPersonaAPI}${environment.endPoint.maestros.tipoDocumentoPersonaExtranjera}`;
     this.urlLogout = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.logout}`;
-    this.urlRecuperarPass = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.recuperarpass}`;
-    this.urlRegistrar = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.registrar}`;
+   
+    
     this.urlCambiarPass = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.cambiarpass}`;
     this.urlActualizar = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.actualizar}`;
     this.urlLoginSunat = `${environment.baseUrlSeguridadAPI}${environment.endPoint.autenticacion.loginsunat}`;
@@ -58,13 +62,18 @@ export class SeguridadService {
     sessionStorage.removeItem('accessToken');
   }
 
-  postRecuperarPass(usuarioModel: UsuarioModel): Observable<ResponseComunModel<string>> {
-    return this.httpClient.post<ResponseComunModel<string>>(this.urlRecuperarPass, usuarioModel);
+  postRecuperarPass(usuarioModel: UsuarioModel): Observable<ApiResponse<number>> {
+    return this.httpClient.post<ApiResponse<number>>(this.urlRecuperarPass, usuarioModel);
   }
 
-  postRegistrar(data: RegistroUsuarioModel): Observable<ResponseComunModel<string>> {
-    return this.httpClient.put<ResponseComunModel<string>>(this.urlRegistrar, data);
+  postRegistrar(data: RegistroRequestModel): Observable<ApiResponse<number>> {
+    return this.httpClient.post<ApiResponse<number>>(this.urlRegistrar, data);
   }
+
+
+
+
+
 
   postCambiarPass(usuarioModel: UsuarioModel): Observable<ResponseComunModel<string>> {
     return this.httpClient.post<ResponseComunModel<string>>(this.urlCambiarPass, usuarioModel);

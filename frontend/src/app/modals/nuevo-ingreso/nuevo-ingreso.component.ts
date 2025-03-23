@@ -22,6 +22,7 @@ export class NuevoIngresoComponent implements OnInit {
   data: ProductosRequest;
   allProducts: any[] = [];
   filteredOptions: any[] = [];
+
   constructor(private builder: FormBuilder,
     private inventarioService: InventarioService,
     private funcionesMtcService: FuncionesMtcService,
@@ -84,7 +85,12 @@ export class NuevoIngresoComponent implements OnInit {
 
         let option = {
           idProducto: this.data.idProducto,
-          nombre: this.allProducts.find(x=>x.idProducto === this.data.idProducto)?.nombre
+          nombre: this.allProducts.find(x=>x.idProducto === this.data.idProducto)?.nombre,
+          descripcion: this.allProducts.find(x => x.idProducto === this.data.idProducto)?.descripcion,
+          talla: this.allProducts.find(x => x.idProducto === this.data.idProducto)?.talla,
+          material: this.allProducts.find(x=>x.idProducto === this.data.idProducto)?.material,
+          color: this.allProducts.find(x=>x.idProducto === this.data.idProducto)?.color,
+
         }
         this.onOptionSelected(option);
 
@@ -139,6 +145,7 @@ export class NuevoIngresoComponent implements OnInit {
   onNombreInput(event: any): void {
     const value = event.target.value.toLowerCase();
     this.filteredOptions = this.allProducts.filter(option => option.nombre.toLowerCase().includes(value));
+    debugger;
   }
 
   onOptionSelected(option: any): void {

@@ -1,8 +1,4 @@
-<body class="container-flex"><!-- 
-    <header class="bg-dark text-white p-3">
-        <h1>Encabezado</h1>
-    </header>
- -->
+<body class="container-flex">
     <div class="container-fluid flexible">
         <div class="row container-cuerpo">
             <main role="main" class="col-12 col-md-12 col-lg-9 row carousel-container">
@@ -69,10 +65,10 @@
                     </form>
                     <div class="footer">
                         <div>
-                            <a [href]="">Olvide mi contraseña</a>
+                            <a [routerLink]="['/autenticacion/recuperar-pass']">Olvide mi contraseña</a>
                         </div>
                         <div>
-                            <a [href]="">Registrar una cuenta</a>
+                            <a [routerLink]="['/autenticacion/registro']">Registrar una cuenta</a>
                         </div>
                     </div>
             <br><br>

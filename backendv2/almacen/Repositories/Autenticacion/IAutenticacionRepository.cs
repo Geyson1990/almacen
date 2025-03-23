@@ -7,5 +7,7 @@ namespace almacen.Repositories.Autenticacion
     public interface IAutenticacionRepository
     {
         Task<StatusResponse<LoginResponseDto>> AutenticarUsuario(LoginRequestDto request);
+        Task<StatusResponse<long>> Registro(RegistroRequestDto request);
+        Task<StatusResponse<long>> OlvideContrasenia(OlvideContraseniaRequestDto request);
     }
 }

@@ -14,18 +14,18 @@ const routes: Routes = [
     path: 'iniciar-sesion',
     component: LoginComponent,
   },
-  // {
-  //   path: 'registro',
-  //   component: RegistroComponent,
-  // },
-  // {
-  //   path: 'recuperar-pass',
-  //   component: RecuperarPassComponent,
-  // },
+  {
+    path: 'registro',
+    component: RegistroComponent,
+  },
+  {
+    path: 'recuperar-pass',
+    component: RecuperarPassComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AutenticacionRoutingModule {}
+export class AutenticacionRoutingModule { }

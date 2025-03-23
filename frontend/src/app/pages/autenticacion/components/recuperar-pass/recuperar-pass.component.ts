@@ -37,6 +37,7 @@ export class RecuperarPassComponent implements OnInit {
   get emailFormControl(): AbstractControl { return this.recuperarPassFormGroup.get('emailFormControl'); }
 
   async submitRecuperarPass(formValue: any, submitBtn: HTMLButtonElement): Promise<void> {
+    this.funcionesMtcService.mostrarCargando();
     if (!this.recuperarPassFormGroup.valid) {
       return;
     }
@@ -50,16 +51,19 @@ export class RecuperarPassComponent implements OnInit {
       const response = await this.seguridadService.postRecuperarPass(usuarioModel).toPromise();
 
       if (response.success) {
+        this.funcionesMtcService.ocultarCargando();
         try {
-          await this.funcionesMtcService.mensajeOk(response.message);
+          await this.funcionesMtcService.mensajeOk("Se envió un correo con las credenciales de su usuario.");
           this.router.navigate(['/autenticacion/iniciar-sesion']);
           return;
         } catch (e) { }
       }
       else {
-        this.funcionesMtcService.mensajeError(response.message);
+        this.funcionesMtcService.ocultarCargando();
+        this.funcionesMtcService.mensajeError("Correo electrónico no registrado.");
       }
     } catch (e) {
+      this.funcionesMtcService.ocultarCargando();
       this.funcionesMtcService.mensajeError('Error en el servicio de recuperar contraseña');
     } finally {
       submitBtn.disabled = false;

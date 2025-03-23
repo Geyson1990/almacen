@@ -39,6 +39,7 @@ export class RegistroEntradaComponent implements OnInit {
       color: [""],
       tipo: [""],
       marca: [""],
+      talla:[""],
       fechaInicio: [""],
       fechaFin: [""],
     }, { validators: this.dateRangeValidator });

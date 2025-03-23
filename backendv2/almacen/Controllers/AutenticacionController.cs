@@ -19,5 +19,20 @@ namespace almacen.Controllers
             return Ok(respuesta);
         }
 
+        [AllowAnonymous]
+        [HttpPost("registro")]
+        public async Task<ActionResult> Registro([FromBody] RegistroRequestDto request)
+        {
+            var respuesta = await _service.Registro(request);
+            return Ok(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("olvide-pass")]
+        public async Task<ActionResult> OlvideContrasenia([FromBody] OlvideContraseniaRequestDto request)
+        {
+            var respuesta = await _service.OlvideContrasenia(request);
+            return Ok(respuesta);
+        }
     }
 }
