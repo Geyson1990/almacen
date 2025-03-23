@@ -18,11 +18,14 @@ export class NuevoProductoComponent implements OnInit {
 
   listaUnidadMedida: UnidadMedidaResponse[] = [];
   data: ProductosRequest;
+  esEditable: boolean = false;
 
   constructor(private builder: FormBuilder,
     private inventarioService: InventarioService,
     private funcionesMtcService: FuncionesMtcService,
-  ) { }
+  ) { 
+    debugger;
+  }
 
   ngOnInit(): void {
     this.buildForm();
@@ -42,7 +45,7 @@ export class NuevoProductoComponent implements OnInit {
       marca: [""],
       idUnidadMedida: ["", Validators.required],
       fechaVencimiento: [""],
-      stockInicial: [0, Validators.required],
+      stockInicial: [{ value: 0, disabled: this.id > 0 }, [Validators.required, Validators.min(0)]],
       stockMinimo: [0, Validators.required],
     });
   }
@@ -98,6 +101,8 @@ export class NuevoProductoComponent implements OnInit {
     this.inventarioService.obtenerProducto(this.id).subscribe(
       (resp: any) => {
         this.funcionesMtcService.ocultarCargando();
+        debugger;
+        if(this.id > 0)this.esEditable = true;
         this.data = resp.data;
         this.form.patchValue(this.data);
         if (this.data.fechaVencimiento) {
