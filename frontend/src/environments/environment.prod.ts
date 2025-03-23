@@ -52,9 +52,10 @@ export const environment = {
     autenticacion: {
       autenticacion: '/Autenticacion/jwt',
       login: '/Autenticacion/login',
-      registrar: '/Autenticacion/registrar',
+      registrar: '/Autenticacion/registro',
+      recuperarpass: '/Autenticacion/olvide-pass',
+
       logout: '/Autenticacion/logout',
-      recuperarpass: '/Autenticacion/recuperarpass',
       cambiarpass: '/Autenticacion/cambiarpass',
       actualizar: '/Autenticacion/actualizar',
       loginsunat: '/Autenticacion/loginsunat',
