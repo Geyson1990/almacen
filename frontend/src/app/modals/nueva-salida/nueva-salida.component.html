@@ -58,6 +58,22 @@
                 <input type="text" class="form-control" placeholder="" formControlName="personaSolicitante" >
                 <!-- <mat-error *ngIf="personaSolicitanteErrors" style="color: red;">{{ personaSolicitanteErrors }}</mat-error> -->
                 </div>
+
+                <div class="col-md-6 col-sm-6 m-b-10px">
+                    <h3>TIPO DE SALIDA<span class="text-danger">(*)</span></h3>
+                    <select class="form-select" formControlName="idTipoSalida">
+                        <option selected value="" [disabled]="true">--SELECCIONE--</option>
+                        <option *ngFor="let item of listaTipoSalida" [value]="item.idTipoSalida">{{ item.descripcion }}</option>
+                    </select>
+                    <mat-error *ngIf="tipoSalidaErrors" style="color: red;">{{ tipoSalidaErrors }}</mat-error>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 m-b-10px">
+                    <h3>N° DOCUMENTO DE SALIDA </h3>
+                <input type="text" class="form-control" placeholder="" formControlName="documentoSalida">
+                </div>
             </div>
 
         </div>

@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../../models/api-response';
 import { EliminarProductoRequest } from '../../models/Inventario/Producto';
 import { IngresoRequest } from '../../models/Inventario/Ingreso';
-import { AreaSolicitanteResponse, EliminarSalidaRequest, SalidaRequest } from '../../models/Inventario/Salida';
+import { AreaSolicitanteResponse, EliminarSalidaRequest, SalidaRequest, TipoSalidaResponse } from '../../models/Inventario/Salida';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class SalidaService {
   private urlObtenerSalida: string = '';
   private urlEliminarSalida: string = '';
   private urlAreasSolicitantes:string = '';
+  private urlListarTipoSalida: string = '';
 
   constructor(private httpClient: HttpClient) {
     this.urlListarSalida = `${environment.baseUrlAPI}${environment.endPoint.listarSalida}`;
@@ -24,6 +25,7 @@ export class SalidaService {
     this.urlObtenerSalida = `${environment.baseUrlAPI}${environment.endPoint.obtenerSalida}`;
     this.urlEliminarSalida = `${environment.baseUrlAPI}${environment.endPoint.eliminarSalida}`;
     this.urlAreasSolicitantes = `${environment.baseUrlAPI}${environment.endPoint.areasSolicitantes}`;
+    this.urlListarTipoSalida = `${environment.baseUrlAPI}${environment.endPoint.listarTipoSalida}`;
   }
 
   getAll<T>(): Observable<ApiResponse<T>> {
@@ -52,4 +54,11 @@ export class SalidaService {
     return this.httpClient.get<ApiResponse<AreaSolicitanteResponse[]>>(`${this.urlAreasSolicitantes}`);
   }
 
+  listarTipoSalida<T>(): Observable<ApiResponse<T>> {
+    return this.httpClient.get<ApiResponse<T>>(`${this.urlListarTipoSalida}`);
+  }
+
+  getTipoSalida(): Observable<ApiResponse<TipoSalidaResponse[]>> {
+      return this.httpClient.get<ApiResponse<TipoSalidaResponse[]>>(`${this.urlListarTipoSalida}`);
+    }
 }

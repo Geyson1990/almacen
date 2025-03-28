@@ -2,7 +2,7 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
-import { ProductosRequest, UnidadMedidaResponse } from 'src/app/core/models/Inventario/Producto';
+import { ProductosRequest, TipoEntradaResponse, UnidadMedidaResponse } from 'src/app/core/models/Inventario/Producto';
 import { InventarioService } from 'src/app/core/services/inventario/inventario.service';
 import { IngresoService } from 'src/app/core/services/inventario/ingreso.service';
 import { IngresoRequest } from 'src/app/core/models/Inventario/Ingreso';
@@ -19,6 +19,7 @@ export class NuevoIngresoComponent implements OnInit {
   @Input() id: number;
 
   listaUnidadMedida: UnidadMedidaResponse[] = [];
+  listaTipoEntrada: TipoEntradaResponse[] = [];
   data: ProductosRequest;
   allProducts: any[] = [];
   filteredOptions: any[] = [];
@@ -47,7 +48,9 @@ export class NuevoIngresoComponent implements OnInit {
     this.form = this.builder.group({
       nombre: ["", Validators.required],
       idProducto: [""],
-      cantidad: ["", Validators.required]
+      cantidad: ["", Validators.required],
+      ordenCompra: [""],
+      idTipoEntrada: ["", Validators.required],
     });
   }
 
@@ -73,6 +76,15 @@ export class NuevoIngresoComponent implements OnInit {
       : '';
   }
 
+  get tipoEntrada() {
+    return this.form.get('idTipoEntrada') as FormControl;
+  }
+
+  get tipoEntradaErrors() {
+    return (this.tipoEntrada.touched || this.tipoEntrada.dirty) && this.tipoEntrada.hasError('required')
+      ? 'Obligatorio'
+      : '';
+  }
   //#endregion
 
   private getData(): void {
@@ -112,7 +124,9 @@ export class NuevoIngresoComponent implements OnInit {
       idEntrada: this.id,
       idProducto: this.form.get('idProducto').value,
       cantidad: this.form.get('cantidad').value,
-      fecha: null
+      fecha: null,
+      idTipoEntrada: this.form.get('idTipoEntrada').value,
+      ordenCompra: this.form.get('ordenCompra').value
     }
 
     this.ingresoService.postGrabarIngreso(datos).subscribe(
@@ -140,12 +154,15 @@ export class NuevoIngresoComponent implements OnInit {
     this.inventarioService.getUnidadesMedida().subscribe(response => {
       this.listaUnidadMedida = response.data;
     });
+
+    this.inventarioService.getTipoEntrada().subscribe(response => {
+      this.listaTipoEntrada = response.data;
+    });
   }
 
   onNombreInput(event: any): void {
     const value = event.target.value.toLowerCase();
     this.filteredOptions = this.allProducts.filter(option => option.nombre.toLowerCase().includes(value));
-    debugger;
   }
 
   onOptionSelected(option: any): void {

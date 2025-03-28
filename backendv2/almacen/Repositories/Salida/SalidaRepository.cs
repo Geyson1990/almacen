@@ -35,7 +35,9 @@ namespace almacen.Repositories.Salida
                                     p.FECHA_VENCIMIENTO fechaVencimiento,
 	                                a.ID idAreaSolicitante,
 	                                a.NOMBRE areaSolicitante,
-	                                rs.PERSONA_SOLICITANTE personaSolicitante
+	                                rs.PERSONA_SOLICITANTE personaSolicitante,
+                                    rs.ID_TIPO_SALIDA idTipoSalida,
+                                    rs.ORDEN_SALIDA documentoSalida
                                 FROM dbo.registro_salida rs INNER JOIN
                                      dbo.producto p ON rs.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                      dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
@@ -67,7 +69,9 @@ namespace almacen.Repositories.Salida
                                    ,[CANTIDAD]
                                    ,[ID_AREA_SOLICITANTE]
                                    ,[PERSONA_SOLICITANTE]
-                                   ,[ESTADO_REGISTRO])
+                                   ,[ESTADO_REGISTRO]
+                                   ,[ID_TIPO_SALIDA]
+                                   ,[ORDEN_SALIDA])
                              OUTPUT INSERTED.ID_SALIDA
                              VALUES
                                    (GETDATE()
@@ -75,7 +79,9 @@ namespace almacen.Repositories.Salida
                                    ,@Cantidad
                                    ,@IdAreaSolicitante
                                    ,@PersonaSolicitante
-                                   ,1);
+                                   ,1
+                                   ,@IdTipoSalida
+                                   ,@OrdenSalida);
 
                             UPDATE producto
                             SET CANTIDAD = ISNULL(CANTIDAD,0) + @Cantidad
@@ -88,6 +94,8 @@ namespace almacen.Repositories.Salida
                                SET [CANTIDAD] = @Cantidad
                                   ,[ID_AREA_SOLICITANTE] = @IdAreaSolicitante
                                   ,[PERSONA_SOLICITANTE] = @PersonaSolicitante
+                                  ,[ID_TIPO_SALIDA] = @IdTipoSalida
+                                  ,[ORDEN_SALIDA] = @OrdenSalida
                              WHERE [ID_SALIDA] = @Id
 
                              UPDATE producto
@@ -101,6 +109,8 @@ namespace almacen.Repositories.Salida
                 param.Add("@Cantidad", request.cantidad);
                 param.Add("@IdAreaSolicitante", request.idAreaSolicitante);
                 param.Add("@PersonaSolicitante", request.personaSolicitante);
+                param.Add("@IdTipoSalida", request.idTipoSalida);
+                param.Add("@OrdenSalida", request.documentoSalida);
 
                 long response = await _conn.Connection.ExecuteScalarAsync<long>(sql, param);
                 return Message.Successful(response);
@@ -150,7 +160,9 @@ namespace almacen.Repositories.Salida
 	                                re.ID_PRODUCTO idProducto,
 	                                re.CANTIDAD cantidad,
                                     re.ID_AREA_SOLICITANTE idAreaSolicitante,
-                                    re.PERSONA_SOLICITANTE personaSolicitante
+                                    re.PERSONA_SOLICITANTE personaSolicitante,
+                                    re.ID_TIPO_SALIDA idTipoSalida,
+                                    re.ORDEN_SALIDA documentoSalida
                                 FROM dbo.registro_salida re INNER JOIN
                                 dbo.producto p ON re.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                 dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA
@@ -249,5 +261,26 @@ namespace almacen.Repositories.Salida
             }
 
         }
+
+        public async Task<StatusResponse<IEnumerable<ListarTipoSalidaResponse>>> ListarTipoSalida()
+        {
+            try
+            {
+                string sql = @"SELECT 
+                                    [ID_TIPO_SALIDA] idTipoSalida
+                                   ,[DESCRIPCION] descripcion
+                              FROM [dbo].[tipo_salida]
+                              WHERE ESTADO_REGISTRO = 1";
+
+                var response = await _conn.Connection.QueryAsync<ListarTipoSalidaResponse>(sql, null) ?? throw new Exception("Lista no válido");
+                return Successful(response);
+            }
+            catch (Exception ex)
+            {
+                return Exception<IEnumerable<ListarTipoSalidaResponse>>(ex);
+            }
+
+        }
+
     }
 }

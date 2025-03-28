@@ -14,5 +14,6 @@ namespace almacen.Repositories.Salida
         Task<StatusResponse<ObtenerSalidaResponse>> ObtenerSalida(long idEntrada);
         Task<StatusResponse<long>> EliminarSalida(long id);
         Task<StatusResponse<IEnumerable<ListarAreasSolicitantesResponse>>> ListarAreasSolicitantes();
+        Task<StatusResponse<IEnumerable<ListarTipoSalidaResponse>>> ListarTipoSalida();
     }
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../../models/api-response';
-import { EliminarProductoRequest, ProductosRequest, UnidadMedidaResponse } from '../../models/Inventario/Producto';
+import { EliminarProductoRequest, ProductosRequest, TipoEntradaResponse, UnidadMedidaResponse } from '../../models/Inventario/Producto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class InventarioService {
   private urlGrabarProductos: string = '';
   private urlObtenerProducto: string = '';
   private urlEliminarProducto: string = '';
+  private urlListarTipoEntrada: string = '';
   private urlArchivo: string = '';
   private urlVisorPdf: string = '';
 
@@ -24,6 +25,7 @@ export class InventarioService {
     this.urlGrabarProductos = `${environment.baseUrlAPI}${environment.endPoint.grabarProductos}`;
     this.urlObtenerProducto = `${environment.baseUrlAPI}${environment.endPoint.obtenerProducto}`;
     this.urlEliminarProducto = `${environment.baseUrlAPI}${environment.endPoint.eliminarProducto}`;
+    this.urlListarTipoEntrada = `${environment.baseUrlAPI}${environment.endPoint.listarTipoIngreso}`;
   }
 
   getAll<T>(): Observable<ApiResponse<T>> {
@@ -49,4 +51,7 @@ export class InventarioService {
     return this.httpClient.post<ApiResponse<T>>(`${this.urlEliminarProducto}`, data);
   }
 
+  getTipoEntrada(): Observable<ApiResponse<TipoEntradaResponse[]>> {
+    return this.httpClient.get<ApiResponse<TipoEntradaResponse[]>>(`${this.urlListarTipoEntrada}`);
+  }
 }

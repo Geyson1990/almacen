@@ -1,9 +1,9 @@
 using almacen.Repositories.Autenticacion;
 using almacen.Repositories.Ingreso;
 using almacen.Repositories.Inventario;
+using almacen.Repositories.Reporte;
 using almacen.Repositories.Salida;
 using almacen.Utils;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,7 @@ builder.Services.AddTransient<IAutenticacionRepository, AutenticacionRepository>
 builder.Services.AddTransient<IInventarioRepository, InventarioRepository>();
 builder.Services.AddTransient<IIngresoRepository, IngresoRepository>();
 builder.Services.AddTransient<ISalidaRepository, SalidaRepository>();
+builder.Services.AddTransient<IReporteRepository, ReporteRepository>();
 
 var valuesSection = builder.Configuration
                 .GetSection("Cors:AllowedHost")

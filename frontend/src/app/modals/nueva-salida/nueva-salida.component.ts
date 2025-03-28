@@ -6,7 +6,7 @@ import { ProductosRequest, UnidadMedidaResponse } from 'src/app/core/models/Inve
 import { InventarioService } from 'src/app/core/services/inventario/inventario.service';
 import { IngresoService } from 'src/app/core/services/inventario/ingreso.service';
 import { IngresoRequest } from 'src/app/core/models/Inventario/Ingreso';
-import { AreaSolicitanteResponse, SalidaRequest } from 'src/app/core/models/Inventario/Salida';
+import { AreaSolicitanteResponse, SalidaRequest, TipoSalidaResponse } from 'src/app/core/models/Inventario/Salida';
 import { SalidaService } from 'src/app/core/services/inventario/salida.service';
 
 @Component({
@@ -21,6 +21,7 @@ export class NuevaSalidaComponent implements OnInit {
   @Input() id: number;
 
   listaAreasSolicitantes: AreaSolicitanteResponse[] = [];
+  listaTipoSalida: TipoSalidaResponse[] = [];
   data: ProductosRequest;
   allProducts: any[] = [];
   filteredOptions: any[] = [];
@@ -52,6 +53,8 @@ export class NuevaSalidaComponent implements OnInit {
       cantidad: ["", Validators.required],
       idAreaSolicitante: [""],
       personaSolicitante: [""],
+      documentoSalida:[""],
+      idTipoSalida: ["", Validators.required],
     });
   }
 
@@ -73,6 +76,16 @@ export class NuevaSalidaComponent implements OnInit {
 
   get cantidadErrors() {
     return (this.cantidad.touched || this.cantidad.dirty) && this.cantidad.hasError('required')
+      ? 'Obligatorio'
+      : '';
+  }
+
+  get tipoSalida() {
+    return this.form.get('idTipoSalida') as FormControl;
+  }
+
+  get tipoSalidaErrors() {
+    return (this.tipoSalida.touched || this.tipoSalida.dirty) && this.tipoSalida.hasError('required')
       ? 'Obligatorio'
       : '';
   }
@@ -114,6 +127,8 @@ export class NuevaSalidaComponent implements OnInit {
       fecha: null,
       idAreaSolicitante: this.form.get('idAreaSolicitante').value,
       personaSolicitante: this.form.get('personaSolicitante').value,
+      documentoSalida: this.form.get('documentoSalida').value,
+      idTipoSalida: this.form.get('idTipoSalida').value,
     }
 
     this.salidaService.postGrabarSalida(datos).subscribe(
@@ -140,6 +155,10 @@ export class NuevaSalidaComponent implements OnInit {
   private loadListas() {
     this.salidaService.areasSolicitantes().subscribe(response => {
       this.listaAreasSolicitantes = response.data as AreaSolicitanteResponse[];
+    });
+
+    this.salidaService.getTipoSalida().subscribe(response => {
+      this.listaTipoSalida = response.data as TipoSalidaResponse[];
     });
   }
 

@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PaginationModel } from 'src/app/core/models/Pagination';
 import { SeguridadService } from 'src/app/core/services/seguridad.service';
 import { FuncionesMtcService } from 'src/app/core/services/funciones-mtc.service';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { DatosUsuarioLogin } from 'src/app/core/models/Autenticacion/DatosUsuarioLogin';
-import { GlobalService } from 'src/app/core/services/mapas/global.service';
-import { InventarioService } from '../../../../core/services/inventario/inventario.service';
-import { SalidaService } from 'src/app/core/services/inventario/salida.service';
-import { NuevaSalidaComponent } from 'src/app/modals/nueva-salida/nueva-salida.component';
-import { EliminarSalidaRequest } from 'src/app/core/models/Inventario/Salida';
+import { ReporteService } from 'src/app/core/services/inventario/reporte.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reporte-inventario',
@@ -17,101 +12,95 @@ import { EliminarSalidaRequest } from 'src/app/core/models/Inventario/Salida';
   styleUrls: ['./reporte-inventario.component.css']
 })
 export class ReporteInventarioComponent implements OnInit {
-
-  tipoPersona: string;
-  tipoDocumento: string;
-  NDocumento: string;
-  Nombres: string;
-  Ruc: string;
-  tipoNombres: string;
-  datosUsuarioLogin: DatosUsuarioLogin;
-  listadoBandejaBase = [];
-  listadoBandeja = [];
-  BandejaSize = 1;
-  page = 1;
-  pageSize = 50;
-  filtrarTexto: string = "";
-  filtrarEstado: string = "ALL";
+  form: FormGroup;
 
   constructor(
+    private builder: FormBuilder,
     private seguridadService: SeguridadService,
     private modalService: NgbModal,
     private funcionesMtcService: FuncionesMtcService,
     private route: Router,
-    private globalService: GlobalService,
-    private salidaService: SalidaService
+    private reporteService: ReporteService,
   ) {
-    this.datosUsuarioLogin = new DatosUsuarioLogin();
-    this.datosUsuarioLogin.nombreCompleto = this.seguridadService.getUserName();
-    this.datosUsuarioLogin.nroDocumento = this.seguridadService.getNumDoc();
-    this.datosUsuarioLogin.razonSocial = this.seguridadService.getUserName();
   }
 
   ngOnInit(): void {
-    this.cargarBandeja();
+    this.buildForm();
   }
 
-  cargarBandeja() {
+  private buildForm(): void {
+    this.form = this.builder.group({
+      idTipoReporte: ["", Validators.required],
+      fechaInicio: ["", Validators.required],
+      fechaFin: ["", Validators.required],
+    });
+  }
 
-    this.funcionesMtcService.mostrarCargando();
-    this.salidaService.getAll().subscribe(
-      (resp: any) => {
-        this.funcionesMtcService.ocultarCargando();
-        this.listadoBandejaBase = resp.data;
-        this.listadoBandeja = resp.data;
-        this.BandejaSize = resp.data.length;
-      },
-      error => {
-        this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
-        this.funcionesMtcService.ocultarCargando();
+  //#region Validaciones
+
+  get idTipoReporte() {
+    return this.form.get('idTipoReporte') as FormControl;
+  }
+
+  get idTipoReporteErrors() {
+    return (this.idTipoReporte.touched || this.idTipoReporte.dirty) && this.idTipoReporte.hasError('required')
+      ? 'Obligatorio'
+      : '';
+  }
+
+  get fechaInicio() {
+    return this.form.get('fechaInicio') as FormControl;
+  }
+
+  get fechaInicioErrors() {
+    return (this.fechaInicio.touched || this.fechaInicio.dirty) && this.fechaInicio.hasError('required')
+      ? 'Obligatorio'
+      : '';
+  }
+
+  get fechaFin() {
+    return this.form.get('fechaFin') as FormControl;
+  }
+
+  get fechaFinErrors() {
+    return (this.fechaFin.touched || this.fechaFin.dirty) && this.fechaFin.hasError('required')
+      ? 'Obligatorio'
+      : '';
+  }
+  //#endregion
+
+  onReset() {
+    this.form.reset();
+    this.form.controls.idTipoReporte.setValue('');
+    this.form.controls.fechaInicio.setValue('');
+    this.form.controls.fechaFin.setValue('');
+  }
+
+  onDownload(form: FormGroup) { 
+    if (this.form.invalid) {
+      // Mostrar mensajes de error si los campos son inválidos
+      if (this.idTipoReporte.invalid) {
+        this.idTipoReporte.markAsTouched();
       }
-    );
-  }
-
-  refreshCountries(pagination: PaginationModel) {
-  }
-
-  onChangeFilterByState() { }
-
-  onChangeFilter(event: any) { }
-
-  onAddRegister(item?: any) {
-    const modalOptions: NgbModalOptions = {
-      size: 'lg',
-      centered: true,
-      ariaLabelledBy: 'modal-basic-title'
+      if (this.fechaInicio.invalid) {
+        this.fechaInicio.markAsTouched();
+      }
+      if (this.fechaFin.invalid) {
+        this.fechaFin.markAsTouched();
+      }
+      this.funcionesMtcService.mensajeError('Por favor, complete todos los campos obligatorios.');
+      return;
+    }
+    
+    this.funcionesMtcService.mostrarCargando();
+    const { idTipoReporte, fechaInicio, fechaFin } = form.value;
+    const params = {
+      fechaInicio: fechaInicio,
+      fechaFin: fechaFin
     };
-
-    const modalRef = this.modalService.open(NuevaSalidaComponent, modalOptions);
-    modalRef.componentInstance.title = item ? "Editar Salida" : "Nueva Salida";
-    modalRef.componentInstance.id = item?.idSalida || 0;
-
-    modalRef.result.then(
-      (result) => {
-        this.cargarBandeja();
-      },
-      (reason) => {// Maneja la cancelación aquí
-        this.cargarBandeja();
-      });
+    this.reporteService.postReporteKardex(params, idTipoReporte);
+    this.funcionesMtcService.ocultarCargando();
   }
 
-  onDelete(item?:any){
-    debugger;
-    this.funcionesMtcService.mensajeConfirmar(`¿Está seguro de eliminar el registro seleccionado? \n`)
-          .then(() => {
-            let request: EliminarSalidaRequest = {
-              id: item.idSalida
-            }
-            this.salidaService.eliminarSalida(request).subscribe(
-              (resp: any) => {
-                this.funcionesMtcService.mensajeOk("Se eliminó el registro seleccionado").then(()=>this.cargarBandeja());
-                
-              },
-              error => {
-                this.funcionesMtcService.mensajeError('No se pudo eliminar el registro seleccionado');
-              }
-            );
-          });
-  }
 }
 

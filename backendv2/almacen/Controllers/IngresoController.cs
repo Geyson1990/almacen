@@ -33,9 +33,7 @@ namespace almacen.Controllers
         [HttpPost("grabar-ingreso")]
         public async Task<ActionResult> GrabarIngreso([FromBody]GrabarIngresoRequest request)
         {
-            var respuesta = await _service.GrabarIngreso(request);
-            //if(respuesta.Data > 0) 
-            //    await _inventario.ActualizarStockProducto(request.idProducto, request.cantidad);            
+            var respuesta = await _service.GrabarIngreso(request);           
             return Ok(respuesta);
         }
 
@@ -47,6 +45,12 @@ namespace almacen.Controllers
             return Ok(respuesta);
         }
 
-
+        [AllowAnonymous]
+        [HttpGet("listar-tipo-ingreso")]
+        public async Task<ActionResult> ListarTipoIngreso()
+        {
+            var respuesta = await _service.ListarTipoIngreso();
+            return Ok(respuesta);
+        }
     }
 }

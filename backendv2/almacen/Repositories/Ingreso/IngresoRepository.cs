@@ -33,7 +33,9 @@ namespace almacen.Repositories.Ingreso
 	                            p.ID_UNIDAD_MEDIDA idUnidadMedida,
 	                            um.NOMBRE nombreUnidadMedida, 
 	                            re.CANTIDAD cantidad, 
-	                            p.FECHA_VENCIMIENTO fechaVencimiento
+	                            p.FECHA_VENCIMIENTO fechaVencimiento,
+                                re.ID_TIPO_ENTRADA idTipoEntrada,
+                                re.ORDEN_COMPRA ordenCompra
                             FROM dbo.registro_entrada re INNER JOIN
                                  dbo.producto p ON re.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                  dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA
@@ -68,14 +70,18 @@ namespace almacen.Repositories.Ingreso
                                    ,[ID_PRODUCTO]
                                    ,[CANTIDAD]
                                    ,[FECHA_VENCIMIENTO]
-                                   ,[ESTADO_REGISTRO])
+                                   ,[ESTADO_REGISTRO]
+                                   ,[ID_TIPO_ENTRADA]
+                                   ,[ORDEN_COMPRA])
                              OUTPUT INSERTED.ID_ENTRADA
                              VALUES
                                    (GETDATE()
                                    ,@IdProducto
                                    ,@Cantidad
                                    ,NULL
-                                   ,1);
+                                   ,1
+                                   ,@IdTipoEntrada
+                                   ,@OrdenCompra);
 
 
                             UPDATE producto
@@ -86,7 +92,9 @@ namespace almacen.Repositories.Ingreso
                 else
                 {
                     sql += @"UPDATE [dbo].[registro_entrada]
-                               SET [CANTIDAD] = CANTIDAD + (@CANTIDAD - CANTIDAD)
+                               SET [CANTIDAD] = CANTIDAD + (@CANTIDAD - CANTIDAD),
+                                ID_TIPO_ENTRADA = @IdTipoEntrada,
+                                ORDEN_COMPRA = @OrdenCompra
                              WHERE [ID_ENTRADA] = @IdEntrada;
 
                             UPDATE producto
@@ -99,6 +107,8 @@ namespace almacen.Repositories.Ingreso
                 param.Add("@IdEntrada", request.idEntrada);
                 param.Add("@IdProducto", request.idProducto);
                 param.Add("@Cantidad", request.cantidad);
+                param.Add("@IdTipoEntrada", request.idTipoEntrada);
+                param.Add("@OrdenCompra", request.ordenCompra);
 
                 long response = await _conn.Connection.ExecuteScalarAsync<long>(sql, param);
                 return Message.Successful(response);
@@ -117,12 +127,14 @@ namespace almacen.Repositories.Ingreso
                 string sql = @"INSERT INTO [dbo].[registro_entrada]
                                    ([FECHA]
                                    ,[ID_PRODUCTO]
-                                   ,[CANTIDAD])
+                                   ,[CANTIDAD]
+                                   ,[ID_TIPO_ENTRADA])
                             OUTPUT INSERTED.ID_ENTRADA
                              VALUES
                                    (GETDATE()
                                    ,@ID_PRODUCTO
-                                   ,@CANTIDAD)";
+                                   ,@CANTIDAD
+                                   ,5)";
 
                 var param = new DynamicParameters();
                 param.Add("@ID_PRODUCTO", request.idProducto);
@@ -146,7 +158,9 @@ namespace almacen.Repositories.Ingreso
                 string sql = @"SELECT        
 	                                re.ID_ENTRADA idEntrada, 
 	                                re.ID_PRODUCTO idProducto,
-	                                re.CANTIDAD cantidad
+	                                re.CANTIDAD cantidad,
+                                    re.ID_TIPO_ENTRADA idTipoEntrada,
+                                    re.ORDEN_COMPRA ordenCompra
                                 FROM dbo.registro_entrada re INNER JOIN
                                 dbo.producto p ON re.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                 dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA
@@ -220,7 +234,25 @@ namespace almacen.Repositories.Ingreso
             }
         }
 
-        
+        public async Task<StatusResponse<IEnumerable<ListarTipoIngresoResponse>>> ListarTipoIngreso()
+        {
+            try
+            {
+                string sql = @"SELECT 
+                                    [ID_TIPO_ENTRADA] idTipoEntrada
+                                   ,[DESCRIPCION] descripcion
+                              FROM [dbo].[tipo_entrada]
+                              WHERE ESTADO_REGISTRO = 1 AND ID_TIPO_ENTRADA NOT IN (5)";
+
+                var response = await _conn.Connection.QueryAsync<ListarTipoIngresoResponse>(sql, null) ?? throw new Exception("Listado no válido");
+                return Successful(response);
+            }
+            catch (Exception ex)
+            {
+                return Exception<IEnumerable<ListarTipoIngresoResponse>>(ex);
+            }
+
+        }
 
     }
 }

@@ -15,23 +15,19 @@ export class IngresoService {
   private urlGrabarIngreso: string = '';
   private urlObtenerIngreso: string = '';
   private urlEliminarIngreso: string = '';
-  private urlArchivo: string = '';
-  private urlVisorPdf: string = '';
+  private urlListarTipoIngreso: string = '';
 
   constructor(private httpClient: HttpClient) {
     this.urlListarIngreso = `${environment.baseUrlAPI}${environment.endPoint.listarIngreso}`;
     this.urlGrabarIngreso = `${environment.baseUrlAPI}${environment.endPoint.grabarIngreso}`;
     this.urlObtenerIngreso = `${environment.baseUrlAPI}${environment.endPoint.obtenerIngreso}`;
     this.urlEliminarIngreso = `${environment.baseUrlAPI}${environment.endPoint.eliminarIngreso}`;
+    this.urlListarTipoIngreso = `${environment.baseUrlAPI}${environment.endPoint.listarTipoIngreso}`;
   }
 
   getAll<T>(): Observable<ApiResponse<T>> {
     return this.httpClient.get<ApiResponse<T>>(`${this.urlListarIngreso}`);
   }
-
-  // getUnidadesMedida(): Observable<ApiResponse<UnidadMedidaResponse[]>> {
-  //   return this.httpClient.get<ApiResponse<UnidadMedidaResponse[]>>(`${this.urlListarUnidadesMedida}`);
-  // }
 
   postGrabarIngreso<T>(data: IngresoRequest): Observable<ApiResponse<T>> {
     return this.httpClient.post<ApiResponse<T>>(`${this.urlGrabarIngreso}`, data);
@@ -44,8 +40,11 @@ export class IngresoService {
   }
 
   eliminarIngreso<T>(data: EliminarIngresoRequest): Observable<ApiResponse<T>> {
-    debugger;
     return this.httpClient.post<ApiResponse<T>>(`${this.urlEliminarIngreso}`, data);
+  }
+
+  listarTipoIngreso<T>(): Observable<ApiResponse<T>> {
+    return this.httpClient.get<ApiResponse<T>>(`${this.urlListarTipoIngreso}`);
   }
 
 }

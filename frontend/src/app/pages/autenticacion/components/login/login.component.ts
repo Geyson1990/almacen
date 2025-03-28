@@ -76,9 +76,9 @@ export class LoginComponent implements OnInit {
 		} as LoginRequestModel;
 
 		try {
-			debugger;
+
 			const response = await this.seguridadService.postLogin(model).toPromise();
-debugger;
+
 			if (response.success) {
 				sessionStorage.setItem('usuario', JSON.stringify(response.data));
 				sessionStorage.setItem('accessToken', response.data.accessToken);

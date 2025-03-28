@@ -13,5 +13,6 @@ namespace almacen.Repositories.Ingreso
         Task<StatusResponse<long>> InsertarStockInicial(GrabarStockInicialRequest request);
         Task<StatusResponse<ObtenerIngresoResponse>> ObtenerIngreso(long idEntrada);
         Task<StatusResponse<long>> EliminarIngreso(long id);
+        Task<StatusResponse<IEnumerable<ListarTipoIngresoResponse>>> ListarTipoIngreso();
     }
 }

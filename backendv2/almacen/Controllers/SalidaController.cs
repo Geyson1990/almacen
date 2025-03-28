@@ -53,5 +53,13 @@ namespace almacen.Controllers
             return Ok(respuesta);
         }
 
+        [AllowAnonymous]
+        [HttpGet("listar-tipo-salida")]
+        public async Task<ActionResult> ListarTipoSalida()
+        {
+            var respuesta = await _service.ListarTipoSalida();
+            return Ok(respuesta);
+        }
+
     }
 }

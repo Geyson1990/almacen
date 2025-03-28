@@ -7,5 +7,7 @@
         public int cantidad { get; set; }
         public long idAreaSolicitante { get; set; }
         public string personaSolicitante { get; set; }
+        public int idTipoSalida { get; set; }
+        public string documentoSalida { get; set; }
     }
 }

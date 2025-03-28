@@ -19,5 +19,7 @@
        // public int estadoStock { get; set; }
         public DateTime? fechaVencimiento { get; set; }
         //public int estado { get; set; }
+        public int idTipoEntrada { get; set; }
+        public string ordenCompra { get; set; }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace almacen.Models.Salida
+﻿namespace almacen.Models.Reporte
 {
-    public class ListarSalidaResponse
+    public class ReporteSalidaResponse
     {
         public long registro { get; set; }
         public DateTime? fecha { get; set; }
@@ -16,7 +16,7 @@
         public int idUnidadMedida { get; set; }
         public string? nombreUnidadMedida { get; set; }
         public long cantidad { get; set; }
-       // public int estadoStock { get; set; }
+        // public int estadoStock { get; set; }
         public DateTime? fechaVencimiento { get; set; }
         //public int estado { get; set; }
         public long idAreaSolicitante { get; set; }

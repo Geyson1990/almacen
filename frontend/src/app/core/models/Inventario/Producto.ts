@@ -22,3 +22,8 @@ export interface ProductosRequest{
 export interface EliminarProductoRequest{
     id:number;
 }
+
+export interface TipoEntradaResponse{
+    idTipoEntrada: number;
+    descripcion: string;
+}

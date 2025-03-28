@@ -25,13 +25,18 @@ export const environment = {
     grabarIngreso: '/Ingreso/grabar-ingreso',
     obtenerIngreso: '/Ingreso/obtener-ingreso',
     eliminarIngreso: '/Ingreso/eliminar-ingreso',
-
+    listarTipoIngreso: '/Ingreso/listar-tipo-ingreso',
 
     listarSalida: '/Salida/listar-salida',
     grabarSalida: '/Salida/grabar-salida',
     obtenerSalida: '/Salida/obtener-salida',
     eliminarSalida: '/Salida/eliminar-salida',
     areasSolicitantes: '/Salida/area-solicitante',
+    listarTipoSalida: '/Salida/listar-tipo-salida',
+
+    reporteKardex: '/Reporte/reporte-kardex',
+    reporteKardexSalida: '/Reporte/reporte-salida',
+    reporteKardexEntrada: '/Reporte/reporte-ingreso',
 
     anexo: '/Anexo',
     anexoTramite: '/Anexo/tramite',
