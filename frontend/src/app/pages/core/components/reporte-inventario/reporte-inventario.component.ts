@@ -98,7 +98,7 @@ export class ReporteInventarioComponent implements OnInit {
       fechaInicio: fechaInicio,
       fechaFin: fechaFin
     };
-    this.reporteService.postReporteKardex(params, idTipoReporte);
+    this.reporteService.postReporteKardex(params, parseInt(idTipoReporte));
     this.funcionesMtcService.ocultarCargando();
   }
 

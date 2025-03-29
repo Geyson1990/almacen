@@ -92,7 +92,7 @@ namespace almacen.Repositories.Reporte
                                  dbo.producto p ON re.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                  dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA
                             WHERE re.ESTADO_REGISTRO = 1
-                            AND FECHA BETWEEN @FechaInicio AND @FechaFin
+                            AND re.FECHA BETWEEN @FechaInicio AND @FechaFin
                             ORDER BY p.ID_PRODUCTO, re.FECHA;";
 
                 var parameters = new DynamicParameters();
@@ -140,8 +140,8 @@ namespace almacen.Repositories.Reporte
                                      dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
 	                                 dbo.area_solicitante a ON rs.ID_AREA_SOLICITANTE = a.ID
                                 WHERE rs.ESTADO_REGISTRO = 1
-                            AND FECHA BETWEEN @FechaInicio AND @FechaFin
-                            ORDER BY p.ID_PRODUCTO, re.FECHA;";
+                            AND rs.FECHA BETWEEN @FechaInicio AND @FechaFin
+                            ORDER BY p.ID_PRODUCTO, rs.FECHA;";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("@FechaInicio", request.fechaInicio);
