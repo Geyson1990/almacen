@@ -218,5 +218,6 @@ namespace almacen.Controllers
                 }
             }
         }
+
     }
 }
