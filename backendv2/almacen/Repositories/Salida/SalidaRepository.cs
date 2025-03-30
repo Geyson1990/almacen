@@ -84,7 +84,7 @@ namespace almacen.Repositories.Salida
                                    ,@OrdenSalida);
 
                             UPDATE producto
-                            SET CANTIDAD = ISNULL(CANTIDAD,0) + @Cantidad
+                            SET CANTIDAD = ISNULL(CANTIDAD,0) - @Cantidad
                             WHERE ID_PRODUCTO = @IdProducto;
                             ";
                 }
