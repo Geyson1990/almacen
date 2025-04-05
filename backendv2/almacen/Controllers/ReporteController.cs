@@ -61,6 +61,31 @@ namespace almacen.Controllers
             return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ReporteSalida.xlsx");
         }
 
+        [AllowAnonymous]
+        [HttpPost("reporte-kardex-pdf")]
+        public async Task<IActionResult> ReporteKardexPdf([FromBody] ReporteKardexRequest request)
+        {
+            var respuesta = await _service.DescargarReporteDetallado(request);
+            return Ok(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("reporte-ingreso-pdf")]
+        public async Task<IActionResult> ReporteIngresoPdf([FromBody] ReporteKardexRequest request)
+        {
+            var respuesta = await _service.DescargarReporteIngreso(request);
+            return Ok(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("reporte-salida-pdf")]
+        public async Task<IActionResult> ReporteSalidaPdf([FromBody] ReporteKardexRequest request)
+        {
+            var respuesta = await _service.DescargarReporteSalida(request);
+            return Ok(respuesta);
+        }
+
+
         private byte[] descargarReporteKardex(IEnumerable<ReporteKardexResponse> request)
         {
             using (var workbook = new XLWorkbook())
@@ -218,5 +243,6 @@ namespace almacen.Controllers
                 }
             }
         }
+
     }
 }
