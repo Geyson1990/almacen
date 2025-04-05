@@ -12,6 +12,8 @@ using Document = iText.Layout.Document;
 using Table = iText.Layout.Element.Table;
 using iText.Kernel.Colors;
 using iText.Layout.Borders;
+using Org.BouncyCastle.Utilities;
+
 
 namespace almacen.Repositories.Reporte
 {
@@ -52,7 +54,7 @@ namespace almacen.Repositories.Reporte
                                         rs.ID_PRODUCTO, 
                                         rs.FECHA, 
                                         'SALIDA' AS TIPO_MOVIMIENTO, 
-                                        -rs.CANTIDAD AS CANTIDAD,
+                                        rs.CANTIDAD AS CANTIDAD,
                                         rs.ORDEN_SALIDA AS DETALLE
                                     FROM registro_salida rs
                                 ) AS m
@@ -167,11 +169,17 @@ namespace almacen.Repositories.Reporte
 
         }
 
-        public async Task<StatusResponse<ReporteKardexResponse>> DescargarDocumento(ReporteKardexRequest request)
+        public async Task<StatusResponse<string>> DescargarReporteDetallado(ReporteKardexRequest request)
         {
             try
             {
                 var solicitud = await ReporteKardex(request);
+                var productos = solicitud.Data.Select(x => new ReporteProductoResponse
+                {
+                    idProducto = x.idProducto,
+                    producto = x.producto
+                }).Distinct();
+
 
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
@@ -179,182 +187,264 @@ namespace almacen.Repositories.Reporte
                     {
                         using (PdfDocument pdf = new PdfDocument(writer))
                         {
+                            pdf.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
                             Document documento = new Document(pdf);
                             documento.SetMargins(20, 50, 20, 50);
 
                             PdfFont fuenteTitulo = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
                             PdfFont fuenteTexto = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
 
-                            AddTitulo(documento, fuenteTitulo);
-                            AddPrimeraTabla(documento, fuenteTitulo, fuenteTexto);
-                            AddSegundaTabla(documento, fuenteTexto);
-                            AddTerceraTabla(documento, fuenteTitulo, fuenteTexto, solicitud);
-                            AddTablaTitular(documento, fuenteTexto, solicitud);
-                            AddTablaRepresentanteLegal(documento, fuenteTexto, solicitud);
-                            AddTablaUbigeo(documento, fuenteTexto, solicitud);
-                            AddMotivoSolicitud(documento, fuenteTitulo, fuenteTexto, solicitud);
-                            AddDocumentos(documento, fuenteTitulo, fuenteTexto);
-                            AddFooter(documento, fuenteTexto);
+                            AddTitulo(documento, fuenteTitulo, "REPORTE DETALLADO DE INVENTARIO");
+                            AddPrimeraTabla(documento, fuenteTitulo, fuenteTexto, request);
+                            AddTablaReporteDetallado(documento, fuenteTexto, productos, solicitud.Data);
+
+                            documento.Close();
+                        }
+                    }
+
+                    byte[] pdfBytes = memoryStream.ToArray();                    
+                    return Successful<string>(Convert.ToBase64String(pdfBytes));
+                }
+            }
+            catch (Exception ex)
+            {
+                return Exception<string>(ex);
+            }
+        }
+
+        public async Task<StatusResponse<string>> DescargarReporteIngreso(ReporteKardexRequest request)
+        {
+            try
+            {
+                var solicitud = await ReporteIngreso(request);
+                var productos = solicitud.Data.Select(x => new ReporteProductoResponse
+                {
+                    idProducto = x.idProducto,
+                    producto = x.nombre
+                }).Distinct();
+
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    using (PdfWriter writer = new(memoryStream))
+                    {
+                        using (PdfDocument pdf = new PdfDocument(writer))
+                        {
+                            pdf.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
+                            Document documento = new Document(pdf);
+                            documento.SetMargins(20, 50, 20, 50);
+
+                            PdfFont fuenteTitulo = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+                            PdfFont fuenteTexto = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+
+                            AddTitulo(documento, fuenteTitulo, "REPORTE DE INGRESOS");
+                            AddPrimeraTabla(documento, fuenteTitulo, fuenteTexto, request);
+                            AddTablaReporteIngreso(documento, fuenteTexto, productos, solicitud.Data);
 
                             documento.Close();
                         }
                     }
 
                     byte[] pdfBytes = memoryStream.ToArray();
-                    return new StatusResponse<DescargarPlantillaDiaResponseDto>
-                    {
-                        Success = true,
-                        Data = new DescargarPlantillaDiaResponseDto
-                        {
-                            base64Documento = Convert.ToBase64String(pdfBytes)
-                        }
-                    };
+                    return Successful<string>(Convert.ToBase64String(pdfBytes));
                 }
             }
             catch (Exception ex)
             {
-                return Message.Exception<DescargarPlantillaDiaResponseDto>(ex);
+                return Exception<string>(ex);
             }
         }
 
-        private void AddTitulo(Document documento, PdfFont fuenteTitulo)
+        public async Task<StatusResponse<string>> DescargarReporteSalida(ReporteKardexRequest request)
         {
-            documento.Add(new Paragraph("DETALLE DE ALMACÉN\n")
-                .SetFont(fuenteTitulo)
-                .SetFontSize(14)
-                .SetTextAlignment(TextAlignment.CENTER));
-        }
-
-        private void AddPrimeraTabla(Document documento, PdfFont fuenteTitulo, PdfFont fuenteTexto)
-        {
-            Table tablaDatos = new Table(2).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaDatos.AddCell(new Cell().Add(new Paragraph("Fecha").SetFont(fuenteTitulo).SetFontSize(7)));
-            tablaDatos.AddCell(new Cell().Add(new Paragraph("Código Ítem").SetFont(fuenteTitulo).SetFontSize(7)));
-            tablaDatos.AddCell(new Cell().Add(new Paragraph("DIA").SetFont(fuenteTexto).SetFontSize(10)));
-            tablaDatos.AddCell(new Cell().Add(new Paragraph(".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(ColorConstants.WHITE)));
-            documento.Add(tablaDatos);
-        }
-
-        private void AddSegundaTabla(Document documento, PdfFont fuenteTexto)
-        {
-            documento.Add(new Paragraph("\n").SetFontSize(1));
-            Table tablaDependencia = new Table(3).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaDependencia.AddCell(new Cell().Add(new Paragraph("Dependencia a la que dirige la solicitud:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaDependencia.AddCell(new Cell().Add(new Paragraph("Nº comprobante:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaDependencia.AddCell(new Cell().Add(new Paragraph("Fecha de Pago:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaDependencia.AddCell(new Cell().Add(new Paragraph("DGAAM").SetFont(fuenteTexto).SetFontSize(10)));
-            tablaDependencia.AddCell(new Cell().Add(new Paragraph(".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(ColorConstants.WHITE)));
-            tablaDependencia.AddCell(new Cell().Add(new Paragraph(".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(ColorConstants.WHITE)));
-            documento.Add(tablaDependencia);
-        }
-
-        private void AddTerceraTabla(Document documento, PdfFont fuenteTitulo, PdfFont fuenteTexto, SP_OBTENER_DATOS_DETALLADO_SOLICITUD_Response_Entity solicitud)
-        {
-            documento.Add(new Paragraph("\n").SetFontSize(1));
-            Table tablaExpediente = new Table(2).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaExpediente.AddCell(new Cell().Add(new Paragraph("Identificación del expediente en caso de que este ya estuviera firmado").SetFont(fuenteTitulo).SetFontSize(7)));
-            tablaExpediente.AddCell(new Cell().Add(new Paragraph("Nro Folios").SetFont(fuenteTitulo).SetFontSize(7)));
-            tablaExpediente.AddCell(new Cell().Add(new Paragraph(solicitud.NombreProyecto ?? ".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.NombreProyecto) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            tablaExpediente.AddCell(new Cell().Add(new Paragraph(".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(ColorConstants.WHITE)));
-            documento.Add(tablaExpediente);
-        }
-
-        private void AddTablaTitular(Document documento, PdfFont fuenteTexto, SP_OBTENER_DATOS_DETALLADO_SOLICITUD_Response_Entity solicitud)
-        {
-            documento.Add(new Paragraph("\n").SetFontSize(1));
-            documento.Add(new Paragraph("Solicitante:").SetFont(fuenteTexto).SetFontSize(10));
-            Table tablaTitular = new Table(2).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaTitular.AddCell(new Cell().Add(new Paragraph("Nombre o Razón Social:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaTitular.AddCell(new Cell().Add(new Paragraph("RUC:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaTitular.AddCell(new Cell().Add(new Paragraph(solicitud.NombreTitular ?? ".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.NombreTitular) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            tablaTitular.AddCell(new Cell().Add(new Paragraph(solicitud.Ruc ?? ".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.Ruc) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            documento.Add(tablaTitular);
-
-            Table tablaTitular2 = new Table(2).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaTitular2.AddCell(new Cell().Add(new Paragraph("DNI/LE/CE/Pasaporte Nº:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaTitular2.AddCell(new Cell().Add(new Paragraph("Inscripción en SUNARP" + "\n" + "Nro de Ficha Registral o Asiento, Folio, Tomo, Libro y Oficina Registral:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaTitular2.AddCell(new Cell().Add(new Paragraph(".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(ColorConstants.WHITE)));
-            tablaTitular2.AddCell(new Cell().Add(new Paragraph(".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(ColorConstants.WHITE)));
-            documento.Add(tablaTitular2);
-        }
-
-        private void AddTablaRepresentanteLegal(Document documento, PdfFont fuenteTexto, SP_OBTENER_DATOS_DETALLADO_SOLICITUD_Response_Entity solicitud)
-        {
-            documento.Add(new Paragraph("\n").SetFontSize(1));
-            Table tablaRepresentante = new Table(2).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaRepresentante.AddCell(new Cell().Add(new Paragraph("Representante Legal:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaRepresentante.AddCell(new Cell().Add(new Paragraph("DNI/LE/CE/Pasaporte:").SetFont(fuenteTexto).SetFontSize(7)));
-
-            string nombreRepresentante = $"{solicitud.ApellidoPaterno ?? ""} {solicitud.ApellidoMaterno ?? ""} {solicitud.Nombres ?? ""}".Trim();
-            tablaRepresentante.AddCell(new Cell().Add(new Paragraph(nombreRepresentante).SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(nombreRepresentante) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            tablaRepresentante.AddCell(new Cell().Add(new Paragraph(solicitud.DocumentoIdentidad ?? ".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.DocumentoIdentidad) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            documento.Add(tablaRepresentante);
-
-            Table tablaRepresentante2 = new Table(1).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaRepresentante2.AddCell(new Cell().Add(new Paragraph("Inscripción en SUNARP" + "\n" + "Nro de Ficha Registral o Asiento, Folio, Tomo, Libro y Oficina Registral:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaRepresentante2.AddCell(new Cell().Add(new Paragraph(".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(ColorConstants.WHITE)));
-            documento.Add(tablaRepresentante2);
-        }
-
-        private void AddTablaUbigeo(Document documento, PdfFont fuenteTexto, SP_OBTENER_DATOS_DETALLADO_SOLICITUD_Response_Entity solicitud)
-        {
-            documento.Add(new Paragraph("\n").SetFontSize(1));
-            Table tablaUbigeo = new Table(3).SetWidth(UnitValue.CreatePercentValue(100));
-            string[]? ubigeo = solicitud.Region?.Split("-");
-            tablaUbigeo.AddCell(new Cell().Add(new Paragraph("Domicilio Legal (para efectos de notificación:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaUbigeo.AddCell(new Cell().Add(new Paragraph("Distrito:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaUbigeo.AddCell(new Cell().Add(new Paragraph("Provincia:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaUbigeo.AddCell(new Cell().Add(new Paragraph(solicitud.Direccion ?? ".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.Direccion?.Trim()) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            tablaUbigeo.AddCell(new Cell().Add(new Paragraph(ubigeo?.ElementAtOrDefault(2) ?? ".    ").SetFont(fuenteTexto).SetFontSize(10)));
-            tablaUbigeo.AddCell(new Cell().Add(new Paragraph(ubigeo?.ElementAtOrDefault(1) ?? ".    ").SetFont(fuenteTexto).SetFontSize(10)));
-            documento.Add(tablaUbigeo);
-
-            Table tablaUbigeo2 = new Table(4).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaUbigeo2.AddCell(new Cell().Add(new Paragraph("Departamento:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaUbigeo2.AddCell(new Cell().Add(new Paragraph("Correo electrónico:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaUbigeo2.AddCell(new Cell().Add(new Paragraph("Teléfonos:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaUbigeo2.AddCell(new Cell().Add(new Paragraph("Fax:").SetFont(fuenteTexto).SetFontSize(7)));
-            tablaUbigeo2.AddCell(new Cell().Add(new Paragraph(ubigeo?[0] ?? ".    ").SetFont(fuenteTexto).SetFontSize(10)));
-            tablaUbigeo2.AddCell(new Cell().Add(new Paragraph(solicitud.Email ?? ".").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.Email?.Trim()) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            tablaUbigeo2.AddCell(new Cell().Add(new Paragraph(solicitud.Telefono ?? " .   ").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.Telefono?.Trim()) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            tablaUbigeo2.AddCell(new Cell().Add(new Paragraph(solicitud.Fax ?? ".    ").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.Fax?.Trim()) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            documento.Add(tablaUbigeo2);
-
-            documento.Add(new Paragraph("*El nombre o razón social,Nro de RUC y dirección del solicitante deberán consignarse en forma obligatoria.").SetFont(fuenteTexto).SetFontSize(6));
-        }
-
-        private void AddMotivoSolicitud(Document documento, PdfFont fuenteTitulo, PdfFont fuenteTexto, SP_OBTENER_DATOS_DETALLADO_SOLICITUD_Response_Entity solicitud)
-        {
-            documento.Add(new Paragraph("\n").SetFontSize(1));
-            documento.Add(new Paragraph("Motivo de la Solicitud (Objeto y Fundamentos):").SetFont(fuenteTitulo).SetFontSize(10));
-            Table tablaMotivo = new Table(1).SetWidth(UnitValue.CreatePercentValue(100));
-            tablaMotivo.AddCell(new Cell().Add(new Paragraph(solicitud.Objetivo ?? ".    \n\n\n\n .").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(string.IsNullOrWhiteSpace(solicitud.Objetivo?.Trim()) ? ColorConstants.WHITE : ColorConstants.BLACK)));
-            documento.Add(tablaMotivo);
-            documento.Add(new Paragraph("Indicar en forma clara y precisa lo que se solicita, expresando cuando sea necesario, los fundamentos de hecho y derecho que correspondan.").SetFont(fuenteTexto).SetFontSize(6));
-        }
-
-        private void AddDocumentos(Document documento, PdfFont fuenteTitulo, PdfFont fuenteTexto)
-        {
-            documento.Add(new Paragraph("\n").SetFontSize(1));
-            documento.Add(new Paragraph("Relación de Documentos y anexos que se acompaña (Si falta espacio, usar hojas adicionales):").SetFont(fuenteTitulo).SetFontSize(8));
-            Table tablaDocumentos = new Table(1).SetWidth(UnitValue.CreatePercentValue(100));
-            for (int i = 1; i <= 6; i++)
+            try
             {
-                tablaDocumentos.AddCell(new Cell().Add(new Paragraph(i.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
+                var solicitud = await ReporteSalida(request);
+                var productos = solicitud.Data.Select(x => new ReporteProductoResponse
+                {
+                    idProducto = x.idProducto,
+                    producto = x.nombre
+                }).Distinct();
+
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    using (PdfWriter writer = new(memoryStream))
+                    {
+                        using (PdfDocument pdf = new PdfDocument(writer))
+                        {
+                            pdf.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
+                            Document documento = new Document(pdf);
+                            documento.SetMargins(20, 50, 20, 50);
+
+                            PdfFont fuenteTitulo = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+                            PdfFont fuenteTexto = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+
+                            AddTitulo(documento, fuenteTitulo, "REPORTE DE SALIDA");
+                            AddPrimeraTabla(documento, fuenteTitulo, fuenteTexto, request);
+                            AddTablaReporteSalida(documento, fuenteTexto, productos, solicitud.Data);
+
+                            documento.Close();
+                        }
+                    }
+
+                    byte[] pdfBytes = memoryStream.ToArray();
+                    return Successful<string>(Convert.ToBase64String(pdfBytes));
+                }
             }
-            documento.Add(tablaDocumentos);
+            catch (Exception ex)
+            {
+                return Exception<string>(ex);
+            }
         }
 
-        private void AddFooter(Document documento, PdfFont fuenteTexto)
+
+        private void AddTitulo(Document documento, PdfFont fuenteTitulo, string titulo)
         {
-            documento.Add(new Paragraph("\n").SetFontSize(20));
-            documento.Add(new Paragraph("\n").SetFontSize(20));
-            Table tablaFooter = new Table(UnitValue.CreatePercentArray(new float[] { 30, 30, 10, 30 })).SetWidth(UnitValue.CreatePercentValue(100)).SetHorizontalAlignment(HorizontalAlignment.CENTER);
-            tablaFooter.AddCell(new Cell().Add(new Paragraph("Lugar y fecha: ........................").SetFont(fuenteTexto).SetFontSize(8).SetHorizontalAlignment(HorizontalAlignment.LEFT)).SetBorder(Border.NO_BORDER));
-            tablaFooter.AddCell(new Cell().Add(new Paragraph("Firma o huella digital del interesado o representante").SetFont(fuenteTexto).SetTextAlignment(TextAlignment.CENTER).SetFontSize(8)).SetPaddingTop(4f).SetBorderTop(new DottedBorder(ColorConstants.BLACK, 1)).SetBorderBottom(Border.NO_BORDER).SetBorderLeft(Border.NO_BORDER).SetBorderRight(Border.NO_BORDER));
-            tablaFooter.AddCell(new Cell().Add(new Paragraph(".....").SetFont(fuenteTexto).SetFontSize(10).SetFontColor(ColorConstants.WHITE)).SetPaddingTop(4f).SetBorderTop(Border.NO_BORDER).SetBorderBottom(Border.NO_BORDER).SetBorderLeft(Border.NO_BORDER).SetBorderRight(Border.NO_BORDER));
-            tablaFooter.AddCell(new Cell().Add(new Paragraph("Firma y sello de abogado\n(Si el procedimiento lo requiere)").SetFont(fuenteTexto).SetTextAlignment(TextAlignment.CENTER).SetFontSize(8)).SetPaddingTop(4f).SetBorderTop(new DottedBorder(ColorConstants.BLACK, 1)).SetBorderBottom(Border.NO_BORDER).SetBorderLeft(Border.NO_BORDER).SetBorderRight(Border.NO_BORDER));
-            documento.Add(tablaFooter);
+            documento.Add(new Paragraph($"{titulo}\n")
+                .SetFont(fuenteTitulo)
+                .SetFontSize(16)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetBold());
         }
+
+        private void AddPrimeraTabla(Document documento, PdfFont fuenteTitulo, PdfFont fuenteTexto, ReporteKardexRequest request)
+        {
+            // Encabezado
+            documento.Add(new Paragraph($"Fecha: {DateTime.Now:dd/MM/yyyy}  Hora: {DateTime.Now:HH:mm}"));
+            documento.Add(new Paragraph("Almacén: GENERAL"));
+            documento.Add(new Paragraph("Destino de Uso: Consumo"));
+            documento.Add(new Paragraph($"Desde: {request.fechaInicio:dd/MM/yyyy} Hasta: {request.fechaFin:dd/MM/yyyy}\n"));
+        }
+
+        private void AddTablaReporteDetallado(Document documento, PdfFont fuenteTexto, IEnumerable<ReporteProductoResponse> productos, IEnumerable<ReporteKardexResponse> kardex)
+        {
+            foreach (var producto in productos)
+            {
+                documento.Add(new Paragraph("\n").SetFontSize(10));
+                Table tblTitulo = new Table(1).SetWidth(UnitValue.CreatePercentValue(100));
+                tblTitulo.AddCell(new Cell().Add(new Paragraph($"Producto: C-000{producto.idProducto} - {producto.producto}").SetFont(fuenteTexto).SetFontSize(9)).SetBold().SetBorder(Border.NO_BORDER));
+                documento.Add(tblTitulo);
+                List<ReporteKardexResponse> operaciones = kardex.Where(x => x.idProducto == producto.idProducto).ToList();
+                Table tabla = new Table(9).SetWidth(UnitValue.CreatePercentValue(100));
+                tabla.AddCell(new Cell().Add(new Paragraph("Fecha").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Tipo").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Stock Acumulado").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("N° Documento Ingreso\n/Salida").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Material").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Color").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Talla").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Marca").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                foreach (var operacion in operaciones)
+                {
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.fecha.ToString("dd/MM/yyyy")).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.tipoMovimiento).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.cantidad.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.stockAcumulado.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.detalle ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.material ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.color ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.talla ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.marca ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                }
+                documento.Add(tabla);
+            }
+
+
+
+            documento.Add(new Paragraph("\n").SetFontSize(1));
+            
+            
+        }
+
+        private void AddTablaReporteIngreso(Document documento, PdfFont fuenteTexto, IEnumerable<ReporteProductoResponse> productos, IEnumerable<ReporteIngresoResponse> kardex)
+        {
+            foreach (var producto in productos)
+            {
+                documento.Add(new Paragraph("\n").SetFontSize(10));
+                Table tblTitulo = new Table(1).SetWidth(UnitValue.CreatePercentValue(100));
+                tblTitulo.AddCell(new Cell().Add(new Paragraph($"Producto: C-000{producto.idProducto} - {producto.producto}").SetFont(fuenteTexto).SetFontSize(9)).SetBold().SetBorder(Border.NO_BORDER));
+                documento.Add(tblTitulo);
+                List<ReporteIngresoResponse> operaciones = kardex.Where(x => x.idProducto == producto.idProducto).ToList();
+                Table tabla = new Table(9).SetWidth(UnitValue.CreatePercentValue(100));
+                tabla.AddCell(new Cell().Add(new Paragraph("Fecha").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Material").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Color").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Talla").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Marca").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Medidas").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Unidad \nde medida").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("N° documento \nde Ingreso").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                foreach (var operacion in operaciones)
+                {
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.fecha?.ToString("dd/MM/yyyy")).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.cantidad.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.material ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.color ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.talla ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.marca ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.medidas ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.nombreUnidadMedida ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.ordenCompra ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                }
+                documento.Add(tabla);
+            }
+
+
+
+            documento.Add(new Paragraph("\n").SetFontSize(1));
+
+
+        }
+
+        private void AddTablaReporteSalida(Document documento, PdfFont fuenteTexto, IEnumerable<ReporteProductoResponse> productos, IEnumerable<ReporteSalidaResponse> kardex)
+        {
+            foreach (var producto in productos)
+            {
+                documento.Add(new Paragraph("\n").SetFontSize(10));
+                Table tblTitulo = new Table(1).SetWidth(UnitValue.CreatePercentValue(100));
+                tblTitulo.AddCell(new Cell().Add(new Paragraph($"Producto: C-000{producto.idProducto} - {producto.producto}").SetFont(fuenteTexto).SetFontSize(9)).SetBold().SetBorder(Border.NO_BORDER));
+                documento.Add(tblTitulo);
+                List<ReporteSalidaResponse> operaciones = kardex.Where(x => x.idProducto == producto.idProducto).ToList();
+                Table tabla = new Table(11).SetWidth(UnitValue.CreatePercentValue(100));
+                tabla.AddCell(new Cell().Add(new Paragraph("Fecha").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Material").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Color").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Talla").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Marca").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Medidas").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Unidad \nde medida").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                //tabla.AddCell(new Cell().Add(new Paragraph("Fecha de \nVencimiento").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Área \nSolicitante").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Persona \nSolicitante").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("N° documento \nde Salida").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                foreach (var operacion in operaciones)
+                {
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.fecha?.ToString("dd/MM/yyyy")).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.cantidad.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.material ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.color ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.talla ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.marca ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.medidas ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.nombreUnidadMedida ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    //tabla.AddCell(new Cell().Add(new Paragraph(operacion.fechaVencimiento?.ToString("dd/MM/yyyy") ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.areaSolicitante ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.personaSolicitante ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.documentoSalida ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
+                }
+                documento.Add(tabla);
+            }
+
+
+
+            documento.Add(new Paragraph("\n").SetFontSize(1));
+
+
+        }
+
     }
 }

@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { ReporteService } from 'src/app/core/services/inventario/reporte.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiResponse } from 'src/app/core/models/api-response';
+import { VistaPdfComponent } from 'src/app/shared/components/vista-pdf/vista-pdf.component';
 
 @Component({
   selector: 'app-reporte-inventario',
@@ -76,7 +78,7 @@ export class ReporteInventarioComponent implements OnInit {
     this.form.controls.fechaFin.setValue('');
   }
 
-  onDownload(form: FormGroup) { 
+  onDownload(form: FormGroup) {
     if (this.form.invalid) {
       // Mostrar mensajes de error si los campos son inválidos
       if (this.idTipoReporte.invalid) {
@@ -91,7 +93,7 @@ export class ReporteInventarioComponent implements OnInit {
       this.funcionesMtcService.mensajeError('Por favor, complete todos los campos obligatorios.');
       return;
     }
-    
+
     this.funcionesMtcService.mostrarCargando();
     const { idTipoReporte, fechaInicio, fechaFin } = form.value;
     const params = {
@@ -100,6 +102,63 @@ export class ReporteInventarioComponent implements OnInit {
     };
     this.reporteService.postReporteKardex(params, parseInt(idTipoReporte));
     this.funcionesMtcService.ocultarCargando();
+  }
+
+  onReportPdf() {
+    debugger;
+    if (this.form.invalid) {
+      // Mostrar mensajes de error si los campos son inválidos
+      if (this.idTipoReporte.invalid) {
+        this.idTipoReporte.markAsTouched();
+      }
+      if (this.fechaInicio.invalid) {
+        this.fechaInicio.markAsTouched();
+      }
+      if (this.fechaFin.invalid) {
+        this.fechaFin.markAsTouched();
+      }
+      this.funcionesMtcService.mensajeError('Por favor, complete todos los campos obligatorios.');
+      return;
+    }
+
+    this.funcionesMtcService.mostrarCargando();
+    const { idTipoReporte, fechaInicio, fechaFin } = this.form.value;
+    const params = {
+      fechaInicio: fechaInicio,
+      fechaFin: fechaFin
+    };
+    this.reporteService.postReporteKardexPdf(params, parseInt(idTipoReporte)).subscribe((resp: ApiResponse<string>) => {
+      if (resp.success) {
+        //const file = new Blob([resp.data], { type: 'application/pdf' });
+        const byteCharacters = atob(resp.data);
+      const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) =>
+        byteCharacters.charCodeAt(i)
+      );
+
+      const byteArray = new Uint8Array(byteNumbers);
+      const file = new Blob([byteArray], { type: 'application/pdf' });
+      //const url = URL.createObjectURL(blob);
+
+        const modalRef = this.modalService.open(VistaPdfComponent, { size: 'lg', scrollable: true });
+        const urlPdf = URL.createObjectURL(file);
+        modalRef.componentInstance.pdfUrl = urlPdf;
+        modalRef.componentInstance.titleModal = "Vista Previa";
+
+
+
+
+        // const url = window.URL.createObjectURL(blob);
+        // const a = document.createElement('a');
+        // a.href = url;
+        // a.download = 'reporte.pdf'; // Nombre del archivo PDF
+        // a.click();
+        // window.URL.revokeObjectURL(url);
+      } else {
+        this.funcionesMtcService.mensajeError(resp.message);
+      }
+    });
+    this.funcionesMtcService.ocultarCargando();
+
   }
 
 }

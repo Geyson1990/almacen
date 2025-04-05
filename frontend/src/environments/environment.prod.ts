@@ -34,6 +34,9 @@ export const environment = {
     reporteKardex: '/Reporte/reporte-kardex',
     reporteKardexSalida: '/Reporte/reporte-salida',
     reporteKardexEntrada: '/Reporte/reporte-ingreso',
+    reporteKardexPdf: '/Reporte/reporte-kardex-pdf',
+    reporteIngresoPdf: '/Reporte/reporte-ingreso-pdf',
+    reporteSalidaPdf: '/Reporte/reporte-salida-pdf',
     
     anexo: '/Anexo',
     anexoTramite: '/Anexo/tramite',
