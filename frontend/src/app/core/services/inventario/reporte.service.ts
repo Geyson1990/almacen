@@ -41,7 +41,11 @@ export class ReporteService {
   }
 
   postReporteKardexPdf(data: ReporteKardexRequest, idTipoReporte: number): Observable<ApiResponse<string>> {
-    if(idTipoReporte === 2){
+    debugger;
+    if(idTipoReporte === 1){
+      this.urlReporteKardexPdf = `${environment.baseUrlAPI}${environment.endPoint.reporteKardexPdf}`;
+    }
+    else if(idTipoReporte === 2){
       this.urlReporteKardexPdf = `${environment.baseUrlAPI}${environment.endPoint.reporteIngresoPdf}`;
     }
     else if(idTipoReporte === 3){

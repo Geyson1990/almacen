@@ -127,6 +127,7 @@ export class ReporteInventarioComponent implements OnInit {
       fechaInicio: fechaInicio,
       fechaFin: fechaFin
     };
+    debugger;
     this.reporteService.postReporteKardexPdf(params, parseInt(idTipoReporte)).subscribe((resp: ApiResponse<string>) => {
       if (resp.success) {
         //const file = new Blob([resp.data], { type: 'application/pdf' });
