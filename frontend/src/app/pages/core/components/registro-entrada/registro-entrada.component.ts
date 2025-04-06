@@ -18,7 +18,7 @@ export class RegistroEntradaComponent implements OnInit {
   listadoBandeja = [];
   BandejaSize = 1;
   page = 1;
-  pageSize = 50;
+  pageSize = 10;
 
   constructor(
     private builder: FormBuilder,
@@ -39,7 +39,7 @@ export class RegistroEntradaComponent implements OnInit {
       color: [""],
       tipo: [""],
       marca: [""],
-      talla:[""],
+      talla: [""],
       fechaInicio: [""],
       fechaFin: [""],
     }, { validators: this.dateRangeValidator });
@@ -114,9 +114,10 @@ export class RegistroEntradaComponent implements OnInit {
     const { producto, material, color, talla, tipo, marca, fechaInicio, fechaFin } = form.value;
 
     this.listadoBandeja = this.listadoBandejaBase.filter(item => {
-      const itemFecha = new Date(item.fecha);
-      const inicio = fechaInicio ? new Date(fechaInicio) : null;
-      const fin = fechaFin ? new Date(fechaFin) : null;
+      debugger;
+      const itemFecha = new Date(item.fecha).getUTCDate();
+      const inicio = fechaInicio ? new Date(fechaInicio).getUTCDate() : null;
+      const fin = fechaFin ? new Date(fechaFin).getUTCDate() : null;
 
       return (
         (!producto || item.nombre.toLowerCase().includes(producto.toLowerCase())) &&
@@ -161,7 +162,7 @@ export class RegistroEntradaComponent implements OnInit {
     ]);
 
     // Añadir los datos de la tabla
-    const headers = ["Nro.", "Fecha de registro", "Producto", 
+    const headers = ["Nro.", "Fecha de registro", "Producto",
       "Material", "Color", "Talla", "Tipo", "Medidas", "Marca", "Unidad de Medida", "Cantidad", "F. Vencimiento"];
     XLSX.utils.sheet_add_aoa(ws, [headers], { origin: "A4" });
 

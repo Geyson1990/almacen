@@ -24,7 +24,7 @@ namespace almacen.Repositories.Reporte
         {
             try
             {
-                string sql = @"SELECT 
+                string sql = @"SELECT distinct
                                     CAST(ROW_NUMBER() OVER(ORDER BY p.ID_PRODUCTO ASC) as int) registro,
                                     p.ID_PRODUCTO idProducto,
                                     p.NOMBRE AS producto,
@@ -54,7 +54,7 @@ namespace almacen.Repositories.Reporte
                                         rs.ID_PRODUCTO, 
                                         rs.FECHA, 
                                         'SALIDA' AS TIPO_MOVIMIENTO, 
-                                        rs.CANTIDAD AS CANTIDAD,
+                                        -rs.CANTIDAD AS CANTIDAD,
                                         rs.ORDEN_SALIDA AS DETALLE
                                     FROM registro_salida rs
                                 ) AS m
@@ -178,7 +178,7 @@ namespace almacen.Repositories.Reporte
                 {
                     idProducto = x.idProducto,
                     producto = x.producto
-                }).Distinct();
+                }).DistinctBy(x => x.idProducto);
 
 
                 using (MemoryStream memoryStream = new MemoryStream())

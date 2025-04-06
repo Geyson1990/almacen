@@ -21,7 +21,7 @@ export class RegistroSalidaComponent implements OnInit {
 
   BandejaSize = 1;
   page = 1;
-  pageSize = 50;
+  pageSize = 10;
 
   constructor(
     private builder: FormBuilder,
@@ -122,9 +122,9 @@ export class RegistroSalidaComponent implements OnInit {
     const { producto, idAreaSolicitante, personaSolicitante, marca, fechaInicio, fechaFin } = form.value;
 
     this.listadoBandeja = this.listadoBandejaBase.filter(item => {
-      const itemFecha = new Date(item.fecha);
-      const inicio = fechaInicio ? new Date(fechaInicio) : null;
-      const fin = fechaFin ? new Date(fechaFin) : null;
+      const itemFecha = new Date(item.fecha).getUTCDate();
+      const inicio = fechaInicio ? new Date(fechaInicio).getUTCDate() : null;
+      const fin = fechaFin ? new Date(fechaFin).getUTCDate() : null;
 
       return (
         (!producto || item.nombre.toLowerCase().includes(producto.toLowerCase())) &&
