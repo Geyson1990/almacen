@@ -14,5 +14,6 @@
         public string color { get; set; }
         public string talla { get; set; }
         public string marca { get; set; }
+        public string descripcionTipo { get; set; }
     }
 }

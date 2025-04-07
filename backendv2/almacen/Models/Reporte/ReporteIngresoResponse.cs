@@ -20,6 +20,7 @@
         public DateTime? fechaVencimiento { get; set; }
         //public int estado { get; set; }
         public int idTipoEntrada { get; set; }
-        public string ordenCompra { get; set; }
+        public string? ordenCompra { get; set; }
+        public string? descripcionTipo { get; set; }
     }
 }

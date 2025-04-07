@@ -96,12 +96,13 @@ namespace almacen.Controllers
                 worksheet.Cell(1, 3).Value = "FECHA";
                 worksheet.Cell(1, 4).Value = "TIPO MOVIMIENTO";
                 worksheet.Cell(1, 5).Value = "CANTIDAD";
-                worksheet.Cell(1, 6).Value = "STOCK ACUMULADO";
-                worksheet.Cell(1, 7).Value = "N° DOCUMENTO";
-                worksheet.Cell(1, 8).Value = "MATERIAL";
-                worksheet.Cell(1, 9).Value = "COLOR";
-                worksheet.Cell(1, 10).Value = "TALLA";
-                worksheet.Cell(1, 11).Value = "MARCA";
+                worksheet.Cell(1, 6).Value = "MOTIVO";
+                worksheet.Cell(1, 7).Value = "STOCK ACUMULADO";
+                worksheet.Cell(1, 8).Value = "N° DOCUMENTO";
+                worksheet.Cell(1, 9).Value = "MATERIAL";
+                worksheet.Cell(1, 10).Value = "COLOR";
+                worksheet.Cell(1, 11).Value = "TALLA";
+                worksheet.Cell(1, 12).Value = "MARCA";
 
                 int row = 2;
                 foreach (var mov in request)
@@ -111,12 +112,13 @@ namespace almacen.Controllers
                     worksheet.Cell(row, 3).Value = mov.fecha.ToString("yyyy-MM-dd");
                     worksheet.Cell(row, 4).Value = mov.tipoMovimiento;
                     worksheet.Cell(row, 5).Value = mov.cantidad;
-                    worksheet.Cell(row, 6).Value = mov.stockAcumulado;
-                    worksheet.Cell(row, 7).Value = mov.detalle;
-                    worksheet.Cell(row, 8).Value = mov.material;
-                    worksheet.Cell(row, 9).Value = mov.color;
-                    worksheet.Cell(row, 10).Value = mov.talla;
-                    worksheet.Cell(row, 11).Value = mov.marca;
+                    worksheet.Cell(row, 6).Value = mov.descripcionTipo;
+                    worksheet.Cell(row, 7).Value = mov.stockAcumulado;
+                    worksheet.Cell(row, 8).Value = mov.detalle;
+                    worksheet.Cell(row, 9).Value = mov.material;
+                    worksheet.Cell(row, 10).Value = mov.color;
+                    worksheet.Cell(row, 11).Value = mov.talla;
+                    worksheet.Cell(row, 12).Value = mov.marca;
                     row++;
                 }
 
@@ -144,12 +146,12 @@ namespace almacen.Controllers
                 worksheet.Cell(1, 9).Value = "TIPO";
                 worksheet.Cell(1, 10).Value = "MEDIDAS";
                 worksheet.Cell(1, 11).Value = "MARCA";
-                worksheet.Cell(1, 12).Value = "ID UNIDAD MEDIDA";
-                worksheet.Cell(1, 13).Value = "NOMBRE UNIDAD MEDIDA";
-                worksheet.Cell(1, 14).Value = "CANTIDAD";
-                worksheet.Cell(1, 15).Value = "FECHA VENCIMIENTO";
-                worksheet.Cell(1, 16).Value = "ID TIPO ENTRADA";
-                worksheet.Cell(1, 17).Value = "ORDEN COMPRA";
+                //worksheet.Cell(1, 12).Value = "ID UNIDAD MEDIDA";
+                worksheet.Cell(1, 12).Value = "NOMBRE UNIDAD MEDIDA";
+                worksheet.Cell(1, 13).Value = "CANTIDAD";
+                worksheet.Cell(1, 14).Value = "FECHA VENCIMIENTO";
+                worksheet.Cell(1, 15).Value = "MOTIVO";
+                worksheet.Cell(1, 16).Value = "ORDEN COMPRA";
 
                 int row = 2;
                 foreach (var ingreso in request)
@@ -165,12 +167,12 @@ namespace almacen.Controllers
                     worksheet.Cell(row, 9).Value = ingreso.tipo;
                     worksheet.Cell(row, 10).Value = ingreso.medidas;
                     worksheet.Cell(row, 11).Value = ingreso.marca;
-                    worksheet.Cell(row, 12).Value = ingreso.idUnidadMedida;
-                    worksheet.Cell(row, 13).Value = ingreso.nombreUnidadMedida;
-                    worksheet.Cell(row, 14).Value = ingreso.cantidad;
-                    worksheet.Cell(row, 15).Value = ingreso.fechaVencimiento?.ToString("yyyy-MM-dd");
-                    worksheet.Cell(row, 16).Value = ingreso.idTipoEntrada;
-                    worksheet.Cell(row, 17).Value = ingreso.ordenCompra;
+                    //worksheet.Cell(row, 12).Value = ingreso.idUnidadMedida;
+                    worksheet.Cell(row, 12).Value = ingreso.nombreUnidadMedida;
+                    worksheet.Cell(row, 13).Value = ingreso.cantidad;
+                    worksheet.Cell(row, 14).Value = ingreso.fechaVencimiento?.ToString("yyyy-MM-dd");
+                    worksheet.Cell(row, 15).Value = ingreso.descripcionTipo;
+                    worksheet.Cell(row, 16).Value = ingreso.ordenCompra;
                     row++;
                 }
 
@@ -199,15 +201,15 @@ namespace almacen.Controllers
                 worksheet.Cell(1, 9).Value = "TIPO";
                 worksheet.Cell(1, 10).Value = "MEDIDAS";
                 worksheet.Cell(1, 11).Value = "MARCA";
-                worksheet.Cell(1, 12).Value = "ID UNIDAD MEDIDA";
-                worksheet.Cell(1, 13).Value = "NOMBRE UNIDAD MEDIDA";
-                worksheet.Cell(1, 14).Value = "CANTIDAD";
-                worksheet.Cell(1, 15).Value = "FECHA VENCIMIENTO";
-                worksheet.Cell(1, 16).Value = "ID AREA SOLICITANTE";
-                worksheet.Cell(1, 17).Value = "AREA SOLICITANTE";
-                worksheet.Cell(1, 18).Value = "PERSONA SOLICITANTE";
-                worksheet.Cell(1, 19).Value = "ID TIPO SALIDA";
-                worksheet.Cell(1, 20).Value = "DOCUMENTO SALIDA";
+                //worksheet.Cell(1, 12).Value = "ID UNIDAD MEDIDA";
+                worksheet.Cell(1, 12).Value = "NOMBRE UNIDAD MEDIDA";
+                worksheet.Cell(1, 13).Value = "CANTIDAD";
+                worksheet.Cell(1, 14).Value = "FECHA VENCIMIENTO";
+                //worksheet.Cell(1, 16).Value = "ID AREA SOLICITANTE";
+                worksheet.Cell(1, 15).Value = "AREA SOLICITANTE";
+                worksheet.Cell(1, 16).Value = "PERSONA SOLICITANTE";
+                worksheet.Cell(1, 17).Value = "MOTIVO";
+                worksheet.Cell(1, 18).Value = "DOCUMENTO SALIDA";
 
                 int row = 2;
                 foreach (var salida in request)
@@ -223,15 +225,15 @@ namespace almacen.Controllers
                     worksheet.Cell(row, 9).Value = salida.tipo;
                     worksheet.Cell(row, 10).Value = salida.medidas;
                     worksheet.Cell(row, 11).Value = salida.marca;
-                    worksheet.Cell(row, 12).Value = salida.idUnidadMedida;
-                    worksheet.Cell(row, 13).Value = salida.nombreUnidadMedida;
-                    worksheet.Cell(row, 14).Value = salida.cantidad;
-                    worksheet.Cell(row, 15).Value = salida.fechaVencimiento?.ToString("yyyy-MM-dd");
-                    worksheet.Cell(row, 16).Value = salida.idAreaSolicitante;
-                    worksheet.Cell(row, 17).Value = salida.areaSolicitante;
-                    worksheet.Cell(row, 18).Value = salida.personaSolicitante;
-                    worksheet.Cell(row, 19).Value = salida.idTipoSalida;
-                    worksheet.Cell(row, 20).Value = salida.documentoSalida;
+                    //worksheet.Cell(row, 12).Value = salida.idUnidadMedida;
+                    worksheet.Cell(row, 12).Value = salida.nombreUnidadMedida;
+                    worksheet.Cell(row, 13).Value = salida.cantidad;
+                    worksheet.Cell(row, 14).Value = salida.fechaVencimiento?.ToString("yyyy-MM-dd");
+                    //worksheet.Cell(row, 16).Value = salida.idAreaSolicitante;
+                    worksheet.Cell(row, 15).Value = salida.areaSolicitante;
+                    worksheet.Cell(row, 16).Value = salida.personaSolicitante;
+                    worksheet.Cell(row, 17).Value = salida.descripcionTipo;
+                    worksheet.Cell(row, 18).Value = salida.documentoSalida;
                     row++;
                 }
 

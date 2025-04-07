@@ -36,7 +36,8 @@ namespace almacen.Repositories.Reporte
                                     p.MATERIAL material,
                                     p.COLOR color,
                                     p.TALLA talla,
-                                    p.MARCA marca
+                                    p.MARCA marca,
+                                    m.DESCRIPCION_TIPO descripcionTipo
                                 FROM (
                                     -- Ingresos
                                     SELECT 
@@ -44,8 +45,10 @@ namespace almacen.Repositories.Reporte
                                         re.FECHA, 
                                         'INGRESO' AS TIPO_MOVIMIENTO, 
                                         re.CANTIDAD,
-                                        re.ORDEN_COMPRA AS DETALLE
-                                    FROM registro_entrada re
+                                        re.ORDEN_COMPRA AS DETALLE,
+                                        ti.DESCRIPCION AS DESCRIPCION_TIPO
+                                    FROM registro_entrada re 
+                                    INNER JOIN tipo_entrada ti ON ti.ID_TIPO_ENTRADA = re.ID_TIPO_ENTRADA
     
                                     UNION ALL
     
@@ -55,8 +58,10 @@ namespace almacen.Repositories.Reporte
                                         rs.FECHA, 
                                         'SALIDA' AS TIPO_MOVIMIENTO, 
                                         -rs.CANTIDAD AS CANTIDAD,
-                                        rs.ORDEN_SALIDA AS DETALLE
+                                        rs.ORDEN_SALIDA AS DETALLE,
+                                        ti.DESCRIPCION AS DESCRIPCION_TIPO
                                     FROM registro_salida rs
+                                    INNER JOIN tipo_salida ti ON ti.ID_TIPO_SALIDA = rs.ID_TIPO_SALIDA
                                 ) AS m
                                 JOIN producto p ON p.ID_PRODUCTO = m.ID_PRODUCTO
                                 WHERE m.FECHA BETWEEN @FechaInicio AND @FechaFin
@@ -98,10 +103,12 @@ namespace almacen.Repositories.Reporte
 	                            re.CANTIDAD cantidad, 
 	                            p.FECHA_VENCIMIENTO fechaVencimiento,
                                 re.ID_TIPO_ENTRADA idTipoEntrada,
-                                re.ORDEN_COMPRA ordenCompra
+                                re.ORDEN_COMPRA ordenCompra,
+                                ti.DESCRIPCION descripcionTipo
                             FROM dbo.registro_entrada re INNER JOIN
                                  dbo.producto p ON re.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
-                                 dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA
+                                 dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
+                                 dbo.tipo_entrada ti ON ti.ID_TIPO_ENTRADA = re.ID_TIPO_ENTRADA
                             WHERE re.ESTADO_REGISTRO = 1
                             AND re.FECHA BETWEEN @FechaInicio AND @FechaFin
                             ORDER BY p.ID_PRODUCTO, re.FECHA;";
@@ -145,11 +152,13 @@ namespace almacen.Repositories.Reporte
 	                                a.NOMBRE areaSolicitante,
 	                                rs.PERSONA_SOLICITANTE personaSolicitante,
                                     rs.ID_TIPO_SALIDA idTipoSalida,
-                                    rs.ORDEN_SALIDA documentoSalida
+                                    rs.ORDEN_SALIDA documentoSalida,
+                                    ts.DESCRIPCION descripcionTipo
                                 FROM dbo.registro_salida rs INNER JOIN
                                      dbo.producto p ON rs.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                      dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
-	                                 dbo.area_solicitante a ON rs.ID_AREA_SOLICITANTE = a.ID
+	                                 dbo.area_solicitante a ON rs.ID_AREA_SOLICITANTE = a.ID INNER JOIN
+                                     dbo.tipo_salida ts ON ts.ID_TIPO_SALIDA = rs.ID_TIPO_SALIDA
                                 WHERE rs.ESTADO_REGISTRO = 1
                             AND rs.FECHA BETWEEN @FechaInicio AND @FechaFin
                             ORDER BY p.ID_PRODUCTO, rs.FECHA;";
@@ -326,9 +335,10 @@ namespace almacen.Repositories.Reporte
                 tblTitulo.AddCell(new Cell().Add(new Paragraph($"Producto: C-000{producto.idProducto} - {producto.producto}").SetFont(fuenteTexto).SetFontSize(9)).SetBold().SetBorder(Border.NO_BORDER));
                 documento.Add(tblTitulo);
                 List<ReporteKardexResponse> operaciones = kardex.Where(x => x.idProducto == producto.idProducto).ToList();
-                Table tabla = new Table(9).SetWidth(UnitValue.CreatePercentValue(100));
+                Table tabla = new Table(10).SetWidth(UnitValue.CreatePercentValue(100));
                 tabla.AddCell(new Cell().Add(new Paragraph("Fecha").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Tipo").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Motivo").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Stock Acumulado").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("N° Documento Ingreso\n/Salida").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
@@ -340,6 +350,7 @@ namespace almacen.Repositories.Reporte
                 {
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.fecha.ToString("dd/MM/yyyy")).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.tipoMovimiento).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.descripcionTipo).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.cantidad.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.stockAcumulado.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.detalle ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
@@ -367,9 +378,10 @@ namespace almacen.Repositories.Reporte
                 tblTitulo.AddCell(new Cell().Add(new Paragraph($"Producto: C-000{producto.idProducto} - {producto.producto}").SetFont(fuenteTexto).SetFontSize(9)).SetBold().SetBorder(Border.NO_BORDER));
                 documento.Add(tblTitulo);
                 List<ReporteIngresoResponse> operaciones = kardex.Where(x => x.idProducto == producto.idProducto).ToList();
-                Table tabla = new Table(9).SetWidth(UnitValue.CreatePercentValue(100));
+                Table tabla = new Table(10).SetWidth(UnitValue.CreatePercentValue(100));
                 tabla.AddCell(new Cell().Add(new Paragraph("Fecha").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Motivo").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Material").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Color").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Talla").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
@@ -381,6 +393,7 @@ namespace almacen.Repositories.Reporte
                 {
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.fecha?.ToString("dd/MM/yyyy")).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.cantidad.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.descripcionTipo?.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.material ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.color ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.talla ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
@@ -408,9 +421,10 @@ namespace almacen.Repositories.Reporte
                 tblTitulo.AddCell(new Cell().Add(new Paragraph($"Producto: C-000{producto.idProducto} - {producto.producto}").SetFont(fuenteTexto).SetFontSize(9)).SetBold().SetBorder(Border.NO_BORDER));
                 documento.Add(tblTitulo);
                 List<ReporteSalidaResponse> operaciones = kardex.Where(x => x.idProducto == producto.idProducto).ToList();
-                Table tabla = new Table(11).SetWidth(UnitValue.CreatePercentValue(100));
+                Table tabla = new Table(12).SetWidth(UnitValue.CreatePercentValue(100));
                 tabla.AddCell(new Cell().Add(new Paragraph("Fecha").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
+                tabla.AddCell(new Cell().Add(new Paragraph("Motivo").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Material").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Color").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
                 tabla.AddCell(new Cell().Add(new Paragraph("Talla").SetFont(fuenteTexto).SetFontSize(7)).SetBackgroundColor(ColorConstants.LIGHT_GRAY));
@@ -425,6 +439,7 @@ namespace almacen.Repositories.Reporte
                 {
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.fecha?.ToString("dd/MM/yyyy")).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.cantidad.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
+                    tabla.AddCell(new Cell().Add(new Paragraph(operacion.descripcionTipo.ToString()).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.material ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.color ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
                     tabla.AddCell(new Cell().Add(new Paragraph(operacion.talla ?? string.Empty).SetFont(fuenteTexto).SetFontSize(10)));
