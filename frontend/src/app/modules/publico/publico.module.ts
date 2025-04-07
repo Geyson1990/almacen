@@ -84,6 +84,7 @@ import { MapComponent } from 'src/app/pages/core/components/mapas/map/map.compon
 import { NuevoProductoComponent } from 'src/app/modals/nuevo-producto/nuevo-producto.component';
 import { NuevoIngresoComponent } from 'src/app/modals/nuevo-ingreso/nuevo-ingreso.component';
 import { NuevaSalidaComponent } from 'src/app/modals/nueva-salida/nueva-salida.component';
+import { VerProductoComponent } from 'src/app/modals/ver-producto/ver-producto.component';
 
 const COMPONENTS = [
   ObjetivoJustificacionProyectDialogComponent,
@@ -148,7 +149,8 @@ const MODALS = [
 
   NuevoProductoComponent,
   NuevoIngresoComponent,
-  NuevaSalidaComponent
+  NuevaSalidaComponent,
+  VerProductoComponent
 ];
 
 @NgModule({

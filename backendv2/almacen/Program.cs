@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCustomMVC(builder.Configuration);
 // Configurar sesión de base de datos
 builder.Services.AddTransient<IDbSession, DbSession>(_ =>
     new DbSession(builder.Configuration.GetRequiredSection("ConnectionStrings:Context").Value!));

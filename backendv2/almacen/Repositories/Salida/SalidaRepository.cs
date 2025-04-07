@@ -37,11 +37,13 @@ namespace almacen.Repositories.Salida
 	                                a.NOMBRE areaSolicitante,
 	                                rs.PERSONA_SOLICITANTE personaSolicitante,
                                     rs.ID_TIPO_SALIDA idTipoSalida,
-                                    rs.ORDEN_SALIDA documentoSalida
+                                    ts.DESCRIPCION tipoSalida,
+                                    rs.ORDEN_SALIDA numeroDocumento
                                 FROM dbo.registro_salida rs INNER JOIN
                                      dbo.producto p ON rs.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                      dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
-	                                 dbo.area_solicitante a ON rs.ID_AREA_SOLICITANTE = a.ID
+	                                 dbo.area_solicitante a ON rs.ID_AREA_SOLICITANTE = a.ID INNER JOIN
+                                    dbo.tipo_salida ts ON rs.ID_TIPO_SALIDA = ts.ID_TIPO_SALIDA
                                 WHERE rs.ESTADO_REGISTRO = 1";
 
                 var response = await _conn.Connection.QueryAsync<ListarSalidaResponse>(sql, null) ?? throw new Exception("Usuario no válido");

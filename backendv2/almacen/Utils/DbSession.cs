@@ -21,7 +21,7 @@ namespace almacen.Utils
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al abrir la conexión a la base de datos.", ex);
+                throw new Exception("Error al abrir la conexión a la base de datos."+ex.Message, ex);
             }
         }
 

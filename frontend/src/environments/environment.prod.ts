@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrlAPI: 'http://localhost:5210/api',
+  baseUrlAPI: 'http://localhost:8092/api',
   
   baseUrlTramiteAPI: 'http://172.25.3.108:8081/ms-administrado', 
   baseUrlSeguridadAPI: 'http://172.25.3.108:8081/ms-seguridad',

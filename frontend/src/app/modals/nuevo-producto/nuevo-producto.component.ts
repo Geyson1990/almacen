@@ -23,9 +23,7 @@ export class NuevoProductoComponent implements OnInit {
   constructor(private builder: FormBuilder,
     private inventarioService: InventarioService,
     private funcionesMtcService: FuncionesMtcService,
-  ) { 
-    debugger;
-  }
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();

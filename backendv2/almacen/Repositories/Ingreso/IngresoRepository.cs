@@ -35,10 +35,12 @@ namespace almacen.Repositories.Ingreso
 	                            re.CANTIDAD cantidad, 
 	                            p.FECHA_VENCIMIENTO fechaVencimiento,
                                 re.ID_TIPO_ENTRADA idTipoEntrada,
-                                re.ORDEN_COMPRA ordenCompra
+                                re.ORDEN_COMPRA numeroDocumento,
+                                te.DESCRIPCION tipoEntrada
                             FROM dbo.registro_entrada re INNER JOIN
                                  dbo.producto p ON re.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
-                                 dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA
+                                 dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
+                                 dbo.tipo_entrada te ON re.ID_TIPO_ENTRADA = te.ID_TIPO_ENTRADA
                             WHERE re.ESTADO_REGISTRO = 1";
 
                 var parameters = new DynamicParameters();
@@ -46,7 +48,7 @@ namespace almacen.Repositories.Ingreso
                 //parameters.Add("@Contrasenia", request.contrasenia);
 
                 // Ejecuta la consulta y obtiene el primer usuario que coincida con los criterios
-                var response = await _conn.Connection.QueryAsync<ListarIngresoResponse>(sql, null) ?? throw new Exception("Usuario no válido");
+                var response = await _conn.Connection.QueryAsync<ListarIngresoResponse>(sql, null) ?? throw new Exception("Lista no válido");
            
                 return Message.Successful(response);
             }

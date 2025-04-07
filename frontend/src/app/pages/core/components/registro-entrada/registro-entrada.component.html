@@ -95,7 +95,7 @@
                 </div>
             </div>
             <hr>
-            <div class="table-responsive">
+            <div class="table-responsive" style="overflow-x: auto;">
                 <table class="table table-hover table-bordered table-striped">
                     <thead class="bg-secondary text-white text-center">
                         <tr class="align-self-center">
@@ -130,7 +130,10 @@
                             <td class="align-middle text-center">{{ item.cantidad }}</td>
                             <td class="align-middle text-center">{{ item.fechaVencimiento | date:'dd/MM/yyyy' }}</td>
                             <td class="align-middle text-center">
-                                <button class="btn btn-sm btn-primary" (click)="onAddRegister(item)">
+                                <button class="btn btn-sm btn-primary me-2" (click)="onViewInformation(item)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-primary me-2" (click)="onAddRegister(item)">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <button class="btn btn-sm btn-danger" (click)="onDelete(item)">

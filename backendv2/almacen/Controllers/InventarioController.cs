@@ -42,14 +42,14 @@ namespace almacen.Controllers
         public async Task<ActionResult> GrabarProductos([FromBody]GrabarProductoRequest request)
         {
             var respuesta = await _service.GrabarProductos(request);
-            if(request.stockInicial > 0)
-            {
-                var insertarIngreso = await _service.InsertarStockInicial(new GrabarStockInicialRequest
-                {
-                    idProducto = respuesta.Data,
-                    cantidad = request.stockInicial
-                });
-            }            
+            //if(request.stockInicial > 0)
+            //{
+            //    var insertarIngreso = await _service.InsertarStockInicial(new GrabarStockInicialRequest
+            //    {
+            //        idProducto = respuesta.Data,
+            //        cantidad = request.stockInicial
+            //    });
+            //}            
             return Ok(respuesta);
         }
 

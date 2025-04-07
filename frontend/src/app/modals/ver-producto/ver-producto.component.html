@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h2>{{title}}</h2>
+    <button mat-icon-button (click)="closeDialog()" class="new-close"><i class="material-icons">close</i>
+    </button>
+</div>
+<div class="table-responsive">
+    <div class="modal-body mat-typography">
+        <div class="content-modal-flexible-none">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr class="table-row-color">
+                        <th class="columna">Producto</th>
+                        <td class="columna">
+                            <p class="form-control-static celda" *ngIf="item.nombre">{{item.nombre}}</p>
+                            <p class="form-control-static celda" *ngIf="!item.nombre">No registrado</p>
+                        </td>
+                    </tr>
+
+                    <tr class="table-row-color">
+                        <th class="columna">Tipo de {{tipoMovimiento}}</th>
+                        <td class="columna">
+                            <p class="form-control-static celda" *ngIf="nombreTipoMovimiento">{{nombreTipoMovimiento}}</p>
+                            <p class="form-control-static celda" *ngIf="!nombreTipoMovimiento">No registrado</p>
+                        </td>
+                    </tr>
+
+                    <tr class="table-row-color">
+                        <th class="columna">N° de documento de {{tipoMovimiento}}</th>
+                        <td class="columna">
+                            <p class="form-control-static celda" *ngIf="item.numeroDocumento">{{item.numeroDocumento}}</p>
+                            <p class="form-control-static celda" *ngIf="!item.numeroDocumento">No registrado</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="mat-small" (click)="closeDialog()"><i class="material-icons">cancel</i>
+            Cerrar</button>
+    </div>
+</div>

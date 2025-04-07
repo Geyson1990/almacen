@@ -6,6 +6,7 @@ import { NuevaSalidaComponent } from 'src/app/modals/nueva-salida/nueva-salida.c
 import { AreaSolicitanteResponse, EliminarSalidaRequest } from 'src/app/core/models/Inventario/Salida';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import * as XLSX from 'xlsx';
+import { VerProductoComponent } from 'src/app/modals/ver-producto/ver-producto.component';
 
 @Component({
   selector: 'app-registro-salida',
@@ -212,5 +213,18 @@ export class RegistroSalidaComponent implements OnInit {
     // Escribir el archivo
     XLSX.writeFile(wb, 'RegistroSalidaInventario.xlsx');
   }
+
+  onViewInformation(item: any){
+      const modalOptions: NgbModalOptions = {
+        size: 'lg',
+        centered: true,
+        ariaLabelledBy: 'modal-basic-title'
+      };
+  
+      const modalRef = this.modalService.open(VerProductoComponent, modalOptions);
+      modalRef.componentInstance.title = "Visualizar detalle del producto";
+      modalRef.componentInstance.item = item;
+      modalRef.componentInstance.tipoMovimiento = "Salida";
+    }
 }
 

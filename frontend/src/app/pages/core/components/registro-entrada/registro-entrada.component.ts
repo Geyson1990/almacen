@@ -6,6 +6,7 @@ import { NuevoIngresoComponent } from 'src/app/modals/nuevo-ingreso/nuevo-ingres
 import { EliminarIngresoRequest } from 'src/app/core/models/Inventario/Ingreso';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import * as XLSX from 'xlsx';
+import { VerProductoComponent } from 'src/app/modals/ver-producto/ver-producto.component';
 @Component({
   selector: 'app-registro-entrada',
   templateUrl: './registro-entrada.component.html',
@@ -63,7 +64,7 @@ export class RegistroEntradaComponent implements OnInit {
         this.funcionesMtcService.ocultarCargando();
         this.listadoBandejaBase = resp.data;
         this.listadoBandeja = resp.data;
-        this.BandejaSize = resp.data.length;
+        this.BandejaSize = resp.data?.length;
       },
       error => {
         this.funcionesMtcService.mensajeError('No se pudo cargar el inventario');
@@ -114,7 +115,6 @@ export class RegistroEntradaComponent implements OnInit {
     const { producto, material, color, talla, tipo, marca, fechaInicio, fechaFin } = form.value;
 
     this.listadoBandeja = this.listadoBandejaBase.filter(item => {
-      debugger;
       const itemFecha = new Date(item.fecha).getUTCDate();
       const inicio = fechaInicio ? new Date(fechaInicio).getUTCDate() : null;
       const fin = fechaFin ? new Date(fechaFin).getUTCDate() : null;
@@ -136,24 +136,19 @@ export class RegistroEntradaComponent implements OnInit {
       item.registro = index + 1;
     });
 
-    this.BandejaSize = this.listadoBandeja.length;
+    this.BandejaSize = this.listadoBandeja?.length;
   }
 
   onReset() {
     this.form.reset();
     this.listadoBandeja = this.listadoBandejaBase;
-    this.listadoBandeja.forEach((item, index) => {
+    this.listadoBandeja?.forEach((item, index) => {
       item.registro = index + 1;
     });
-    this.BandejaSize = this.listadoBandeja.length;
+    this.BandejaSize = this.listadoBandeja?.length;
   }
 
   downloadExcel() {
-    // const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.listadoBandeja);
-    // const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    // XLSX.utils.book_append_sheet(wb, ws, 'Inventarios');
-
-    // XLSX.writeFile(wb, 'Inventarios.xlsx');
     // Crear una nueva hoja de cálculo
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([
       ["Municipalidad Distrital de Sayan"],
@@ -207,6 +202,19 @@ export class RegistroEntradaComponent implements OnInit {
 
     // Escribir el archivo
     XLSX.writeFile(wb, 'RegistroIngresoInventario.xlsx');
+  }
+
+  onViewInformation(item: any){
+    const modalOptions: NgbModalOptions = {
+      size: 'lg',
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title'
+    };
+
+    const modalRef = this.modalService.open(VerProductoComponent, modalOptions);
+    modalRef.componentInstance.title = "Visualizar detalle del producto";
+    modalRef.componentInstance.item = item;
+    modalRef.componentInstance.tipoMovimiento = "Ingreso";
   }
 }
 
