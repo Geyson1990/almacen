@@ -17,6 +17,7 @@ export interface ProductosRequest{
     fechaVencimiento: Date;
     stockInicial: number;
     stockMinimo: number;
+    fecha: Date;
 }
 
 export interface EliminarProductoRequest{

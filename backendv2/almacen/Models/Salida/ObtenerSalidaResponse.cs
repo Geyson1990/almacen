@@ -9,5 +9,6 @@
         public string personaSolicitante { get; set; }
         public int idTipoSalida { get; set; }
         public string documentoSalida { get; set; }
+        public DateTime fecha { get; set; }
     }
 }

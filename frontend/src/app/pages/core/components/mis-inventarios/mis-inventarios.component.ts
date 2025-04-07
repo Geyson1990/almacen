@@ -34,7 +34,8 @@ export class MisInventariosComponent implements OnInit {
     idUnidadMedida: 0,
     fechaVencimiento: undefined,
     stockInicial: 0,
-    stockMinimo: 0
+    stockMinimo: 0,
+    fecha: new Date(),
   };
 
   constructor(

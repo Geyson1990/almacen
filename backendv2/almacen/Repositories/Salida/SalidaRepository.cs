@@ -76,7 +76,7 @@ namespace almacen.Repositories.Salida
                                    ,[ORDEN_SALIDA])
                              OUTPUT INSERTED.ID_SALIDA
                              VALUES
-                                   (GETDATE()
+                                   (@Fecha
                                    ,@IdProducto
                                    ,@Cantidad
                                    ,@IdAreaSolicitante
@@ -98,6 +98,7 @@ namespace almacen.Repositories.Salida
                                   ,[PERSONA_SOLICITANTE] = @PersonaSolicitante
                                   ,[ID_TIPO_SALIDA] = @IdTipoSalida
                                   ,[ORDEN_SALIDA] = @OrdenSalida
+                                  ,[FECHA] = @Fecha
                              WHERE [ID_SALIDA] = @Id
 
                              UPDATE producto
@@ -113,6 +114,7 @@ namespace almacen.Repositories.Salida
                 param.Add("@PersonaSolicitante", request.personaSolicitante);
                 param.Add("@IdTipoSalida", request.idTipoSalida);
                 param.Add("@OrdenSalida", request.documentoSalida);
+                param.Add("@Fecha", request.fecha);
 
                 long response = await _conn.Connection.ExecuteScalarAsync<long>(sql, param);
                 return Message.Successful(response);
@@ -164,7 +166,8 @@ namespace almacen.Repositories.Salida
                                     re.ID_AREA_SOLICITANTE idAreaSolicitante,
                                     re.PERSONA_SOLICITANTE personaSolicitante,
                                     re.ID_TIPO_SALIDA idTipoSalida,
-                                    re.ORDEN_SALIDA documentoSalida
+                                    re.ORDEN_SALIDA documentoSalida,
+                                    re.FECHA fecha
                                 FROM dbo.registro_salida re INNER JOIN
                                 dbo.producto p ON re.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                 dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA

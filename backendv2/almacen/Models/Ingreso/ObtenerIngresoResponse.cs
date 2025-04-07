@@ -7,5 +7,6 @@
         public int cantidad { get; set; }  
         public int idTipoEntrada { get; set; }
         public string ordenCompra { get; set; }
+        public DateTime fecha { get; set; }
     }
 }

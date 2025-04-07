@@ -55,6 +55,7 @@ export class NuevaSalidaComponent implements OnInit {
       personaSolicitante: [""],
       documentoSalida:[""],
       idTipoSalida: ["", Validators.required],
+      fecha: ["", Validators.required]
     });
   }
 
@@ -90,21 +91,42 @@ export class NuevaSalidaComponent implements OnInit {
       : '';
   }
 
+  get fecha() {
+    return this.form.get('fecha') as FormControl;
+  }
+
+  get fechaErrors() {
+    return (this.fecha.touched || this.fecha.dirty) && this.fecha.hasError('required')
+      ? 'Obligatorio'
+      : '';
+  }
+
   //#endregion
 
   private getData(): void {
-
+    this.funcionesMtcService.mostrarCargando();
     this.salidaService.obtenerSalida(this.id).subscribe(
       (resp: any) => {
         this.funcionesMtcService.ocultarCargando();
         this.data = resp.data;
         this.form.patchValue(this.data);
-
+        this.form.patchValue({
+          fecha: this.data.fecha ? new Date(this.data.fecha).toISOString().substring(0, 10) : ''
+        });
+        
+        if (this.data.fecha) {
+          const fecha = new Date(this.data.fecha);
+          this.data.fecha = new Date(fecha.toISOString().substring(0, 10));
+        }
         let option = {
           idProducto: this.data.idProducto,
           nombre: this.allProducts.find(x=>x.idProducto === this.data.idProducto)?.nombre
         }
         this.onOptionSelected(option);
+
+        setTimeout(() => {
+          this.funcionesMtcService.ocultarCargando();
+        }, 1000);
 
       },
       error => {
@@ -124,7 +146,7 @@ export class NuevaSalidaComponent implements OnInit {
       idSalida: this.id,
       idProducto: this.form.get('idProducto').value,
       cantidad: this.form.get('cantidad').value,
-      fecha: null,
+      fecha: this.form.get('fecha').value,
       idAreaSolicitante: this.form.get('idAreaSolicitante').value,
       personaSolicitante: this.form.get('personaSolicitante').value,
       documentoSalida: this.form.get('documentoSalida').value,
