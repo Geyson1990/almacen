@@ -41,7 +41,8 @@ namespace almacen.Repositories.Ingreso
                                  dbo.producto p ON re.ID_PRODUCTO = p.ID_PRODUCTO INNER JOIN
                                  dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
                                  dbo.tipo_entrada te ON re.ID_TIPO_ENTRADA = te.ID_TIPO_ENTRADA
-                            WHERE re.ESTADO_REGISTRO = 1";
+                            WHERE re.ESTADO_REGISTRO = 1
+                            ORDER BY re.FECHA DESC";
 
                 var parameters = new DynamicParameters();
                 //parameters.Add("@Alias", request.alias);
@@ -93,18 +94,31 @@ namespace almacen.Repositories.Ingreso
                 }
                 else
                 {
-                    sql += @"UPDATE [dbo].[registro_entrada]
-                               SET [CANTIDAD] = CANTIDAD + (@CANTIDAD - CANTIDAD),
+                    sql += @"
+                            DECLARE @CantidadAnterior INT;
+                            SELECT @CantidadAnterior = CANTIDAD FROM [dbo].[registro_entrada] WHERE ID_ENTRADA = @IdEntrada;
+
+                            -- Actualizar el registro de entrada
+                            UPDATE [dbo].[registro_entrada]
+                            SET 
                                 ID_TIPO_ENTRADA = @IdTipoEntrada,
                                 ORDEN_COMPRA = @OrdenCompra,
                                 FECHA = @FechaIngreso
-                             WHERE [ID_ENTRADA] = @IdEntrada;
+                            WHERE [ID_ENTRADA] = @IdEntrada;
 
-                            UPDATE producto
-                            SET CANTIDAD = CANTIDAD + (@CANTIDAD - CANTIDAD)
-                            WHERE ID_PRODUCTO = @IdProducto;
+                            -- Solo actualizar la cantidad si ha cambiado
+                            IF (@Cantidad <> @CantidadAnterior)
+                            BEGIN
+                                -- Actualizar la cantidad en registro_entrada
+                                UPDATE [dbo].[registro_entrada]
+                                SET CANTIDAD = @Cantidad
+                                WHERE [ID_ENTRADA] = @IdEntrada;
 
-";                    
+                                -- Actualizar la cantidad en producto considerando la diferencia
+                                UPDATE producto
+                                SET CANTIDAD = CANTIDAD + (@Cantidad - @CantidadAnterior)
+                                WHERE ID_PRODUCTO = @IdProducto;
+                            END;";                    
                 }
 
                 param.Add("@IdEntrada", request.idEntrada);

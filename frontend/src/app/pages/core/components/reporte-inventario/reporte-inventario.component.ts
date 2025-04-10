@@ -33,8 +33,8 @@ export class ReporteInventarioComponent implements OnInit {
   private buildForm(): void {
     this.form = this.builder.group({
       idTipoReporte: ["", Validators.required],
-      fechaInicio: ["", Validators.required],
-      fechaFin: ["", Validators.required],
+      fechaInicio: [""],
+      fechaFin: [""],
     });
   }
 
@@ -50,25 +50,25 @@ export class ReporteInventarioComponent implements OnInit {
       : '';
   }
 
-  get fechaInicio() {
-    return this.form.get('fechaInicio') as FormControl;
-  }
+  // get fechaInicio() {
+  //   return this.form.get('fechaInicio') as FormControl;
+  // }
 
-  get fechaInicioErrors() {
-    return (this.fechaInicio.touched || this.fechaInicio.dirty) && this.fechaInicio.hasError('required')
-      ? 'Obligatorio'
-      : '';
-  }
+  // get fechaInicioErrors() {
+  //   return (this.fechaInicio.touched || this.fechaInicio.dirty) && this.fechaInicio.hasError('required')
+  //     ? 'Obligatorio'
+  //     : '';
+  // }
 
-  get fechaFin() {
-    return this.form.get('fechaFin') as FormControl;
-  }
+  // get fechaFin() {
+  //   return this.form.get('fechaFin') as FormControl;
+  // }
 
-  get fechaFinErrors() {
-    return (this.fechaFin.touched || this.fechaFin.dirty) && this.fechaFin.hasError('required')
-      ? 'Obligatorio'
-      : '';
-  }
+  // get fechaFinErrors() {
+  //   return (this.fechaFin.touched || this.fechaFin.dirty) && this.fechaFin.hasError('required')
+  //     ? 'Obligatorio'
+  //     : '';
+  // }
   //#endregion
 
   onReset() {
@@ -84,12 +84,12 @@ export class ReporteInventarioComponent implements OnInit {
       if (this.idTipoReporte.invalid) {
         this.idTipoReporte.markAsTouched();
       }
-      if (this.fechaInicio.invalid) {
-        this.fechaInicio.markAsTouched();
-      }
-      if (this.fechaFin.invalid) {
-        this.fechaFin.markAsTouched();
-      }
+      // if (this.fechaInicio.invalid) {
+      //   this.fechaInicio.markAsTouched();
+      // }
+      // if (this.fechaFin.invalid) {
+      //   this.fechaFin.markAsTouched();
+      // }
       this.funcionesMtcService.mensajeError('Por favor, complete todos los campos obligatorios.');
       return;
     }
@@ -97,26 +97,25 @@ export class ReporteInventarioComponent implements OnInit {
     this.funcionesMtcService.mostrarCargando();
     const { idTipoReporte, fechaInicio, fechaFin } = form.value;
     const params = {
-      fechaInicio: fechaInicio,
-      fechaFin: fechaFin
+      fechaInicio: fechaInicio === '' ? null : fechaInicio,
+      fechaFin: fechaFin === '' ? null : fechaFin
     };
     this.reporteService.postReporteKardex(params, parseInt(idTipoReporte));
     this.funcionesMtcService.ocultarCargando();
   }
 
   onReportPdf() {
-    debugger;
     if (this.form.invalid) {
       // Mostrar mensajes de error si los campos son inválidos
       if (this.idTipoReporte.invalid) {
         this.idTipoReporte.markAsTouched();
       }
-      if (this.fechaInicio.invalid) {
-        this.fechaInicio.markAsTouched();
-      }
-      if (this.fechaFin.invalid) {
-        this.fechaFin.markAsTouched();
-      }
+      // if (this.fechaInicio.invalid) {
+      //   this.fechaInicio.markAsTouched();
+      // }
+      // if (this.fechaFin.invalid) {
+      //   this.fechaFin.markAsTouched();
+      // }
       this.funcionesMtcService.mensajeError('Por favor, complete todos los campos obligatorios.');
       return;
     }
@@ -124,10 +123,9 @@ export class ReporteInventarioComponent implements OnInit {
     this.funcionesMtcService.mostrarCargando();
     const { idTipoReporte, fechaInicio, fechaFin } = this.form.value;
     const params = {
-      fechaInicio: fechaInicio,
-      fechaFin: fechaFin
+      fechaInicio: fechaInicio === '' ? null : fechaInicio,
+      fechaFin: fechaFin === '' ? null : fechaFin
     };
-    debugger;
     this.reporteService.postReporteKardexPdf(params, parseInt(idTipoReporte)).subscribe((resp: ApiResponse<string>) => {
       if (resp.success) {
         //const file = new Blob([resp.data], { type: 'application/pdf' });

@@ -44,7 +44,8 @@ namespace almacen.Repositories.Salida
                                      dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
 	                                 dbo.area_solicitante a ON rs.ID_AREA_SOLICITANTE = a.ID INNER JOIN
                                     dbo.tipo_salida ts ON rs.ID_TIPO_SALIDA = ts.ID_TIPO_SALIDA
-                                WHERE rs.ESTADO_REGISTRO = 1";
+                                WHERE rs.ESTADO_REGISTRO = 1
+                                ORDER BY rs.FECHA DESC";
 
                 var response = await _conn.Connection.QueryAsync<ListarSalidaResponse>(sql, null) ?? throw new Exception("Usuario no válido");
            
@@ -92,18 +93,33 @@ namespace almacen.Repositories.Salida
                 }
                 else
                 {
-                    sql += @"UPDATE [dbo].[registro_salida]
-                               SET [CANTIDAD] = @Cantidad
-                                  ,[ID_AREA_SOLICITANTE] = @IdAreaSolicitante
-                                  ,[PERSONA_SOLICITANTE] = @PersonaSolicitante
-                                  ,[ID_TIPO_SALIDA] = @IdTipoSalida
-                                  ,[ORDEN_SALIDA] = @OrdenSalida
-                                  ,[FECHA] = @Fecha
-                             WHERE [ID_SALIDA] = @Id
+                    sql += @"
+                                DECLARE @CantidadAnterior INT;
+                                SELECT @CantidadAnterior = CANTIDAD FROM [dbo].[registro_salida] WHERE ID_SALIDA = @Id;
 
-                             UPDATE producto
-                            SET CANTIDAD = CANTIDAD - (@CANTIDAD - CANTIDAD)
-                            WHERE ID_PRODUCTO = @IdProducto;
+                                -- Actualizar el registro de salida
+                                UPDATE [dbo].[registro_salida]
+                                SET 
+                                    ID_TIPO_SALIDA = @IdTipoSalida,
+                                    ORDEN_SALIDA = @OrdenSalida,
+                                    FECHA = @Fecha,
+                                    ID_AREA_SOLICITANTE = @IdAreaSolicitante,
+                                    PERSONA_SOLICITANTE = @PersonaSolicitante
+                                WHERE [ID_SALIDA] = @Id;
+
+                                -- Solo actualizar la cantidad si ha cambiado
+                                IF (@Cantidad <> @CantidadAnterior)
+                                BEGIN
+                                    -- Actualizar la cantidad en registro_salida
+                                    UPDATE [dbo].[registro_salida]
+                                    SET CANTIDAD = @Cantidad
+                                    WHERE [ID_SALIDA] = @Id;
+
+                                    -- Actualizar la cantidad en producto considerando la diferencia
+                                    UPDATE producto
+                                    SET CANTIDAD = CANTIDAD - (@Cantidad - @CantidadAnterior)
+                                    WHERE ID_PRODUCTO = @IdProducto;
+                                END;
 ";                    
                 }
 

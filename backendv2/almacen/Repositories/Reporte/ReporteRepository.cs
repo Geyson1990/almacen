@@ -31,7 +31,7 @@ namespace almacen.Repositories.Reporte
                                     m.FECHA fecha,
                                     m.TIPO_MOVIMIENTO tipoMovimiento,
                                     m.CANTIDAD cantidad,
-                                    SUM(m.CANTIDAD) OVER (PARTITION BY p.ID_PRODUCTO ORDER BY m.FECHA, m.TIPO_MOVIMIENTO) AS stockAcumulado,
+                                    SUM(m.CANTIDAD) OVER (PARTITION BY p.ID_PRODUCTO ORDER BY m.FECHA, m.TIPO_MOVIMIENTO, m.ID_MOVIMIENTO) AS stockAcumulado,
                                     m.DETALLE detalle,
                                     p.MATERIAL material,
                                     p.COLOR color,
@@ -46,7 +46,8 @@ namespace almacen.Repositories.Reporte
                                         'INGRESO' AS TIPO_MOVIMIENTO, 
                                         re.CANTIDAD,
                                         re.ORDEN_COMPRA AS DETALLE,
-                                        ti.DESCRIPCION AS DESCRIPCION_TIPO
+                                        ti.DESCRIPCION AS DESCRIPCION_TIPO,
+                                        re.ID_ENTRADA AS ID_MOVIMIENTO
                                     FROM registro_entrada re 
                                     INNER JOIN tipo_entrada ti ON ti.ID_TIPO_ENTRADA = re.ID_TIPO_ENTRADA
     
@@ -59,12 +60,15 @@ namespace almacen.Repositories.Reporte
                                         'SALIDA' AS TIPO_MOVIMIENTO, 
                                         -rs.CANTIDAD AS CANTIDAD,
                                         rs.ORDEN_SALIDA AS DETALLE,
-                                        ti.DESCRIPCION AS DESCRIPCION_TIPO
+                                        ti.DESCRIPCION AS DESCRIPCION_TIPO,
+                                        rs.ID_SALIDA AS ID_MOVIMIENTO
                                     FROM registro_salida rs
                                     INNER JOIN tipo_salida ti ON ti.ID_TIPO_SALIDA = rs.ID_TIPO_SALIDA
                                 ) AS m
                                 JOIN producto p ON p.ID_PRODUCTO = m.ID_PRODUCTO
-                                WHERE m.FECHA BETWEEN @FechaInicio AND @FechaFin
+                                WHERE --m.FECHA BETWEEN @FechaInicio AND @FechaFin
+                                (@FechaInicio IS NULL OR m.FECHA >= @FechaInicio)
+                                AND (@FechaFin IS NULL OR m.FECHA <= @FechaFin)   
                                 ORDER BY p.ID_PRODUCTO, m.FECHA, m.TIPO_MOVIMIENTO;";
 
                 var parameters = new DynamicParameters();
@@ -110,7 +114,9 @@ namespace almacen.Repositories.Reporte
                                  dbo.unidad_medida um ON p.ID_UNIDAD_MEDIDA = um.ID_UNIDAD_MEDIDA INNER JOIN
                                  dbo.tipo_entrada ti ON ti.ID_TIPO_ENTRADA = re.ID_TIPO_ENTRADA
                             WHERE re.ESTADO_REGISTRO = 1
-                            AND re.FECHA BETWEEN @FechaInicio AND @FechaFin
+                            --AND re.FECHA BETWEEN @FechaInicio AND @FechaFin
+                            AND (@FechaInicio IS NULL OR re.FECHA >= @FechaInicio)
+                            AND (@FechaFin IS NULL OR re.FECHA <= @FechaFin)   
                             ORDER BY p.ID_PRODUCTO, re.FECHA;";
 
                 var parameters = new DynamicParameters();
@@ -160,7 +166,9 @@ namespace almacen.Repositories.Reporte
 	                                 dbo.area_solicitante a ON rs.ID_AREA_SOLICITANTE = a.ID INNER JOIN
                                      dbo.tipo_salida ts ON ts.ID_TIPO_SALIDA = rs.ID_TIPO_SALIDA
                                 WHERE rs.ESTADO_REGISTRO = 1
-                            AND rs.FECHA BETWEEN @FechaInicio AND @FechaFin
+                            AND (@FechaInicio IS NULL OR rs.FECHA >= @FechaInicio)
+                            AND (@FechaFin IS NULL OR rs.FECHA <= @FechaFin)            
+                            --AND rs.FECHA BETWEEN @FechaInicio AND @FechaFin
                             ORDER BY p.ID_PRODUCTO, rs.FECHA;";
 
                 var parameters = new DynamicParameters();
@@ -230,7 +238,7 @@ namespace almacen.Repositories.Reporte
                 {
                     idProducto = x.idProducto,
                     producto = x.nombre
-                }).Distinct();
+                }).DistinctBy(x => x.idProducto);
 
 
                 using (MemoryStream memoryStream = new MemoryStream())
@@ -273,7 +281,7 @@ namespace almacen.Repositories.Reporte
                 {
                     idProducto = x.idProducto,
                     producto = x.nombre
-                }).Distinct();
+                }).DistinctBy(x => x.idProducto);
 
 
                 using (MemoryStream memoryStream = new MemoryStream())

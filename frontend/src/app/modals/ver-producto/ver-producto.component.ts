@@ -26,7 +26,7 @@ export class VerProductoComponent implements OnInit {
 
   fnObtenerDatos(){
     if(this.tipoMovimiento === "Ingreso")
-      this.nombreTipoMovimiento = this.item.tipoIngreso;
+      this.nombreTipoMovimiento = this.item.tipoEntrada;
     else
       this.nombreTipoMovimiento = this.item.tipoSalida;
   }
